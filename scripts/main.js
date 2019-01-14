@@ -4,7 +4,8 @@
 	* 1  : white stone
 */
 
-$.get("test.sgf", function(response) {
+//$.get("test.sgf", function(response) {
+function beginSGF(response) {
     var sgf = SGFGrove.parse(response);
     var moveNumber = 1; // Next move number (start at 1, 0 contains game meta data)
 
@@ -27,7 +28,7 @@ $.get("test.sgf", function(response) {
 		moveNumber++;
 	})
 
-});
+};
 
 function fillMatrix(boardMat, sgf, moveNumber) {
 
