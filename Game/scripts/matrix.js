@@ -4,32 +4,6 @@
 	* 1  : white stone
 */
 
-//$.get("test.sgf", function(response) {
-function beginSGF(response) {
-    var sgf = SGFGrove.parse(response);
-    var moveNumber = 1; // Next move number (start at 1, 0 contains game meta data)
-
-    // Go directly to desired data
-    sgf = sgf[0][0];
-
-    // Get the size of the board (usually 19)
-	var size = sgf[0].SZ;
-	console.log("Board size : " + size);
-
-    var boardMat = math.zeros(size, size);
-    //boardMat = fillFullMatrix(boardMat, sgf);
-    //console.log(boardMat);
-
-	document.querySelector('#addMove').addEventListener('click', function(e) {
-
-		boardMat = fillMatrix(boardMat, sgf, moveNumber);
-        console.log(boardMat);
-
-		moveNumber++;
-	})
-
-};
-
 function fillMatrix(boardMat, sgf, moveNumber) {
 
     if (Object.keys(sgf[moveNumber])[0] == "B") {
