@@ -52,3 +52,7 @@ function gammeMinor(tonale){
 	gamme.push(tonale);
 	return gamme;
 }
+
+function minorRelative(gamme){
+	return gammeMinor(gamme[0]/freqIncrement/freqIncrement/freqIncrement);
+}

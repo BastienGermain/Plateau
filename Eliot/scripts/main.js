@@ -41,10 +41,9 @@ var loop1 = new Tone.Loop(
 	, 4*T)
 //loop.start(0).stop('4m')     //defined length loop
 loop1.start(0).end(Infinity);
-
 */
 
-
+/*
 var event1 = new Tone.Event(
 	function(time){
 		//kick.triggerAttackRelease("C1", "8n", time);	//4e argument would be velocity
@@ -65,7 +64,7 @@ var event2 = new Tone.Event(
 	}
 );
 event2.loop = Infinity;
-event2.start();
+event2.start();*/
 
 /*
 var loop2 = new Tone.Loop(function(time){
@@ -79,7 +78,7 @@ loop2.start()
 
 
 
-/*
+
 
 //composition automatique
 var disto = new Tone.Distortion(0.4)
@@ -187,4 +186,4 @@ for (var i=0; i<randIntArray.length; i++){
 	}
 	}
 
-}*/
+}
