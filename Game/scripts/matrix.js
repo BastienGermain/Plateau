@@ -7,12 +7,10 @@
 function fillMatrix(boardMat, sgf, moveNumber) {
 
     if (Object.keys(sgf[moveNumber])[0] == "B") {
-        console.log("Black plays");
         var coord = sgf[moveNumber].B;
         return insertIntoMatrix(boardMat, coord, -1);
 
     } else {
-        console.log("White plays");
         var coord = sgf[moveNumber].W;
         return insertIntoMatrix(boardMat, coord, 1);
     }

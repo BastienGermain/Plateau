@@ -9,7 +9,9 @@
     <script src="scripts/matrix.js"></script>
     <script src="scripts/sgfgrove.js" ></script>
     <script type="text/javascript" src="dist/jgoboard-latest.js"></script>
-    <script type="text/javascript" src="medium/board.js"></script>
+    <script type="text/javascript" src="medium/boardStyle.js"></script>
+    <script src="scripts/dataProcess.js" ></script>
+    <script src="scripts/board.js" ></script>
     <script src="scripts/main.js" ></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
@@ -18,6 +20,8 @@
 
     <p id="menu" class="controls" style="width: 900px;">
         <input style="padding-left: 2em;" id="file" type="file"> <button onclick="loadFile();">Load file</button>
+        <button onclick="printData()">Print Data</button>
+        <button onclick="printMatrix()">Print Matrix</button>
     </p>
 
     <div style="text-align: center; width: 100%">
@@ -31,8 +35,8 @@
                     <a href="#" onclick="move(-1); return false;"><i class="fa fa-step-backward"></i></a>-->
                     <strong id="move">1</strong> / <strong id="moves">1</strong>
                     <a href="#" id='addMove' onclick="move(1); return false;"><i class="fa fa-step-forward"></i></a>
-                    <a href="#" onclick="move(10); return false;"><i class="fa fa-forward"></i></a>
-                    <a href="#" onclick="move(1000); return false;"><i class="fa fa-fast-forward"></i></a>
+                    <!--<a href="#" onclick="move(10); return false;"><i class="fa fa-forward"></i></a>
+                    <a href="#" onclick="move(1000); return false;"><i class="fa fa-fast-forward"></i></a>-->
                 </p>
             </div>
 
