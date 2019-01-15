@@ -6,10 +6,31 @@
 */
 
 var SampleLibrary = {
-    minify: false,
-    ext: '.[mp3|ogg]', // use setExt to change the extensions on all files // do not change this variable //
+
+    minify: true, // if true : loads less samples by instrument
+    ext: '.[mp3|ogg]', // use setExt to change the extensions on all files // DO NOT CHANGE THIS VARIABLE //
     baseUrl: '/samples/',
-    list: ['bass-electric','bassoon','cello','clarinet','contrabass','flute','french-horn','guitar-acoustic','guitar-electric','guitar-nylon', 'harmonium','harp','organ','piano','saxophone','trombone','trumpet','tuba','violin','xylophone'],
+
+    list: [
+    'bass-electric',
+    'bassoon','cello',
+    'clarinet','contrabass',
+    'flute',
+    'french-horn',
+    'guitar-acoustic',
+    'guitar-electric',
+    'guitar-nylon',
+    'harmonium',
+    'harp',
+    'organ',
+    'piano',
+    'saxophone',
+    'trombone',
+    'trumpet',
+    'tuba',
+    'violin',
+    'xylophone'],
+
     onload: null,
   
     setExt: function (newExt) {
@@ -69,21 +90,17 @@ var SampleLibrary = {
 
                 }
 
-
-
-
                 rt[t.instruments[i]] = new Tone.Sampler(
                     newT, {
                         baseUrl: t.baseUrl + t.instruments[i] + "/",
                         onload: t.onload
                     }
-
                 )
             }
 
             return rt
 
-            // if a single instrument name is passed...
+        // if a single instrument name is passed...
         } else {
             newT = this[t.instruments];
 
@@ -109,15 +126,12 @@ var SampleLibrary = {
             }
 
 
-
-
             var s = new Tone.Sampler(
                 newT, {
                     baseUrl: t.baseUrl + t.instruments + "/",
                     onload: t.onload
                 }
             )
-
             return s
         }
 
