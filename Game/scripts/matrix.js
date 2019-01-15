@@ -16,6 +16,16 @@ function fillMatrix(boardMat, sgf, moveNumber) {
     }
 }
 
+function emptyMatrix(boardMat, sgf, moveNumber) {
+    if (Object.keys(sgf[moveNumber])[0] == "B") {
+        var coord = sgf[moveNumber].B;
+    } else {
+        var coord = sgf[moveNumber].W;
+    }
+
+    return insertIntoMatrix(boardMat, coord, 0);
+}
+
 // Fill entirely matrix from sgf
 function fillFullMatrix(boardMat, sgf) {
 

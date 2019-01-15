@@ -13,6 +13,7 @@
     <script src="scripts/dataProcess.js" ></script>
     <script src="scripts/board.js" ></script>
     <script src="scripts/tone.js" ></script>
+    <script src="scripts/musicAssets.js" ></script>
     <script src="scripts/main.js" ></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
@@ -20,10 +21,9 @@
 <div id="main">
 
     <p id="menu" class="controls" style="width: 900px;">
-        <input style="padding-left: 2em;" id="file" type="file"> <button onclick="loadFile();">Load file</button>
+        <input style="padding-left: 2em;" id="file" type="file"> <button onclick="loadFile()">Load file</button>
         <button onclick="printData()">Print Data</button>
         <button onclick="printMatrix()">Print Matrix</button>
-        <button onclick="playSound()">Play Sound</button>
     </p>
 
     <div style="text-align: center; width: 100%">
@@ -33,10 +33,10 @@
 
                 <p class="controls" style="width: 500px;">
                     <!--<a href="#" onclick="move(0); return false;"><i class="fa fa-fast-backward"></i></a>
-                    <a href="#" onclick="move(-10); return false;"><i class="fa fa-backward"></i></a>
-                    <a href="#" onclick="move(-1); return false;"><i class="fa fa-step-backward"></i></a>-->
+                    <a href="#" onclick="move(-10); return false;"><i class="fa fa-backward"></i></a>-->
+                    <a href="#" id="removeMove" onclick="move(-1); return false;"><i class="fa fa-step-backward"></i></a>
                     <strong id="move">1</strong> / <strong id="moves">1</strong>
-                    <a href="#" id='addMove' onclick="move(1); return false;"><i class="fa fa-step-forward"></i></a>
+                    <a href="#" id="addMove" onclick="move(1); return false;"><i class="fa fa-step-forward"></i></a>
                     <!--<a href="#" onclick="move(10); return false;"><i class="fa fa-forward"></i></a>
                     <a href="#" onclick="move(1000); return false;"><i class="fa fa-fast-forward"></i></a>-->
                 </p>
