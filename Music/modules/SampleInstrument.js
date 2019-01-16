@@ -561,6 +561,14 @@ class SampleInstrument
         else if (note.state === false) 
             this.sampler.triggerRelease(Tone.Frequency(note.note, "midi").toNote());
     }
+
+    play(note ,time, duration) 
+    {           
+        if (note.state === true) 
+            this.sampler.triggerAttack(Tone.Frequency(note.note, "midi").toNote(), time, duration);
+        else if (note.state === false) 
+            this.sampler.triggerRelease(Tone.Frequency(note.note, "midi").toNote(), time, duration);
+    }
 }
 
 
