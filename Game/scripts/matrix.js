@@ -16,6 +16,16 @@ function fillMatrix(boardMat, sgf, moveNumber) {
     }
 }
 
+function emptyMatrix(boardMat, sgf, moveNumber) {
+    if (Object.keys(sgf[moveNumber])[0] == "B") {
+        var coord = sgf[moveNumber].B;
+    } else {
+        var coord = sgf[moveNumber].W;
+    }
+
+    return insertIntoMatrix(boardMat, coord, 0);
+}
+
 // Fill entirely matrix from sgf
 function fillFullMatrix(boardMat, sgf) {
 
@@ -61,10 +71,10 @@ function readMatrix(matrix) {
 // color = 1 or -1
 function insertIntoMatrix(boardMat, coord, color) {
 
-    var first = letterToNumber(coord.slice(0, 1)) -1;
-    var second = letterToNumber(coord.slice(1, 2)) -1;
+    var x = letterToNumber(coord.slice(0, 1)) -1;
+    var y = letterToNumber(coord.slice(1, 2)) -1;
 
-    boardMat.subset(math.index(second, first), color);
+    boardMat.subset(math.index(y, x), color);
     return boardMat;
 }
 

@@ -5,7 +5,15 @@
 // data structure
 var data = new Object();
 data["lastPlayer"] = ""; // Values : "Black" or "White"
-data["stoneNumber"] = 0;
+data["stoneOnBoard"] = 0; // Number of stone on the board
+data["lastStonePosition"] = [0, 0]; // Range [0, 18]; 0,0 is top-left of goban
+data["stonesAround"] = 0; // number of stones around the last played stone
+data["whiteStonesAround"] = 0; // same with only white
+data["blackStonesAround"] = 0; // same with only black
+data["whiteCaptures"] = 0; // number of black stones captured by white
+data["blackCaptures"] = 0;
+data["knownMove"] = "" // Values : "Kata",
+
 
 var boardMat = math.zeros(19, 19);
 
@@ -25,29 +33,137 @@ function beginSGF(file) {
     //boardMat = fillFullMatrix(boardMat, sgf);
     //console.log(boardMat);
 
-	document.querySelector('#addMove').addEventListener('click', function(e) {
-
+	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
+        move(1);
 		boardMat = fillMatrix(boardMat, sgf, moveNumber);
         data = getLastPlayer(data, sgf, moveNumber);
-        data["stoneNumber"] += 1;
+        data = getLastStonePosition(data, sgf, moveNumber);
+        data = getStonesAround(data, boardMat);
+        data["stoneOnBoard"] += 1;
+        data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
+        data["blackCaptures"] = getInfo().captures[JGO.BLACK];
+        data["knownMove"] = checkKnownMoves(data, boardMat);
 		moveNumber++;
+	})
+
+    // To go back one move
+    document.querySelector('#removeMove').addEventListener('click', function(e) {
+        move(-1);
+        moveNumber--;
+		boardMat = emptyMatrix(boardMat, sgf, moveNumber);
+        data = getLastPlayer(data, sgf, moveNumber-1);
+        data["stoneOnBoard"] -= 1;
 	})
 };
 
 function getLastPlayer(dataObject, sgf, moveNumber) {
     if (Object.keys(sgf[moveNumber])[0] == "B") {
-        console.log("Black plays");
         dataObject["lastPlayer"] = "Black";
     } else {
-        console.log("White plays");
         dataObject["lastPlayer"] = "White";
     }
 
     return dataObject;
 }
 
-function getData() {
+function getLastStonePosition(dataObject, sgf, moveNumber) {
+    if (Object.keys(sgf[moveNumber])[0] == "B") {
+        var coord = sgf[moveNumber].B;
+    } else {
+        var coord = sgf[moveNumber].W;
+    }
+
+    var x = letterToNumber(coord.slice(0, 1)) -1;
+    var y = letterToNumber(coord.slice(1, 2)) -1;
+
+    dataObject["lastStonePosition"] = [x, y];
+
+    return dataObject;
+}
+
+function getStonesAround(dataObject, mat) {
+    var whiteStonesAround = 0;
+    var blackStonesAround = 0;
+
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+
+    var i, j;
+
+    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
+        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
+            if (i != x || j != y) {
+                var matValue = math.subset(mat, math.index(j, i));
+
+                if (matValue == 1) {
+                    whiteStonesAround++;
+                } else if (matValue == -1) {
+                    blackStonesAround++;
+                }
+            }
+        }
+    }
+
+    dataObject["stonesAround"] = whiteStonesAround + blackStonesAround;
+    dataObject["whiteStonesAround"] = whiteStonesAround;
+    dataObject["blackStonesAround"] = blackStonesAround;
+
+    return dataObject;
+}
+
+// TO DO : Tobi, Nobi, Nozoki, Tsuke, Kosumi, Hane (plus tricky)
+function checkKnownMoves(dataObject, mat) {
+    if (dataObject["stonesAround"] != 0) {
+        if (dataObject["lastPlayer"] == "White") {
+            if (dataObject["blackStonesAround"] == 1) {
+                if (checkKata(dataObject, mat)) {
+                    return "Kata";
+                }
+            }
+        } else {
+            if (dataObject["whiteStonesAround"] == 1) {
+                if (checkKata(dataObject, mat)) {
+                    return "Kata";
+                }
+            }
+        }
+    }
+
+    return "";
+
+}
+
+/* Kata : Approche pierre adverse en diagonale
+* [1, 0, 0]
+* [0, -1, 0]
+* [0, 0, 0]
+*/
+function checkKata(dataObject, mat) {
+    var isKata = false;
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+
+    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
+        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
+            if (i != x && j != y) {
+                var matValue = math.subset(mat, math.index(j, i));
+                if (matValue == (dataObject["lastPlayer"] == "White" ? -1 : 1)) {
+                    isKata = true;
+                }
+            }
+        }
+    }
+
+    return isKata;
+
+}
+
+/*function getData() {
     return data;
+}*/
+
+function printData() {
+    console.log(data);
 }
 
 function printMatrix() {
