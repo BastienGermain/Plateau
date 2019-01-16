@@ -12,7 +12,8 @@ data["whiteStonesAround"] = 0; // same with only white
 data["blackStonesAround"] = 0; // same with only black
 data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
-data["knownMove"] = "" // Values : "Kata",
+data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Tobi"
+data["lastMoveTime"] = 0.00; 
 
 
 var boardMat = math.zeros(19, 19);
@@ -43,16 +44,8 @@ function beginSGF(file) {
         data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
         data["blackCaptures"] = getInfo().captures[JGO.BLACK];
         data["knownMove"] = checkKnownMoves(data, boardMat);
+        data["lastMoveTime"] = sgf[moveNumber].C;
 		moveNumber++;
-	})
-
-    // To go back one move
-    document.querySelector('#removeMove').addEventListener('click', function(e) {
-        move(-1);
-        moveNumber--;
-		boardMat = emptyMatrix(boardMat, sgf, moveNumber);
-        data = getLastPlayer(data, sgf, moveNumber-1);
-        data["stoneOnBoard"] -= 1;
 	})
 };
 
@@ -153,7 +146,7 @@ function checkKnownMoves(dataObject, mat) {
             }
         }
     } else if (checkTobi(dataObject, mat)) {
-        console.log("Tobi !");
+        console.log("Tobi");
         return "Tobi";
     }
 
