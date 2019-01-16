@@ -8,19 +8,22 @@
     <meta name="N.P. Brosowsky" content="Tone.js instrument library loader"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <script type="text/javascript" src="external/nprogress.js"></script>
-    <script type="text/javascript" src="external/NexusUI.js"></script>
-    <script type="text/javascript" src="external/Tone.js"></script>
-    <script type="text/javascript" src="src/SampleLibrary.js"></script>
-    <script type="text/javascript" src="src/ArpPlayer.js"></script>
-    <script type="text/javascript" src="src/MusicalScale.js"></script>
-    <script type="text/javascript" src="src/ArpeggioPaterns.js"></script>
-
-    <script type="text/javascript" src="script.js"></script>
-
+    <!-- ### STYLES ### -->
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <link type="text/css" rel="stylesheet" href="style/nprogress.css"/>
+    <!--
+        <link type="text/css" rel="stylesheet" href="style/arpeggiator.css"/>
+    -->
 
+    <!-- ### SCRIPTS ### -->
+
+    <!-- External -->
+    <script type="text/javascript" src="external/jquery.min.js"></script>
+    <script type="text/javascript" src="external/NexusUI.js"></script>
+    <script type="text/javascript" src="external/Tone.js"></script>
+    <script type="text/javascript" src="external/StartAudioContext.js"></script>
+
+    
     <title>Plateau</title>
 
 </head>
@@ -36,8 +39,21 @@
             <br/>
             <div id="Keyboard"></div>
         </div>
-
+        <article>
+            <aside id="aside"></aside>
+            <main id="main"></main>
+        </article>
     </div>
+    
+    <!--
+        <script type="module" src="modules/Arpeggiator.js"></script>
+    -->
+    <script type="text/javascript" src="modules/SampleInstrument.js"></script>
+    <!--
+        <script type="text/javascript" src="modules/EffectRack.js"></script>
+    -->
+    <script type="text/javascript" src="external/nprogress.js"></script>
+    <script type="module" src="main.js"></script>
 
 </body>
 
