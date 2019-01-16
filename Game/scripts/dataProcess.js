@@ -111,25 +111,130 @@ function getStonesAround(dataObject, mat) {
     return dataObject;
 }
 
-// TO DO : Tobi, Nobi, Nozoki, Tsuke, Kosumi, Hane (plus tricky)
+// TO DO : Nozoki, Hane (plus tricky)
 function checkKnownMoves(dataObject, mat) {
     if (dataObject["stonesAround"] != 0) {
         if (dataObject["lastPlayer"] == "White") {
-            if (dataObject["blackStonesAround"] == 1) {
-                if (checkKata(dataObject, mat)) {
+            // affiner en fonction des pierres noires alentours
+            if (dataObject["whiteStonesAround"] == 1) {
+                if (checkNobi(dataObject, mat)) {
+                    console.log("White : Nobi");
+                    return "Nobi";
+                } else if (checkKosumi(dataObject, mat)) {
+                    console.log("White : Kosumi");
+                    return "Kosumi";
+                }
+            } else if (dataObject["blackStonesAround"] == 1) {
+                if (checkTsuke(dataObject, mat)) {
+                    console.log("White : Tsuke");
+                    return "Tsuke";
+                } else if (checkKata(dataObject, mat)) {
+                    console.log("White : Kata");
                     return "Kata";
                 }
             }
         } else {
-            if (dataObject["whiteStonesAround"] == 1) {
-                if (checkKata(dataObject, mat)) {
+            if (dataObject["blackStonesAround"] == 1) {
+                 if (checkNobi(dataObject, mat)) {
+                    console.log("Black : Nobi");
+                    return "Nobi";
+                 } else if (checkKosumi(dataObject, mat)) {
+                     console.log("Black : Kosumi");
+                     return "Kosumi";
+                 }
+            } else if (dataObject["whiteStonesAround"] == 1) {
+                if (checkTsuke(dataObject, mat)) {
+                    console.log("Black : Tsuke");
+                    return "Tsuke";
+                } else if (checkKata(dataObject, mat)) {
+                    console.log("Black : Kata");
                     return "Kata";
+                }
+            }
+        }
+    } else if (checkTobi(dataObject, mat)) {
+        console.log("Tobi !");
+        return "Tobi";
+    }
+
+    return "";
+
+}
+
+/* Nobi : contact direct entre deux pierres de même couleur
+* [0, 1, 0]
+* [0, 1, 0]
+* [0, 0, 0]
+*/
+function checkNobi(dataObject, mat) {
+    var isNobi = false;
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+
+    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
+        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
+            if (i == x || j == y) {
+                if (i != x || j != y) {
+                    var matValue = math.subset(mat, math.index(j, i));
+                    if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
+                        isNobi = true;
+                    }
                 }
             }
         }
     }
 
-    return "";
+    return isNobi;
+}
+
+/* Tsuke : contact direct entre deux pierres de couleur opposée
+* [0, -1, 0]
+* [0, 1, 0]
+* [0, 0, 0]
+*/
+function checkTsuke(dataObject, mat) {
+    var isTsuke = false;
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+
+    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
+        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
+            if (i == x || j == y) {
+                if (i != x || j != y) {
+                    var matValue = math.subset(mat, math.index(j, i));
+                    if (matValue == (dataObject["lastPlayer"] == "White" ? -1 : 1)) {
+                        isTsuke = true;
+                    }
+                }
+            }
+        }
+    }
+
+    return isTsuke;
+}
+
+/* Kosumi : Extension en diagonale
+* [1, 0, 0]
+* [0, 1, 0]
+* [0, 0, 0]
+*/
+function checkKosumi(dataObject, mat) {
+    var isKosumi = false;
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+
+    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
+        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
+            if (i != x && j != y) {
+                var matValue = math.subset(mat, math.index(j, i));
+                if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
+                    isKosumi = true;
+                }
+            }
+        }
+    }
+
+    return isKosumi;
 
 }
 
@@ -155,6 +260,35 @@ function checkKata(dataObject, mat) {
     }
 
     return isKata;
+
+}
+
+/* Tobi : Saut d'un espace
+* [1, 0, 1]
+* [0, 0, 0]
+* [0, 0, 0]
+*/
+function checkTobi(dataObject, mat) {
+    var isTobi = false;
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+    //console.log("x, y " + x + ", " + y);
+
+    for (x <= 1 ? i = 0 : i = x - 2; i <= (x >= 17 ? x : x + 2); i++) {
+        for (y <= 1 ? j = 0 : j = y - 2; j <= (y >= 17 ? y : y + 2); j++) {
+            if ((i == x || j == y) && (i == x - 2 || j == y - 2 || i == x + 2 || j  == y + 2)) {
+
+                //console.log("i, j " + i + ", " + j);
+                var matValue = math.subset(mat, math.index(j, i));
+                if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
+                    isTobi = true;
+                }
+
+            }
+        }
+    }
+
+    return isTobi;
 
 }
 
