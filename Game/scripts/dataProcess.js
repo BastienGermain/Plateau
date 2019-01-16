@@ -12,6 +12,7 @@ data["whiteStonesAround"] = 0; // same with only white
 data["blackStonesAround"] = 0; // same with only black
 data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
+data["knownMove"] = "" // Values : "Kata",
 
 
 var boardMat = math.zeros(19, 19);
@@ -41,6 +42,7 @@ function beginSGF(file) {
         data["stoneOnBoard"] += 1;
         data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
         data["blackCaptures"] = getInfo().captures[JGO.BLACK];
+        data["knownMove"] = checkKnownMoves(data, boardMat);
 		moveNumber++;
 	})
 
@@ -79,7 +81,7 @@ function getLastStonePosition(dataObject, sgf, moveNumber) {
     return dataObject;
 }
 
-function getStonesAround(dataObject, boardMat) {
+function getStonesAround(dataObject, mat) {
     var whiteStonesAround = 0;
     var blackStonesAround = 0;
 
@@ -91,8 +93,7 @@ function getStonesAround(dataObject, boardMat) {
     for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
         for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
             if (i != x || j != y) {
-
-                var matValue = math.subset(boardMat, math.index(j, i));
+                var matValue = math.subset(mat, math.index(j, i));
 
                 if (matValue == 1) {
                     whiteStonesAround++;
@@ -110,9 +111,56 @@ function getStonesAround(dataObject, boardMat) {
     return dataObject;
 }
 
-function getData() {
-    return data;
+// TO DO : Tobi, Nobi, Nozoki, Tsuke, Kosumi, Hane (plus tricky)
+function checkKnownMoves(dataObject, mat) {
+    if (dataObject["stonesAround"] != 0) {
+        if (dataObject["lastPlayer"] == "White") {
+            if (dataObject["blackStonesAround"] == 1) {
+                if (checkKata(dataObject, mat)) {
+                    return "Kata";
+                }
+            }
+        } else {
+            if (dataObject["whiteStonesAround"] == 1) {
+                if (checkKata(dataObject, mat)) {
+                    return "Kata";
+                }
+            }
+        }
+    }
+
+    return "";
+
 }
+
+/* Kata : Approche pierre adverse en diagonale
+* [1, 0, 0]
+* [0, -1, 0]
+* [0, 0, 0]
+*/
+function checkKata(dataObject, mat) {
+    var isKata = false;
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+
+    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
+        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
+            if (i != x && j != y) {
+                var matValue = math.subset(mat, math.index(j, i));
+                if (matValue == (dataObject["lastPlayer"] == "White" ? -1 : 1)) {
+                    isKata = true;
+                }
+            }
+        }
+    }
+
+    return isKata;
+
+}
+
+/*function getData() {
+    return data;
+}*/
 
 function printData() {
     console.log(data);
