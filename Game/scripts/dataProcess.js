@@ -5,8 +5,12 @@
 // data structure
 var data = new Object();
 data["lastPlayer"] = ""; // Values : "Black" or "White"
-data["stoneNumber"] = 0;
+data["stoneOnBoard"] = 0; // Number of stone on the board
 data["lastStonePosition"] = [0, 0]; // Range [0, 18]; 0,0 is top-left of goban
+data["stonesAround"] = 0; // number of stones around the last played stone
+data["whiteStonesAround"] = 0; // same with only white
+data["blackStonesAround"] = 0; // same with only black
+
 
 var boardMat = math.zeros(19, 19);
 
@@ -30,24 +34,24 @@ function beginSGF(file) {
 		boardMat = fillMatrix(boardMat, sgf, moveNumber);
         data = getLastPlayer(data, sgf, moveNumber);
         data = getLastStonePosition(data, sgf, moveNumber);
-        data["stoneNumber"] += 1;
+        data = getStonesAround(data, boardMat);
+        data["stoneOnBoard"] += 1;
 		moveNumber++;
 	})
 
+    // To go back one move
     document.querySelector('#removeMove').addEventListener('click', function(e) {
         moveNumber--;
 		boardMat = emptyMatrix(boardMat, sgf, moveNumber);
         data = getLastPlayer(data, sgf, moveNumber-1);
-        data["stoneNumber"] -= 1;
+        data["stoneOnBoard"] -= 1;
 	})
 };
 
 function getLastPlayer(dataObject, sgf, moveNumber) {
     if (Object.keys(sgf[moveNumber])[0] == "B") {
-        console.log("Black plays");
         dataObject["lastPlayer"] = "Black";
     } else {
-        console.log("White plays");
         dataObject["lastPlayer"] = "White";
     }
 
@@ -61,10 +65,41 @@ function getLastStonePosition(dataObject, sgf, moveNumber) {
         var coord = sgf[moveNumber].W;
     }
 
-    var first = letterToNumber(coord.slice(0, 1)) -1;
-    var second = letterToNumber(coord.slice(1, 2)) -1;
+    var x = letterToNumber(coord.slice(0, 1)) -1;
+    var y = letterToNumber(coord.slice(1, 2)) -1;
 
-    dataObject["lastStonePosition"] = [first, second];
+    dataObject["lastStonePosition"] = [x, y];
+
+    return dataObject;
+}
+
+function getStonesAround(dataObject, boardMat) {
+    var whiteStonesAround = 0;
+    var blackStonesAround = 0;
+
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+
+    var i, j;
+
+    for (x == 0 ? i = 0 : i = x - 1; i <= x + 1; i++) {
+        for (y == 0 ? j = 0 : j = y - 1; j <= y + 1; j++) {
+            if (i != x || j != y) {
+
+                var matValue = math.subset(boardMat, math.index(j, i));
+
+                if (matValue == 1) {
+                    whiteStonesAround++;
+                } else if (matValue == -1) {
+                    blackStonesAround++;
+                }
+            }
+        }
+    }
+
+    dataObject["stonesAround"] = whiteStonesAround + blackStonesAround;
+    dataObject["whiteStonesAround"] = whiteStonesAround;
+    dataObject["blackStonesAround"] = blackStonesAround;
 
     return dataObject;
 }

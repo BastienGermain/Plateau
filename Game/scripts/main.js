@@ -96,7 +96,7 @@ $(document).ready(function() {
             Tone.context.resume();
         }
 
-        updateSound();
+        //updateSound();
 
     })
 })
