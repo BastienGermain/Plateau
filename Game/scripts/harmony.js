@@ -5,7 +5,7 @@ var vibrato = new Tone.Vibrato(5, 0.1).toMaster();
 var polySynth = new Tone.PolySynth(4, Tone.Synth).toMaster();
 polySynth = polySynth.connect(vibrato);
 
-var relativ = 1;
+var relativ=1;
 //config harmonie
 var tonalite = "A3"
 var gamme = gammeMajor(notes[tonalite])
@@ -126,17 +126,17 @@ function sequence0(currentBeat){
 	if (currentBeat % 16==0){
 		modifBase(1);
 		modifHarmony(1);
-		console.log("degré1");
+		//console.log("degré1");
 	}
 	else if (currentBeat % 16==4){
 		modifBase(5);
 		modifHarmony(5);
-		console.log("degré5");
+		//console.log("degré5");
 	}
 	else if (currentBeat % 16==8){
 		modifBase(1, true);
 		harmony.stop();
-		console.log("degré1");
+		//console.log("degré1");
 	}
 
 }
@@ -145,17 +145,17 @@ function sequence1(currentBeat){
 	if (currentBeat % 16==0){
 		modifBase(5);
 		modifHarmony(5);
-		console.log("degré5");
+		//console.log("degré5");
 	}
 	else if (currentBeat % 16==4){
 		modifBase(1);
 		modifHarmony(1);
-		console.log("degré1");
+		//console.log("degré1");
 	}
 	else if (currentBeat % 16==8){
 		modifBase(5, true);
 		harmony.stop();
-		console.log("degré5");
+		//console.log("degré5");
 	}
 
 }
@@ -164,17 +164,17 @@ function sequence2(currentBeat){
 	if (currentBeat % 16==0){
 		modifBase(2);
 		modifHarmony(2);
-		console.log("degré2");
+		//console.log("degré2");
 	}
 	else if (currentBeat % 16==4){
 		modifBase(5);
 		modifHarmony(5);
-		console.log("degré5");
+		//console.log("degré5");
 	}
 	else if (currentBeat % 16==8){
 		modifBase(1, true);
 		harmony.stop();
-		console.log("degré1");
+		//console.log("degré1");
 	}
 
 }
@@ -183,22 +183,22 @@ function sequence3(currentBeat){
 	if (currentBeat % 16==0){
 		modifBase(1);
 		modifHarmony(1);
-		console.log("degré1");
+		//console.log("degré1");
 	}
 	else if (currentBeat % 16==4){
 		modifBase(4);
 		modifHarmony(4);
-		console.log("degré4");
+		//console.log("degré4");
 	}
 	else if (currentBeat % 16==8){
 		modifBase(2);
 		modifHarmony(2);
-		console.log("degré2");
+		//console.log("degré2");
 	}
 	else if (currentBeat % 16==12){
 		modifBase(5);
 		modifHarmony(5);
-		console.log("degré5");
+		//console.log("degré5");
 	}
 
 }
@@ -207,22 +207,22 @@ function sequence4(currentBeat){
 	if (currentBeat % 16==0){
 		modifBase(2);
 		modifHarmony(2);
-		console.log("degré2");
+		//console.log("degré2");
 	}
 	else if (currentBeat % 16==4){
 		modifBase(5);
 		modifHarmony(5);
-		console.log("degré5");
+		//console.log("degré5");
 	}
 	else if (currentBeat % 16==8){
 		modifBase(1);
 		modifHarmony(1);
-		console.log("degré1");
+		//console.log("degré1");
 	}
 	else if (currentBeat % 16==12){
 		modifBase(6);
 		modifHarmony(6);
-		console.log("degré6");
+		//console.log("degré6");
 	}
 
 }
