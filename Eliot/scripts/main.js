@@ -12,6 +12,12 @@ Tone.Transport.start();
 var tempo = 120
 var T = 60/tempo
 
+document.querySelector('#addMove').addEventListener('click', function() {
+	if (Tone.context.state !== 'running'){
+		Tone.context.resume();
+	}
+})
+
 //samples
 //1 mesure (1m) correspond à 2 temps (une demi-ronde --> 2n)
 //1 noire --> 1/4 de ronde --> 4n
