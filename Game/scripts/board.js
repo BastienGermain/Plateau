@@ -33,6 +33,10 @@ function updateInfo() {
     $('#white_captures').html(info.captures[JGO.WHITE]);
 }
 
+function getInfo() {
+    return jrecord.getCurrentNode().info;
+}
+
 function updateGameInfo(info) {
     var html = "";
 

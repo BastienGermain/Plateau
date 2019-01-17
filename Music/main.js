@@ -1,51 +1,90 @@
-NProgress.start();
+import * as Arpeggiator from './modules/Arpeggiator.js';
 
-var samples = SampleLibrary.load({
-    instruments: "flute",
-    baseUrl: "samples/"
+document.documentElement.addEventListener("mousedown", function()
+{    
+    if (Tone.context.state !== 'running') 
+        Tone.context.resume();
 })
 
-var current
-// show keyboard on load //
+var instrumentsList = 
+[
+    'piano', 
+    'bass-electric', 
+    'bassoon', 
+    'cello', 
+    'clarinet', 
+    'contrabass', 
+    'flute', 
+    'french-horn', 
+    'guitar-acoustic', 
+    'guitar-electric',
+    'guitar-nylon', 
+    'harmonium', 
+    'harp', 
+    'organ', 
+    'saxophone', 
+    'trombone', 
+    'trumpet', 
+    'tuba', 
+    'violin', 
+    'xylophone'
+];
+//var app = new Arpeggiator.ArpPlayer(instrument.sampler);
 
-Tone.Buffer.on('load', function() {
+var instrument = new SampleInstrument(instrumentsList[0]);
+
+window.onload = function() 
+{
+    StartAudioContext(Tone.context);
+
+    if (Tone.context.state !== 'running')
+        Tone.context.resume();
+
+    NProgress.start();
+
+    Tone.Transport.start();
+    Tone.context.latencyHint = "fastest";
+    Tone.context.lookAhead = 0.01;
+
+    //var effects = new EffectRack();
+};
+
+window.addEventListener("resize", function(event) {
+  keyboardUI.resize(window.innerWidth*0.75, window.innerHeight*0.5);
+  console.log("resize");
+});
+
+// show keyboard on load //
+Tone.Buffer.on('load', function() 
+{   
     document.querySelector(".container").style.display = 'block';
     document.querySelector("#loading").style.display = 'none';
     NProgress.done();
 
-    // loop through instruments and set release, connect to master output
-    for (var property in samples) {
-        if (samples.hasOwnProperty(property)) {
-            console.log(samples[property])
-            samples[property].release = .5;
-            samples[property].toMaster();
-        }
-    }
+    console.log(instrument);
+    instrument.sampler.release = .5;
+    instrument.sampler.toMaster();
 
-    current = samples[chooseFour[0]];
-
-    select.on('change', function(v) {
-        current = samples[v.value];
-    })
-
-
+    select.on('change', function(seleted) 
+    {
+        instrument.switch(seleted.value);
+    });
 })
+
+
 // show error message on loading error //
-Tone.Buffer.on('error', function() {
-    document.querySelector("#loading").innerHTML = "I'm sorry, there has been an error loading the samples. This demo works best on on the most up-to-date version of Chrome.";
+Tone.Buffer.on('error', function() 
+{
+    document.querySelector("#loading").innerHTML = "I'm sorry, there has been an error loading the instruments. This demo works best on on the most up-to-date version of Chrome.";
 })
-
-
-// create Nexus UI //
-Nexus.colors.accent = "#f00"
 
 var select = new Nexus.Select('#Selector', {
     'size': [300, 30],
-    'options': Object.keys(samples)
+    'options': instrumentsList
 });
 
 var keyboardUI = new Nexus.Piano('#Keyboard', {
-    'size': [1000, 125],
+    'size': [window.innerWidth*0.75, window.innerHeight*0.5],
     'mode': 'button', // 'button', 'toggle', or 'impulse'
     'lowNote': 36,
     'highNote': 72
@@ -54,9 +93,5 @@ var keyboardUI = new Nexus.Piano('#Keyboard', {
 
 keyboardUI.on('change', function(note) {
     console.log(Tone.Frequency(note.note, "midi").toNote());
-    if (note.state === true) {
-        current.triggerAttack(Tone.Frequency(note.note, "midi").toNote());
-    } else if (note.state === false) {
-        current.triggerRelease(Tone.Frequency(note.note, "midi").toNote());
-    }
+    instrument.play(note);
 })
