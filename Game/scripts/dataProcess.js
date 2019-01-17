@@ -13,7 +13,7 @@ data["blackStonesAround"] = 0; // same with only black
 data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Tobi"
-data["lastMoveTime"] = 0.00; 
+data["lastMoveTime"] = 0.00;
 
 
 var boardMat = math.zeros(19, 19);
@@ -21,14 +21,14 @@ var boardMat = math.zeros(19, 19);
 // Load SGF for matrix
 //$.get("test.sgf", function(response) {
 function beginSGF(file) {
-    var sgf = SGFGrove.parse(file);
-    var moveNumber = 1; // Next move number (start at 1, 0 contains game meta data)
+    let sgf = SGFGrove.parse(file);
+    let moveNumber = 1; // Next move number (start at 1, 0 contains game meta data)
 
     // Go directly to desired data
     sgf = sgf[0][0];
 
     // Get the size of the board (usually 19)
-	var size = sgf[0].SZ;
+	const size = sgf[0].SZ;
 	console.log("Board size : " + size);
 
     //boardMat = fillFullMatrix(boardMat, sgf);
@@ -37,9 +37,9 @@ function beginSGF(file) {
 	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
         move(1);
 		boardMat = fillMatrix(boardMat, sgf, moveNumber);
-        data = getLastPlayer(data, sgf, moveNumber);
-        data = getLastStonePosition(data, sgf, moveNumber);
-        data = getStonesAround(data, boardMat);
+        getLastPlayer(sgf, moveNumber);
+        getLastStonePosition(sgf, moveNumber);
+        getStonesAround();
         data["stoneOnBoard"] += 1;
         data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
         data["blackCaptures"] = getInfo().captures[JGO.BLACK];
@@ -49,44 +49,42 @@ function beginSGF(file) {
 	})
 };
 
-function getLastPlayer(dataObject, sgf, moveNumber) {
+function getLastPlayer(sgf, moveNumber) {
     if (Object.keys(sgf[moveNumber])[0] == "B") {
-        dataObject["lastPlayer"] = "Black";
+        data["lastPlayer"] = "Black";
     } else {
-        dataObject["lastPlayer"] = "White";
+        data["lastPlayer"] = "White";
     }
-
-    return dataObject;
 }
 
-function getLastStonePosition(dataObject, sgf, moveNumber) {
+function getLastStonePosition(sgf, moveNumber) {
+    let coord;
+
     if (Object.keys(sgf[moveNumber])[0] == "B") {
-        var coord = sgf[moveNumber].B;
+        coord = sgf[moveNumber].B;
     } else {
-        var coord = sgf[moveNumber].W;
+        coord = sgf[moveNumber].W;
     }
 
-    var x = letterToNumber(coord.slice(0, 1)) -1;
-    var y = letterToNumber(coord.slice(1, 2)) -1;
+    const x = letterToNumber(coord.slice(0, 1)) -1;
+    const y = letterToNumber(coord.slice(1, 2)) -1;
 
-    dataObject["lastStonePosition"] = [x, y];
-
-    return dataObject;
+    data["lastStonePosition"] = [x, y];
 }
 
-function getStonesAround(dataObject, mat) {
-    var whiteStonesAround = 0;
-    var blackStonesAround = 0;
+function getStonesAround() {
+    let whiteStonesAround = 0;
+    let blackStonesAround = 0;
 
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
+    const x = data["lastStonePosition"][0];
+    const y = data["lastStonePosition"][1];
 
-    var i, j;
+    let i, j;
 
     for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
         for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
             if (i != x || j != y) {
-                var matValue = math.subset(mat, math.index(j, i));
+                const matValue = math.subset(boardMat, math.index(j, i));
 
                 if (matValue == 1) {
                     whiteStonesAround++;
@@ -97,15 +95,26 @@ function getStonesAround(dataObject, mat) {
         }
     }
 
-    dataObject["stonesAround"] = whiteStonesAround + blackStonesAround;
-    dataObject["whiteStonesAround"] = whiteStonesAround;
-    dataObject["blackStonesAround"] = blackStonesAround;
-
-    return dataObject;
+    data["stonesAround"] = whiteStonesAround + blackStonesAround;
+    data["whiteStonesAround"] = whiteStonesAround;
+    data["blackStonesAround"] = blackStonesAround;
 }
 
-// TO DO : Nozoki, Hane (plus tricky)
+// TO DO : Keima, Nozoki, Hane (plus tricky)
 function checkKnownMoves(dataObject, mat) {
+
+
+    const nobis = moveMatrices.Nobi;
+    const currentMatrix = getCurrentMatrix(dataObject, mat);
+    console.log(currentMatrix);
+    console.log(rotateMatrix(currentMatrix));
+    let i;
+    /*for (i = 0; i < nobis.length; i++) {
+        if(currentMatrix == nobis[i] || currentMatrix == -nobis[i]) {
+            console.log("Nobi des matrices");
+    }*/
+
+
     if (dataObject["stonesAround"] != 0) {
         if (dataObject["lastPlayer"] == "White") {
             // affiner en fonction des pierres noires alentours
@@ -127,6 +136,7 @@ function checkKnownMoves(dataObject, mat) {
                 }
             }
         } else {
+            // affiner en fonction des pierres blanches alentours
             if (dataObject["blackStonesAround"] == 1) {
                  if (checkNobi(dataObject, mat)) {
                     console.log("Black : Nobi");
@@ -148,6 +158,9 @@ function checkKnownMoves(dataObject, mat) {
     } else if (checkTobi(dataObject, mat)) {
         console.log("Tobi");
         return "Tobi";
+    } else if (checkKogeima(dataObject, mat)) {
+        console.log("Kogeima");
+        return "Kogeima";
     }
 
     return "";
@@ -265,13 +278,11 @@ function checkTobi(dataObject, mat) {
     var isTobi = false;
     var x = dataObject["lastStonePosition"][0];
     var y = dataObject["lastStonePosition"][1];
-    //console.log("x, y " + x + ", " + y);
 
     for (x <= 1 ? i = 0 : i = x - 2; i <= (x >= 17 ? x : x + 2); i++) {
         for (y <= 1 ? j = 0 : j = y - 2; j <= (y >= 17 ? y : y + 2); j++) {
             if ((i == x || j == y) && (i == x - 2 || j == y - 2 || i == x + 2 || j  == y + 2)) {
 
-                //console.log("i, j " + i + ", " + j);
                 var matValue = math.subset(mat, math.index(j, i));
                 if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
                     isTobi = true;
@@ -282,6 +293,41 @@ function checkTobi(dataObject, mat) {
     }
 
     return isTobi;
+
+}
+
+/* Kogeima : Saut de cheval
+* [1, 0, 0]
+* [0, 0, 1]
+* [0, 0, 0]
+*/
+function checkKogeima(dataObject, mat) {
+    var isKogeima = false;
+    var x = dataObject["lastStonePosition"][0];
+    var y = dataObject["lastStonePosition"][1];
+    //console.log("x, y " + x + ", " + y);
+
+    for (x <= 2 ? i = 0 : i = x - 3; i <= (x >= 16 ? x : x + 3); i++) {
+        for (y <= 2 ? j = 0 : j = y - 3; j <= (y >= 16 ? y : y + 3); j++) {
+
+            if (
+                (i == x - 2 && (j == y - 1 || j == y + 1)) ||
+                (i == x + 2 && (j == y - 1 || j == y + 1)) ||
+                (j == y - 2 && (i == x - 1 || i == x + 1)) ||
+                (j == y + 2 && (i == x - 1 || i == x + 1))
+            )  {
+
+                //console.log("i, j " + i + ", " + j);
+                var matValue = math.subset(mat, math.index(j, i));
+                if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
+                    isKogeima = true;
+                }
+            }
+
+        }
+    }
+
+    return isKogeima;
 
 }
 

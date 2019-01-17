@@ -1,54 +1,62 @@
 var freqIncrement = 1.05946;
 
-var note = new Object();
-note["A3"]=220;
-note["A#3"]=note["A3"]*freqIncrement;
-note["B3"]=note["A#3"]*freqIncrement;
-note["C3"]=note["B3"]*freqIncrement;
-note["C#3"]=note["C3"]*freqIncrement;
-note["D3"]=note["C#3"]*freqIncrement;
-note["D#3"]=note["D3"]*freqIncrement;
-note["E3"]=note["D#3"]*freqIncrement;
-note["F3"]=note["E3"]*freqIncrement;
-note["F#3"]=note["F3"]*freqIncrement;
-note["G3"]=note["F#3"]*freqIncrement;
-note["G#3"]=note["G3"]*freqIncrement;
-note["A4"]=note["G#3"]*freqIncrement;
+var tempo = 120;
+var T = 60/tempo;
+var nbMesure = 4;
+
+var notes = new Object();
+notes["A3"]=220;
+notes["A#3"]=notes["A3"]*freqIncrement;
+notes["B3"]=notes["A#3"]*freqIncrement;
+notes["C3"]=notes["B3"]*freqIncrement;
+notes["C#3"]=notes["C3"]*freqIncrement;
+notes["D3"]=notes["C#3"]*freqIncrement;
+notes["D#3"]=notes["D3"]*freqIncrement;
+notes["E3"]=notes["D#3"]*freqIncrement;
+notes["F3"]=notes["E3"]*freqIncrement;
+notes["F#3"]=notes["F3"]*freqIncrement;
+notes["G3"]=notes["F#3"]*freqIncrement;
+notes["G#3"]=notes["G3"]*freqIncrement;
+notes["A4"]=notes["G#3"]*freqIncrement;
+
+function pythagoricienne(tonale){
+	var gamme = [tonale]
+	for (var i=0; i<12; i++){
+		gamme[i+1]=gamme[i]*freqIncrement;
+	}
+	return gamme
+}
 
 function gammeMajor(tonale){
-	var gamme = [tonale];
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; 
-	gamme.push(tonale);
+	var pytha = pythagoricienne(tonale);
+	var gamme = [pytha[0]];
+	gamme.push(pytha[2]);
+	gamme.push(pytha[4]);
+	gamme.push(pytha[5]);
+	gamme.push(pytha[7]);
+	gamme.push(pytha[9]);
+	gamme.push(pytha[11]);
+	gamme.push(pytha[12]);
 	return gamme;
 }
 
 function gammeMinor(tonale){
-	var gamme = [tonale];
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; 
-	gamme.push(tonale);
-	tonale*=freqIncrement; tonale*=freqIncrement;  tonale*=freqIncrement;
-	gamme.push(tonale);
-	tonale*=freqIncrement; 
-	gamme.push(tonale);
+	var pytha = pythagoricienne(tonale);
+	var gamme = [pytha[0]];
+	gamme.push(pytha[2]);
+	gamme.push(pytha[3]);
+	gamme.push(pytha[5]);
+	gamme.push(pytha[7]);
+	gamme.push(pytha[8]);
+	gamme.push(pytha[10]);
+	gamme.push(pytha[12]);
 	return gamme;
+}
+
+function minorRelative(gamme){
+	return gammeMinor(gamme[0]/freqIncrement/freqIncrement/freqIncrement);
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));  //getRadomInt(3) return 0 1 or 2
 }
