@@ -28,7 +28,7 @@ window.onload = function()
 
   //  NProgress.start();
 
-    Ton//e.Transport.start();
+    //Tone.Transport.start();
     Tone.context.latencyHint = "fastest";
     Tone.context.lookAhead = 0.01;
 };

@@ -53,8 +53,8 @@ class Arpeggiator
 			chords: scribble.progression.getChords(
 				note + " " + this.mode, 
 				this.stringify(this.chords)),
-			count: 3, 
-			order: '102' 
+			count: 2, 
+			order: '10' 
 		});
 		
 		return progression;
@@ -64,18 +64,11 @@ class Arpeggiator
 	{		
 		let _this = this;
 		this.progression = this.createProgression(this.tonic + "" + this.octave);
+		console.log(this.progression);
 
-		_this.progression.forEach(function(element, index)
-		{	
-			let progression = _this.createProgression(element);
-			console.log(progression);
-			let sequence = new Tone.Sequence(
-				function(note) {instrument.play(note, "4n");},
-				progression, "4n").start(index*progression.length*1);
-
-			sleep(1000);
-			instrument.play(element, 0.25);
-		});
+		let sequence = new Tone.Sequence(
+			function(note) {instrument.play(note, "4n");},
+			this.progression, "4n").start(0);
 	}
 
 	stop()
