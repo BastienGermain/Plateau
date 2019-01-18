@@ -26,9 +26,9 @@ window.onload = function()
     if (Tone.context.state !== 'running')
         Tone.context.resume();
 
-    NProgress.start();
+  //  NProgress.start();
 
-    Tone.Transport.start();
+    Ton//e.Transport.start();
     Tone.context.latencyHint = "fastest";
     Tone.context.lookAhead = 0.01;
 };
@@ -50,58 +50,58 @@ Tone.Buffer.on('load', function()
 
     instrument.instrumentSelector.on('change', function(selected) 
     {   
-        arpeggiator.stop();
+        //arpeggiator.stop();
         console.log("Instrument changed to " + selected.value);
         instrument.switch(selected.value);
         instrument.catchFXs(fx, true);
-        arpeggiator.start(instrument);
+        //arpeggiator.start(instrument);
     });
 
     fx.FXSelector.on('change', function(selected) 
     {   
         console.log("FX changed to " + selected.value);
-        arpeggiator.stop();
+        //arpeggiator.stop();
         fx.selectFX(selected);
         instrument.catchFXs(fx);        
-        arpeggiator.start(instrument);
+        //arpeggiator.start(instrument);
     });
 
     arpeggiator.modeSelector.on('change', function(selected)
     {
-        arpeggiator.stop();
+        //arpeggiator.stop();
         arpeggiator.mode = selected.value;
         console.log(arpeggiator.mode);
-        arpeggiator.start(instrument);
+        //arpeggiator.start(instrument);
     });
 
     arpeggiator.tonicSelector.on('change', function(selected)
     {
-        arpeggiator.stop();
+        //arpeggiator.stop();
         arpeggiator.tonic = selected.value;
         console.log(arpeggiator.tonic);
-        arpeggiator.start(instrument);
+        //arpeggiator.start(instrument);
     });
 
     arpeggiator.octaveSelector.on('change', function(selected)
     {
-        arpeggiator.stop();
+        //arpeggiator.stop();
         arpeggiator.octave = selected.value;
         console.log(arpeggiator.octave);
-        arpeggiator.start(instrument);
+        //arpeggiator.start(instrument);
     });
 
     arpeggiator.chordSelectors.forEach(function(element, index)
     {   
         element.on('change', function(selected)
         {
-            arpeggiator.stop();
+            //arpeggiator.stop();
             arpeggiator.chords[index] = selected.value;
             console.log(arpeggiator.chords[index]);
-            arpeggiator.start(instrument);
+            //arpeggiator.start(instrument);
         });
     });
 
-    arpeggiator.start(instrument);
+    //arpeggiator.start(instrument);
 })
 
 // show error message on loading error //

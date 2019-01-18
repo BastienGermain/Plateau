@@ -21,7 +21,7 @@ class InstrumentSampler
 
     load() 
     {   
-        let sampler = new Tone.Sampler(data[this.instrument], {baseUrl: this.baseUrl + this.instrument + "/", onload: this.onload});
+        let sampler = new Tone.Sampler(dataSample[this.instrument], {baseUrl: this.baseUrl + this.instrument + "/", onload: this.onload});
         console.log("sampler : ");
         console.log(sampler);
         return sampler;
