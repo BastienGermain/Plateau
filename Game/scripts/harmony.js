@@ -2,7 +2,7 @@
 //var instrument = new Tone.PolySynth(4, Tone.Synth).toMaster();
 //instrument = instrument.connect(vibrato);
 
-var instrument = new InstrumentSampler("violin");
+var instrument = new InstrumentSampler("trumpet");
 var fx = new FXRack();
 
 // add fx to the FXRack
@@ -23,7 +23,7 @@ var harmony = createHarmony(tonalite, 1)
 
 
 function createBase(tonalite, degré, finCadence=false){
-	var allongeNote =0
+	var allongeNote = 0;
 	if (finCadence){
 		allongeNote=4;
 	}
@@ -53,6 +53,7 @@ function createBase(tonalite, degré, finCadence=false){
 			instrument.play(
 				Tone.Frequency(gamme[0]*modifDegré/2).toNote(),
 				(3+allongeNote-2)*T,
+				time
 			);
 			instrument.play(
 				Tone.Frequency(gamme[4]*modifDegré/2).toNote(),

@@ -8,6 +8,9 @@ var startTime;
 Tone.Transport.start();
 
 var randInt = 0;
+var drum = new InstrumentSampler('drum');
+var beat = new Beat(drum, tempo);
+
 
 function updateHarmony()
 {
@@ -62,6 +65,8 @@ function updateHarmony()
 			break;
 	}
 	
+	beat.play(); 
+
 	window.setTimeout(updateHarmony, 1000*T);
 
 }
