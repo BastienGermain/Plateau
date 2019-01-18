@@ -4,12 +4,6 @@ class FXRack
 	{
     this.id = FXRack.instances++;
     this.appliedFXs = [];
-
-    this.FXSelector = new Nexus.Select
-    (
-      '#FXSelector', 
-      {'size': [300, 30],'options': FXRack.FXs}
-    );
   }
 
   // FX adders ///////////////////////////////////////////////////////////////////
@@ -62,12 +56,9 @@ class FXRack
   {	
   	let FXInstrument = instrument;
 
-    FXRack.DOMcleanFXs()
-
     this.appliedFXs.forEach(function(element) 
     {
       FXInstrument = FXRack.applyFX(FXInstrument, element);
-      FXRack.DOMaddFX(element);
     })
 
     return FXInstrument;
@@ -75,17 +66,16 @@ class FXRack
 
   selectFX(input)
   {
-    console.log(this.appliedFXs.find(fx => fx.type == input.value));
     if (!this.appliedFXs.find(fx => fx.type == input.value))
     {
-      switch(input.value) 
+      switch(input) 
       {
         case 'chorus':
         this.addChorus(4, 2.5, 0.5);
         break;
 
         case 'reverb':
-        this.addReverb(0.25);
+        this.addReverb(0.5);
         break;
 
         case 'tremolo':
@@ -104,32 +94,6 @@ class FXRack
         break;
       }
     }
-  }
-
-  // DOM ///////////////////////////////////////////////////////////////////////
-
-  static DOMcleanFXs()
-  {
-    let DOMselectedFXs =  document.querySelector("#selectedFXs");
-
-    if(DOMselectedFXs)
-    {
-      while(DOMselectedFXs.firstChild)
-        DOMselectedFXs.removeChild(DOMselectedFXs.firstChild);
-    }
-    else 
-      console.log("ERROR : ID NOT FOUND");
-  }
-
-  static DOMaddFX(fx)
-  {
-    let DOMselectedFXs =  document.querySelector("#selectedFXs");
-    let DOMFXSection = document.createElement("fx");
-    let br = document.createElement("br");
-
-    DOMFXSection.innerHTML = fx.type;
-    DOMselectedFXs.appendChild(DOMFXSection);
-    DOMselectedFXs.appendChild(br);
   }
 
 }

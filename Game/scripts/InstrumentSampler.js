@@ -12,11 +12,6 @@ class InstrumentSampler
 
         this.sampler = this.load();
         this.samplerFX = null;
-
-        this.instrumentSelector = new Nexus.Select(
-            '#instrumentSelector', 
-            {'size': [300, 30], 'options': InstrumentSampler.Instruments}
-        );
     }
 
     load() 
@@ -56,11 +51,11 @@ class InstrumentSampler
     }
 
      // Expect note at format "C4"
-    play(note, duration) 
+    play(note, duration, time) 
     {   
         console.log(note);
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
-        sampler.triggerAttackRelease(note, duration);
+        sampler.triggerAttackRelease(note, duration, time);
     }
 
 
@@ -69,7 +64,9 @@ class InstrumentSampler
         if (!this.samplerFX)
         {
             if (this.sampler)
+            {   
                 this.samplerFX = fxRack.applyFXs(this.sampler);
+            }
             else 
                 console.log("ERROR WHILE APPLYING EFFECTS TO InstrumentSampler in InstrumentSampler.js : Sampler not created");
         }

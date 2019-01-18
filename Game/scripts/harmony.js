@@ -1,9 +1,13 @@
-//FX
-var vibrato = new Tone.Vibrato(5, 0.1).toMaster();
-
 //Choix instrument
-var polySynth = new Tone.PolySynth(4, Tone.Synth).toMaster();
-polySynth = polySynth.connect(vibrato);
+//var instrument = new Tone.PolySynth(4, Tone.Synth).toMaster();
+//instrument = instrument.connect(vibrato);
+
+var instrument = new InstrumentSampler("violin");
+var fx = new FXRack();
+
+// add fx to the FXRack
+fx.selectFX('reverb');
+instrument.catchFXs(fx);
 
 var relativ=1;
 //config harmonie
@@ -46,8 +50,12 @@ function createBase(tonalite, degré, finCadence=false){
 	}
 	var base =  new Tone.Event(
 		function(time){
-			polySynth.triggerAttackRelease(
-				[gamme[0]*modifDegré/2,  gamme[4]*modifDegré/2],
+			instrument.play(
+				Tone.Frequency(gamme[0]*modifDegré/2).toNote(),
+				(3+allongeNote-2)*T,
+			);
+			instrument.play(
+				Tone.Frequency(gamme[4]*modifDegré/2).toNote(),
 				(3+allongeNote-2)*T,
 				time
 			);
@@ -90,13 +98,23 @@ function createHarmony(tonalite, degré){
 	}
 	var event = new Tone.Event(
 		function(time){
-			polySynth.triggerAttackRelease(
-				[gamme[2]*modifDegré, gamme[4]*modifDegré],
+			instrument.play(
+				Tone.Frequency(gamme[2]*modifDegré).toNote(),
 				T/2,
 				time+T
 			);
-			polySynth.triggerAttackRelease(
-				[gamme[2]*modifDegré, gamme[4]*modifDegré],
+			instrument.play(
+				Tone.Frequency(gamme[4]*modifDegré).toNote(),
+				T/2,
+				time+T
+			);
+			instrument.play(
+				Tone.Frequency(gamme[2]*modifDegré).toNote(),
+				T/2,
+				time+3*T
+			);
+			instrument.play(
+				Tone.Frequency(gamme[4]*modifDegré).toNote(),
 				T/2,
 				time+3*T
 			);

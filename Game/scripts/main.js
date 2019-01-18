@@ -8,31 +8,36 @@ var startTime;
 Tone.Transport.start();
 
 var randInt = 0;
-function updateHarmony(){
-	if (data["lastPlayer"]=="White"){
-		if (relativ != 1){
+
+function updateHarmony()
+{
+	if (data["lastPlayer"]=="White")
+	{
+		if (relativ != 1)
 			relativ = 1;
-		}
 	}
-	else{
-		if (relativ != 0){
+	else
+	{
+		if (relativ != 0)
 			relativ = 0;
-		}		
 	}
 	//console.log("relativ =" + relativ);
 
 	var currentBeat = 0;
 	var timeTmp = Tone.context.currentTime.toFixed(4) - startTime;
-	while (timeTmp > T-0.1){
+	while (timeTmp > T-0.1)
+	{
 		timeTmp-=T;
 		currentBeat++;
 	}
 	//console.log(currentBeat);
-	if (currentBeat % 16 == 0){
+	if (currentBeat % 16 == 0)
+	{
 		randInt = getRandomInt(5);
 	}
 
-	switch (randInt){
+	switch (randInt)
+	{
 		case 0 :
 			sequence0(currentBeat);
 			break;
@@ -56,6 +61,7 @@ function updateHarmony(){
 		default:
 			break;
 	}
+	
 	window.setTimeout(updateHarmony, 1000*T);
 
 }

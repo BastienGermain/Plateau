@@ -8,31 +8,6 @@ class Arpeggiator
 		this.octave = 4;
 		this.progression = [];
 		this.arpeggio = null;
-
-		this.modeSelector = new Nexus.Select(
-			'#modeSelector', 
-			{'size': [300, 30], 'options': Arpeggiator.ModesNames}
-			);
-
-		this.tonicSelector = new Nexus.Select(
-			'#tonicSelector', 
-			{'size': [300, 30], 'options': Arpeggiator.Notes}
-			);
-
-		this.octaveSelector = new Nexus.Select(
-			'#octaveSelector', 
-			{'size': [300, 30], 'options': Arpeggiator.Octaves}
-			);
-
-		this.chordSelectors = [];
-
-		for (var i = 1; i <= 8; i++) 
-		{
-			this.chordSelectors.push(new Nexus.Select(
-				'#chord'+i, 
-				{'size': [300, 30], 'options': Arpeggiator.Modes[this.mode]}
-				));
-		}
 	}
 
 	stringify(chords)
