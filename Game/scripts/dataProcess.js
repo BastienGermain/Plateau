@@ -106,13 +106,16 @@ function checkKnownMoves(dataObject, mat) {
 
     const nobis = moveMatrices.Nobi;
     const currentMatrix = getCurrentMatrix(dataObject, mat);
-    console.log(currentMatrix);
-    console.log(rotateMatrix(currentMatrix));
+    //console.log(currentMatrix);
     let i;
-    /*for (i = 0; i < nobis.length; i++) {
-        if(currentMatrix == nobis[i] || currentMatrix == -nobis[i]) {
+    //console.log(nobis)
+    for (i = 0; i < nobis.length; i++) {
+        //console.log(nobis[i]);
+        //console.log(math.dotMultiply(-1, nobis[i]));
+        if(math.deepEqual(currentMatrix, nobis[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, nobis[i]))) {
             console.log("Nobi des matrices");
-    }*/
+        }
+    }
 
 
     if (dataObject["stonesAround"] != 0) {

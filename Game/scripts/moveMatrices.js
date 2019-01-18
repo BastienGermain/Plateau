@@ -42,22 +42,20 @@ const topNobi7 = math.matrix([
     [0, -1, 0]
 ]);
 
+let nobis = [topNobi, topNobi1, topNobi2, topNobi3, topNobi4, topNobi5, topNobi6, topNobi7];
+moveMatrices["Nobi"] = new Array();
 
-/*const leftNobi = math.matrix([
-    [0, 0, 0],
-    [1, 1, 0],
-    [0, 0, 0]
-]);
-const rightNobi = math.matrix([
-    [0, 0, 0],
-    [0, 1, 1],
-    [0, 0, 0]
-]);
-const bottomNobi = math.matrix([
-    [0, 0, 0],
-    [0, 1, 0],
-    [0, 1, 0]
-]);*/
+let i, j;
 
-const topNobis = [topNobi, topNobi1, topNobi2, topNobi3, topNobi4];
-//moveMatrices["Nobi"] = [topNobi, topNobi1, topNobi2, leftNobi, rightNobi, bottomNobi];
+for (j = 0; j < nobis.length; j++) {
+    moveMatrices["Nobi"].push(nobis[j]);
+}
+
+for (i = 0; i < 3; i++) {
+    for (j = 0; j < nobis.length; j++) {
+        nobis[j] = rotateMatrix(nobis[j]);
+        moveMatrices["Nobi"].push(nobis[j]);
+    }
+}
+
+console.log(moveMatrices["Nobi"]);
