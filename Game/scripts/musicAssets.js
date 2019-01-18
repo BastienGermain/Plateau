@@ -57,6 +57,10 @@ function minorRelative(gamme){
 	return gammeMinor(gamme[0]/freqIncrement/freqIncrement/freqIncrement);
 }
 
+function majorRelative(gamme){
+	return gammeMajor(gamme[0]*freqIncrement*freqIncrement*freqIncrement);
+}
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));  //getRadomInt(3) return 0 1 or 2
 }

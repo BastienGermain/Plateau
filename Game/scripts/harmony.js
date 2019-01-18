@@ -1,13 +1,24 @@
-//Choix instrument
-//var instrument = new Tone.PolySynth(4, Tone.Synth).toMaster();
-//instrument = instrument.connect(vibrato);
+//Choix harmonyInstrument
+//var harmonyInstrument = new Tone.PolySynth(4, Tone.Synth).toMaster();
+//harmonyInstrument = harmonyInstrument.connect(vibrato);
 
-var instrument = new InstrumentSampler("trumpet");
+/*
+class Harmony{
+	public:
+		var harmonyInstrument;
+		var fx;
+};*/
+
+var harmonyInstrument
+var player1Instrument = new InstrumentSampler("violin");
+var player2Instrument = new InstrumentSampler("flute");
 var fx = new FXRack();
+
 
 // add fx to the FXRack
 fx.selectFX('reverb');
-instrument.catchFXs(fx);
+player1Instrument.catchFXs(fx);
+player2Instrument.catchFXs(fx);
 
 var relativ=1;
 //config harmonie
@@ -23,7 +34,7 @@ var harmony = createHarmony(tonalite, 1)
 
 
 function createBase(tonalite, degré, finCadence=false){
-	var allongeNote = 0;
+	var allongeNote =0
 	if (finCadence){
 		allongeNote=4;
 	}
@@ -50,12 +61,11 @@ function createBase(tonalite, degré, finCadence=false){
 	}
 	var base =  new Tone.Event(
 		function(time){
-			instrument.play(
+			harmonyInstrument.play(
 				Tone.Frequency(gamme[0]*modifDegré/2).toNote(),
 				(3+allongeNote-2)*T,
-				time
 			);
-			instrument.play(
+			harmonyInstrument.play(
 				Tone.Frequency(gamme[4]*modifDegré/2).toNote(),
 				(3+allongeNote-2)*T,
 				time
@@ -99,22 +109,22 @@ function createHarmony(tonalite, degré){
 	}
 	var event = new Tone.Event(
 		function(time){
-			instrument.play(
+			harmonyInstrument.play(
 				Tone.Frequency(gamme[2]*modifDegré).toNote(),
 				T/2,
 				time+T
 			);
-			instrument.play(
+			harmonyInstrument.play(
 				Tone.Frequency(gamme[4]*modifDegré).toNote(),
 				T/2,
 				time+T
 			);
-			instrument.play(
+			harmonyInstrument.play(
 				Tone.Frequency(gamme[2]*modifDegré).toNote(),
 				T/2,
 				time+3*T
 			);
-			instrument.play(
+			harmonyInstrument.play(
 				Tone.Frequency(gamme[4]*modifDegré).toNote(),
 				T/2,
 				time+3*T

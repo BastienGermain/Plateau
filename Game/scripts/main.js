@@ -8,19 +8,18 @@ var startTime;
 Tone.Transport.start();
 
 var randInt = 0;
-var drum = new InstrumentSampler('drum');
-var beat = new Beat(drum, tempo);
-
 
 function updateHarmony()
 {
 	if (data["lastPlayer"]=="White")
 	{
+		harmonyInstrument = player2Instrument;
 		if (relativ != 1)
 			relativ = 1;
 	}
 	else
 	{
+		harmonyInstrument = player1Instrument;
 		if (relativ != 0)
 			relativ = 0;
 	}
@@ -65,8 +64,6 @@ function updateHarmony()
 			break;
 	}
 	
-	beat.play(); 
-
 	window.setTimeout(updateHarmony, 1000*T);
 
 }
