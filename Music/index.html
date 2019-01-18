@@ -11,19 +11,19 @@
     <!-- ### STYLES ### -->
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <link type="text/css" rel="stylesheet" href="style/nprogress.css"/>
-    <!--
-        <link type="text/css" rel="stylesheet" href="style/arpeggiator.css"/>
-    -->
 
     <!-- ### SCRIPTS ### -->
 
     <!-- External -->
-    <script type="text/javascript" src="external/jquery.min.js"></script>
-    <script type="text/javascript" src="external/NexusUI.js"></script>
-    <script type="text/javascript" src="external/Tone.js"></script>
-    <script type="text/javascript" src="external/StartAudioContext.js"></script>
+    <script type="text/javascript" src="ext/jquery.min.js"></script>
+    <script type="text/javascript" src="ext/NexusUI.js"></script>
+    <script type="text/javascript" src="ext/StartAudioContext.js"></script>
 
-    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.3.1/Tone.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/scribbletune/1.9.2/scribbletune.js"></script>
+
+    <script type="text/javascript" src="assets/samples/data.js"></script>
+
     <title>Plateau</title>
 
 </head>
@@ -33,27 +33,39 @@
     <div id="content">
         <H3 id="loading">Loading...</H3>
         <div class="container">
-            <h1> Tone.js-Instruments</h1>
-            <p> Loads four random instruments from the list. Refresh for different instruments.</p>
-            <div id="Selector"></div>
+            <selectors>
+                <selector id="instrumentSelector"></selector>
+                <selector id="FXSelector"></selector>
+            </selectors>
             <br/>
-            <div id="Keyboard"></div>
+            <div id="keyboard"></div>
+            <div id="selectedFXs"></div>
+            <br/>
+            <selectors id="arpeggiatorSelectors">
+                <selector id="modeSelector"></selector>
+                <selector id="tonicSelector"></selector>
+                <selector id="octaveSelector"></selector>
+                <br/>
+                <br/>
+                <selectors id="chordProgressionSelectors">
+                    <selector id="chord1"></selector>
+                    <selector id="chord2"></selector>
+                    <selector id="chord3"></selector>
+                    <selector id="chord4"></selector>
+                    <selector id="chord5"></selector>
+                    <selector id="chord6"></selector>
+                    <selector id="chord7"></selector>
+                    <selector id="chord8"></selector>
+                </selectors>
+            </selectors>
         </div>
-        <article>
-            <aside id="aside"></aside>
-            <main id="main"></main>
-        </article>
     </div>
     
-    <!--
-        <script type="module" src="modules/Arpeggiator.js"></script>
-    -->
-    <script type="text/javascript" src="modules/SampleInstrument.js"></script>
-    <!--
-        <script type="text/javascript" src="modules/EffectRack.js"></script>
-    -->
-    <script type="text/javascript" src="external/nprogress.js"></script>
-    <script type="module" src="main.js"></script>
+    <script type="text/javascript" src="ext/nprogress.js"></script>
+    <script type="text/javascript" src="src/InstrumentSampler.js"></script>
+    <script type="text/javascript" src="src/Arpeggiator.js"></script>
+    <script type="text/javascript" src="src/EffectRack.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 
 </body>
 
