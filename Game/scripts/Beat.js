@@ -7,58 +7,122 @@ class Beat {
 
 		this.drum = drum;
 
-		this.kickSubdivisions = 4;
-		this.hihatSubdivisions = 8;
-		this.snareSubdivisions = 2;
+		this.kickSubdivisions = 16;
+		this.hihatSubdivisions = 16;
+		this.snareSubdivisions = 16;
 
-		this.kickPattern = this.pattern(this.kickSubdivisions);
-		console.log(this.kickPattern);
-		this.hihatPattern = this.pattern(this.hihatSubdivisions);
-		this.snarePattern = this.pattern(this.snareSubdivisions);
+		this.kickPattern = [];
+		this.hihatPattern = [];
+		this.snarePattern = [];
+
+		this.instancePatterns();
+
+		this.kickIndex = 0;
+		this.snareIndex = 0;
+		this.hihatIndex = 0;
 
 		this.kick = "C0";
 		this.hihat = "D0";
 		this.snare = "C#0";
 	}
 
-	pattern(count) 
+	instancePatterns() 
 	{
-  		let pattern = [];
-
-  		for (let i = 0; i < (count || 8); ++i) 
-  		{
-    		pattern.push(Math.round(Math.random()) ? '-' : 'x');
-  		}
-  		return pattern;
+    	this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() * 10)) % Beat.KickPatterns.length];
+    	this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() * 10)) % Beat.SnarePatterns.length];
+    	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() * 10)) % Beat.HihatPatterns.length];
 	}
 
-	create() 
+	createKick() 
 	{	
-		let timeInterval = 60/tempo;
 		let _this = this;
 
-		let beat =  new Tone.Event(
+		let kick =  new Tone.Event(
 			function(time)
 			{	
-				console.log(_this.kickPattern);
-				console.log(_this.kickPattern[(T - timeInterval) % _this.kickSubdivisions]);
-
-				if (_this.kickPattern[Math.round(time) % _this.kickSubdivisions] === "x")
+				if (_this.kickPattern[_this.kickIndex % _this.kickSubdivisions] === "x")
+				{
 					_this.drum.play(_this.kick, 0.25, time);
-
-				if (_this.snarePattern[Math.round(time) % _this.snareSubdivisions] === "x")
-					_this.drum.play(_this.snare, 0.25, time);
-
-				if (_this.hihatPattern[Math.round(time) % _this.hihatSubdivisions] === "x")
-					_this.drum.play(_this.hihat, 0.25, time);
+					console.log("kick");
+				}
+				_this.kickIndex++;
 			});
-		beat.loop = Infinity;
-		beat.loopEnd = 4*T;
-		return beat;
+
+		kick.loop = Infinity;
+		kick.loopEnd = "8n";
+		kick.playbackRate = 1;
+
+		return kick;
 	}
 
-	play()
+	createSnare() 
+	{	
+		let _this = this;
+
+		let snare =  new Tone.Event(
+			function(time)
+			{	
+				if (_this.snarePattern[_this.snareIndex % _this.snareSubdivisions] === "x")
+				{
+					_this.drum.play(_this.snare, 0.25, time);
+					console.log("snare");
+				}
+				_this.snareIndex++;
+			});
+
+		snare.loop = Infinity;
+		snare.loopEnd = "8n";
+		snare.playbackRate = 1;
+		return snare;
+	}
+
+	createHihat() 
+	{	
+		let _this = this;
+
+		let hihat =  new Tone.Event(
+			function(time)
+			{	
+				if (_this.hihatPattern[_this.hihatIndex % _this.hihatSubdivisions] === "x")
+				{
+					_this.drum.play(_this.hihat, 0.25, time, 0.1);
+					console.log("hihat");
+				}
+				_this.hihatIndex++;
+			});
+		hihat.loop = Infinity;
+		hihat.loopEnd = "8n";
+		hihat.playbackRate = 1;
+		return hihat;
+	}
+
+	play(startTime)
 	{
-		let beat = this.create().start();
+		console.log("play");
+
+		let kick = this.createKick().start(startTime);
+		let snare = this.createSnare().start(startTime);
+		let hihat = this.createHihat().start(startTime);
 	}
 }
+
+/*
+["-", "-", "-", "|", "-", "-", "-", "|", "-", "-", "-", "|", "-", "-", "-", "|"],
+*/
+
+Beat.KickPatterns = 
+[
+["-", "-", "-", "x", "-", "-", "-", "x", "-", "-", "-", "x", "-", "-", "-", "x"],
+["x", "-", "-", "-", "-", "-", "x", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+];
+
+Beat.SnarePatterns = 
+[
+["-", "-", "-", "-", "-", "-", "-", "x", "-", "-", "-", "-", "-", "-", "-", "x"],
+["-", "-", "-", "-", "x", "-", "-", "-", "-", "-", "-", "-", "x", "-", "-", "-"],
+];
+Beat.HihatPatterns = 
+[
+["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"],
+["x", "-", "x", "-", "x", "-", "x", "x", "x", "x", "x", "-", "x", "-", "x", "-"],
+];

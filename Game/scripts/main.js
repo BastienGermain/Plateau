@@ -5,35 +5,41 @@
 
 var startTime;
 
+Tone.Transport.bpm.value = 120;
+Tone.Master.volume.value = -12;
+
 Tone.Transport.start();
 
 var randInt = 0;
+
+var harmony = new Harmony();
+var melody = new Melody();
+
 var drum = new InstrumentSampler('drum');
 var beat = new Beat(drum, tempo);
-
 
 function updateHarmony()
 {
 	if (data["lastPlayer"]=="White")
 	{
-		if (relativ != 1)
-			relativ = 1;
+		if (harmony.relative != 1)
+			harmony.relative = 1;
 	}
 	else
 	{
-		if (relativ != 0)
-			relativ = 0;
+		if (harmony.relative != 0)
+			harmony.relative = 0;
 	}
-	//console.log("relativ =" + relativ);
 
-	var currentBeat = 0;
-	var timeTmp = Tone.context.currentTime.toFixed(4) - startTime;
+	let currentBeat = 0;
+	let timeTmp = Tone.context.currentTime.toFixed(4) - startTime;
+
 	while (timeTmp > T-0.1)
 	{
 		timeTmp-=T;
 		currentBeat++;
 	}
-	//console.log(currentBeat);
+
 	if (currentBeat % 16 == 0)
 	{
 		randInt = getRandomInt(5);
@@ -42,30 +48,28 @@ function updateHarmony()
 	switch (randInt)
 	{
 		case 0 :
-			sequence0(currentBeat);
+			harmony.sequence0(currentBeat);
 			break;
 
 		case 1 :
-			sequence1(currentBeat);
+			harmony.sequence1(currentBeat);
 			break;
 
 		case 2 :
-			sequence2(currentBeat);
+			harmony.sequence2(currentBeat);
 			break;
 
 		case 3 :
-			sequence3(currentBeat);
+			harmony.sequence3(currentBeat);
 			break;
 
 		case 4 :
-			sequence4(currentBeat);
+			harmony.sequence4(currentBeat);
 			break;
 
 		default:
 			break;
-	}
-	
-	beat.play(); 
+	} 
 
 	window.setTimeout(updateHarmony, 1000*T);
 
@@ -98,21 +102,25 @@ async function updateSound() {
 }*/
 
 
-let start = 0;
-$(document).ready(function() {
-    document.querySelector('#addMove').addEventListener('mouseup', function(e) {
+var start = 0;
+$(document).ready(function() 
+{
+    document.querySelector('#addMove').addEventListener('mouseup', function(e) 
+    {
         /* For Chrome : If an AudioContext is created prior to the document receiving a user gesture,
         * it will be created in the "suspended" state,
         * and you will need to call resume() after a user gesture is received.
         */
-        if (Tone.context.state !== 'running') {
-            Tone.context.resume();
-        }
+        if (Tone.context.state !== 'running') 
+           	Tone.context.resume();
 
-		if (start == 0) {
-			updateHarmony();
+		if (start == 0) 
+		{
+			//updateHarmony();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
+			beat.play(startTime);
+			melody.start(startTime);
 		}
     })
 })
