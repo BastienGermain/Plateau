@@ -14,6 +14,7 @@ data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
 data["lastMoveTime"] = 0.00;
+data["atariNumber"] = 0; //  number of atari situations on the board
 
 
 var boardMat = math.zeros(19, 19);
@@ -44,6 +45,7 @@ function beginSGF(file) {
         data["blackCaptures"] = getInfo().captures[JGO.BLACK];
         data["knownMove"] = checkKnownMoves(data, boardMat);
         data["lastMoveTime"] = sgf[moveNumber].C;
+        checkAtari(boardMat);
 		moveNumber++;
 	})
 };
@@ -101,8 +103,9 @@ function getStonesAround() {
 
 
 function checkKnownMoves(dataObject, mat) {
-
-    const currentMatrix = getCurrentMatrix(dataObject, mat);
+    const x = dataObject["lastStonePosition"][0];
+    const y = dataObject["lastStonePosition"][1];
+    const currentMatrix = getCurrentMatrix(mat, x, y);
     const nobis = moveMatrices.Nobi;
     const tsukes = moveMatrices.Tsuke;
     const kosumis = moveMatrices.Kosumi;
@@ -178,8 +181,6 @@ function checkKnownMoves(dataObject, mat) {
         return "Kogeima";
     }
 
-    // Detection Atari à faire
-
     return "";
 
 }
@@ -190,15 +191,15 @@ function checkKnownMoves(dataObject, mat) {
 * [0, 0, 0]
 */
 function checkTobi(dataObject, mat) {
-    var isTobi = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
+    let isTobi = false;
+    const x = dataObject["lastStonePosition"][0];
+    const y = dataObject["lastStonePosition"][1];
 
     for (x <= 1 ? i = 0 : i = x - 2; i <= (x >= 17 ? x : x + 2); i++) {
         for (y <= 1 ? j = 0 : j = y - 2; j <= (y >= 17 ? y : y + 2); j++) {
             if ((i == x || j == y) && (i == x - 2 || j == y - 2 || i == x + 2 || j  == y + 2)) {
 
-                var matValue = math.subset(mat, math.index(j, i));
+                const matValue = math.subset(mat, math.index(j, i));
                 if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
                     isTobi = true;
                 }
@@ -208,7 +209,6 @@ function checkTobi(dataObject, mat) {
     }
 
     return isTobi;
-
 }
 
 /* Kogeima : Saut de cheval
@@ -217,9 +217,9 @@ function checkTobi(dataObject, mat) {
 * [0, 0, 0]
 */
 function checkKogeima(dataObject, mat) {
-    var isKogeima = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
+    let isKogeima = false;
+    const x = dataObject["lastStonePosition"][0];
+    const y = dataObject["lastStonePosition"][1];
 
     for (x <= 2 ? i = 0 : i = x - 3; i <= (x >= 16 ? x : x + 3); i++) {
         for (y <= 2 ? j = 0 : j = y - 3; j <= (y >= 16 ? y : y + 3); j++) {
@@ -230,7 +230,7 @@ function checkKogeima(dataObject, mat) {
                 (j == y - 2 && (i == x - 1 || i == x + 1)) ||
                 (j == y + 2 && (i == x - 1 || i == x + 1))
             ) {
-                var matValue = math.subset(mat, math.index(j, i));
+                const matValue = math.subset(mat, math.index(j, i));
                 if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
                     isKogeima = true;
                 }
@@ -240,7 +240,24 @@ function checkKogeima(dataObject, mat) {
     }
 
     return isKogeima;
+}
 
+function checkAtari(mat) {
+    data["atariNumber"] = 0;
+    let i, j;
+    for (i = 0; i < 19; i++) {
+        for (j = 0; j < 19; j++) {
+            const currentMat = getCurrentMatrix(mat, i, j);
+            const sum = currentMat.get([0, 1]) + currentMat.get([1, 0]) + currentMat.get([2, 1]) + currentMat.get([1, 2]);
+            //console.log(sum + " pos : " + i + j);
+            if (sum == 3 || sum == -3) {
+                if(currentMat.get([1, 1]) != 0) {
+                    console.log("Atari");
+                    data["atariNumber"] += 1;
+                }
+            }
+        }
+    }
 }
 
 function printData() {

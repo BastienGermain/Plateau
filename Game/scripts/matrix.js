@@ -4,25 +4,21 @@
 	* 1  : white stone
 */
 
-function getCurrentMatrix(dataObject, mat) {
-    const x = dataObject["lastStonePosition"][0];
-    const y = dataObject["lastStonePosition"][1];
+function getCurrentMatrix(mat, x, y) {
 
-    // Pour les cas extrêmes (coins ou bords)
+    // Extreme case : corner or edge
     if (x == 0) {
         if (y == 0) {
             let currentMat = math.subset(mat, math.index([y, y + 1], [x, x + 1]));
             const firstLine = math.matrix([[0, 0]]);
             currentMat = math.concat(firstLine, currentMat, 0);
             const firstColumn = math.matrix([[0], [0], [0]]);
-            console.log(math.concat(firstColumn, currentMat));
             return math.concat(firstColumn, currentMat);
         } else if (y == 18) {
             let currentMat = math.subset(mat, math.index([y - 1, y], [x, x + 1]));
             const lastLine = math.matrix([[0, 0]]);
             currentMat =  math.concat(currentMat, lastLine, 0);
             const firstColumn = math.matrix([[0], [0], [0]]);
-            console.log(math.concat(firstColumn, currentMat));
             return math.concat(firstColumn, currentMat);
         } else {
             const currentMat = math.subset(mat, math.index([y - 1, y, y + 1], [x, x + 1]));
@@ -35,14 +31,12 @@ function getCurrentMatrix(dataObject, mat) {
             const firstLine = math.matrix([[0, 0]]);
             currentMat = math.concat(firstLine, currentMat, 0);
             const lastColumn = math.matrix([[0], [0], [0]]);
-            console.log(math.concat(currentMat, lastColumn));
             return math.concat(currentMat, lastColumn);
         } else if (y == 18) {
             let currentMat = math.subset(mat, math.index([y - 1, y], [x - 1, x]));
             const lastLine = math.matrix([[0, 0]]);
             currentMat =  math.concat(currentMat, lastLine, 0);
             const lastColumn = math.matrix([[0], [0], [0]]);
-            console.log(math.concat(currentMat, lastColumn));
             return math.concat(currentMat, lastColumn);
         } else {
             const currentMat = math.subset(mat, math.index([y - 1, y, y + 1], [x - 1, x]));
