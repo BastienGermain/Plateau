@@ -12,14 +12,14 @@ data["whiteStonesAround"] = 0; // same with only white
 data["blackStonesAround"] = 0; // same with only black
 data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
-data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Tobi"
+data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
 data["lastMoveTime"] = 0.00;
+data["atariNumber"] = 0; //  number of atari situations on the board
 
 
 var boardMat = math.zeros(19, 19);
 
 // Load SGF for matrix
-//$.get("test.sgf", function(response) {
 function beginSGF(file) {
     let sgf = SGFGrove.parse(file);
     let moveNumber = 1; // Next move number (start at 1, 0 contains game meta data)
@@ -45,6 +45,7 @@ function beginSGF(file) {
         data["blackCaptures"] = getInfo().captures[JGO.BLACK];
         data["knownMove"] = checkKnownMoves(data, boardMat);
         data["lastMoveTime"] = sgf[moveNumber].C;
+        checkAtari(boardMat);
 		moveNumber++;
 	})
 };
@@ -100,65 +101,79 @@ function getStonesAround() {
     data["blackStonesAround"] = blackStonesAround;
 }
 
-// TO DO : Keima, Nozoki, Hane (plus tricky)
+
 function checkKnownMoves(dataObject, mat) {
-
-
+    const x = dataObject["lastStonePosition"][0];
+    const y = dataObject["lastStonePosition"][1];
+    const currentMatrix = getCurrentMatrix(mat, x, y);
     const nobis = moveMatrices.Nobi;
-    const currentMatrix = getCurrentMatrix(dataObject, mat);
-    //console.log(currentMatrix);
+    const tsukes = moveMatrices.Tsuke;
+    const kosumis = moveMatrices.Kosumi;
+    const katas = moveMatrices.Kata;
+    const hanes = moveMatrices.Hane;
+    const nozokis = moveMatrices.Nozoki;
+    const coupes = moveMatrices.Coupe;
+    const connects = moveMatrices.Connect;
+
     let i;
-    //console.log(nobis)
+
     for (i = 0; i < nobis.length; i++) {
-        //console.log(nobis[i]);
-        //console.log(math.dotMultiply(-1, nobis[i]));
         if(math.deepEqual(currentMatrix, nobis[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, nobis[i]))) {
-            console.log("Nobi des matrices");
+            console.log("Nobi");
+            return "Nobi";
         }
     }
 
-
-    if (dataObject["stonesAround"] != 0) {
-        if (dataObject["lastPlayer"] == "White") {
-            // affiner en fonction des pierres noires alentours
-            if (dataObject["whiteStonesAround"] == 1) {
-                if (checkNobi(dataObject, mat)) {
-                    console.log("White : Nobi");
-                    return "Nobi";
-                } else if (checkKosumi(dataObject, mat)) {
-                    console.log("White : Kosumi");
-                    return "Kosumi";
-                }
-            } else if (dataObject["blackStonesAround"] == 1) {
-                if (checkTsuke(dataObject, mat)) {
-                    console.log("White : Tsuke");
-                    return "Tsuke";
-                } else if (checkKata(dataObject, mat)) {
-                    console.log("White : Kata");
-                    return "Kata";
-                }
-            }
-        } else {
-            // affiner en fonction des pierres blanches alentours
-            if (dataObject["blackStonesAround"] == 1) {
-                 if (checkNobi(dataObject, mat)) {
-                    console.log("Black : Nobi");
-                    return "Nobi";
-                 } else if (checkKosumi(dataObject, mat)) {
-                     console.log("Black : Kosumi");
-                     return "Kosumi";
-                 }
-            } else if (dataObject["whiteStonesAround"] == 1) {
-                if (checkTsuke(dataObject, mat)) {
-                    console.log("Black : Tsuke");
-                    return "Tsuke";
-                } else if (checkKata(dataObject, mat)) {
-                    console.log("Black : Kata");
-                    return "Kata";
-                }
-            }
+    for (i = 0; i < tsukes.length; i++) {
+        if(math.deepEqual(currentMatrix, tsukes[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, tsukes[i]))) {
+            console.log("Tsuke");
+            return "Tsuke";
         }
-    } else if (checkTobi(dataObject, mat)) {
+    }
+
+    for (i = 0; i < kosumis.length; i++) {
+        if(math.deepEqual(currentMatrix, kosumis[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, kosumis[i]))) {
+            console.log("Kosumi");
+            return "Kosumi";
+        }
+    }
+
+    for (i = 0; i < katas.length; i++) {
+        if(math.deepEqual(currentMatrix, katas[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, katas[i]))) {
+            console.log("Kata");
+            return "Kata";
+        }
+    }
+
+    for (i = 0; i < hanes.length; i++) {
+        if(math.deepEqual(currentMatrix, hanes[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, hanes[i]))) {
+            console.log("Hane");
+            return "Hane";
+        }
+    }
+
+    for (i = 0; i < nozokis.length; i++) {
+        if(math.deepEqual(currentMatrix, nozokis[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, nozokis[i]))) {
+            console.log("Nozoki");
+            return "Nozoki";
+        }
+    }
+
+    for (i = 0; i < coupes.length; i++) {
+        if(math.deepEqual(currentMatrix, coupes[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, coupes[i]))) {
+            console.log("Coupe");
+            return "Coupe";
+        }
+    }
+
+    for (i = 0; i < connects.length; i++) {
+        if(math.deepEqual(currentMatrix, connects[i]) || math.deepEqual(currentMatrix, math.dotMultiply(-1, connects[i]))) {
+            console.log("Connect");
+            return "Connect";
+        }
+    }
+
+    if (checkTobi(dataObject, mat)) {
         console.log("Tobi");
         return "Tobi";
     } else if (checkKogeima(dataObject, mat)) {
@@ -170,123 +185,21 @@ function checkKnownMoves(dataObject, mat) {
 
 }
 
-/* Nobi : contact direct entre deux pierres de même couleur
-* [0, 1, 0]
-* [0, 1, 0]
-* [0, 0, 0]
-*/
-function checkNobi(dataObject, mat) {
-    var isNobi = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
-
-    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
-        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
-            if (i == x || j == y) {
-                if (i != x || j != y) {
-                    var matValue = math.subset(mat, math.index(j, i));
-                    if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
-                        isNobi = true;
-                    }
-                }
-            }
-        }
-    }
-
-    return isNobi;
-}
-
-/* Tsuke : contact direct entre deux pierres de couleur opposée
-* [0, -1, 0]
-* [0, 1, 0]
-* [0, 0, 0]
-*/
-function checkTsuke(dataObject, mat) {
-    var isTsuke = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
-
-    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
-        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
-            if (i == x || j == y) {
-                if (i != x || j != y) {
-                    var matValue = math.subset(mat, math.index(j, i));
-                    if (matValue == (dataObject["lastPlayer"] == "White" ? -1 : 1)) {
-                        isTsuke = true;
-                    }
-                }
-            }
-        }
-    }
-
-    return isTsuke;
-}
-
-/* Kosumi : Extension en diagonale
-* [1, 0, 0]
-* [0, 1, 0]
-* [0, 0, 0]
-*/
-function checkKosumi(dataObject, mat) {
-    var isKosumi = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
-
-    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
-        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
-            if (i != x && j != y) {
-                var matValue = math.subset(mat, math.index(j, i));
-                if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
-                    isKosumi = true;
-                }
-            }
-        }
-    }
-
-    return isKosumi;
-
-}
-
-/* Kata : Approche pierre adverse en diagonale
-* [1, 0, 0]
-* [0, -1, 0]
-* [0, 0, 0]
-*/
-function checkKata(dataObject, mat) {
-    var isKata = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
-
-    for (x == 0 ? i = 0 : i = x - 1; i <= (x == 18 ? x : x + 1); i++) {
-        for (y == 0 ? j = 0 : j = y - 1; j <= (y == 18 ? y : y + 1); j++) {
-            if (i != x && j != y) {
-                var matValue = math.subset(mat, math.index(j, i));
-                if (matValue == (dataObject["lastPlayer"] == "White" ? -1 : 1)) {
-                    isKata = true;
-                }
-            }
-        }
-    }
-
-    return isKata;
-
-}
-
 /* Tobi : Saut d'un espace
 * [1, 0, 1]
 * [0, 0, 0]
 * [0, 0, 0]
 */
 function checkTobi(dataObject, mat) {
-    var isTobi = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
+    let isTobi = false;
+    const x = dataObject["lastStonePosition"][0];
+    const y = dataObject["lastStonePosition"][1];
 
     for (x <= 1 ? i = 0 : i = x - 2; i <= (x >= 17 ? x : x + 2); i++) {
         for (y <= 1 ? j = 0 : j = y - 2; j <= (y >= 17 ? y : y + 2); j++) {
             if ((i == x || j == y) && (i == x - 2 || j == y - 2 || i == x + 2 || j  == y + 2)) {
 
-                var matValue = math.subset(mat, math.index(j, i));
+                const matValue = math.subset(mat, math.index(j, i));
                 if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
                     isTobi = true;
                 }
@@ -296,7 +209,6 @@ function checkTobi(dataObject, mat) {
     }
 
     return isTobi;
-
 }
 
 /* Kogeima : Saut de cheval
@@ -305,10 +217,9 @@ function checkTobi(dataObject, mat) {
 * [0, 0, 0]
 */
 function checkKogeima(dataObject, mat) {
-    var isKogeima = false;
-    var x = dataObject["lastStonePosition"][0];
-    var y = dataObject["lastStonePosition"][1];
-    //console.log("x, y " + x + ", " + y);
+    let isKogeima = false;
+    const x = dataObject["lastStonePosition"][0];
+    const y = dataObject["lastStonePosition"][1];
 
     for (x <= 2 ? i = 0 : i = x - 3; i <= (x >= 16 ? x : x + 3); i++) {
         for (y <= 2 ? j = 0 : j = y - 3; j <= (y >= 16 ? y : y + 3); j++) {
@@ -318,10 +229,8 @@ function checkKogeima(dataObject, mat) {
                 (i == x + 2 && (j == y - 1 || j == y + 1)) ||
                 (j == y - 2 && (i == x - 1 || i == x + 1)) ||
                 (j == y + 2 && (i == x - 1 || i == x + 1))
-            )  {
-
-                //console.log("i, j " + i + ", " + j);
-                var matValue = math.subset(mat, math.index(j, i));
+            ) {
+                const matValue = math.subset(mat, math.index(j, i));
                 if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
                     isKogeima = true;
                 }
@@ -331,12 +240,24 @@ function checkKogeima(dataObject, mat) {
     }
 
     return isKogeima;
-
 }
 
-/*function getData() {
-    return data;
-}*/
+function checkAtari(mat) {
+    data["atariNumber"] = 0;
+    let i, j;
+    for (i = 0; i < 19; i++) {
+        for (j = 0; j < 19; j++) {
+            const currentMat = getCurrentMatrix(mat, i, j);
+            const sum = currentMat.get([0, 1]) + currentMat.get([1, 0]) + currentMat.get([2, 1]) + currentMat.get([1, 2]);
+            if (sum == 3 || sum == -3) {
+                if(currentMat.get([1, 1]) != 0) {
+                    console.log("Atari");
+                    data["atariNumber"] += 1;
+                }
+            }
+        }
+    }
+}
 
 function printData() {
     console.log(data);

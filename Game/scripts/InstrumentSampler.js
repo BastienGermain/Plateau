@@ -37,7 +37,6 @@ class InstrumentSampler
             this.sampler.triggerAttack(Tone.Frequency(note.note, "midi").toNote());
         else if (note.state === false) 
             this.sampler.triggerRelease(Tone.Frequency(note.note, "midi").toNote());
-        sampler.toMaster();
     }
     
     // Expect note at format {note : 50, state : false}
@@ -94,7 +93,7 @@ class InstrumentSampler
 InstrumentSampler.Instruments =
 [
 'piano', 'bass-electric', 'bassoon', 'cello', 'clarinet', 
-'contrabass', 'drum', 'flute', 'french-horn', 'guitar-acoustic', 
+'contrabass', 'flute', 'french-horn', 'guitar-acoustic', 
 'guitar-electric','guitar-nylon', 'harmonium', 'harp', 'organ', 
 'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone'
 ];

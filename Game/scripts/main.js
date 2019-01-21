@@ -18,17 +18,20 @@ var melody = new Melody();
 var drum = new InstrumentSampler('drum');
 var beat = new Beat(drum, tempo);
 
+function updateBassLine(){
+	bassLine = createBassLine(tonalite);
+	bassLine.start();
+}
+
 function updateHarmony()
 {
-	if (data["lastPlayer"]=="White")
-	{
-		if (harmony.relative != 1)
-			harmony.relative = 1;
+	if (data["lastPlayer"]=="White"){
+		harmonyInstrument = player2Instrument;
+		//if (relativ != 0) relativ = 0;
 	}
-	else
-	{
-		if (harmony.relative != 0)
-			harmony.relative = 0;
+	else {
+		harmonyInstrument = player1Instrument;
+		//if (relativ != 1) relativ = 1;
 	}
 
 	let currentBeat = 0;
@@ -69,10 +72,9 @@ function updateHarmony()
 
 		default:
 			break;
-	} 
-
+	}
+	
 	window.setTimeout(updateHarmony, 1000*T);
-
 }
 
 /*function waitForRightTime() {
@@ -88,10 +90,8 @@ function updateHarmony()
     check();
   });
 }
-
 async function updateSound() {
     await waitForRightTime();
-
     if (data["lastPlayer"] == "Black") {
         event2.stop();
         event1.start();
@@ -114,9 +114,9 @@ $(document).ready(function()
         if (Tone.context.state !== 'running') 
            	Tone.context.resume();
 
-		if (start == 0) 
-		{
-			//updateHarmony();
+		if (start == 0) {
+			updateHarmony();
+			//updateBassLine();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 			beat.play(startTime);
