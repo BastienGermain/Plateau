@@ -20,7 +20,7 @@ fx.selectFX('reverb');
 player1Instrument.catchFXs(fx);
 player2Instrument.catchFXs(fx);
 
-var relativ=1;
+var relativ=0;
 //config harmonie
 var tonalite = "A3"
 var gamme = gammeMajor(notes[tonalite])

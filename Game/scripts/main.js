@@ -9,19 +9,20 @@ Tone.Transport.start();
 
 var randInt = 0;
 
+function updateBassLine(){
+	bassLine = createBassLine(tonalite);
+	bassLine.start();
+}
+
 function updateHarmony()
 {
-	if (data["lastPlayer"]=="White")
-	{
+	if (data["lastPlayer"]=="White"){
 		harmonyInstrument = player2Instrument;
-		if (relativ != 1)
-			relativ = 1;
+		//if (relativ != 0) relativ = 0;
 	}
-	else
-	{
+	else {
 		harmonyInstrument = player1Instrument;
-		if (relativ != 0)
-			relativ = 0;
+		//if (relativ != 1) relativ = 1;
 	}
 	//console.log("relativ =" + relativ);
 
@@ -65,7 +66,6 @@ function updateHarmony()
 	}
 	
 	window.setTimeout(updateHarmony, 1000*T);
-
 }
 
 /*function waitForRightTime() {
@@ -81,10 +81,8 @@ function updateHarmony()
     check();
   });
 }
-
 async function updateSound() {
     await waitForRightTime();
-
     if (data["lastPlayer"] == "Black") {
         event2.stop();
         event1.start();
@@ -108,6 +106,7 @@ $(document).ready(function() {
 
 		if (start == 0) {
 			updateHarmony();
+			//updateBassLine();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 		}
