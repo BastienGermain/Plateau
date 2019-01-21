@@ -1,10 +1,7 @@
 class Beat {
 
-
-	constructor(drum, bpm = 80)
+	constructor(drum)
 	{	
-		this.bpm = bpm;
-
 		this.drum = drum;
 
 		this.kickSubdivisions = 16;
@@ -21,9 +18,13 @@ class Beat {
 		this.snareIndex = 0;
 		this.hihatIndex = 0;
 
-		this.kick = "C0";
-		this.hihat = "D0";
-		this.snare = "C#0";
+		this.kickNote = "C0";
+		this.snareNote = "C#0";
+		this.hihatNote = "D0";
+
+		this.kick = null;
+		this.hihat = null;
+		this.snare = null;
 	}
 
 	instancePatterns() 
@@ -41,10 +42,7 @@ class Beat {
 			function(time)
 			{	
 				if (_this.kickPattern[_this.kickIndex % _this.kickSubdivisions] === "x")
-				{
-					_this.drum.play(_this.kick, 0.25, time);
-					console.log("kick");
-				}
+					_this.drum.play(_this.kickNote, 0.25, time);
 				_this.kickIndex++;
 			});
 
@@ -63,10 +61,7 @@ class Beat {
 			function(time)
 			{	
 				if (_this.snarePattern[_this.snareIndex % _this.snareSubdivisions] === "x")
-				{
-					_this.drum.play(_this.snare, 0.25, time);
-					console.log("snare");
-				}
+					_this.drum.play(_this.snareNote, 0.25, time);
 				_this.snareIndex++;
 			});
 
@@ -84,10 +79,7 @@ class Beat {
 			function(time)
 			{	
 				if (_this.hihatPattern[_this.hihatIndex % _this.hihatSubdivisions] === "x")
-				{
-					_this.drum.play(_this.hihat, 0.25, time, 0.1);
-					console.log("hihat");
-				}
+					_this.drum.play(_this.hihatNote, 0.25, time, 0.1);
 				_this.hihatIndex++;
 			});
 		hihat.loop = Infinity;
@@ -100,9 +92,9 @@ class Beat {
 	{
 		console.log("play");
 
-		let kick = this.createKick().start(startTime);
-		let snare = this.createSnare().start(startTime);
-		let hihat = this.createHihat().start(startTime);
+		this.kick = this.createKick().start(startTime);
+		this.snare = this.createSnare().start(startTime);
+		this.hihat = this.createHihat().start(startTime);
 	}
 }
 

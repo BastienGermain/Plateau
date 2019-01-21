@@ -1,21 +1,31 @@
 class Melody 
 {
-	constructor() 
+	constructor(mode, bass, instrumentA, instrumentB = null) 
 	{	
-		this.piano = new InstrumentSampler('piano');
-		this.violin = new InstrumentSampler('bass-electric');
-		this.violin.sampler.volume.value = -6;
+		this.leadA = new InstrumentSampler(instrumentA);
+		this.leadA.sampler.volume.value = -12;
 
-		this.mode = Melody.ModesNames[3];
+		if(instrumentB)
+		{
+			this.leadB = new InstrumentSampler(instrumentB);
+			this.leadB.sampler.volume.value = -12;
+		}
+
+		this.bass = new InstrumentSampler(bass);
+		this.bass.sampler.volume.value = -6;
+
+		this.mode = mode || Melody.ModesNames[0];
 		this.chords = Melody.Modes[this.mode];
 		this.tonic = Melody.Notes[3];
 		this.octave = 3;
 
 		this.progression = [];
-		this.arpeggio = [];
+		this.arpeggioA = [];
+		this.arpeggioB = [];
 
 		this.base = null;
-		this.melody = null;
+		this.melodyA = null;
+		this.melodyB = null;
 
 		this.baseIndex = 0;
 		this.arpeggioIndex = 0;
@@ -30,6 +40,15 @@ class Melody
 	        chords[i] = chords[j];
 	        chords[j] = temp;
     	}
+	}
+
+	// input : array of notes
+	adjustNotesOctave(notes, octave)
+	{
+		for (var i = 0; i < notes.length; i++) 
+		{
+			notes[i] = notes[i].substring(0, notes[i].length - 2) + octave.toString(); 
+		}
 	}
 
 	createArpeggioPattern(noteCount)
@@ -64,10 +83,12 @@ class Melody
 
 	createArpeggio(note, noteCount = 8)
 	{
-		return scribble.arp({chords: note, count: noteCount, order: this.createArpeggioPattern(noteCount)});
+		let arpeggio = scribble.arp({chords: note, count: noteCount, order: this.createArpeggioPattern(noteCount)});
+		this.adjustNotesOctave(arpeggio, Math.min(this.octave + 1 , 6));
+		return arpeggio;
 	}
 
-	createBase() 
+	createBase(instrument) 
 	{
 		let _this = this;
 
@@ -76,12 +97,12 @@ class Melody
 			function(time)
 			{	
 				let chord = scribble.chord(_this.progression[_this.baseIndex % _this.progression.length]);
+				_this.adjustNotesOctave(chord, _this.octave);
 
 				for (let i = 0; i < chord.length; i++) 
-					_this.violin.play(chord[i], "1m", time);
+					instrument.play(chord[i], "1m", time);
 	
 				_this.baseIndex++;
-				_this.updateArpeggio();
 			}
 		);
 
@@ -91,18 +112,18 @@ class Melody
 		return base;
 	}
 
-	createMelody() 
+	createMelody(instrument, arpeggio) 
 	{
 		let _this = this;
 		let melody = new Tone.Pattern
 		(
 			function(time, note)
 			{
-				_this.piano.play(note, 4*Tone.Time("1m").toMilliseconds()/_this.arpeggio.length, time);
+				instrument.play(note, 4*Tone.Time("1m").toMilliseconds()/arpeggio.length, time);
 				_this.baseIndex++;
 			},
-			_this.arpeggio, 
-			"upDown"
+			arpeggio, 
+			"random"
 		);
 
 		melody.loop = Infinity;
@@ -111,23 +132,44 @@ class Melody
 		return melody;
 	}
 
-	start(startTime) 
+	init() 
 	{				
 		this.progression = this.createProgression(this.tonic + "" + this.octave);
-		this.arpeggio = this.createArpeggio(this.progression[this.baseIndex % this.progression.length]);
 
-		this.base = this.createBase().start(startTime);
-		this.melody = this.createMelody().start(startTime);
+		this.arpeggioA = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
+		this.arpeggioB = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
+
+		this.base = this.createBase(this.bass);
+		this.melodyA = this.createMelody(this.leadA, this.arpeggioA);
+
+		if (this.leadB)
+			this.melodyB = this.createMelody(this.leadB, this.arpeggioB);
 	}
 
-	updateArpeggio()
+	start(startTime = 0)
 	{
-		this.melody.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], 4);
+		this.base.start(startTime);
+		this.melodyA.start(startTime);
+
+		if (this.leadB)
+			this.melodyB.start(startTime);
+	}
+
+	update()
+	{
+		this.melodyA.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
+
+		if(this.melodyB)
+			this.melodyB.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
 	}
 
 	stop()
 	{
-		
+		this.base.stop();
+		this.melodyA.stop();
+
+		if(this.melodyB)
+			this.melodyB.stop();
 	}
 }
 

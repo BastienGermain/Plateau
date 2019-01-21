@@ -108,6 +108,13 @@ const dataSample =
         "B2": "B2.[mp3|ogg]"
     },
 
+    "drum":
+    {
+        "C0": "classic-kick.wav",
+        "C#0": "classic-snare.wav",
+        "D0": "classic-hihat.wav"
+    },
+
     "flute": 
     {
         "A5": "A5.[mp3|ogg]",

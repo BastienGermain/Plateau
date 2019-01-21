@@ -58,3 +58,14 @@ function majorRelative(gamme){
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));  //getRadomInt(3) return 0 1 or 2
 }
+
+// getRandomInt(1, 5) returns a random number between 1 et 5
+function getRandomIntBetween(start, end) 
+{
+	let numbers = [];
+
+	for (var i = start; i <= end; i++) {
+		numbers.push(i);
+	}
+	return numbers[getRandomInt(numbers.length)];
+}

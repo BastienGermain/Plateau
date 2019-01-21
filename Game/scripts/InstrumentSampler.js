@@ -8,7 +8,7 @@ class InstrumentSampler
         this.ext = '.[mp3|ogg]';
         this.baseUrl = './assets/samples/';
 
-        this.onload = function() {console.log("samples loaded");};
+        this.onload = function(instrument) {console.log("Samples loaded for " + instrument);};
 
         this.sampler = this.load();
         this.samplerFX = null;
@@ -16,9 +16,7 @@ class InstrumentSampler
 
     load() 
     {   
-        let sampler = new Tone.Sampler(dataSample[this.instrument], {baseUrl: this.baseUrl + this.instrument + "/", onload: this.onload});
-        console.log("sampler : ");
-        console.log(sampler);
+        let sampler = new Tone.Sampler(dataSample[this.instrument], {baseUrl: this.baseUrl + this.instrument + "/", onload: this.onload(this.instrument)});
         return sampler;
     }
 
@@ -48,6 +46,7 @@ class InstrumentSampler
             sampler.triggerAttack(Tone.Frequency(note.note, "midi").toNote(), time, velocity);
         else if (note.state === false) 
             sampler.triggerRelease(Tone.Frequency(note.note, "midi").toNote(), time, velocity);
+
         sampler.toMaster();
     }
 
@@ -55,8 +54,6 @@ class InstrumentSampler
     play(note, duration, time, velocity = 1) 
     {   
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
-
-        console.log(note);
         
         sampler.triggerAttackRelease(note, duration, time, velocity);
         sampler.toMaster();

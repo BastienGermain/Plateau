@@ -64,7 +64,7 @@ class FXRack
     return FXInstrument;
   }
 
-  selectFX(input)
+  selectFX(input, params)
   {
     if (!this.appliedFXs.find(fx => fx.type == input.value))
     {
@@ -83,7 +83,7 @@ class FXRack
         break;
 
         case 'pitchShift':
-        this.addPitchShift(12);
+        this.addPitchShift(params.pitch);
         break;
 
         case 'autoWah':
