@@ -184,36 +184,42 @@ const kata2 = math.matrix([
 ]);
 
 const kata3 = math.matrix([
-    [-1, 0, 0],
+    [1, 0, -1],
     [0, 1, 0],
-    [0, 0, 1]
+    [0, 0, 0]
 ]);
 
 const kata4 = math.matrix([
     [-1, 0, 0],
     [0, 1, 0],
-    [1, 0, 1]
+    [0, 0, 1]
 ]);
 
 const kata5 = math.matrix([
-    [-1, 0, 1],
+    [-1, 0, 0],
     [0, 1, 0],
-    [0, 0, 1]
+    [1, 0, 1]
 ]);
 
 const kata6 = math.matrix([
     [-1, 0, 1],
     [0, 1, 0],
-    [0, 1, 0]
+    [0, 0, 1]
 ]);
 
 const kata7 = math.matrix([
+    [-1, 0, 1],
+    [0, 1, 0],
+    [0, 1, 0]
+]);
+
+const kata8 = math.matrix([
     [1, 0, -1],
     [0, 1, 0],
     [0, 1, 0]
 ]);
 
-let katas = [kata1, kata2, kata3, kata4, kata5, kata6, kata7];
+let katas = [kata1, kata2, kata3, kata4, kata5, kata6, kata7, kata8];
 moveMatrices["Kata"] = new Array();
 
 for (j = 0; j < katas.length; j++) {

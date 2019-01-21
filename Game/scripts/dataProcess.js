@@ -249,7 +249,6 @@ function checkAtari(mat) {
         for (j = 0; j < 19; j++) {
             const currentMat = getCurrentMatrix(mat, i, j);
             const sum = currentMat.get([0, 1]) + currentMat.get([1, 0]) + currentMat.get([2, 1]) + currentMat.get([1, 2]);
-            //console.log(sum + " pos : " + i + j);
             if (sum == 3 || sum == -3) {
                 if(currentMat.get([1, 1]) != 0) {
                     console.log("Atari");
