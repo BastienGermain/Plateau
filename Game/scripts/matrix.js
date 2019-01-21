@@ -8,15 +8,47 @@ function getCurrentMatrix(dataObject, mat) {
     const x = dataObject["lastStonePosition"][0];
     const y = dataObject["lastStonePosition"][1];
 
-    // AJOUTER LES COINS
+    // Pour les cas extrêmes (coins ou bords)
     if (x == 0) {
-        const currentMat = math.subset(mat, math.index([y - 1, y, y + 1], [x, x + 1]));
-        const firstColumn = math.matrix([[0], [0], [0]]);
-        return math.concat(firstColumn, currentMat);
+        if (y == 0) {
+            let currentMat = math.subset(mat, math.index([y, y + 1], [x, x + 1]));
+            const firstLine = math.matrix([[0, 0]]);
+            currentMat = math.concat(firstLine, currentMat, 0);
+            const firstColumn = math.matrix([[0], [0], [0]]);
+            console.log(math.concat(firstColumn, currentMat));
+            return math.concat(firstColumn, currentMat);
+        } else if (y == 18) {
+            let currentMat = math.subset(mat, math.index([y - 1, y], [x, x + 1]));
+            const lastLine = math.matrix([[0, 0]]);
+            currentMat =  math.concat(currentMat, lastLine, 0);
+            const firstColumn = math.matrix([[0], [0], [0]]);
+            console.log(math.concat(firstColumn, currentMat));
+            return math.concat(firstColumn, currentMat);
+        } else {
+            const currentMat = math.subset(mat, math.index([y - 1, y, y + 1], [x, x + 1]));
+            const firstColumn = math.matrix([[0], [0], [0]]);
+            return math.concat(firstColumn, currentMat);
+        }
     } else if (x == 18) {
-        const currentMat = math.subset(mat, math.index([y - 1, y, y + 1], [x - 1, x]));
-        const lastColumn = math.matrix([[0], [0], [0]]);
-        return math.concat(currentMat, lastColumn);
+        if (y == 0) {
+            let currentMat = math.subset(mat, math.index([y, y + 1], [x - 1, x]));
+            const firstLine = math.matrix([[0, 0]]);
+            currentMat = math.concat(firstLine, currentMat, 0);
+            const lastColumn = math.matrix([[0], [0], [0]]);
+            console.log(math.concat(currentMat, lastColumn));
+            return math.concat(currentMat, lastColumn);
+        } else if (y == 18) {
+            let currentMat = math.subset(mat, math.index([y - 1, y], [x - 1, x]));
+            const lastLine = math.matrix([[0, 0]]);
+            currentMat =  math.concat(currentMat, lastLine, 0);
+            const lastColumn = math.matrix([[0], [0], [0]]);
+            console.log(math.concat(currentMat, lastColumn));
+            return math.concat(currentMat, lastColumn);
+        } else {
+            const currentMat = math.subset(mat, math.index([y - 1, y, y + 1], [x - 1, x]));
+            const lastColumn = math.matrix([[0], [0], [0]]);
+            return math.concat(currentMat, lastColumn);
+        }
     } else if (y == 0) {
         const currentMat = math.subset(mat, math.index([y, y + 1], [x - 1, x, x + 1]));
         const firstLine = math.matrix([[0, 0, 0]]);
@@ -82,26 +114,6 @@ function fillFullMatrix(boardMat, sgf) {
 	}
 
 	return boardMat;
-}
-
-// à revoir ?
-function readMatrix(matrix) {
-	let i, j;
-
-	for (i = 0; i < matrix.size()[0]; i++) {
-		for (j = 0; j < matrix.size()[1]; j++) {
-
-			let value = matrix.get([i, j]);
-
-			//var time = i * matrix.size()[0] + j * matrix.size()[1];
-
-			if (value == -1) {
-				// do stuff if black
-			} else if (value == 1) {
-				// do stuff if white
-			}
-		}
-	}
 }
 
 // color = 1 or -1
