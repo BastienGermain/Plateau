@@ -25,7 +25,6 @@ class Melody
 
 		this.progression = [];
 		this.arpeggio = [];
-		this.arpeggioPattern = null;
 
 		this.base = null;
 		this.melody = null;
@@ -120,12 +119,15 @@ class Melody
 		(
 			function(time, note)
 			{
+				instrument.play(note, 4*Tone.Time("1m").toMilliseconds()/arpeggio.length, time);
+				console.log(Tone.Time("1m").toSeconds() / (this.values.length * Tone.Time(this.melodyInterval).toSeconds()))
 				instrument.play(
 					note, 
-					Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
+					0.8 *Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
 					time);
 			},
 			arpeggio, 
+			"up"
 		);
 
 		melody.loop = Infinity;
@@ -139,7 +141,6 @@ class Melody
 	{				
 		this.progression = this.createProgression(this.tonic + "" + this.octave);
 		this.arpeggio = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
-		this.arpeggioPattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length - 1)];
 
 		if (this.bass) this.base = this.createBase(this.bass);
 
@@ -156,7 +157,6 @@ class Melody
 	update()
 	{
 		this.baseIndex++;
-		this.melody.pattern = this.arpeggioPattern;
 		this.melody.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
 	}
 
@@ -191,5 +191,3 @@ Melody.Degrees = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
 
 Melody.Notes = ['C', 'C#', 'D', 'D#','E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 Melody.Octaves = [0, 1, 2, 3, 4, 5, 6];
-
-Melody.ArpeggioPaterns = ["up", "down", "upDown", "downUp", "random"];

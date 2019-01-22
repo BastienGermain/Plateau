@@ -3,7 +3,6 @@ class Beat {
 	constructor(drum)
 	{	
 		this.drum = drum;
-		this.drum.sampler.volume.value = -9;
 
 		this.kickSubdivisions = 16;
 		this.hihatSubdivisions = 16;
@@ -42,10 +41,8 @@ class Beat {
 		let kick =  new Tone.Event(
 			function(time)
 			{	
-				if (_this.kickPattern.charAt(_this.kickIndex % _this.kickSubdivisions) === "x")
-				{
+				if (_this.kickPattern[_this.kickIndex % _this.kickSubdivisions] === "x")
 					_this.drum.play(_this.kickNote, 0.25, time);
-				}
 				_this.kickIndex++;
 			});
 
@@ -63,7 +60,7 @@ class Beat {
 		let snare =  new Tone.Event(
 			function(time)
 			{	
-				if (_this.snarePattern.charAt(_this.snareIndex % _this.snareSubdivisions) === "x")
+				if (_this.snarePattern[_this.snareIndex % _this.snareSubdivisions] === "x")
 					_this.drum.play(_this.snareNote, 0.25, time);
 				_this.snareIndex++;
 			});
@@ -81,11 +78,10 @@ class Beat {
 		let hihat =  new Tone.Event(
 			function(time)
 			{	
-				if (_this.hihatPattern.charAt(_this.hihatIndex % _this.hihatSubdivisions) === "x")
+				if (_this.hihatPattern[_this.hihatIndex % _this.hihatSubdivisions] === "x")
 					_this.drum.play(_this.hihatNote, 0.25, time, 0.1);
 				_this.hihatIndex++;
 			});
-
 		hihat.loop = Infinity;
 		hihat.loopEnd = "8n";
 		hihat.playbackRate = 1;
@@ -108,43 +104,17 @@ class Beat {
 
 Beat.KickPatterns = 
 [
-"---x---x---x---x---x---x---x---x",
-
-"x-----x---------x-----x---x--x--",
-"x---------x-----x---------x-----",
-"x-------x-------x--------x------",
-"x------x--x-----x-x---x---x-----",
-"x------x--x-----x------x--x-----",
-"x---------x-------x-------x-----",
-"x---------x-------x----x--x-----",
-"x---x-----x----x------x---x-----",
-"x-----x---x-------x-----x-------",
-"x-----x---------x-----x---x--x--",
-"x--x---x-xx----xx-x----xxxx-----",
-"x------x-x-x---xx----------x----"
-
+["-", "-", "-", "x", "-", "-", "-", "x", "-", "-", "-", "x", "-", "-", "-", "x"],
+["x", "-", "-", "-", "-", "-", "x", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
 ];
 
 Beat.SnarePatterns = 
 [
-"-------x-------x-------x-------x",
-"----x-------x-------x-------x---",
-"---x--------x-------x-------x---",
-"----x----x----x-------x--x--x---",
-"----x---------x-----x-------x---",
-"--------x-----x-----x-------x---",
-"--x-x---x--xx-xx----x-x---x-x---"
+["-", "-", "-", "-", "-", "-", "-", "x", "-", "-", "-", "-", "-", "-", "-", "x"],
+["-", "-", "-", "-", "x", "-", "-", "-", "-", "-", "-", "-", "x", "-", "-", "-"],
 ];
-
 Beat.HihatPatterns = 
 [
-"xxxxxxxxxxxxxxxx",
-
-"x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
-"x-x-x-x-xxx-x-x-x-x-x-xxx-x---x-",
-"--x---x---x---x---x---x---x---x-",
-"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
-"x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
-"x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
-"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-xx"
+["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"],
+["x", "-", "x", "-", "x", "-", "x", "x", "x", "x", "x", "-", "x", "-", "x", "-"],
 ];
