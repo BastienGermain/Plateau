@@ -1,15 +1,15 @@
 class Melody 
 {
-	constructor(mode, lead, bass = null) 
+	constructor(mode, octave, lead, bass = null) 
 	{	
 		this.fx = new FXRack();
 		this.fx.selectFX('reverb', {'reverb': 0.1});
 
 		this.lead = new InstrumentSampler(lead);
-		this.lead.sampler.volume.value = -12;
+		this.lead.sampler.volume.value = -6;
 		this.lead.sampler.release = 1;
 		this.lead.catchFXs(this.fx);
-		this.lead.samplerFX.volume.value = -12;
+		this.lead.samplerFX.volume.value = -6;
 
 		if (bass)
 		{
@@ -18,10 +18,9 @@ class Melody
 		}
 
 		this.mode = mode || Melody.ModesNames[0];
-		this.chords = Melody.Modes[this.mode];
-		this.tonic = Melody.Notes[3];
-		this.octave = 2;
-		this.melodyInterval = "8n";
+		this.tonic = Melody.Notes[0];
+		this.octave = octave || 3;
+		this.melodyInterval = "4n";
 
 		this.progression = [];
 		this.arpeggio = [];
@@ -30,7 +29,6 @@ class Melody
 		this.melody = null;
 
 		this.baseIndex = 0;
-		this.arpeggioIndex = 0;
 	}
 
 	shuffleChords(chords) 
@@ -49,7 +47,7 @@ class Melody
 	{
 		for (var i = 0; i < notes.length; i++) 
 		{
-			notes[i] = notes[i].substring(0, notes[i].length - 2) + octave.toString(); 
+			notes[i] = notes[i].substring(0, notes[i].length - 1) + octave.toString(); 
 		}
 	}
 
@@ -72,11 +70,11 @@ class Melody
     	return pattern;
 	}
 
-	createProgression()
+	createProgression(tonic, mode)
 	{
 		let progression = scribble.progression.getChords(
-			this.tonic + " " + this.mode, 
-			this.chords.join(' ')
+			tonic + " " + mode, 
+			Melody.Modes[mode].join(' ')
 		).split(' ');
 
 		this.shuffleChords(progression);
@@ -86,7 +84,7 @@ class Melody
 	createArpeggio(note, noteCount = 8)
 	{
 		let arpeggio = scribble.arp({chords: note, count: noteCount, order: this.createArpeggioPattern(noteCount)});
-		this.adjustNotesOctave(arpeggio, Math.min(this.octave + 2 , 6));
+		this.adjustNotesOctave(arpeggio, Math.min(this.octave, 6));
 		return arpeggio;
 	}
 
@@ -123,7 +121,7 @@ class Melody
 				console.log(Tone.Time("1m").toSeconds() / (this.values.length * Tone.Time(this.melodyInterval).toSeconds()))
 				instrument.play(
 					note, 
-					0.8 *Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
+					Tone.Time(_this.melodyInterval).toSeconds(), 
 					time);
 			},
 			arpeggio, 
@@ -139,7 +137,7 @@ class Melody
 
 	init() 
 	{				
-		this.progression = this.createProgression(this.tonic + "" + this.octave);
+		this.progression = this.createProgression(this.tonic + "" + this.octave, this.mode);
 		this.arpeggio = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
 
 		if (this.bass) this.base = this.createBase(this.bass);
@@ -157,6 +155,8 @@ class Melody
 	update()
 	{
 		this.baseIndex++;
+
+		this.melody.pattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length - 1)];
 		this.melody.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
 	}
 
