@@ -4,16 +4,19 @@
 
 // data structure
 var data = new Object();
-data["lastPlayer"] = ""; // Values : "Black" or "White"
+data["player"] = ""; // Values : "Black" or "White"
 data["stoneOnBoard"] = 0; // Number of stone on the board
-data["lastStonePosition"] = [0, 0]; // Range [0, 18]; 0,0 is top-left of goban
+data["stonePosition"] = [0, 0]; // Range [0, 18]; 0,0 is top-left of goban
+data["previousStonePosition"] = [0, 0];
 data["stonesAround"] = 0; // number of stones around the last played stone
 data["whiteStonesAround"] = 0; // same with only white
 data["blackStonesAround"] = 0; // same with only black
 data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
-data["lastMoveTime"] = 0; // In seconds
+data["moveTime"] = 0; // In seconds
+data["previousMoveTime"] = 0;
+// atari en fonction des couleurs
 data["atariNumber"] = 0; //  number of atari situations on the board
 
 
@@ -37,28 +40,32 @@ function beginSGF(file) {
 	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
         move(1);
 		boardMat = fillMatrixSGF(boardMat, sgf, moveNumber);
-        getLastPlayer(sgf, moveNumber);
-        getLastStonePosition(sgf, moveNumber);
+        getPlayer(sgf, moveNumber);
+        if (data["stoneOnBoard"] != 0) {
+            data["previousStonePosition"] = data["stonePosition"];
+            data["previousMoveTime"] = data["moveTime"];
+        }
+        getStonePosition(sgf, moveNumber);
         getStonesAround();
         data["stoneOnBoard"] += 1;
         data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
         data["blackCaptures"] = getInfo().captures[JGO.BLACK];
         data["knownMove"] = checkKnownMoves(data, boardMat);
-        data["lastMoveTime"] = sgf[moveNumber].C;
+        data["moveTime"] = sgf[moveNumber].C;
         checkAtari(boardMat);
 		moveNumber++;
 	})
 };
 
-function getLastPlayer(sgf, moveNumber) {
+function getPlayer(sgf, moveNumber) {
     if (Object.keys(sgf[moveNumber])[0] == "B") {
-        data["lastPlayer"] = "Black";
+        data["player"] = "Black";
     } else {
-        data["lastPlayer"] = "White";
+        data["player"] = "White";
     }
 }
 
-function getLastStonePosition(sgf, moveNumber) {
+function getStonePosition(sgf, moveNumber) {
     let coord;
 
     if (Object.keys(sgf[moveNumber])[0] == "B") {
@@ -70,15 +77,15 @@ function getLastStonePosition(sgf, moveNumber) {
     const x = letterToNumber(coord.slice(0, 1)) -1;
     const y = letterToNumber(coord.slice(1, 2)) -1;
 
-    data["lastStonePosition"] = [x, y];
+    data["stonePosition"] = [x, y];
 }
 
 function getStonesAround() {
     let whiteStonesAround = 0;
     let blackStonesAround = 0;
 
-    const x = data["lastStonePosition"][0];
-    const y = data["lastStonePosition"][1];
+    const x = data["stonePosition"][0];
+    const y = data["stonePosition"][1];
 
     let i, j;
 
@@ -103,8 +110,8 @@ function getStonesAround() {
 
 
 function checkKnownMoves(dataObject, mat) {
-    const x = dataObject["lastStonePosition"][0];
-    const y = dataObject["lastStonePosition"][1];
+    const x = dataObject["stonePosition"][0];
+    const y = dataObject["stonePosition"][1];
     const currentMatrix = getCurrentMatrix(mat, x, y);
     const nobis = moveMatrices.Nobi;
     const tsukes = moveMatrices.Tsuke;
@@ -192,15 +199,15 @@ function checkKnownMoves(dataObject, mat) {
 */
 function checkTobi(dataObject, mat) {
     let isTobi = false;
-    const x = dataObject["lastStonePosition"][0];
-    const y = dataObject["lastStonePosition"][1];
+    const x = dataObject["stonePosition"][0];
+    const y = dataObject["stonePosition"][1];
 
     for (x <= 1 ? i = 0 : i = x - 2; i <= (x >= 17 ? x : x + 2); i++) {
         for (y <= 1 ? j = 0 : j = y - 2; j <= (y >= 17 ? y : y + 2); j++) {
             if ((i == x || j == y) && (i == x - 2 || j == y - 2 || i == x + 2 || j  == y + 2)) {
 
                 const matValue = math.subset(mat, math.index(j, i));
-                if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
+                if (matValue == (dataObject["player"] == "White" ? 1 : -1)) {
                     isTobi = true;
                 }
 
@@ -218,8 +225,8 @@ function checkTobi(dataObject, mat) {
 */
 function checkKogeima(dataObject, mat) {
     let isKogeima = false;
-    const x = dataObject["lastStonePosition"][0];
-    const y = dataObject["lastStonePosition"][1];
+    const x = dataObject["stonePosition"][0];
+    const y = dataObject["stonePosition"][1];
 
     for (x <= 2 ? i = 0 : i = x - 3; i <= (x >= 16 ? x : x + 3); i++) {
         for (y <= 2 ? j = 0 : j = y - 3; j <= (y >= 16 ? y : y + 3); j++) {
@@ -231,7 +238,7 @@ function checkKogeima(dataObject, mat) {
                 (j == y + 2 && (i == x - 1 || i == x + 1))
             ) {
                 const matValue = math.subset(mat, math.index(j, i));
-                if (matValue == (dataObject["lastPlayer"] == "White" ? 1 : -1)) {
+                if (matValue == (dataObject["player"] == "White" ? 1 : -1)) {
                     isKogeima = true;
                 }
             }
