@@ -53,6 +53,9 @@ class InstrumentSampler
      // Expect note at format "C4"
     play(note, duration, time, velocity = 1) 
     {   
+        /*console.log(note);
+        console.log(duration);
+        console.log(time);*/
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
         
         sampler.triggerAttackRelease(note, duration, time, velocity);

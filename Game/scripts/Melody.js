@@ -120,7 +120,6 @@ class Melody
 			function(time, note)
 			{
 				instrument.play(note, 4*Tone.Time("1m").toMilliseconds()/arpeggio.length, time);
-				_this.baseIndex++;
 			},
 			arpeggio, 
 			"random"

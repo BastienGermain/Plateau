@@ -10,9 +10,10 @@ Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
-var randInt = 0;
 
-//var harmony = new Harmony();
+
+var harmony = new Harmony();
+
 
 var melodyP1 = new Melody(Melody.ModesNames[8], 'bass-electric', 'piano', 'piano');
 var melodyP2 = new Melody(Melody.ModesNames[3], 'cello', 'bassoon');
@@ -30,7 +31,7 @@ function updateBassLine(){
 	bassLine.start();
 }
 
-function updateHarmony()
+function updateMelody()
 {
 	melody.stop();
 
@@ -43,52 +44,45 @@ function updateHarmony()
 		//if (relativ != 1) relativ = 1;
 	}
 
-	melody.update()
-	melody.start();
-	/*
-	let currentBeat = 0;
-	let timeTmp = Tone.context.currentTime.toFixed(4) - startTime;
+	//melody.update();
+	//melody.start();
 
-	while (timeTmp > T-0.1)
-	{
-		timeTmp-=T;
-		currentBeat++;
-	}
+	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
+}
 
-	if (currentBeat % 16 == 0)
-	{
-		randInt = getRandomInt(5);
-	}
+function updateHarmony()
+{
+	harmony.randInt = getRandomInt(5);
 
-	switch (randInt)
+	switch (harmony.randInt)
 	{
 		case 0 :
-			harmony.sequence0(currentBeat);
+			harmony.sequence0();
 			break;
 
 		case 1 :
-			harmony.sequence1(currentBeat);
+			harmony.sequence1();
 			break;
 
 		case 2 :
-			harmony.sequence2(currentBeat);
+			harmony.sequence2();
 			break;
 
 		case 3 :
-			harmony.sequence3(currentBeat);
+			harmony.sequence3();
 			break;
 
 		case 4 :
-			harmony.sequence4(currentBeat);
+			harmony.sequence4();
 			break;
 
 		default:
 			break;
 	}
-	*/
-	
-	window.setTimeout(updateHarmony, Tone.Time("1m").toMilliseconds());
+
+	window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
 }
+
 
 /*function waitForRightTime() {
   return new Promise(resolve => {
@@ -133,7 +127,7 @@ $(document).ready(function()
 			startTime = Tone.context.currentTime.toFixed(4);
 			beat.play(startTime);
 			melody.start(startTime);
-			updateHarmony();
+			//updateHarmony();	//lance l'harmonie
 		}
     })
 })
