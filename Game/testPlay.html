@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Play the game</title>
+
+    <script src="scripts/ext/jquery.min.js"></script>
+    <script src="scripts/ext/math.js"></script>
+    <script src="scripts/ext/sgfgrove.js" ></script>
+    <script src="scripts/ext/tone.js" ></script>
+    <script src="scripts/ext/scribbletune.js" ></script>
+    <script src="scripts/ext/StartAudioContext.js" ></script>
+
+    <script src="scripts/matrix.js"></script>
+
+    <script src="assets/samples/dataSample.js"></script>
+
+    <script type="text/javascript" src="dist/jgoboard-latest.js"></script>
+
+    <script type="text/javascript" src="large/boardStyle.js"></script>
+
+    <script src="scripts/moveMatrices.js" ></script>
+    <script src="scripts/dataProcess.js" ></script>
+
+    <script src="scripts/musicAssets.js" ></script>
+    <script src="scripts/InstrumentSampler.js" ></script>
+    <script src="scripts/EffectRack.js" ></script>
+    <script src="scripts/Arpeggiator.js" ></script>
+    <script src="scripts/harmony.js" ></script>
+    <script src="scripts/bassLine.js" ></script>
+
+</head>
+<body>
+    <p id="menu">
+        <button onclick="printData()">Print Data</button>
+        <button onclick="printMatrix()">Print Matrix</button>
+    </p>
+    
+    <div id="board"></div>
+
+    <div>
+        <div id="black-captures">0</div>
+        <div id="white-captures">0</div>
+    </div>
+
+<script src="scripts/mainPlay.js" ></script>
+
+</body>
+</html>

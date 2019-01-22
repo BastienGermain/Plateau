@@ -36,7 +36,7 @@ function beginSGF(file) {
 
 	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
         move(1);
-		boardMat = fillMatrix(boardMat, sgf, moveNumber);
+		boardMat = fillMatrixSGF(boardMat, sgf, moveNumber);
         getLastPlayer(sgf, moveNumber);
         getLastStonePosition(sgf, moveNumber);
         getStonesAround();
