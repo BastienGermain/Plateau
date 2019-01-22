@@ -22,6 +22,7 @@ var melody = melodyP1;
 
 const drum = new InstrumentSampler('drum');
 var beat = new Beat(drum);
+var technoBeat = new Beat(drum, techno=true);
 /*
 function updateBassLine(){
 	bassLine = createBassLine(tonalite);
@@ -122,10 +123,15 @@ $(document).ready(function()
 			//updateBassLine();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
-			beat.play(startTime);
-			melody.start(startTime);
-			updateMelody();
+			//beat.play(startTime);
+			//melody.start(startTime);
+			//updateMelody();
+
 			//updateHarmony();	//lance l'harmonie
+
+
+			Tone.Transport.bpm.value*=3;
+			technoBeat.play();
 		}
     })
 })

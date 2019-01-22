@@ -15,9 +15,9 @@ var fx = new FXRack();
 fx.selectFX('reverb', {reverb: 0.5});
 harmonyInstrument.catchFXs(fx);
 player1Instrument.catchFXs(fx);
-player1Instrument.sampler.volume.value = -12;
+player1Instrument.sampler.volume.value = -48;
 player2Instrument.catchFXs(fx);
-player2Instrument.sampler.volume.value = -12;
+player2Instrument.sampler.volume.value = -48;
 
 var relativ=0;
 //config harmonie
