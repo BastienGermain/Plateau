@@ -159,6 +159,8 @@ jsetup.create('board', function(canvas) {
           startTime = Tone.context.currentTime.toFixed(4);
       }
 
+	  switchTimer();
+
     } else alert('Illegal move: ' + play.errorMsg);
   });
 

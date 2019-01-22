@@ -21,21 +21,17 @@
 
     <script src="scripts/moveMatrices.js" ></script>
     <script src="scripts/dataProcess.js" ></script>
-
-    <script src="scripts/musicAssets.js" ></script>
-    <script src="scripts/InstrumentSampler.js" ></script>
-    <script src="scripts/EffectRack.js" ></script>
-    <script src="scripts/Arpeggiator.js" ></script>
-    <script src="scripts/harmony.js" ></script>
-    <script src="scripts/bassLine.js" ></script>
+    <script src="scripts/clock.js" ></script>
 
 </head>
 <body>
     <p id="menu">
         <button onclick="printData()">Print Data</button>
         <button onclick="printMatrix()">Print Matrix</button>
+        White : <span id="minutesW">00</span>:<span id="secondsW">00</span>
+        Black : <span id="minutesB">00</span>:<span id="secondsB">00</span>
     </p>
-    
+
     <div id="board"></div>
 
     <div>
