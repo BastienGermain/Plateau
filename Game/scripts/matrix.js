@@ -65,19 +65,29 @@ function rotateMatrix(mat) {
     return newMat;
 }
 
-function fillMatrix(boardMat, sgf, moveNumber) {
+function fillMatrixSGF(boardMat, sgf, moveNumber) {
 
     if (Object.keys(sgf[moveNumber])[0] == "B") {
         const coord = sgf[moveNumber].B;
-        return insertIntoMatrix(boardMat, coord, -1);
+        return insertIntoMatrixCoord(boardMat, coord, -1);
 
     } else {
         const coord = sgf[moveNumber].W;
-        return insertIntoMatrix(boardMat, coord, 1);
+        return insertIntoMatrixCoord(boardMat, coord, 1);
     }
 }
 
-function emptyMatrix(boardMat, sgf, moveNumber) {
+// player : 1 for black, 2 for white
+function fillMatrixPlay(boardMat, player, x, y) {
+    if (player == 1) {
+        return insertIntoMatrixXY(boardMat, x, y, -1);
+
+    } else {
+        return insertIntoMatrixXY(boardMat, x, y, 1);
+    }
+}
+
+function emptyMatrixSGF(boardMat, sgf, moveNumber) {
     let coord;
     if (Object.keys(sgf[moveNumber])[0] == "B") {
         coord = sgf[moveNumber].B;
@@ -85,7 +95,7 @@ function emptyMatrix(boardMat, sgf, moveNumber) {
         coord = sgf[moveNumber].W;
     }
 
-    return insertIntoMatrix(boardMat, coord, 0);
+    return insertIntoMatrixCoord(boardMat, coord, 0);
 }
 
 // Fill entirely matrix from sgf
@@ -100,23 +110,29 @@ function fillFullMatrix(boardMat, sgf) {
 
 		if (Object.keys(sgf[i])[0] == "B") {
 			const coord = sgf[i].B;
-            boardMat = insertIntoMatrix(boardMat, coord, -1);
+            boardMat = insertIntoMatrixCoord(boardMat, coord, -1);
 		} else {
 			const coord = sgf[i].W;
-            boardMat = insertIntoMatrix(boardMat, coord, 1);
+            boardMat = insertIntoMatrixCoord(boardMat, coord, 1);
 		}
 	}
 
 	return boardMat;
 }
 
-// color = 1 or -1
-function insertIntoMatrix(boardMat, coord, color) {
+// value = 1 (white) or -1 (black)
+function insertIntoMatrixCoord(boardMat, coord, value) {
 
     const x = letterToNumber(coord.slice(0, 1)) -1;
     const y = letterToNumber(coord.slice(1, 2)) -1;
 
-    boardMat.subset(math.index(y, x), color);
+    boardMat.subset(math.index(y, x), value);
+    return boardMat;
+}
+
+// value = 1 (white) or -1 (black)
+function insertIntoMatrixXY(boardMat, x, y, value) {
+    boardMat.subset(math.index(y, x), value);
     return boardMat;
 }
 
