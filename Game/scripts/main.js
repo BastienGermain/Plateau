@@ -6,16 +6,22 @@
 var startTime;
 
 Tone.Transport.bpm.value = 120;
-Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
 var randInt = 0;
 
+var envelope = new Tone.Envelope({
+	"attack" : 0.1,
+	"decay" : 0.2,
+	"sustain" : 1,
+	"release" : 0.8,
+}).toMaster();
+
 //var harmony = new Harmony();
 
-var melodyP1 = new Melody(Melody.ModesNames[8], 'bass-electric', 'piano', 'piano');
-var melodyP2 = new Melody(Melody.ModesNames[3], 'cello', 'bassoon');
+var melodyP1 = new Melody(Melody.ModesNames[6], 'flute', 'tuba');
+var melodyP2 = new Melody(Melody.ModesNames[8], 'cello', 'bassoon');
 
 melodyP1.init();
 melodyP2.init();
@@ -30,6 +36,14 @@ function updateBassLine(){
 	bassLine.start();
 }
 
+function updateMelody()
+{
+	melody.stop();
+	melody.update();
+	melody.start();
+
+	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
+}
 function updateHarmony()
 {
 	melody.stop();
@@ -43,7 +57,6 @@ function updateHarmony()
 		//if (relativ != 1) relativ = 1;
 	}
 
-	melody.update()
 	melody.start();
 	/*
 	let currentBeat = 0;
@@ -133,6 +146,7 @@ $(document).ready(function()
 			startTime = Tone.context.currentTime.toFixed(4);
 			beat.play(startTime);
 			melody.start(startTime);
+			updateMelody();
 			updateHarmony();
 		}
     })

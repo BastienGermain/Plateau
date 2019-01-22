@@ -64,18 +64,18 @@ class FXRack
     return FXInstrument;
   }
 
-  selectFX(input, params)
+  selectFX(name, params)
   {
-    if (!this.appliedFXs.find(fx => fx.type == input.value))
+    if (!this.appliedFXs.find(fx => fx.type == name))
     {
-      switch(input) 
+      switch(name) 
       {
         case 'chorus':
         this.addChorus(4, 2.5, 0.5);
         break;
 
         case 'reverb':
-        this.addReverb(0.5);
+        this.addReverb(params.reverb);
         break;
 
         case 'tremolo':
