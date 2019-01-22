@@ -1,6 +1,7 @@
 class Beat {
 
-	constructor(drum)
+	// selected pattern [kickPatternIndex, snarePatternIndex, hihatPatternIndex]
+	constructor(drum, selectedPaterns = null)
 	{	
 		this.drum = drum;
 		this.drum.sampler.volume.value = -9;
@@ -12,6 +13,8 @@ class Beat {
 		this.kickPattern = [];
 		this.hihatPattern = [];
 		this.snarePattern = [];
+
+		this.selectedPaterns = selectedPaterns;
 
 		this.instancePatterns();
 
@@ -30,9 +33,18 @@ class Beat {
 
 	instancePatterns() 
 	{
-    	this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() * 10)) % Beat.KickPatterns.length];
-    	this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() * 10)) % Beat.SnarePatterns.length];
-    	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() * 10)) % Beat.HihatPatterns.length];
+		if(!this.selectedPaterns)
+		{
+    		this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() * 10)) % Beat.KickPatterns.length];
+    		this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() * 10)) % Beat.SnarePatterns.length];
+  		  	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() * 10)) % Beat.HihatPatterns.length];
+		}
+		else
+		{
+			this.kickPattern = Beat.KickPatterns[this.selectedPaterns[0]];
+    		this.snarePattern = Beat.SnarePatterns[this.selectedPaterns[1]];
+  		  	this.hihatPattern = Beat.HihatPatterns[this.selectedPaterns[2]];
+		}
 	}
 
 	createKick() 
@@ -121,7 +133,9 @@ Beat.KickPatterns =
 "x-----x---x-------x-----x-------",
 "x-----x---------x-----x---x--x--",
 "x--x---x-xx----xx-x----xxxx-----",
-"x------x-x-x---xx----------x----"
+"x------x-x-x---xx----------x----",
+
+// TECHNO PATTERNS
 
 ];
 
@@ -134,6 +148,9 @@ Beat.SnarePatterns =
 "----x---------x-----x-------x---",
 "--------x-----x-----x-------x---",
 "--x-x---x--xx-xx----x-x---x-x---"
+
+// TECHNO PATTERNS
+
 ];
 
 Beat.HihatPatterns = 
@@ -147,4 +164,6 @@ Beat.HihatPatterns =
 "x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-xx"
+
+// TECHNO PATTERNS
 ];
