@@ -22,7 +22,9 @@ var melody = melodyP1;
 
 const drum = new InstrumentSampler('drum');
 var beat = new Beat(drum);
+
 var technoBeat = new Beat(drum, techno=true);
+var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
 /*
 function updateBassLine(){
 	bassLine = createBassLine(tonalite);
@@ -44,6 +46,15 @@ function updateMelody()
 
 	melody.update();
 	melody.start();
+
+	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
+}
+
+function updateTechnoMelody()
+{
+	technoMelody.stop();
+	technoMelody.update();
+	technoMelody.start();
 
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
@@ -123,6 +134,7 @@ $(document).ready(function()
 			//updateBassLine();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
+			
 			//beat.play(startTime);
 			//melody.start(startTime);
 			//updateMelody();

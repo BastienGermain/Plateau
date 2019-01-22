@@ -33,9 +33,9 @@ class Beat {
 	{
 		if(techno)
 		{
-			this.kickPattern = Beat.KickTechnoPatterns[1];
-    		this.snarePattern = Beat.SnareTechnoPatterns[0];
-  		  	this.hihatPattern = Beat.HihatTechnoPatterns[0];
+			this.kickPattern = Beat.KickTechnoPatterns[3];
+    		this.snarePattern = Beat.SnareTechnoPatterns[2];
+  		  	this.hihatPattern = Beat.HihatTechnoPatterns[1];
 		}
 		else
 		{
@@ -157,20 +157,28 @@ Beat.HihatPatterns =
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-xx"
 ];
 
+
 //TECHNO PATTERNS
 Beat.KickTechnoPatterns = 
 [
 "x---------x-----x---------x-----",
-"x---------x-----x---------x---x-"
+"x---------x-----x---------x---x-",
+"x-------x-x-----x-------x-x-----",
+"x---x---x---x---x---x---x---x---"
 ];
 
 Beat.SnareTechnoPatterns = 
 [
-"----x-------x-------x-------x---"
+"----x-------x-------x-------x---",
+"--x---x---x---x---x---x---x---x-",
+"--x---x---x-x-x---x---x---x-x---",
+
+
 ];
 
 Beat.HihatTechnoPatterns = 
 [
-"x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-"
+"x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-xxx-x-x-x-x-x-x-xxx-x-x-x-"
 ];
 
