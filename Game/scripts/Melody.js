@@ -120,18 +120,12 @@ class Melody
 		(
 			function(time, note)
 			{
-<<<<<<< HEAD
-				instrument.play(note, 4*Tone.Time("1m").toMilliseconds()/arpeggio.length, time);
-=======
-				console.log(Tone.Time("1m").toSeconds() / (this.values.length * Tone.Time(this.melodyInterval).toSeconds()))
 				instrument.play(
 					note, 
 					Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
 					time);
->>>>>>> f32109a0c25b5a9076349ca078c3332bd19068c3
 			},
 			arpeggio, 
-			_this.arpeggioPattern
 		);
 
 		melody.loop = Infinity;

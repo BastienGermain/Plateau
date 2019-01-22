@@ -10,10 +10,7 @@ Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
-
-
 var harmony = new Harmony();
-
 
 var melodyP1 = new Melody(Melody.ModesNames[8], 'bass-electric', 'piano', 'piano');
 var melodyP2 = new Melody(Melody.ModesNames[3], 'cello', 'bassoon');
