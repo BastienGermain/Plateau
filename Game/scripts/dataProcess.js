@@ -16,9 +16,9 @@ data["blackCaptures"] = 0;
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
 data["moveTime"] = 0; // In seconds
 data["previousMoveTime"] = 0;
-// atari en fonction des couleurs
 data["atariNumber"] = 0; //  number of atari situations on the board
-
+data["whiteAtariNumber"] = 0; // number of white stones in atari
+data["blackAtariNumber"] = 0;
 
 var boardMat = math.zeros(19, 19);
 
@@ -250,20 +250,26 @@ function checkKogeima(dataObject, mat) {
 }
 
 function checkAtari(mat) {
-    data["atariNumber"] = 0;
+    data["whiteAtariNumber"] = 0;
+    data["blackAtariNumber"] = 0;
     let i, j;
     for (i = 0; i < 19; i++) {
         for (j = 0; j < 19; j++) {
             const currentMat = getCurrentMatrix(mat, i, j);
             const sum = currentMat.get([0, 1]) + currentMat.get([1, 0]) + currentMat.get([2, 1]) + currentMat.get([1, 2]);
             if (sum == 3 || sum == -3) {
-                if(currentMat.get([1, 1]) != 0) {
+                if(currentMat.get([1, 1]) == 1) {
                     console.log("Atari");
-                    data["atariNumber"] += 1;
+                    data["whiteAtariNumber"] += 1;
+                } else if (currentMat.get([1, 1]) == -1) {
+                    console.log("Atari");
+                    data["blackAtariNumber"] += 1;
                 }
             }
         }
     }
+
+    data["atariNumber"] = data["whiteAtariNumber"] + data["blackAtariNumber"];
 }
 
 function printData() {
