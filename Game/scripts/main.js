@@ -44,8 +44,8 @@ function updateMelody()
 		//if (relativ != 1) relativ = 1;
 	}
 
-	//melody.update();
-	//melody.start();
+	melody.update();
+	melody.start();
 
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
