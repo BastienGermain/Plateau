@@ -24,9 +24,7 @@ class PunctualMelody
 	adjustNotesOctave(notes, octave)
 	{
 		for (var i = 0; i < notes.length; i++) 
-		{
 			notes[i] = notes[i].substring(0, notes[i].length - 1) + octave.toString(); 
-		}
 	}
 
 	createArpeggioPattern(noteCount)

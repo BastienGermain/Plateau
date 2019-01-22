@@ -191,3 +191,5 @@ Melody.Degrees = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
 
 Melody.Notes = ['C', 'C#', 'D', 'D#','E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 Melody.Octaves = [0, 1, 2, 3, 4, 5, 6];
+
+Melody.ArpeggioPaterns["up", "down", "upDown", "downUp", "random"];
