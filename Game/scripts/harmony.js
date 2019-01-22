@@ -12,7 +12,7 @@ var fx = new FXRack();
 
 
 // add fx to the FXRack
-fx.selectFX('reverb');
+fx.selectFX('reverb', {reverb: 0.5});
 harmonyInstrument.catchFXs(fx);
 player1Instrument.catchFXs(fx);
 player2Instrument.catchFXs(fx);
