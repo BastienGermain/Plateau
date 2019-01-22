@@ -124,6 +124,7 @@ $(document).ready(function()
 			startTime = Tone.context.currentTime.toFixed(4);
 			beat.play(startTime);
 			melody.start(startTime);
+			updateMelody();
 			//updateHarmony();	//lance l'harmonie
 		}
     })
