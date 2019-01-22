@@ -63,10 +63,11 @@ class PunctualMelody
 		(
 			function(time, note)
 			{
-				instrument.play(
-					note, 
-					2* Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
-					time);
+				if(Math.round(Math.random()))
+					instrument.play(
+						note, 
+						2* Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
+						time);
 			},
 			arpeggio, 
 		);

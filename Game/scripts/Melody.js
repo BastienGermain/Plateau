@@ -6,10 +6,10 @@ class Melody
 		this.fx.selectFX('reverb', {'reverb': 0.1});
 
 		this.lead = new InstrumentSampler(lead);
-		this.lead.sampler.volume.value = -6;
+		this.lead.sampler.volume.value = -10;
 		this.lead.sampler.release = 1;
 		this.lead.catchFXs(this.fx);
-		this.lead.samplerFX.volume.value = -6;
+		this.lead.samplerFX.volume.value = -10;
 
 		if (bass)
 		{
@@ -78,6 +78,7 @@ class Melody
 		).split(' ');
 
 		this.shuffleChords(progression);
+		console.log(progression);
 		return progression;
 	}
 
@@ -117,12 +118,11 @@ class Melody
 		(
 			function(time, note)
 			{
-				instrument.play(note, 4*Tone.Time("1m").toMilliseconds()/arpeggio.length, time);
-				console.log(Tone.Time("1m").toSeconds() / (this.values.length * Tone.Time(this.melodyInterval).toSeconds()))
-				instrument.play(
-					note, 
-					Tone.Time(_this.melodyInterval).toSeconds(), 
-					time);
+				if(Math.round(2 * Math.random()))
+					instrument.play(
+						note, 
+						Tone.Time(_this.melodyInterval).toSeconds(), 
+						time);
 			},
 			arpeggio, 
 			"up"
@@ -192,4 +192,4 @@ Melody.Degrees = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
 Melody.Notes = ['C', 'C#', 'D', 'D#','E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 Melody.Octaves = [0, 1, 2, 3, 4, 5, 6];
 
-Melody.ArpeggioPaterns["up", "down", "upDown", "downUp", "random"];
+Melody.ArpeggioPaterns = ["up", "down", "upDown", "downUp", "random"];

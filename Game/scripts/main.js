@@ -153,7 +153,7 @@ $(document).ready(function()
 			//updateHarmony();	//lance l'harmonie
 
 
-			Tone.Transport.bpm.value*=3;
+			//Tone.Transport.bpm.value*=3;
 			technoBeat.play();
 		}
     })
