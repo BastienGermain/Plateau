@@ -118,11 +118,16 @@ jsetup.create('board', function(canvas) {
 
       boardMat = fillMatrixPlay(boardMat, player, coord.i, coord.j);
       if (player == 1) {
-          data["lastPlayer"] = "Black";
+          data["player"] = "Black";
       } else {
-          data["lastPlayer"] = "White";
+          data["player"] = "White";
       }
-      data["lastStonePosition"] = [coord.i, coord.j];
+
+	  if (data["stoneOnBoard"] != 0) {
+		  data["previousStonePosition"] = data["stonePosition"];
+	  }
+
+      data["stonePosition"] = [coord.i, coord.j];
       getStonesAround();
       data["stoneOnBoard"] += 1;
       data["whiteCaptures"] = node.info.captures[2];
