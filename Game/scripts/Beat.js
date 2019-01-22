@@ -33,17 +33,17 @@ class Beat {
 
 	instancePatterns() 
 	{
-		if(!this.selectedPaterns)
-		{
-    		this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() * 10)) % Beat.KickPatterns.length];
-    		this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() * 10)) % Beat.SnarePatterns.length];
-  		  	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() * 10)) % Beat.HihatPatterns.length];
-		}
-		else
+		if(this.selectedPaterns && this.selectedPaterns.length === 3)
 		{
 			this.kickPattern = Beat.KickPatterns[this.selectedPaterns[0]];
     		this.snarePattern = Beat.SnarePatterns[this.selectedPaterns[1]];
   		  	this.hihatPattern = Beat.HihatPatterns[this.selectedPaterns[2]];
+		}
+		else
+		{
+    		this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() * 10)) % Beat.KickPatterns.length];
+    		this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() * 10)) % Beat.SnarePatterns.length];
+  		  	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() * 10)) % Beat.HihatPatterns.length];
 		}
 	}
 
