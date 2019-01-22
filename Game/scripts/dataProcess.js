@@ -13,7 +13,7 @@ data["blackStonesAround"] = 0; // same with only black
 data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
-data["lastMoveTime"] = 0.00;
+data["lastMoveTime"] = 0; // In seconds
 data["atariNumber"] = 0; //  number of atari situations on the board
 
 
@@ -36,7 +36,7 @@ function beginSGF(file) {
 
 	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
         move(1);
-		boardMat = fillMatrix(boardMat, sgf, moveNumber);
+		boardMat = fillMatrixSGF(boardMat, sgf, moveNumber);
         getLastPlayer(sgf, moveNumber);
         getLastStonePosition(sgf, moveNumber);
         getStonesAround();

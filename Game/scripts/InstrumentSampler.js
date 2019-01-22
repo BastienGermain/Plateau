@@ -58,6 +58,7 @@ class InstrumentSampler
         console.log(time);*/
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
         
+        sampler.release = 1;
         sampler.triggerAttackRelease(note, duration, time, velocity);
         sampler.toMaster();
     }

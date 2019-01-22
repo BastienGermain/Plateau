@@ -1,31 +1,33 @@
 class Melody 
 {
-	constructor(mode, bass, instrumentA, instrumentB = null) 
+	constructor(mode, lead, bass = null) 
 	{	
-		this.leadA = new InstrumentSampler(instrumentA);
-		this.leadA.sampler.volume.value = -12;
+		this.fx = new FXRack();
+		this.fx.selectFX('reverb', {'reverb': 0.1});
 
-		if(instrumentB)
+		this.lead = new InstrumentSampler(lead);
+		this.lead.sampler.volume.value = -12;
+		this.lead.sampler.release = 1;
+		this.lead.catchFXs(this.fx);
+		this.lead.samplerFX.volume.value = -12;
+
+		if (bass)
 		{
-			this.leadB = new InstrumentSampler(instrumentB);
-			this.leadB.sampler.volume.value = -12;
+			this.bass = new InstrumentSampler(bass);
+			this.bass.sampler.volume.value = -6;
 		}
-
-		this.bass = new InstrumentSampler(bass);
-		this.bass.sampler.volume.value = -6;
 
 		this.mode = mode || Melody.ModesNames[0];
 		this.chords = Melody.Modes[this.mode];
 		this.tonic = Melody.Notes[3];
-		this.octave = 3;
+		this.octave = 2;
+		this.melodyInterval = "8n";
 
 		this.progression = [];
-		this.arpeggioA = [];
-		this.arpeggioB = [];
+		this.arpeggio = [];
 
 		this.base = null;
-		this.melodyA = null;
-		this.melodyB = null;
+		this.melody = null;
 
 		this.baseIndex = 0;
 		this.arpeggioIndex = 0;
@@ -84,7 +86,7 @@ class Melody
 	createArpeggio(note, noteCount = 8)
 	{
 		let arpeggio = scribble.arp({chords: note, count: noteCount, order: this.createArpeggioPattern(noteCount)});
-		this.adjustNotesOctave(arpeggio, Math.min(this.octave + 1 , 6));
+		this.adjustNotesOctave(arpeggio, Math.min(this.octave + 2 , 6));
 		return arpeggio;
 	}
 
@@ -101,8 +103,6 @@ class Melody
 
 				for (let i = 0; i < chord.length; i++) 
 					instrument.play(chord[i], "1m", time);
-	
-				_this.baseIndex++;
 			}
 		);
 
@@ -119,13 +119,22 @@ class Melody
 		(
 			function(time, note)
 			{
+<<<<<<< HEAD
 				instrument.play(note, 4*Tone.Time("1m").toMilliseconds()/arpeggio.length, time);
+=======
+				console.log(Tone.Time("1m").toSeconds() / (this.values.length * Tone.Time(this.melodyInterval).toSeconds()))
+				instrument.play(
+					note, 
+					0.8 *Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
+					time);
+>>>>>>> f32109a0c25b5a9076349ca078c3332bd19068c3
 			},
 			arpeggio, 
-			"random"
+			"up"
 		);
 
 		melody.loop = Infinity;
+		melody.interval = this.melodyInterval;
 		melody.loopEnd = "1m";
 
 		return melody;
@@ -134,41 +143,31 @@ class Melody
 	init() 
 	{				
 		this.progression = this.createProgression(this.tonic + "" + this.octave);
+		this.arpeggio = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
 
-		this.arpeggioA = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
-		this.arpeggioB = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
+		if (this.bass) this.base = this.createBase(this.bass);
 
-		this.base = this.createBase(this.bass);
-		this.melodyA = this.createMelody(this.leadA, this.arpeggioA);
-
-		if (this.leadB)
-			this.melodyB = this.createMelody(this.leadB, this.arpeggioB);
+		this.melody = this.createMelody(this.lead, this.arpeggio);
 	}
 
 	start(startTime = 0)
 	{
-		this.base.start(startTime);
-		this.melodyA.start(startTime);
+		if(this.base) this.base.start(startTime);
 
-		if (this.leadB)
-			this.melodyB.start(startTime);
+		this.melody.start(startTime);
 	}
 
 	update()
 	{
-		this.melodyA.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
-
-		if(this.melodyB)
-			this.melodyB.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
+		this.baseIndex++;
+		this.melody.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
 	}
 
 	stop()
-	{
-		this.base.stop();
-		this.melodyA.stop();
+	{	
+		if(this.base) this.base.stop();
 
-		if(this.melodyB)
-			this.melodyB.stop();
+		this.melody.stop();
 	}
 }
 
