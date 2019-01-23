@@ -53,7 +53,7 @@ const ambiance1 =
 		'minor',
 		4,
 		'violin', 
-		'piano'
+		'cello'
 	),
 	melodyP2: new Melody
 	(
@@ -86,5 +86,6 @@ const ambianceDub =
 	melody : new Melody(Melody.ModesNames[0], 4, 'violin'),
 	fx : new FXRack()
 }
+
 ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
 ambianceDub.beat.snare.catchFXs(fx);

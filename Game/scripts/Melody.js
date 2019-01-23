@@ -20,7 +20,7 @@ class Melody
 		this.mode = mode || Melody.ModesNames[0];
 		this.tonic = Melody.Notes[0];
 		this.octave = octave || 3;
-		this.melodyInterval = "4n";
+		this.melodyInterval = "8n";
 
 		this.progression = [];
 		this.arpeggio = [];
@@ -56,10 +56,12 @@ class Melody
 	// Input : array of notes
 	adjustNotesOctave(notes, octave)
 	{
+		let result = [];
+
 		for (var i = 0; i < notes.length; i++) 
-		{
-			notes[i] = notes[i].substring(0, notes[i].length - 1) + octave.toString(); 
-		}
+			result.push(notes[i].substring(0, notes[i].length - 1) + octave.toString());
+
+		return result;
 	}
 
 	// Given a chord at format 'CM-4' transforms it to 'CM'
@@ -105,7 +107,8 @@ class Melody
 		let pattern = this.createArpeggioPattern(noteCount);
 
 		for (let i = 0; i < noteCount; i++) {
-			arpeggio.push(notes[pattern[i] % notes.length]);
+			//arpeggio.push(notes[pattern[i] % notes.length]);
+			arpeggio.push(notes[i % notes.length]);
 		}
 
 		return arpeggio;
@@ -117,15 +120,13 @@ class Melody
 
 		let base = new Tone.Event
 		(
-			function(time)
+			function(time, note)
 			{	
-				let chord = scribble.chord(_this.progression[_this.baseIndex % _this.progression.length]);
-				console.log(_this.progression[_this.baseIndex % _this.progression.length]);
-				_this.adjustNotesOctave(chord, _this.octave);
-
-				for (let i = 0; i < chord.length; i++) 
-					instrument.play(chord[i], "1m", time);
-			}
+				note.forEach(element => instrument.play(element, "1m", time));
+			},
+		 	_this.adjustNotesOctave(
+				scribble.chord(
+					_this.progression[_this.baseIndex % _this.progression.length]), _this.octave)
 		);
 
 		base.loop = Infinity;
@@ -147,7 +148,7 @@ class Melody
 						time);
 			},
 			arpeggio, 
-			"up"
+			"down"
 		);
 
 		melody.loop = Infinity;
@@ -163,38 +164,46 @@ class Melody
 		this.progression = this.createProgression(this.tonic + "" + this.octave, this.mode);
 
 		this.arpeggio = this.createArpeggio(
-			this.shuffleChords(
 				scribble.chord(
-					this.progression[this.baseIndex % this.progression.length])), 3);
+					this.progression[this.baseIndex % this.progression.length]), 8);
 
 		if (this.bass) this.base = this.createBase(this.bass);
 
-		this.melody = this.createMelody(this.lead, this.arpeggio, this.melodyInterval, 0.5);
+		this.melody = this.createMelody(this.lead, this.arpeggio, this.melodyInterval, 1);
 	}
 
-	start(startTime = 0)
+	startBase(startTime = 0)
 	{
 		if(this.base) this.base.start(startTime);
+	}
 
+	startMelody(startTime = 0)
+	{
 		this.melody.start(startTime);
 	}
 
-	update()
+
+	updateBase(chordNotes = 1)
 	{
 		this.baseIndex++;
-
-		this.melody.pattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length)];
-
-		this.melody.values = this.createArpeggio(
-			this.shuffleChords(
-				scribble.chord(
-					this.progression[this.baseIndex % this.progression.length])), 3);
+		let chord = scribble.chord(this.progression[this.baseIndex % this.progression.length]);
+		this.base.value = this.adjustNotesOctave(chord.splice(0, Math.min(chord.length, chordNotes)), this.octave);
+		console.log(this.base);
 	}
 
-	stop()
+	updateArpeggio()
+	{
+		//this.melody.pattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length)];
+		let chord = scribble.chord(this.progression[this.baseIndex % this.progression.length]);
+		this.melody.values = this.createArpeggio(chord, 8);
+	}
+
+	stopBase()
 	{	
 		if(this.base) this.base.stop();
-
+	}
+	stopMelody()
+	{
 		this.melody.stop();
 	}
 }

@@ -47,12 +47,14 @@ function updateMelody()
 	melody.stop();
 	punctualMelody.stop();
 
-	if (data["player"]=="White"){
+	if (data["player"]=="White")
+	{
 		melody = melodyP2;
 		punctualMelody = punctualMelodyP2;
 		//if (relativ != 0) relativ = 0;
 	}
-	else {
+	else 
+	{
 		melody = melodyP1;
 		punctualMelody = punctualMelodyP1;
 		//if (relativ != 1) relativ = 1;
@@ -141,9 +143,9 @@ async function updateSound() {
 
 
 //preparation ambianceDub
-async function updateBassLine(phase){
-await waitForRightTime();
-
+async function updateBassLine(phase)
+{
+	await waitForRightTime();
 
 	ambianceDub.bassLine.stop();
 
@@ -181,9 +183,9 @@ await waitForRightTime();
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
 }
 
-
 var phase = 0;
 var start = 0;
+
 $(document).ready(function()
 {
     document.querySelector('#addMove').addEventListener('mouseup', function(e)
@@ -211,6 +213,28 @@ $(document).ready(function()
 			//melody.start(startTime);
 			//punctualMelody.start(startTime);
 			//updateMelody();
+
+			switch(data["cornerMove"])
+			{
+				case "San-san":
+					melody.mode = Melody.ModesNames[2];
+					break;
+				case "Hoshi":
+					melody.mode = Melody.ModesNames[3];
+					break;
+				case "Komoku":
+					melody.mode = Melody.ModesNames[4];
+					break;
+				case "Takamoku":
+					melody.mode = Melody.ModesNames[5];
+					break;
+				case "Mokuhazushi":
+					melody.mode = Melody.ModesNames[6];
+					break;
+				default:
+					break;
+
+			}
 
 			beat.play(startTime);
 			melody.start(startTime);

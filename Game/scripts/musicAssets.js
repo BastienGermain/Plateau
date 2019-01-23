@@ -60,24 +60,28 @@ function getRandomIntBetween(start, end)
 {
 	let numbers = [];
 
-	for (var i = start; i <= end; i++) {
+	for (var i = start; i <= end; i++)
 		numbers.push(i);
-	}
+
 	return numbers[getRandomInt(numbers.length)];
 }
 
 
-function waitForRightTime() {
-  return new Promise(resolve => {
-    function check() {
+function waitForRightTime() 
+{
+  return new Promise(resolve => 
+  {
+    function check() 
+    {
 
-      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) {
+      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) 
+      {
         console.log('right time to update sound !');
         console.log(Tone.context.currentTime.toFixed(2)*60);
         resolve();
-      } else {
+      } 
+      else 
         window.setTimeout(check, 10);
-      }
     }
     check();
   });
