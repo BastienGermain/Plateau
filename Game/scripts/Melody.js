@@ -20,7 +20,7 @@ class Melody
 		this.mode = mode || Melody.ModesNames[0];
 		this.tonic = Melody.Notes[0];
 		this.octave = octave || 3;
-		this.melodyInterval = "4n";
+		this.melodyInterval = "8n";
 
 		this.progression = [];
 		this.arpeggio = [];

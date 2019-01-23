@@ -5,7 +5,7 @@
 
 var startTime;
 
-Tone.Transport.bpm.value = 120;
+Tone.Transport.bpm.value = 140;
 Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
@@ -35,19 +35,23 @@ var punctualMelody = punctualMelodyP1;
 
 // BEAT //////////////////////////////////////////////////////
 
-var beat = new Beat();
+const drum = new InstrumentSampler('drum');
+var beat = new Beat(drum);
 
 /////////////////////////////////////////////////////////////
 
-var technoBeat = new Beat("techno");
+var technoBeat = new Beat(drum, "techno");
 var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
+
+
+
 
 function updateMelody()
 {
 	melody.stop();
 	punctualMelody.stop();
 
-	if (data["player"]=="White"){
+	if (data["lastPlayer"]=="White"){
 		melody = melodyP2;
 		punctualMelody = punctualMelodyP2;
 		//if (relativ != 0) relativ = 0;
@@ -147,6 +151,7 @@ await waitForRightTime();
 
 	ambianceDub.bassLine.stop();
 
+	//les règles pour les != phases
 	if (phase==1){
 		if (data["player"]=="White"){
 			ambianceDub.bassLine = createBassLine("A3", 1);
@@ -156,10 +161,6 @@ await waitForRightTime();
 		}
 	}
 	if (phase==2){
-		//if (ambianceDub.beat != null){
-		//	ambianceDub.beat.stop();
-		//}
-		ambianceDub.beat.play();
 		if (data["player"]=="White"){
 			ambianceDub.bassLine = createBassLine("A3", 1);
 		}
@@ -176,6 +177,16 @@ await waitForRightTime();
 			ambianceDub.bassLine = createBassLine("A3", 3);	
 		}
 	}
+	if (phase==4){
+		if (data["player"]=="White"){
+			ambianceDub.bassLine = createBassLine("A3", 2);
+		}
+		else {
+			ambianceDub.beat.play();
+			ambianceDub.bassLine = createBassLine("A3", 3);	
+		}
+	}
+
 	ambianceDub.bassLine.start();
 	
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
@@ -203,7 +214,6 @@ $(document).ready(function()
 			phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 			
-			impro.start();
 			/*
 			beat.play(startTime);
 			melody.start(startTime);
@@ -222,18 +232,27 @@ $(document).ready(function()
 			//dubMelody.start();
 			//updateBassLine(phase);
 			//bassLineLow.start();
-			
-			
 		}
 		
-		/*
+		
 		if (data["stoneOnBoard"]>4){
 			phase=2;
+			ambianceDub.beat.play();
 		}
 		if (data["stoneOnBoard"]>8){
 			phase=3;
+			ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
+			ambianceDub.beat.snare.catchFXs(fx);
+		}
+		if (data["stoneOnBoard"]>12){
+			phase=4;
+			ambianceDub.melody.start();
+		}
+		if (data["stoneOnBoard"]>16){
+			ambianceDub.melody.melodyInterval = '1n';
 		}
 	
-		updateBassLine(phase);	*/
+		console.log(ambianceDub.melody.melodyInterval);
+		updateBassLine(phase);	
     })
 })

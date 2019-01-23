@@ -71,9 +71,9 @@ function waitForRightTime() {
   return new Promise(resolve => {
     function check() {
 
-      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) {
-        console.log('right time to update sound !');
-        console.log(Tone.context.currentTime.toFixed(2)*60);
+      if (Math.round(Tone.context.currentTime.toFixed(2)*100) % Math.round(60/Tone.Transport.bpm.value*8*100)  == 0.00) {
+        //console.log('right time to update sound !');
+        console.log(Tone.context.currentTime.toFixed(2));
         resolve();
       } else {
         window.setTimeout(check, 10);
