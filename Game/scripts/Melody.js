@@ -134,17 +134,16 @@ class Melody
 		return base;
 	}
 
-	createMelody(instrument, arpeggio, probability = 1) 
+	createMelody(instrument, arpeggio, interval, probability = 1) 
 	{
 		let _this = this;
 		let melody = new Tone.Pattern
 		(
 			function(time, note)
 			{
-				if(Math.round(2 * Math.random()))
 					instrument.play(
 						note, 
-						Tone.Time(_this.melodyInterval).toSeconds(), 
+						1.25 * Tone.Time(interval).toSeconds(), 
 						time);
 			},
 			arpeggio, 
@@ -152,7 +151,7 @@ class Melody
 		);
 
 		melody.loop = Infinity;
-		melody.interval = this.melodyInterval;
+		melody.interval = interval;
 		melody.probability = probability;
 		melody.loopEnd = "1m";
 
@@ -170,7 +169,7 @@ class Melody
 
 		if (this.bass) this.base = this.createBase(this.bass);
 
-		this.melody = this.createMelody(this.lead, this.arpeggio, 0.5);
+		this.melody = this.createMelody(this.lead, this.arpeggio, this.melodyInterval, 0.5);
 	}
 
 	start(startTime = 0)

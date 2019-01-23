@@ -1,10 +1,15 @@
 class Beat {
 
 	// selected pattern [kickPatternIndex, snarePatternIndex, hihatPatternIndex]
-	constructor(drum, ambiance = "")
+	constructor(ambiance = "")
 	{	
-		this.drum = new InstrumentSampler('drum');
-		this.drum.sampler.volume.value = -9;
+		this.kick = new InstrumentSampler('kick');
+		this.snare = new InstrumentSampler('snare');
+		this.hihat = new InstrumentSampler('hihat');
+		
+		this.kick.sampler.volume.value = -9;
+		this.snare.sampler.volume.value = -9;
+		this.hihat.sampler.volume.value = -9;
 
 		this.kickSubdivisions = 32;
 		this.hihatSubdivisions = 32;
@@ -21,12 +26,12 @@ class Beat {
 		this.hihatIndex = 0;
 
 		this.kickNote = "C0";
-		this.snareNote = "C#0";
-		this.hihatNote = "D0";
+		this.snareNote = "C0";
+		this.hihatNote = "C0";
 
-		this.kick = null;
-		this.hihat = null;
-		this.snare = null;
+		this.kickLoop = null;
+		this.hihatLoop = null;
+		this.snareLoop = null;
 
 		this.playing = false;
 	}
@@ -57,57 +62,57 @@ class Beat {
 	{	
 		let _this = this;
 
-		let kick =  new Tone.Event(
+		let kickLoop =  new Tone.Event(
 			function(time)
 			{	
 				if (_this.kickPattern.charAt(_this.kickIndex % _this.kickSubdivisions) === "x")
 				{
-					_this.drum.play(_this.kickNote, 0.25, time);
+					_this.kick.play(_this.kickNote, 0.25, time);
 				}
 				_this.kickIndex++;
 			});
 
-		kick.loop = Infinity;
-		kick.loopEnd = "8n";
-		kick.playbackRate = 1;
+		kickLoop.loop = Infinity;
+		kickLoop.loopEnd = "8n";
+		kickLoop.playbackRate = 1;
 
-		return kick;
+		return kickLoop;
 	}
 
 	createSnare() 
 	{	
 		let _this = this;
 
-		let snare =  new Tone.Event(
+		let snareLoop =  new Tone.Event(
 			function(time)
 			{	
 				if (_this.snarePattern.charAt(_this.snareIndex % _this.snareSubdivisions) === "x")
-					_this.drum.play(_this.snareNote, 0.25, time);
+					_this.snare.play(_this.snareNote, 0.25, time);
 				_this.snareIndex++;
 			});
 
-		snare.loop = Infinity;
-		snare.loopEnd = "8n";
-		snare.playbackRate = 1;
-		return snare;
+		snareLoop.loop = Infinity;
+		snareLoop.loopEnd = "8n";
+		snareLoop.playbackRate = 1;
+		return snareLoop;
 	}
 
 	createHihat() 
 	{	
 		let _this = this;
 
-		let hihat =  new Tone.Event(
+		let hihatLoop =  new Tone.Event(
 			function(time)
 			{	
 				if (_this.hihatPattern.charAt(_this.hihatIndex % _this.hihatSubdivisions) === "x")
-					_this.drum.play(_this.hihatNote, 0.25, time, 0.1);
+					_this.hihat.play(_this.hihatNote, 0.25, time, 0.1);
 				_this.hihatIndex++;
 			});
 
-		hihat.loop = Infinity;
-		hihat.loopEnd = "8n";
-		hihat.playbackRate = 1;
-		return hihat;
+		hihatLoop.loop = Infinity;
+		hihatLoop.loopEnd = "8n";
+		hihatLoop.playbackRate = 1;
+		return hihatLoop;
 	}
  
 	async play(startTime)
@@ -116,29 +121,29 @@ class Beat {
 
 		if (!this.playing){
 			this.playing = true;
-			this.kick = this.createKick().start(startTime);
-			this.snare = this.createSnare().start(startTime);
-			this.hihat = this.createHihat().start(startTime);
+			this.kickLoop = this.createKick().start(startTime);
+			this.snareLoop = this.createSnare().start(startTime);
+			this.hihatLoop = this.createHihat().start(startTime);
 		}
 	}
 
 	stop(){
-		this.kick.stop();
-		this.snare.stop();
-		this.hihat.stop();
+		this.kickLoop.stop();
+		this.snareLoop.stop();
+		this.hihatLoop.stop();
 
 		this.playing = false;
 	}
 
 	//pas fonctionnel
 	rate(){
-		this.kick = this.createKick().playbackRate(2)
-		this.snare = this.createSnare().playbackRate(2)
-		this.hihat = this.createHihat().playbackRate(2)
+		this.kickLoop = this.createKick().playbackRate(2)
+		this.snareLoop = this.createSnare().playbackRate(2)
+		this.hihatLoop = this.createHihat().playbackRate(2)
 
-		this.kick.start(startTime);
-		this.snare.start(startTime);
-		this.hihat.start(startTime);
+		this.kickLoop.start(startTime);
+		this.snareLoop.start(startTime);
+		this.hihatLoop.start(startTime);
 	}
 }
 

@@ -94,7 +94,8 @@ InstrumentSampler.Instruments =
 'piano', 'bass-electric', 'bassoon', 'cello', 'clarinet', 
 'contrabass', 'flute', 'french-horn', 'guitar-acoustic', 
 'guitar-electric','guitar-nylon', 'harmonium', 'harp', 'organ', 
-'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone'
+'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone', 
+'kick', 'snare', 'hihat'
 ];
 
 
