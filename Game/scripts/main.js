@@ -143,15 +143,15 @@ async function updateSound() {
 
 
 var start = 0;
-$(document).ready(function() 
+$(document).ready(function()
 {
-    document.querySelector('#addMove').addEventListener('mouseup', function(e) 
+    document.querySelector('#addMove').addEventListener('mouseup', function(e)
     {
         /* For Chrome : If an AudioContext is created prior to the document receiving a user gesture,
         * it will be created in the "suspended" state,
         * and you will need to call resume() after a user gesture is received.
         */
-        if (Tone.context.state !== 'running') 
+        if (Tone.context.state !== 'running')
            	Tone.context.resume();
 
 		if (start == 0) 
