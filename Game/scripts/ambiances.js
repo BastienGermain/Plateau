@@ -61,11 +61,13 @@ const ambiance1 =
 		3,
 		'flute', 
 		'contrabass'
-	)
+	),
+	
 }
-
 ambiance1.punctualMelodyP1 = new PunctualMelody(ambiance1.melodyP1, 'xylophone', 3);
 ambiance1.punctualMelodyP2 = new PunctualMelody(ambiance1.melodyP2, 'violin', 4);
+
+
 
 ///////////////////////////////////////////////////////////////////
 
@@ -83,9 +85,11 @@ const ambianceDub =
 {
 	beat : new Beat("dub"),
 	bassLine : createBassLine("A3", 0),
-	melody : new Melody(Melody.ModesNames[0], 4, 'violin'),
+	melody : new Melody('major', 3, 'violin', 'trumpet'),
 	fx : new FXRack()
 }
 
 ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
 ambianceDub.beat.snare.catchFXs(fx);
+ambianceDub.melody.init();
+
