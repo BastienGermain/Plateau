@@ -1,14 +1,10 @@
 const freqIncrement = 1.05946;
 
-const tempo = Tone.Transport.bpm;
-const T = 60/tempo;
-
-const nbMesure = 4;
 
 const notes = new Object();
-const notesNames = ["A3", "A#3", "B3", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A4"];
+const notesNames = ["A2", "A#2", "B2", "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A3", "A#3", "B3", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A4"];
 
-notes["A3"] = 220;
+notes["A2"] = 110;
 
 for(let i = 1; i < notesNames.length; ++i)
 	notes[notesNames[i]] = notes[notesNames[i-1]] * freqIncrement;
@@ -68,4 +64,21 @@ function getRandomIntBetween(start, end)
 		numbers.push(i);
 	}
 	return numbers[getRandomInt(numbers.length)];
+}
+
+
+function waitForRightTime() {
+  return new Promise(resolve => {
+    function check() {
+
+      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) {
+        console.log('right time to update sound !');
+        console.log(Tone.context.currentTime.toFixed(2)*60);
+        resolve();
+      } else {
+        window.setTimeout(check, 10);
+      }
+    }
+    check();
+  });
 }

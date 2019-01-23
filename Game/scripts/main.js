@@ -40,14 +40,11 @@ var beat = new Beat(drum);
 
 /////////////////////////////////////////////////////////////
 
-var technoBeat = new Beat(drum, techno=true);
+var technoBeat = new Beat(drum, "techno");
 var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
 
-/*
-function updateBassLine(){
-	bassLine = createBassLine(tonalite);
-	bassLine.start();
-}*/
+
+
 
 function updateMelody()
 {
@@ -117,11 +114,15 @@ function updateHarmony()
 }
 
 
-/*function waitForRightTime() {
+//recopiée dans musicAssets.js
+/*
+function waitForRightTime() {
   return new Promise(resolve => {
     function check() {
-      if (Tone.context.currentTime.toFixed(2) % nbMesure == 0.00) {
+
+      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) {
         console.log('right time to update sound !');
+        console.log(Tone.context.currentTime.toFixed(2)*60);
         resolve();
       } else {
         window.setTimeout(check, 10);
@@ -142,6 +143,50 @@ async function updateSound() {
 }*/
 
 
+
+//preparation ambianceDub
+async function updateBassLine(phase){
+await waitForRightTime();
+
+
+	ambianceDub.bassLine.stop();
+
+	if (phase==1){
+		if (data["player"]=="White"){
+			ambianceDub.bassLine = createBassLine("A3", 1);
+		}
+		else {
+			ambianceDub.bassLine = createBassLine("A3", 0);	
+		}
+	}
+	if (phase==2){
+		//if (ambianceDub.beat != null){
+		//	ambianceDub.beat.stop();
+		//}
+		ambianceDub.beat.play();
+		if (data["player"]=="White"){
+			ambianceDub.bassLine = createBassLine("A3", 1);
+		}
+		else {
+			ambianceDub.bassLine = createBassLine("A3", 0);	
+		}
+	}
+	if (phase==3){
+		if (data["player"]=="White"){
+			ambianceDub.bassLine = createBassLine("A3", 2);
+		}
+		else {
+			ambianceDub.beat.play();
+			ambianceDub.bassLine = createBassLine("A3", 3);	
+		}
+	}
+	ambianceDub.bassLine.start();
+	
+	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
+}
+
+
+var phase = 0;
 var start = 0;
 $(document).ready(function()
 {
@@ -151,15 +196,26 @@ $(document).ready(function()
         * it will be created in the "suspended" state,
         * and you will need to call resume() after a user gesture is received.
         */
-        if (Tone.context.state !== 'running')
+        if (Tone.context.state !== 'running') 
+           
            	Tone.context.resume();
 
 		if (start == 0) 
 		{
 			//updateBassLine();
 			start = 1;
+			phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 			
+			//beat.play(startTime);
+			//melody.start(startTime);
+			//updateMelody();
+
+			//beat.play(startTime);
+			//melody.start(startTime);
+			//punctualMelody.start(startTime);
+			//updateMelody();
+
 			beat.play(startTime);
 			melody.start(startTime);
 			punctualMelody.start(startTime);
@@ -167,8 +223,24 @@ $(document).ready(function()
 			//updateHarmony();	//lance l'harmonie
 
 
-			//Tone.Transport.bpm.value*=3;
-			technoBeat.play();
+			//Tone.Transport.bpm.value*=3;		//drum'n'bass ambiance
+			//technoBeat.play();
+
+
+			//ambianceDub.beat.play();
+			//dubMelody.start();
+			//updateBassLine(phase);
+			//bassLineLow.start();
 		}
+		
+		/*
+		if (data["stoneOnBoard"]>4){
+			phase=2;
+		}
+		if (data["stoneOnBoard"]>8){
+			phase=3;
+		}
+	
+		updateBassLine(phase);	*/
     })
 })
