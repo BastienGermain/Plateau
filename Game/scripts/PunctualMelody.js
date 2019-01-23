@@ -30,7 +30,7 @@ class PunctualMelody
 
 		this.arpeggioPattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length)];
 
-		this.punctualMelody = this.melody.createMelody(this.lead, this.arpeggio, 0.4);
+		this.punctualMelody = this.melody.createMelody(this.lead, this.arpeggio, this.melodyInterval, 0.4);
 	}
 
 	start(startTime = 0)
