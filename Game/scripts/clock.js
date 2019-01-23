@@ -24,6 +24,7 @@ function switchTimer() {
         }, 1000);
         data["previousMoveTime"] = data["moveTime"];
         data["moveTime"] = secW - oldSecW;
+        data["totalWhiteTime"] = secW;
         oldSecW = secW;
     } else {
         clearInterval(timer);
@@ -34,6 +35,7 @@ function switchTimer() {
         }, 1000);
         data["previousMoveTime"] = data["moveTime"];
         data["moveTime"] = secB - oldSecB;
+        data["totalBlackTime"] = secB;
         oldSecB = secB;
     }
 }

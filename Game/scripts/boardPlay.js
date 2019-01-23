@@ -67,6 +67,11 @@ jsetup.create('board', function(canvas) {
       data["blackCaptures"] = node.info.captures[1];
       data["knownMove"] = checkKnownMoves(data, boardMat);
       checkAtari(boardMat);
+      if (data["stonesAround"] == 0) {
+         data["cornerMove"] = getCornerMove();
+      } else {
+         data["cornerMove"] = "";
+      }
 
       if(lastMove)
         node.setMark(lastMove, JGO.MARK.NONE); // clear previous mark

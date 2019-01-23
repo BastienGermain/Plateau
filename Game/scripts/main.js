@@ -37,11 +37,8 @@ var punctualMelody = punctualMelodyP1;
 const drum = new InstrumentSampler('drum');
 var beat = new Beat(drum);
 
-<<<<<<< HEAD
-=======
 /////////////////////////////////////////////////////////////
 
->>>>>>> 89dfe01967d00d1e9cd25af6235fc25d7b26a0e1
 var technoBeat = new Beat(drum, techno=true);
 var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
 /*
@@ -68,7 +65,7 @@ function updateMelody()
 
 	melody.update();
 	punctualMelody.update(melody.progression[melody.baseIndex % melody.progression.length]);
-	
+
 	melody.start();
 	punctualMelody.start();
 
@@ -144,33 +141,26 @@ async function updateSound() {
 
 
 var start = 0;
-$(document).ready(function() 
+$(document).ready(function()
 {
-    document.querySelector('#addMove').addEventListener('mouseup', function(e) 
+    document.querySelector('#addMove').addEventListener('mouseup', function(e)
     {
         /* For Chrome : If an AudioContext is created prior to the document receiving a user gesture,
         * it will be created in the "suspended" state,
         * and you will need to call resume() after a user gesture is received.
         */
-        if (Tone.context.state !== 'running') 
+        if (Tone.context.state !== 'running')
            	Tone.context.resume();
 
 		if (start == 0) {
 			//updateBassLine();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
-<<<<<<< HEAD
-			
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//updateMelody();
 
-=======
 			beat.play(startTime);
 			melody.start(startTime);
 			punctualMelody.start(startTime);
 			updateMelody();
->>>>>>> 89dfe01967d00d1e9cd25af6235fc25d7b26a0e1
 			//updateHarmony();	//lance l'harmonie
 
 
