@@ -3,8 +3,6 @@
 //harmonyInstrument = harmonyInstrument.connect(vibrato);
 
 
-
-
 var harmonyInstrument = new InstrumentSampler("violin");
 var player1Instrument = new InstrumentSampler("violin");
 var player2Instrument = new InstrumentSampler("flute");
