@@ -19,6 +19,9 @@ data["previousMoveTime"] = 0;
 data["atariNumber"] = 0; //  number of atari situations on the board
 data["whiteAtariNumber"] = 0; // number of white stones in atari
 data["blackAtariNumber"] = 0;
+// ajouter les josekis de coin
+// connexion de chaines (seulement 4 libertés)
+// temps total mis par blanc et/ou noir
 
 var boardMat = math.zeros(19, 19);
 
