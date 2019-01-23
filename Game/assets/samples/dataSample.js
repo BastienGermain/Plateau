@@ -108,13 +108,6 @@ const dataSample =
         "B2": "B2.[mp3|ogg]"
     },
 
-    "drum":
-    {
-        "C0": "classic-kick.wav",
-        "C#0": "classic-snare.wav",
-        "D0": "classic-hihat.wav"
-    },
-
     "flute": 
     {
         "A5": "A5.[mp3|ogg]",
@@ -539,5 +532,20 @@ const dataSample =
         "C4": "C4.[mp3|ogg]",
         "C5": "C5.[mp3|ogg]",
         "C6": "C6.[mp3|ogg]"
+    },
+
+    "kick":
+    {
+        "C0": "classic-kick.wav"
+    },
+
+    "snare":
+    {
+        "C0": "classic-snare.wav"
+    },
+
+    "drum":
+    {
+        "C0": "classic-hihat.wav"
     }
 }

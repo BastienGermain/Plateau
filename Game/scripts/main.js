@@ -35,23 +35,19 @@ var punctualMelody = punctualMelodyP1;
 
 // BEAT //////////////////////////////////////////////////////
 
-const drum = new InstrumentSampler('drum');
-var beat = new Beat(drum);
+var beat = new Beat();
 
 /////////////////////////////////////////////////////////////
 
-var technoBeat = new Beat(drum, "techno");
+var technoBeat = new Beat("techno");
 var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
-
-
-
 
 function updateMelody()
 {
 	melody.stop();
 	punctualMelody.stop();
 
-	if (data["lastPlayer"]=="White"){
+	if (data["player"]=="White"){
 		melody = melodyP2;
 		punctualMelody = punctualMelodyP2;
 		//if (relativ != 0) relativ = 0;
@@ -207,19 +203,14 @@ $(document).ready(function()
 			phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 			
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//updateMelody();
-
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//punctualMelody.start(startTime);
-			//updateMelody();
-
+			impro.start();
+			/*
 			beat.play(startTime);
 			melody.start(startTime);
 			punctualMelody.start(startTime);
 			updateMelody();
+			*/
+
 			//updateHarmony();	//lance l'harmonie
 
 
@@ -231,6 +222,8 @@ $(document).ready(function()
 			//dubMelody.start();
 			//updateBassLine(phase);
 			//bassLineLow.start();
+			
+			
 		}
 		
 		/*
