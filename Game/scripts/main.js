@@ -207,19 +207,14 @@ $(document).ready(function()
 			phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 			
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//updateMelody();
-
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//punctualMelody.start(startTime);
-			//updateMelody();
-
+			impro.start();
+			/*
 			beat.play(startTime);
 			melody.start(startTime);
 			punctualMelody.start(startTime);
 			updateMelody();
+			*/
+
 			//updateHarmony();	//lance l'harmonie
 
 
@@ -231,6 +226,8 @@ $(document).ready(function()
 			//dubMelody.start();
 			//updateBassLine(phase);
 			//bassLineLow.start();
+			
+			
 		}
 		
 		/*
