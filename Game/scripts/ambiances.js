@@ -27,9 +27,9 @@ const ambianceX =
 		'leadInstrument', 
 		'bassInstrument'
 	),
-	punctualMelodyP1: new PunctualMelody('instrument', octave),
-	punctualMelodyP2: new PunctualMelody('instrument', octave),
 }
+ambianceX.punctualMelodyP1: new PunctualMelody(ambianceX.melodyP1, 'instrument', octave),
+ambianceX.punctualMelodyP2: new PunctualMelody(ambianceX.melodyP2, 'instrument', octave),
 
 */
 
@@ -63,18 +63,28 @@ const ambiance1 =
 		'contrabass'
 	)
 }
+
 ambiance1.punctualMelodyP1 = new PunctualMelody(ambiance1.melodyP1, 'xylophone', 3);
 ambiance1.punctualMelodyP2 = new PunctualMelody(ambiance1.melodyP2, 'violin', 4);
 
+///////////////////////////////////////////////////////////////////
 
+/* AMBIANCE DESCRIPTION */
+/*
+*
+*
+*
+*
+*
+*
+*////////////////////////
 
 const ambianceDub = 
 {
 	beat : new Beat("dub"),
 	bassLine : createBassLine("A3", 0),
-	melody : new Melody(Melody.ModesNames[0], 'violon'),
+	melody : new Melody(Melody.ModesNames[0], 4, 'violin'),
 	fx : new FXRack()
-
 }
 ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
 ambianceDub.beat.snare.catchFXs(fx);
