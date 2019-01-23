@@ -57,7 +57,7 @@ const ambiance1 =
 		'major',
 		3,
 		'trumpet', 
-		'bass-electric'
+		'piano'
 	),
 	melodyP2: new Melody
 	(
@@ -65,10 +65,10 @@ const ambiance1 =
 		3,
 		'flute', 
 		'contrabass'
-	),
-	punctualMelodyP1: new PunctualMelody('xylophone', 3),
-	punctualMelodyP2: new PunctualMelody('violin', 4),
+	)
 }
+ambiance1.punctualMelodyP1 = new PunctualMelody(ambiance1.melodyP1, 'xylophone', 3);
+ambiance1.punctualMelodyP2 = new PunctualMelody(ambiance1.melodyP2, 'violin', 4);
 
 
 

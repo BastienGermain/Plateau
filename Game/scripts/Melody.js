@@ -33,6 +33,8 @@ class Melody
 
 	shuffleChords(chords) 
 	{
+		let result = [];
+
     	for (let i = chords.length - 1; i > 0; i--) 
     	{
 	        let j = Math.floor(Math.random() * (i + 1));
@@ -40,9 +42,18 @@ class Melody
 	        chords[i] = chords[j];
 	        chords[j] = temp;
     	}
+
+    	result = chords;
+    	return result;
 	}
 
-	// input : array of notes
+	pickFour(chords)
+	{
+		let result = [];
+		result.push(chords[getRandomInt(chords.length)])
+	}
+
+	// Input : array of notes
 	adjustNotesOctave(notes, octave)
 	{
 		for (var i = 0; i < notes.length; i++) 
@@ -51,10 +62,16 @@ class Melody
 		}
 	}
 
+	// Given a chord at format 'CM-4' transforms it to 'CM'
+	removeChordOctave(chord)
+	{
+		return chord.substring(0, 1) + chord.charAt(chord.length -1);
+	}
+
 	createArpeggioPattern(noteCount)
 	{
 		let numbers = [];
-		let pattern = '';
+		let pattern = [];
   		let picked = null;
 
 		for (let i = 0; i < (noteCount || 8); ++i) 
@@ -63,7 +80,7 @@ class Melody
   		while (numbers.length != 0)
   		{
   			picked = Math.round(Math.random() * (numbers.length-1));
-    		pattern += numbers[picked];
+    		pattern.push(numbers[picked]);
     		numbers = numbers.filter(number => number != numbers[picked]);
     	}
 
@@ -77,15 +94,20 @@ class Melody
 			Melody.Modes[mode].join(' ')
 		).split(' ');
 
-		this.shuffleChords(progression);
 		console.log(progression);
+		this.shuffleChords(progression);
 		return progression;
 	}
 
-	createArpeggio(note, noteCount = 8)
+	createArpeggio(notes, noteCount = 8)
 	{
-		let arpeggio = scribble.arp({chords: note, count: noteCount, order: this.createArpeggioPattern(noteCount)});
-		this.adjustNotesOctave(arpeggio, Math.min(this.octave, 6));
+		let arpeggio = [];
+		let pattern = this.createArpeggioPattern(noteCount);
+
+		for (let i = 0; i < noteCount; i++) {
+			arpeggio.push(notes[pattern[i] % notes.length]);
+		}
+
 		return arpeggio;
 	}
 
@@ -98,6 +120,7 @@ class Melody
 			function(time)
 			{	
 				let chord = scribble.chord(_this.progression[_this.baseIndex % _this.progression.length]);
+				console.log(_this.progression[_this.baseIndex % _this.progression.length]);
 				_this.adjustNotesOctave(chord, _this.octave);
 
 				for (let i = 0; i < chord.length; i++) 
@@ -138,7 +161,11 @@ class Melody
 	init() 
 	{				
 		this.progression = this.createProgression(this.tonic + "" + this.octave, this.mode);
-		this.arpeggio = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
+
+		this.arpeggio = this.createArpeggio(
+			this.shuffleChords(
+				scribble.chord(
+					this.progression[this.baseIndex % this.progression.length])), 3);
 
 		if (this.bass) this.base = this.createBase(this.bass);
 
@@ -156,8 +183,12 @@ class Melody
 	{
 		this.baseIndex++;
 
-		this.melody.pattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length - 1)];
-		this.melody.values = this.createArpeggio(this.progression[this.baseIndex % this.progression.length], getRandomIntBetween(2, 8));
+		this.melody.pattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length)];
+
+		this.melody.values = this.createArpeggio(
+			this.shuffleChords(
+				scribble.chord(
+					this.progression[this.baseIndex % this.progression.length])), 3);
 	}
 
 	stop()

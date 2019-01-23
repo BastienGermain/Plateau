@@ -27,8 +27,9 @@ var melody = melodyP1;
 const punctualMelodyP1 = ambiance1.punctualMelodyP1;
 const punctualMelodyP2 = ambiance1.punctualMelodyP2;
 
-punctualMelodyP1.init(melodyP1.progression[melody.baseIndex % melody.progression.length]);
-punctualMelodyP2.init(melodyP2.progression[melody.baseIndex % melody.progression.length]);
+punctualMelodyP1.init();
+
+punctualMelodyP2.init();
 
 var punctualMelody = punctualMelodyP1;
 
@@ -41,6 +42,8 @@ var beat = new Beat(drum);
 
 var technoBeat = new Beat(drum, "techno");
 var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
+
+
 
 
 function updateMelody()
@@ -60,7 +63,7 @@ function updateMelody()
 	}
 
 	melody.update();
-	punctualMelody.update(melody.progression[melody.baseIndex % melody.progression.length]);
+	punctualMelody.update();
 	
 	melody.start();
 	punctualMelody.start();
@@ -185,9 +188,9 @@ await waitForRightTime();
 
 var phase = 0;
 var start = 0;
-$(document).ready(function() 
+$(document).ready(function()
 {
-    document.querySelector('#addMove').addEventListener('mouseup', function(e) 
+    document.querySelector('#addMove').addEventListener('mouseup', function(e)
     {
         /* For Chrome : If an AudioContext is created prior to the document receiving a user gesture,
         * it will be created in the "suspended" state,
@@ -197,9 +200,8 @@ $(document).ready(function()
            
            	Tone.context.resume();
 
-           
-
-		if (start == 0) {
+		if (start == 0) 
+		{
 			//updateBassLine();
 			start = 1;
 			phase = 1;
@@ -214,6 +216,10 @@ $(document).ready(function()
 			//punctualMelody.start(startTime);
 			//updateMelody();
 
+			beat.play(startTime);
+			melody.start(startTime);
+			punctualMelody.start(startTime);
+			updateMelody();
 			//updateHarmony();	//lance l'harmonie
 
 
@@ -227,6 +233,7 @@ $(document).ready(function()
 			//bassLineLow.start();
 		}
 		
+		/*
 		if (data["stoneOnBoard"]>4){
 			phase=2;
 		}
@@ -234,6 +241,6 @@ $(document).ready(function()
 			phase=3;
 		}
 	
-		updateBassLine(phase);	
+		updateBassLine(phase);	*/
     })
 })

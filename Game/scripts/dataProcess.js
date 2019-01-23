@@ -13,12 +13,17 @@ data["whiteStonesAround"] = 0; // same with only white
 data["blackStonesAround"] = 0; // same with only black
 data["whiteCaptures"] = 0; // number of black stones captured by white
 data["blackCaptures"] = 0;
-data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
-data["moveTime"] = 0; // In seconds
-data["previousMoveTime"] = 0;
 data["atariNumber"] = 0; //  number of atari situations on the board
 data["whiteAtariNumber"] = 0; // number of white stones in atari
 data["blackAtariNumber"] = 0;
+data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
+data["moveTime"] = 0; // In seconds
+data["previousMoveTime"] = 0;
+data["totalWhiteTime"] = 0; // In seconds
+data["totalBlackTime"] = 0;
+data["cornerMove"] = "" // Values : "San-san", "Hoshi", "Komoku", "Takamoku", "Mokuhazushi"
+// connexion de chaines (seulement 4 libertés)
+
 
 var boardMat = math.zeros(19, 19);
 
@@ -53,6 +58,11 @@ function beginSGF(file) {
         data["knownMove"] = checkKnownMoves(data, boardMat);
         data["moveTime"] = sgf[moveNumber].C;
         checkAtari(boardMat);
+        if (data["stonesAround"] == 0) {
+           data["cornerMove"] = getCornerMove();
+        } else {
+           data["cornerMove"] = "";
+        }
 		moveNumber++;
 	})
 };
@@ -190,6 +200,90 @@ function checkKnownMoves(dataObject, mat) {
 
     return "";
 
+}
+
+function getCornerMove() {
+    const x = data["stonePosition"][0];
+    const y = data["stonePosition"][1];
+    if (x == 2) {
+        if (y == 2) {
+            return "San-san";
+        } else if (y == 3) {
+            return "Komoku";
+        } else if (y == 4) {
+            return "Mokuhazushi";
+        } else if (y == 14) {
+            return "Mokuhazushi";
+        } else if (y == 15) {
+            return "Komoku";
+        } else if (y == 16) {
+            return "San-san";
+        }
+    } else if (x == 3) {
+        if (y == 2) {
+            return "Komoku";
+        } else if (y == 3) {
+            return "Hoshi";
+        } else if (y == 4) {
+            return "Takamoku";
+        } else if (y == 14) {
+            return "Takamoku";
+        } else if (y == 15) {
+            return "Hoshi";
+        } else if (y == 16) {
+            return "Komoku";
+        }
+    } else if (x == 4) {
+        if (y == 2) {
+            return "Mokuhazushi";
+        } else if (y == 3) {
+            return "Takamoku";
+        } else if (y == 15) {
+            return "Takamoku";
+        } else if (y == 16) {
+            return "Mokuhazushi";
+        }
+    } else if (x == 14) {
+        if (y == 2) {
+            return "Mokuhazushi";
+        } else if (y == 3) {
+            return "Takamoku";
+        } else if (y == 15) {
+            return "Takamoku";
+        } else if (y == 16) {
+            return "Mokuhazushi";
+        }
+    } else if (x == 15) {
+        if (y == 2) {
+            return "Komoku";
+        } else if (y == 3) {
+            return "Hoshi";
+        } else if (y == 4) {
+            return "Takamoku";
+        }  else if (y == 14) {
+            return "Takamoku";
+        } else if (y == 15) {
+            return "Hoshi";
+        } else if (y == 16) {
+            return "Komoku";
+        }
+    } else if (x == 16) {
+        if (y == 2) {
+            return "San-san";
+        } else if (y == 3) {
+            return "Komoku";
+        } else if (y == 4) {
+            return "Mokuhazushi";
+        } else if (y == 14) {
+            return "Mokuhazushi";
+        } else if (y == 15) {
+            return "Komoku";
+        } else if (y == 16) {
+            return "San-san";
+        }
+    } else {
+        return "";
+    }
 }
 
 /* Tobi : Saut d'un espace
