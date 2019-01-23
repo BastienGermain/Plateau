@@ -12,37 +12,74 @@ Tone.Transport.start();
 
 var harmony = new Harmony();
 
-var melodyP1 = new Melody(Melody.ModesNames[8], 'bass-electric', 'piano');
-var melodyP2 = new Melody(Melody.ModesNames[3], 'cello', 'bassoon');
+// MELODY ////////////////////////////////////////////
+
+const melodyP1 = ambiance1.melodyP1;
+const melodyP2 = ambiance1.melodyP2;
 
 melodyP1.init();
 melodyP2.init();
 
 var melody = melodyP1;
 
+// PONCTUAL MELODY ////////////////////////////////////////////
+
+const punctualMelodyP1 = ambiance1.punctualMelodyP1;
+const punctualMelodyP2 = ambiance1.punctualMelodyP2;
+
+punctualMelodyP1.init(melodyP1.progression[melody.baseIndex % melody.progression.length]);
+punctualMelodyP2.init(melodyP2.progression[melody.baseIndex % melody.progression.length]);
+
+var punctualMelody = punctualMelodyP1;
+
+// BEAT //////////////////////////////////////////////////////
+
 const drum = new InstrumentSampler('drum');
 var beat = new Beat(drum);
 
+<<<<<<< HEAD
+=======
+/////////////////////////////////////////////////////////////
+
+>>>>>>> 89dfe01967d00d1e9cd25af6235fc25d7b26a0e1
+var technoBeat = new Beat(drum, techno=true);
+var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
+/*
 function updateBassLine(){
 	bassLine = createBassLine(tonalite);
 	bassLine.start();
-}
+}*/
 
 function updateMelody()
 {
 	melody.stop();
+	punctualMelody.stop();
 
 	if (data["lastPlayer"]=="White"){
 		melody = melodyP2;
+		punctualMelody = punctualMelodyP2;
 		//if (relativ != 0) relativ = 0;
 	}
 	else {
 		melody = melodyP1;
+		punctualMelody = punctualMelodyP1;
 		//if (relativ != 1) relativ = 1;
 	}
 
 	melody.update();
+	punctualMelody.update(melody.progression[melody.baseIndex % melody.progression.length]);
+	
 	melody.start();
+	punctualMelody.start();
+
+	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
+}
+
+function updateTechnoMelody()
+{
+	technoMelody.stop();
+	technoMelody.update();
+	technoMelody.start();
 
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
@@ -122,10 +159,23 @@ $(document).ready(function()
 			//updateBassLine();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
+<<<<<<< HEAD
+			
+			//beat.play(startTime);
+			//melody.start(startTime);
+			//updateMelody();
+
+=======
 			beat.play(startTime);
 			melody.start(startTime);
+			punctualMelody.start(startTime);
 			updateMelody();
+>>>>>>> 89dfe01967d00d1e9cd25af6235fc25d7b26a0e1
 			//updateHarmony();	//lance l'harmonie
+
+
+			//Tone.Transport.bpm.value*=3;
+			technoBeat.play();
 		}
     })
 })

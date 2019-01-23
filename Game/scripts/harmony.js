@@ -15,11 +15,13 @@ var fx = new FXRack();
 fx.selectFX('reverb', {reverb: 0.5});
 harmonyInstrument.catchFXs(fx);
 player1Instrument.catchFXs(fx);
+player1Instrument.sampler.volume.value = -48;
 player2Instrument.catchFXs(fx);
+player2Instrument.sampler.volume.value = -48;
 
-var relativ=1;
+var relativ=0;
 //config harmonie
-var tonalite = "A3"
+var tonalite = "D#3"
 var gamme = gammeMajor(notes[tonalite])
 if (relativ==1){
 	gamme = minorRelative(gamme);

@@ -1,22 +1,20 @@
 class Beat {
 
 	// selected pattern [kickPatternIndex, snarePatternIndex, hihatPatternIndex]
-	constructor(drum, selectedPaterns = null)
+	constructor(drum, techno = false)
 	{	
-		this.drum = drum;
+		this.drum = new InstrumentSampler('drum');
 		this.drum.sampler.volume.value = -9;
 
-		this.kickSubdivisions = 16;
-		this.hihatSubdivisions = 16;
-		this.snareSubdivisions = 16;
+		this.kickSubdivisions = 32;
+		this.hihatSubdivisions = 32;
+		this.snareSubdivisions = 32;
 
 		this.kickPattern = [];
 		this.hihatPattern = [];
 		this.snarePattern = [];
 
-		this.selectedPaterns = selectedPaterns;
-
-		this.instancePatterns();
+		this.instancePatterns(techno);
 
 		this.kickIndex = 0;
 		this.snareIndex = 0;
@@ -31,13 +29,13 @@ class Beat {
 		this.snare = null;
 	}
 
-	instancePatterns() 
+	instancePatterns(techno) 
 	{
-		if(this.selectedPaterns && this.selectedPaterns.length === 3)
+		if(techno)
 		{
-			this.kickPattern = Beat.KickPatterns[this.selectedPaterns[0]];
-    		this.snarePattern = Beat.SnarePatterns[this.selectedPaterns[1]];
-  		  	this.hihatPattern = Beat.HihatPatterns[this.selectedPaterns[2]];
+			this.kickPattern = Beat.KickTechnoPatterns[3];
+    		this.snarePattern = Beat.SnareTechnoPatterns[2];
+  		  	this.hihatPattern = Beat.HihatTechnoPatterns[1];
 		}
 		else
 		{
@@ -103,7 +101,7 @@ class Beat {
 		hihat.playbackRate = 1;
 		return hihat;
 	}
-
+ 
 	play(startTime)
 	{
 		console.log("play");
@@ -134,9 +132,6 @@ Beat.KickPatterns =
 "x-----x---------x-----x---x--x--",
 "x--x---x-xx----xx-x----xxxx-----",
 "x------x-x-x---xx----------x----",
-
-// TECHNO PATTERNS
-
 ];
 
 Beat.SnarePatterns = 
@@ -148,15 +143,11 @@ Beat.SnarePatterns =
 "----x---------x-----x-------x---",
 "--------x-----x-----x-------x---",
 "--x-x---x--xx-xx----x-x---x-x---"
-
-// TECHNO PATTERNS
-
 ];
 
 Beat.HihatPatterns = 
 [
 "xxxxxxxxxxxxxxxx",
-
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
 "x-x-x-x-xxx-x-x-x-x-x-xxx-x---x-",
 "--x---x---x---x---x---x---x---x-",
@@ -164,6 +155,30 @@ Beat.HihatPatterns =
 "x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-xx"
-
-// TECHNO PATTERNS
 ];
+
+
+//TECHNO PATTERNS
+Beat.KickTechnoPatterns = 
+[
+"x---------x-----x---------x-----",
+"x---------x-----x---------x---x-",
+"x-------x-x-----x-------x-x-----",
+"x---x---x---x---x---x---x---x---"
+];
+
+Beat.SnareTechnoPatterns = 
+[
+"----x-------x-------x-------x---",
+"--x---x---x---x---x---x---x---x-",
+"--x---x---x-x-x---x---x---x-x---",
+
+
+];
+
+Beat.HihatTechnoPatterns = 
+[
+"x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-xxx-x-x-x-x-x-x-xxx-x-x-x-"
+];
+
