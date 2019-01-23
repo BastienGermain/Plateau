@@ -1,7 +1,8 @@
 class PunctualMelody
 {
-	constructor(lead, octave = 3) 
+	constructor(melody, lead, octave = 3) 
 	{	
+		this.melody = melody;
 		this.fx = new FXRack();
 		this.fx.selectFX('reverb', {'reverb': 0.1});
 
@@ -17,89 +18,38 @@ class PunctualMelody
 		this.arpeggio = [];
 		this.arpeggioPattern = null;
 
-		this.melody = null;
+		this.punctualMelody = null;
 	}
 
-	// input : array of notes
-	adjustNotesOctave(notes, octave)
-	{
-		for (var i = 0; i < notes.length; i++) 
-			notes[i] = notes[i].substring(0, notes[i].length - 1) + octave.toString(); 
-	}
+	init() 
+	{						
+		this.arpeggio = this.melody.createArpeggio(
+			this.melody.shuffleChords(
+				scribble.chord(
+					this.melody.progression[this.melody.baseIndex % this.melody.progression.length])), 3);
 
-	createArpeggioPattern(noteCount)
-	{
-		let numbers = [];
-		let pattern = '';
-  		let picked = null;
+		this.arpeggioPattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length)];
 
-		for (let i = 0; i < (noteCount || 8); ++i) 
-    		numbers.push(i.toString());
-
-  		while (numbers.length != 0)
-  		{
-  			picked = Math.round(Math.random() * (numbers.length-1));
-    		pattern += numbers[picked];
-    		numbers = numbers.filter(number => number != numbers[picked]);
-    	}
-
-    	return pattern;
-	}
-
-	createArpeggio(note, noteCount = 8)
-	{
-		let arpeggio = scribble.arp({chords: note, count: noteCount, order: this.createArpeggioPattern(noteCount)});
-		console.log(arpeggio);
-		this.adjustNotesOctave(arpeggio, Math.min(this.octave, 6));
-		console.log(arpeggio);
-
-		return arpeggio;
-	}
-
-	createMelody(instrument, arpeggio) 
-	{
-		let _this = this;
-		let melody = new Tone.Pattern
-		(
-			function(time, note)
-			{
-				if(Math.round(Math.random()))
-					instrument.play(
-						note, 
-						2* Tone.Time("1m").toSeconds() / Tone.Time(this.melodyInterval).toSeconds(), 
-						time);
-			},
-			arpeggio, 
-		);
-
-		melody.loop = Infinity;
-		melody.interval = this.melodyInterval;
-		melody.loopEnd = "1m";
-
-		return melody;
-	}
-
-	init(chord) 
-	{				
-		this.arpeggio = this.createArpeggio(chord, getRandomIntBetween(2, 4));
-		this.arpeggioPattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length - 1)];
-
-		this.melody = this.createMelody(this.lead, this.arpeggio);
+		this.punctualMelody = this.melody.createMelody(this.lead, this.arpeggio);
 	}
 
 	start(startTime = 0)
 	{
-		this.melody.start(startTime);
+		this.punctualMelody.start(startTime);
 	}
 
-	update(chord)
+	update()
 	{		
-		this.melody.pattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length - 1)];
-		this.melody.values = this.createArpeggio(chord, getRandomIntBetween(2, 4));
+		this.punctualMelody.pattern = Melody.ArpeggioPaterns[getRandomInt(Melody.ArpeggioPaterns.length - 1)];
+
+		this.punctualMelody.values = this.melody.createArpeggio(
+			this.melody.shuffleChords(
+				scribble.chord(
+					this.melody.progression[this.melody.baseIndex % this.melody.progression.length])), 3);
 	}
 
 	stop()
 	{	
-		this.melody.stop();
+		this.punctualMelody.stop();
 	}
 }

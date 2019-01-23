@@ -27,8 +27,9 @@ var melody = melodyP1;
 const punctualMelodyP1 = ambiance1.punctualMelodyP1;
 const punctualMelodyP2 = ambiance1.punctualMelodyP2;
 
-punctualMelodyP1.init(melodyP1.progression[melody.baseIndex % melody.progression.length]);
-punctualMelodyP2.init(melodyP2.progression[melody.baseIndex % melody.progression.length]);
+punctualMelodyP1.init();
+
+punctualMelodyP2.init();
 
 var punctualMelody = punctualMelodyP1;
 
@@ -37,13 +38,11 @@ var punctualMelody = punctualMelodyP1;
 const drum = new InstrumentSampler('drum');
 var beat = new Beat(drum);
 
-<<<<<<< HEAD
-=======
 /////////////////////////////////////////////////////////////
 
->>>>>>> 89dfe01967d00d1e9cd25af6235fc25d7b26a0e1
 var technoBeat = new Beat(drum, techno=true);
 var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
+
 /*
 function updateBassLine(){
 	bassLine = createBassLine(tonalite);
@@ -67,7 +66,7 @@ function updateMelody()
 	}
 
 	melody.update();
-	punctualMelody.update(melody.progression[melody.baseIndex % melody.progression.length]);
+	punctualMelody.update();
 	
 	melody.start();
 	punctualMelody.start();
@@ -155,22 +154,16 @@ $(document).ready(function()
         if (Tone.context.state !== 'running') 
            	Tone.context.resume();
 
-		if (start == 0) {
+		if (start == 0) 
+		{
 			//updateBassLine();
 			start = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
-<<<<<<< HEAD
 			
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//updateMelody();
-
-=======
 			beat.play(startTime);
 			melody.start(startTime);
 			punctualMelody.start(startTime);
 			updateMelody();
->>>>>>> 89dfe01967d00d1e9cd25af6235fc25d7b26a0e1
 			//updateHarmony();	//lance l'harmonie
 
 
