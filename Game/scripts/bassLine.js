@@ -2,59 +2,278 @@ var bass = new InstrumentSampler("bass-electric");
 
 var relativ=0;
 //config harmonie
+/*
 var tonalite = "A3"
 var gamme = gammeMajor(notes[tonalite])
 if (relativ==1){
 	gamme = minorRelative(gamme);
-}
+}*/
 
-function createBassLine(tonalite){
-	var noteDuration = 7/8;
-	var bassLine =  new Tone.Event(
-		function(time){
-			bass.play(
-				Tone.Frequency(gamme[0]/2).toNote(),
-				noteDuration*T,
-				time
+function createBassLine(tonalite, num){
+	var gamme = gammeMajor(notes[tonalite])
+
+	var bassLine;
+
+	switch (num){
+		case 0 :
+			bassLine = new Tone.Event(
+				function(time){
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"2n",
+						time
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"2n",
+						time + Tone.Time("1m").toSeconds()*2/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"2n",
+						time + Tone.Time("1m").toSeconds()
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*7/4
+					);
+
+				}
 			);
-			bass.play(
-				Tone.Frequency(gamme[0]/2).toNote(),
-				noteDuration*T,
-				time +1/2
+			bassLine.loop = Infinity;
+			bassLine.loopEnd = "2m";
+			break;
+
+		case 1 :
+			bassLine = new Tone.Event(
+				function(time){
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"2n",
+						time
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"2n",
+						time + Tone.Time("1m").toSeconds()*2/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"2n",
+						time + Tone.Time("1m").toSeconds()
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*7/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*2
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+1/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+2/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+3/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"2n",
+						time + Tone.Time("1m").toSeconds()*3
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(3+3/4)
+					);
+				}
 			);
-			bass.play(
-				Tone.Frequency(gamme[0]/2).toNote(),
-				noteDuration*T,
-				time + 1
+			bassLine.loop = Infinity;
+			bassLine.loopEnd = "4m";
+			break;
+
+
+		case 2:
+			bassLine = new Tone.Event(
+				function(time){
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*1/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*2/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*3/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()
+					);
+					bass.play(
+						Tone.Frequency(gamme[1]/2*freqIncrement).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*5/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[1]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*6/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[6]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*7/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+1/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+2/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+3/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"2n",
+						time + Tone.Time("1m").toSeconds()*3
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(3+3/4)
+					);
+				}
 			);
-			bass.play(
-				Tone.Frequency(gamme[0]/2).toNote(),
-				noteDuration*T,
-				time +3/2
+			bassLine.loop = Infinity;
+			bassLine.loopEnd = "4m";
+			break;
+
+			case 3:
+			bassLine = new Tone.Event(
+				function(time){
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*1/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*2/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*3/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()
+					);
+					bass.play(
+						Tone.Frequency(gamme[1]/2*freqIncrement).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*5/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[1]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*6/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[6]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*7/4
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+1/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+2/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(2+3/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*3
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(3+1/4)
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(3+1/2)
+					);
+					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"4n",
+						time + Tone.Time("1m").toSeconds()*(3+3/4)
+					);
+				}
 			);
-			bass.play(
-				Tone.Frequency(gamme[0]/2).toNote(),
-				noteDuration*T,
-				time +2
-			);
-			bass.play(
-				Tone.Frequency(gamme[1]/2*freqIncrement).toNote(),
-				noteDuration*T,
-				time +5/2
-			);
-			bass.play(
-				Tone.Frequency(gamme[1]/2).toNote(),
-				noteDuration*T,
-				time +3
-			);
-			bass.play(
-				Tone.Frequency(gamme[6]/2/2).toNote(),
-				noteDuration*T,
-				time +7/2
-			);
-		}
-	);
-	bassLine.loop = Infinity;
-	bassLine.loopEnd = 8*T;
+			bassLine.loop = Infinity;
+			bassLine.loopEnd = "4m";
+			break;
+	
+	}
+	
 	return bassLine;
 }

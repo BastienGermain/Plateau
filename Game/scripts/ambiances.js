@@ -45,6 +45,10 @@ const ambianceX =
 *
 *////////////////////////
 
+
+var drum2 = new InstrumentSampler('drum');
+
+
 const ambiance1 = 
 {
 	beat: new Beat(),
@@ -66,7 +70,12 @@ const ambiance1 =
 	punctualMelodyP2: new PunctualMelody('violin', 4),
 }
 
-const ambiance2 =
+
+
+const ambianceDub = 
 {
+	beat : new Beat(drum2, "dub"),
+	bassLine : createBassLine("A3", 0),
+	Melody : new Melody(Melody.ModesNames[0], 'violon')
 
 }

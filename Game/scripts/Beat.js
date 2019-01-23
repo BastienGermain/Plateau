@@ -1,7 +1,7 @@
 class Beat {
 
 	// selected pattern [kickPatternIndex, snarePatternIndex, hihatPatternIndex]
-	constructor(drum, techno = false)
+	constructor(drum, ambiance = "")
 	{	
 		this.drum = new InstrumentSampler('drum');
 		this.drum.sampler.volume.value = -9;
@@ -14,7 +14,7 @@ class Beat {
 		this.hihatPattern = [];
 		this.snarePattern = [];
 
-		this.instancePatterns(techno);
+		this.instancePatterns(ambiance);
 
 		this.kickIndex = 0;
 		this.snareIndex = 0;
@@ -27,15 +27,23 @@ class Beat {
 		this.kick = null;
 		this.hihat = null;
 		this.snare = null;
+
+		this.playing = false;
 	}
 
-	instancePatterns(techno) 
+	instancePatterns(ambiance) 
 	{
-		if(techno)
-		{
+		if(ambiance=="techno")
+		{			
 			this.kickPattern = Beat.KickTechnoPatterns[3];
     		this.snarePattern = Beat.SnareTechnoPatterns[2];
   		  	this.hihatPattern = Beat.HihatTechnoPatterns[1];
+		}
+		else if(ambiance=="dub")
+		{
+			this.kickPattern = Beat.KickDubPatterns[1];
+    		this.snarePattern = Beat.SnareDubPatterns[0];
+  		  	this.hihatPattern = Beat.HihatDubPatterns[0];
 		}
 		else
 		{
@@ -102,13 +110,35 @@ class Beat {
 		return hihat;
 	}
  
-	play(startTime)
+	async play(startTime)
 	{
-		console.log("play");
+		await waitForRightTime();
 
-		this.kick = this.createKick().start(startTime);
-		this.snare = this.createSnare().start(startTime);
-		this.hihat = this.createHihat().start(startTime);
+		if (!this.playing){
+			this.playing = true;
+			this.kick = this.createKick().start(startTime);
+			this.snare = this.createSnare().start(startTime);
+			this.hihat = this.createHihat().start(startTime);
+		}
+	}
+
+	stop(){
+		this.kick.stop();
+		this.snare.stop();
+		this.hihat.stop();
+
+		this.playing = false;
+	}
+
+	//pas fonctionnel
+	rate(){
+		this.kick = this.createKick().playbackRate(2)
+		this.snare = this.createSnare().playbackRate(2)
+		this.hihat = this.createHihat().playbackRate(2)
+
+		this.kick.start(startTime);
+		this.snare.start(startTime);
+		this.hihat.start(startTime);
 	}
 }
 
@@ -180,5 +210,26 @@ Beat.HihatTechnoPatterns =
 [
 "x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-xxx-x-x-x-x-x-x-xxx-x-x-x-"
+];
+
+
+
+//DUB PATTERNS
+Beat.KickDubPatterns = 
+[
+"x---x---x---x---x---x---x---x---",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
+];
+
+Beat.SnareDubPatterns = 
+[
+"----x-------x-------x-------x---",
+"----x-------x-------x-------x---"
+
+];
+
+Beat.HihatDubPatterns = 
+[
+"",
 ];
 
