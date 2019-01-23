@@ -3,7 +3,7 @@ class Beat {
 	// selected pattern [kickPatternIndex, snarePatternIndex, hihatPatternIndex]
 	constructor(drum, techno = false)
 	{	
-		this.drum = drum;
+		this.drum = new InstrumentSampler('drum');
 		this.drum.sampler.volume.value = -9;
 
 		this.kickSubdivisions = 32;

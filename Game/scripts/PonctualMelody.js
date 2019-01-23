@@ -1,7 +1,0 @@
-class PonctualMelody
-{
-	constructor() 
-	{
-		
-	}
-}
