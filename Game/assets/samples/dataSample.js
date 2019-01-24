@@ -544,7 +544,7 @@ const dataSample =
         "C0": "classic-snare.wav"
     },
 
-    "drum":
+    "hihat":
     {
         "C0": "classic-hihat.wav"
     }

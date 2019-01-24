@@ -63,3 +63,50 @@ for (let i=0; i<nbNotes; i++){
 var epsilon = 0.05
 var index;
 
+
+var impro = new Tone.Event(
+	function(time){
+		console.log("creating Impro pattern");
+		let nbBlanches;
+		let nbNoires;
+
+		for (let i=0; i<randIntArray.length; i++){
+			if (Math.floor(Math.random()*2)==0){
+				index = randIntArray[i];
+			}
+			else{
+				index = randIntArray[i]+8;
+			}
+			var rand=Math.floor(Math.random()*3);
+			//if (rand==0){	//1 chance sur 3 on joue une blanche
+				console.log("blanche");
+				improInstrument.play(gamme[index], "2n", time + Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires);
+				nbBlanches++;
+			/*}
+			else{
+
+				if (rand==1){	//1 chance sur 3 on joue une noire
+					console.log("noire");
+					improInstrument.play(gamme[index], "4n", time + Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires);
+					nbNoires++;
+				}
+				else{	//1 fois sur 3 on joue 2 croches
+					console.log("2 croches");
+					improInstrument.play(gamme[index], "8n", time+ Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires);
+					if (Math.floor(Math.random()*3)==0){
+						index = randIntArray[i];
+					}
+					else{
+						index = randIntArray[i]+8;
+					}
+					improInstrument.play(gamme[index], "8n", time + Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires + Tone.Time("8n").toSeconds());
+					nbNoires++;
+				}
+			}*/
+		}
+		console.log("impro pattern created");
+	}
+);
+
+
+

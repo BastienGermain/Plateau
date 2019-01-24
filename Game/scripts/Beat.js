@@ -40,9 +40,9 @@ class Beat {
 	{
 		if(ambiance=="techno")
 		{			
-			this.kickPattern = Beat.KickTechnoPatterns[3];
-    		this.snarePattern = Beat.SnareTechnoPatterns[2];
-  		  	this.hihatPattern = Beat.HihatTechnoPatterns[1];
+			this.kickPattern = Beat.KickTechnoPatterns[0];
+    		this.snarePattern = Beat.SnareTechnoPatterns[0];
+  		  	this.hihatPattern = Beat.HihatTechnoPatterns[0];
 		}
 		else if(ambiance=="dub")
 		{

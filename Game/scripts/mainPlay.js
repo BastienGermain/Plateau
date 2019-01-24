@@ -51,20 +51,23 @@ function updateHarmony()
 }
 
 
-  $("#board").on('click', function(coord) {
+$("#board").on('click', function(coord) {
 
 
 
-      if (Tone.context.state !== 'running') {
-          Tone.context.resume();
-      }
+    if (Tone.context.state !== 'running') {
+        Tone.context.resume();
+    }
 
-      if (start == 0) {
-          //updateHarmony();
-          //updateBassLine();
-          start = 1;
-          startTime = Tone.context.currentTime.toFixed(4);
-      }
+    if (start == 0) {
+        //updateHarmony();
+        //updateBassLine();
+        start = 1;
+        startTime = Tone.context.currentTime.toFixed(4);
+
+        Tone.Transport.bpm.value*=3;		//drum'n'bass ambiance
+	    ambianceDrum.beat.play();
+  }
 
 
-  });
+});

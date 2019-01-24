@@ -80,9 +80,15 @@ ambiance1.punctualMelodyP2 = new PunctualMelody(ambiance1.melodyP2, 'violin', 4)
 *
 *
 *////////////////////////
+const ambianceDrum =
+{
+	beat : new Beat("techno")
+}
 
 const ambianceDub = 
 {
+	player1Instrument : new InstrumentSampler('violin'),
+	player2Instrument : new InstrumentSampler('trumpet'),
 	beat : new Beat("dub"),
 	bassLine : createBassLine("A3", 0),
 	melody : new Melody('major', 3, 'violin', 'trumpet'),
