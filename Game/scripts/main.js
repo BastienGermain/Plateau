@@ -159,12 +159,10 @@ async function updateBassLine(phase)
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
 }
 
-<<<<<<< HEAD
-var lastData;
-=======
+
 */
 
-
+var lastData;
 var phase = 0;
 var start = 0;
 
@@ -191,7 +189,7 @@ $(document).ready(function()
 			//en fonction de la position des pierres, choix tonalite, instruments
 			//(en vrai ça concerne pas que le 1er tour ...)
 
-			var actualAmbiance = ambianceDub;
+			var actualAmbiance = ambianceDrum;
 			var tonalite = "A3"
 
 			lastData = data;
@@ -205,12 +203,13 @@ $(document).ready(function()
 			createVictoryMelody(actualAmbiance.player2Instrument, tonalite).start();
 		}
 
-		if (data["stoneOnBoard"]>lastData["stoneOnBoard"]){
-			createVictoryMelody(actualAmbiance.player2Instrument, tonalite).start();
-		}
-		console.log(data["stoneOnBoard"])
-		console.log(lastData["stoneOnBoard"])
 
+		if (actualAmbiance == ambianceDrum){
+			if (data["player"]=="Black"){ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[0];}
+			else{ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];}
+			ambianceDrum.beat.playHihat();
+		}
+		
 		//lastData = data;
 
 		
