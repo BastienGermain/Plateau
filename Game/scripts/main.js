@@ -5,15 +5,17 @@
 
 var startTime;
 
-Tone.Transport.bpm.value = 120;
+tempo = 120;
+
+Tone.Transport.bpm.value = tempo;
 Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
-var harmony = new Harmony();
+//var harmony = new Harmony();
 
 // MELODY ////////////////////////////////////////////
-
+/*
 const melodyP1 = ambiance1.melodyP1;
 const melodyP2 = ambiance1.melodyP2;
 
@@ -21,6 +23,7 @@ melodyP1.init();
 melodyP2.init();
 
 var melody = melodyP1;
+
 
 // PONCTUAL MELODY ////////////////////////////////////////////
 
@@ -32,40 +35,43 @@ punctualMelodyP1.init();
 punctualMelodyP2.init();
 
 var punctualMelody = punctualMelodyP1;
+*/
 
 
+// BEAT //////////////////////////////////////////////////////
 
+var beat = new Beat();
 
-function updateMelody()
+/////////////////////////////////////////////////////////////
+
+//var technoBeat = new Beat("techno");
+//var technoTheme = new Theme(Theme.ModesNames[0], 'cello');
+
+async function updateTheme()
 {
-	melody.stop();
-	punctualMelody.stop();
+	console.log(Tone.Transport.bpm.value);
+	melody.stopBase();
 
-	if (data["lastPlayer"]=="White"){
+	// Set of instrument used according to the player currently playing
+
+	if (data["player"] == "White")
 		melody = melodyP2;
-		punctualMelody = punctualMelodyP2;
-		//if (relativ != 0) relativ = 0;
-	}
-	else {
+	else 
 		melody = melodyP1;
-		punctualMelody = punctualMelodyP1;
-		//if (relativ != 1) relativ = 1;
-	}
 
-	melody.update();
-	punctualMelody.update();
-	
-	melody.start();
-	punctualMelody.start();
+
+	melody.startBase();
 
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
 
+/*
+
 function updateTechnoMelody()
 {
-	technoMelody.stop();
-	technoMelody.update();
-	technoMelody.start();
+	technoMelody.stopBase();
+	technoMelody.updateArpeggio();
+	technoMelody.startBase();
 
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
@@ -103,41 +109,10 @@ function updateHarmony()
 	window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
 }
 
-
-//recopiée dans musicAssets.js
-/*
-function waitForRightTime() {
-  return new Promise(resolve => {
-    function check() {
-
-      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) {
-        console.log('right time to update sound !');
-        console.log(Tone.context.currentTime.toFixed(2)*60);
-        resolve();
-      } else {
-        window.setTimeout(check, 10);
-      }
-    }
-    check();
-  });
-}
-async function updateSound() {
-    await waitForRightTime();
-    if (data["lastPlayer"] == "Black") {
-        event2.stop();
-        event1.start();
-    } else {
-        event1.stop();
-        event2.start();
-    }
-}*/
-
-
-
 //preparation ambianceDub
-async function updateBassLine(phase){
-await waitForRightTime();
-
+async function updateBassLine(phase)
+{
+	await waitForRightTime();
 
 	//ambianceDub.bassLine.stop();
 
@@ -184,9 +159,15 @@ await waitForRightTime();
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
 }
 
+<<<<<<< HEAD
 var lastData;
+=======
+*/
+
+
 var phase = 0;
 var start = 0;
+
 $(document).ready(function()
 {
     document.querySelector('#addMove').addEventListener('mouseup', function(e)
@@ -201,10 +182,10 @@ $(document).ready(function()
 
 		if (start == 0) 
 		{
-			//updateBassLine();
 			start = 1;
 			//phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
+
 			
 			//ICI CODE D INITIALISATION JOUEUR 1 
 			//en fonction de la position des pierres, choix tonalite, instruments
@@ -236,30 +217,21 @@ $(document).ready(function()
     })
 })
 
-					/*
-			beat.play(startTime);
-			melody.start(startTime);
-			punctualMelody.start(startTime);
+	/*
+			melody.startBase(startTime);
 			updateMelody();
-			*/
 
 			//updateHarmony();	//lance l'harmonie
+			//Tone.Transport.bpm.value*=3;		//drum'n'bass ambiance
+			//technoBeat.play();
+			//ambianceDub.beat.play();
+			//dubMelody.start();
+			//updateBassLine(phase);
+			//bassLineLow.start();
 
-			/*let vic = createVictoryMelody(ambianceDub.player2Instrument, "A3");
-			vic.start();*/
+		
+		/*
 
-
-		//Tone.Transport.bpm.value*=3;		//drum'n'bass ambiance
-		//ambianceDrum.beat.play();
-
-
-		//ambianceDub.beat.play();
-		//dubMelody.start();
-		//updateBassLine(phase);
-		//bassLineLow.start();
-
-
-			/*
 		if (data["stoneOnBoard"]>4){
 			phase=2;
 			ambianceDub.beat.play();
@@ -276,5 +248,6 @@ $(document).ready(function()
 		if (data["stoneOnBoard"]>16){
 			ambianceDub.melody.melodyInterval = '1n';
 		}*/
-	
+
 		//updateBassLine(phase);	
+

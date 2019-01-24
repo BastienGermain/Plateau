@@ -1,0 +1,92 @@
+# DOCUMENTATION FOR THEME CLASS #
+
+	*** How to use it ? *** 
+
+1/ Create a Theme : 
+
+	theme = new Theme
+		(
+			mode (string),
+			octave (int),
+			lead instrument (string), 
+			base instrument (string)
+		);
+
+2/ Initialize the Theme before using it (IMPORTANT!) :
+
+	theme.init(
+	{
+		chordNoteCount: 1,
+		arpeggioNoteCount: 3,
+		interval: "8n",
+		probability: 1
+	});
+
+	IMPORTANT : use the same parameter fields names!
+
+	IF YOU USE theme.init() DEFAULT VALUES (those used in the example) WILL BE KEPT!
+
+3/ You can now start to use the Theme by :
+
+	$ Playing the base :
+		theme.startBase(starTime);
+			or
+		theme.startBase(); #startTime will be 0
+
+	$ Playing the theme arpeggio  :
+		theme.startMelody(starTime);
+			or
+		theme.startMelody(); #startTime will be 0
+
+4/ Then for any change in the base of the theme you can :
+
+	$ Update the tonic note :
+		theme.updateTonic(tonic, octave);
+		--> theme.updateTonic("C#", 4);
+
+
+	$ Update the mode :
+		theme.updateMode(mode);
+		--> theme.updateMode("lydian");
+
+		MUST BE ONE OF THOSE : ['major', 'minor', 'melodic minor', 'harmonic minor', 'ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']
+
+
+	$ Update the number of notes played for base chord :
+		theme.updateBaseNoteCount(chordNoteCount);
+		--> theme.updateBaseNoteCount(2);
+
+
+	$ Update the base chord and use next chord of the chord progression based on tonic note :
+		--> theme.updateBaseChord();
+
+
+	$ Update the melody pattern :
+		updateMelodyPattern(patternType);
+		--> updateMelodyPattern("upDown");
+
+		MUST BE ONE OF THOSE : ["up", "down", "upDown", "downUp", "random"]
+
+
+	$ Update the melody for making it fit base chord + you can change the number of notes of the apreggio :
+		updateMelody(arpeggioNoteCount);
+		--> updateMelody(6);
+
+
+	$ Update the probability for notes of the melody to be played :
+		udpateMelodyNoteProbability(probability);
+		--> udpateMelodyNoteProbability(0.6);
+
+
+	$ Update the time interval between melody notes :
+		updateMelodyNoteInterval(interval);
+		--> updateMelodyNoteInterval("4n");
+		
+
+4/ Once you're done with base or melody you can :
+	
+	$ Stop the base :
+		stopBase();
+
+	$ Stop the melody :
+		stopMelody;

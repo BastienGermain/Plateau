@@ -15,21 +15,19 @@
 const ambianceX = 
 {
 	beat: new Beat(),
-	melodyP1: new Melody
+	themeP1: new Theme
 	(
-		Melody.ModesNames[modeIndex] || 'modeName', 
+		Theme.ModesNames[modeIndex] || 'modeName', 
 		'leadInstrument', 
 		'bassInstrument'
 	),
-	melodyP2: new Melody
+	themeP2: new Theme
 	(
-		Melody.ModesNames[modeIndex] || 'modeName', 
+		Theme.ModesNames[modeIndex] || 'modeName', 
 		'leadInstrument', 
 		'bassInstrument'
 	),
 }
-ambianceX.punctualMelodyP1: new PunctualMelody(ambianceX.melodyP1, 'instrument', octave),
-ambianceX.punctualMelodyP2: new PunctualMelody(ambianceX.melodyP2, 'instrument', octave),
 
 */
 
@@ -48,14 +46,14 @@ ambianceX.punctualMelodyP2: new PunctualMelody(ambianceX.melodyP2, 'instrument',
 const ambiance1 = 
 {
 	beat: new Beat(),
-	melodyP1: new Melody
+	themeP1: new Theme
 	(
 		'minor',
 		4,
 		'violin', 
-		'piano'
+		'cello'
 	),
-	melodyP2: new Melody
+	themeP2: new Theme
 	(
 		'major', 
 		3,
@@ -64,10 +62,6 @@ const ambiance1 =
 	),
 	
 }
-ambiance1.punctualMelodyP1 = new PunctualMelody(ambiance1.melodyP1, 'xylophone', 3);
-ambiance1.punctualMelodyP2 = new PunctualMelody(ambiance1.melodyP2, 'violin', 4);
-
-
 
 ///////////////////////////////////////////////////////////////////
 
@@ -91,8 +85,11 @@ const ambianceDub =
 	player2Instrument : new InstrumentSampler('trumpet'),
 	beat : new Beat("dub"),
 	bassLine : createBassLine("A3", 0),
-	melody : new Melody('major', 3, 'violin', 'trumpet'),
+	theme : new Theme('major', 3, 'violin', 'trumpet'),
 	fx : new FXRack()
 }
-ambianceDub.melody.init();
+
+ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
+ambianceDub.beat.snare.catchFXs(fx);
+ambianceDub.theme.init();
 
