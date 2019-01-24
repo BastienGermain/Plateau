@@ -1,6 +1,5 @@
 class Beat {
 
-	// selected pattern [kickPatternIndex, snarePatternIndex, hihatPatternIndex]
 	constructor(ambiance = "")
 	{	
 		this.kick = new InstrumentSampler('kick');
@@ -33,9 +32,13 @@ class Beat {
 		this.hihatLoop = null;
 		this.snareLoop = null;
 
-		this.playing = false;
+		this.playingKick = false;
+		this.playingSnare = false;
+		this.playingHihat = false;
 	}
 
+/// PATTERN BUILDER ////////////////////////////////////////////////////////////
+	
 	instancePatterns(ambiance) 
 	{
 		if(ambiance=="techno")
@@ -58,6 +61,8 @@ class Beat {
 		}
 	}
 
+/// LOOP CREATORS ///////////////////////////////////////////////////////////////
+	
 	createKick() 
 	{	
 		let _this = this;
@@ -65,11 +70,11 @@ class Beat {
 		let kickLoop =  new Tone.Event(
 			function(time)
 			{	
-				if (_this.kickPattern.charAt(_this.kickIndex % _this.kickSubdivisions) === "x")
+				if (_this.kickPattern.charAt(_this.kickIndex) === "x")
 				{
 					_this.kick.play(_this.kickNote, 0.25, time);
 				}
-				_this.kickIndex++;
+				_this.kickIndex = (_this.kickIndex + 1) % _this.kickSubdivisions;
 			});
 
 		kickLoop.loop = Infinity;
@@ -86,9 +91,9 @@ class Beat {
 		let snareLoop =  new Tone.Event(
 			function(time)
 			{	
-				if (_this.snarePattern.charAt(_this.snareIndex % _this.snareSubdivisions) === "x")
+				if (_this.snarePattern.charAt(_this.snareIndex) === "x")
 					_this.snare.play(_this.snareNote, 0.25, time);
-				_this.snareIndex++;
+				_this.snareIndex = (_this.snareIndex + 1) % _this.kickSubdivisions;
 			});
 
 		snareLoop.loop = Infinity;
@@ -104,9 +109,9 @@ class Beat {
 		let hihatLoop =  new Tone.Event(
 			function(time)
 			{	
-				if (_this.hihatPattern.charAt(_this.hihatIndex % _this.hihatSubdivisions) === "x")
+				if (_this.hihatPattern.charAt(_this.hihatIndex) === "x")
 					_this.hihat.play(_this.hihatNote, 0.25, time, 0.1);
-				_this.hihatIndex++;
+				_this.hihatIndex = (_this.hihatIndex + 1) % _this.kickSubdivisions;
 			});
 
 		hihatLoop.loop = Infinity;
@@ -115,25 +120,56 @@ class Beat {
 		return hihatLoop;
 	}
  
-	async play(startTime)
+/// PLAY FUNCTIONS //////////////////////////////////////////////////////////////
+	
+	playKick(startTime = 0)
 	{
-		await waitForRightTime();
+		//await waitForRightTime();
 
-		if (!this.playing){
-			this.playing = true;
+		if (!this.playingKick)
+		{
+			this.playingKick = true;
 			this.kickLoop = this.createKick().start(startTime);
+		}
+	}
+
+	playSnare(startTime = 0)
+	{
+		//waitForRightTime();
+
+		if (!this.playingSnare){
+			this.playingSnare = true;
 			this.snareLoop = this.createSnare().start(startTime);
+		}
+	}
+
+	playHihat(startTime = 0)
+	{
+		//await waitForRightTime();
+
+		if (!this.playingHihat){
+			this.playingHihat = true;
 			this.hihatLoop = this.createHihat().start(startTime);
 		}
 	}
 
-	stop(){
+/// STOP FUNCTIONS //////////////////////////////////////////////////////////////
+	
+	stopKick(){
 		this.kickLoop.stop();
-		this.snareLoop.stop();
-		this.hihatLoop.stop();
-
-		this.playing = false;
+		this.playingKick = false;
 	}
+
+	stopSnare(){
+		this.snareLoop.stop();
+		this.playingSnare = false;
+	}
+
+	stopHihat(){
+		this.hihatLoop.stop();
+		this.playingHihath = false;
+	}
+/////////////////////////////////////////////////////////////////////////////////
 
 	//pas fonctionnel
 	rate(){

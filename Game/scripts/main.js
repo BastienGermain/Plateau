@@ -5,12 +5,14 @@
 
 var startTime;
 
-Tone.Transport.bpm.value = 140;
+tempo = 120;
+
+Tone.Transport.bpm.value = tempo;
 Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
-var harmony = new Harmony();
+//var harmony = new Harmony();
 
 // MELODY ////////////////////////////////////////////
 
@@ -22,62 +24,40 @@ melodyP2.init();
 
 var melody = melodyP1;
 
-// PONCTUAL MELODY ////////////////////////////////////////////
-
-const punctualMelodyP1 = ambiance1.punctualMelodyP1;
-const punctualMelodyP2 = ambiance1.punctualMelodyP2;
-
-punctualMelodyP1.init();
-
-punctualMelodyP2.init();
-
-var punctualMelody = punctualMelodyP1;
-
 // BEAT //////////////////////////////////////////////////////
 
-const drum = new InstrumentSampler('drum');
-var beat = new Beat(drum);
+var beat = new Beat();
 
 /////////////////////////////////////////////////////////////
 
-var technoBeat = new Beat(drum, "techno");
-var technoMelody = new Melody(Melody.ModesNames[0], 'cello');
+//var technoBeat = new Beat("techno");
+//var technoTheme = new Theme(Theme.ModesNames[0], 'cello');
 
-
-
-
-function updateMelody()
+async function updateTheme()
 {
-	melody.stop();
-	punctualMelody.stop();
+	console.log(Tone.Transport.bpm.value);
+	melody.stopBase();
 
-	if (data["player"]=="White")
-	{
+	// Set of instrument used according to the player currently playing
+
+	if (data["player"] == "White")
 		melody = melodyP2;
-		punctualMelody = punctualMelodyP2;
-		//if (relativ != 0) relativ = 0;
-	}
 	else 
-	{
 		melody = melodyP1;
-		punctualMelody = punctualMelodyP1;
-		//if (relativ != 1) relativ = 1;
-	}
 
-	melody.update();
-	punctualMelody.update();
-	
-	melody.start();
-	punctualMelody.start();
+
+	melody.startBase();
 
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
 
+/*
+
 function updateTechnoMelody()
 {
-	technoMelody.stop();
-	technoMelody.update();
-	technoMelody.start();
+	technoMelody.stopBase();
+	technoMelody.updateArpeggio();
+	technoMelody.startBase();
 
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
@@ -114,37 +94,6 @@ function updateHarmony()
 
 	window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
 }
-
-
-//recopiée dans musicAssets.js
-/*
-function waitForRightTime() {
-  return new Promise(resolve => {
-    function check() {
-
-      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) {
-        console.log('right time to update sound !');
-        console.log(Tone.context.currentTime.toFixed(2)*60);
-        resolve();
-      } else {
-        window.setTimeout(check, 10);
-      }
-    }
-    check();
-  });
-}
-async function updateSound() {
-    await waitForRightTime();
-    if (data["lastPlayer"] == "Black") {
-        event2.stop();
-        event1.start();
-    } else {
-        event1.stop();
-        event2.start();
-    }
-}*/
-
-
 
 //preparation ambianceDub
 async function updateBassLine(phase)
@@ -194,6 +143,9 @@ async function updateBassLine(phase)
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
 }
 
+*/
+
+
 var phase = 0;
 var start = 0;
 
@@ -211,62 +163,28 @@ $(document).ready(function()
 
 		if (start == 0) 
 		{
-			//updateBassLine();
 			start = 1;
 			phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
-			
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//updateMelody();
 
-			//beat.play(startTime);
-			//melody.start(startTime);
-			//punctualMelody.start(startTime);
-			//updateMelody();
+			beat.playKick(startTime);
+			beat.playSnare(startTime);
+			beat.playHihat(startTime);
 
-			switch(data["cornerMove"])
-			{
-				case "San-san":
-					melody.mode = Melody.ModesNames[2];
-					break;
-				case "Hoshi":
-					melody.mode = Melody.ModesNames[3];
-					break;
-				case "Komoku":
-					melody.mode = Melody.ModesNames[4];
-					break;
-				case "Takamoku":
-					melody.mode = Melody.ModesNames[5];
-					break;
-				case "Mokuhazushi":
-					melody.mode = Melody.ModesNames[6];
-					break;
-				default:
-					break;
-
-			}
-
-			beat.play(startTime);
-			melody.start(startTime);
-			punctualMelody.start(startTime);
+			melody.startBase(startTime);
 			updateMelody();
-			*/
 
 			//updateHarmony();	//lance l'harmonie
-
-
 			//Tone.Transport.bpm.value*=3;		//drum'n'bass ambiance
 			//technoBeat.play();
-
-
 			//ambianceDub.beat.play();
 			//dubMelody.start();
 			//updateBassLine(phase);
 			//bassLineLow.start();
 		}
 		
-		
+		/*
+
 		if (data["stoneOnBoard"]>4){
 			phase=2;
 			ambianceDub.beat.play();
@@ -286,5 +204,7 @@ $(document).ready(function()
 	
 		console.log(ambianceDub.melody.melodyInterval);
 		updateBassLine(phase);	
+
+		*/
     })
 })
