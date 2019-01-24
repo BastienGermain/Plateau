@@ -27,6 +27,33 @@ data["cornerMove"] = "" // Values : "San-san", "Hoshi", "Komoku", "Takamoku", "M
 
 var boardMat = math.zeros(19, 19);
 
+var lastData = new Object();
+
+function updatePrevious() {
+    lastData = JSON.parse(JSON.stringify(data));
+}
+
+function updateData(sgf, moveNumber) {
+    getPlayer(sgf, moveNumber);
+    if (data["stoneOnBoard"] != 0) {
+        data["previousStonePosition"] = data["stonePosition"];
+        data["previousMoveTime"] = data["moveTime"];
+    }
+    getStonePosition(sgf, moveNumber);
+    getStonesAround();
+    data["stoneOnBoard"] += 1;
+    data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
+    data["blackCaptures"] = getInfo().captures[JGO.BLACK];
+    data["knownMove"] = checkKnownMoves(data, boardMat);
+    data["moveTime"] = sgf[moveNumber].C;
+    checkAtari(boardMat);
+    if (data["stonesAround"] == 0) {
+       data["cornerMove"] = getCornerMove();
+    } else {
+       data["cornerMove"] = "";
+    }
+}
+
 // Load SGF for matrix
 function beginSGF(file) {
     let sgf = SGFGrove.parse(file);
@@ -43,26 +70,10 @@ function beginSGF(file) {
     //console.log(boardMat);
 
 	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
+        updatePrevious();
         move(1);
 		boardMat = fillMatrixSGF(boardMat, sgf, moveNumber);
-        getPlayer(sgf, moveNumber);
-        if (data["stoneOnBoard"] != 0) {
-            data["previousStonePosition"] = data["stonePosition"];
-            data["previousMoveTime"] = data["moveTime"];
-        }
-        getStonePosition(sgf, moveNumber);
-        getStonesAround();
-        data["stoneOnBoard"] += 1;
-        data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
-        data["blackCaptures"] = getInfo().captures[JGO.BLACK];
-        data["knownMove"] = checkKnownMoves(data, boardMat);
-        data["moveTime"] = sgf[moveNumber].C;
-        checkAtari(boardMat);
-        if (data["stonesAround"] == 0) {
-           data["cornerMove"] = getCornerMove();
-        } else {
-           data["cornerMove"] = "";
-        }
+        updateData(sgf, moveNumber);
 		moveNumber++;
 	})
 };

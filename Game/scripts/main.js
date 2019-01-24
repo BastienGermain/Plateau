@@ -56,7 +56,7 @@ async function updateTheme()
 
 	if (data["player"] == "White")
 		melody = melodyP2;
-	else 
+	else
 		melody = melodyP1;
 
 
@@ -124,7 +124,7 @@ async function updateBassLine(phase)
 			//ambianceDub.bassLine = createBassLine("A3", 1);
 		}
 		else {
-			//ambianceDub.bassLine = createBassLine("A3", 0);	
+			//ambianceDub.bassLine = createBassLine("A3", 0);
 		}
 	}
 	if (phase==2){
@@ -132,7 +132,7 @@ async function updateBassLine(phase)
 			ambianceDub.bassLine = createBassLine("A3", 1);
 		}
 		else {
-			ambianceDub.bassLine = createBassLine("A3", 0);	
+			ambianceDub.bassLine = createBassLine("A3", 0);
 		}
 	}
 	if (phase==3){
@@ -141,7 +141,7 @@ async function updateBassLine(phase)
 		}
 		else {
 			ambianceDub.beat.play();
-			ambianceDub.bassLine = createBassLine("A3", 3);	
+			ambianceDub.bassLine = createBassLine("A3", 3);
 		}
 	}
 	if (phase==4){
@@ -150,18 +150,15 @@ async function updateBassLine(phase)
 		}
 		else {
 			ambianceDub.beat.play();
-			ambianceDub.bassLine = createBassLine("A3", 3);	
+			ambianceDub.bassLine = createBassLine("A3", 3);
 		}
 	}
 
 	//ambianceDub.bassLine.start();
-	
+
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
 }
 
-<<<<<<< HEAD
-var lastData;
-=======
 */
 
 
@@ -176,29 +173,27 @@ $(document).ready(function()
         * it will be created in the "suspended" state,
         * and you will need to call resume() after a user gesture is received.
         */
-        if (Tone.context.state !== 'running') 
-           
+        if (Tone.context.state !== 'running')
+
            	Tone.context.resume();
 
-		if (start == 0) 
+		if (start == 0)
 		{
 			start = 1;
 			//phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 
-			
-			//ICI CODE D INITIALISATION JOUEUR 1 
+
+			//ICI CODE D INITIALISATION JOUEUR 1
 			//en fonction de la position des pierres, choix tonalite, instruments
 			//(en vrai ça concerne pas que le 1er tour ...)
 
 			var actualAmbiance = ambianceDub;
 			var tonalite = "A3"
-
-			lastData = data;
 		}
 
 		//ICI NOTIFICATION DES CHGTS DE DATA
-		if (data["blackCaptures"]>lastData["blackCaptures"]){
+		/*if (data["blackCaptures"]>lastData["blackCaptures"]){
 			createVictoryMelody(actualAmbiance.player1Instrument, tonalite).start();
 		}
 		if (data["whiteCaptures"]>lastData["whiteCaptures"]){
@@ -207,13 +202,12 @@ $(document).ready(function()
 
 		if (data["stoneOnBoard"]>lastData["stoneOnBoard"]){
 			createVictoryMelody(actualAmbiance.player2Instrument, tonalite).start();
-		}
-		console.log(data["stoneOnBoard"])
-		console.log(lastData["stoneOnBoard"])
+		}*/
 
-		//lastData = data;
+		console.log(lastData);
+		console.log(data);
 
-		
+
     })
 })
 
@@ -229,7 +223,7 @@ $(document).ready(function()
 			//updateBassLine(phase);
 			//bassLineLow.start();
 
-		
+
 		/*
 
 		if (data["stoneOnBoard"]>4){
@@ -249,5 +243,4 @@ $(document).ready(function()
 			ambianceDub.melody.melodyInterval = '1n';
 		}*/
 
-		//updateBassLine(phase);	
-
+		//updateBassLine(phase);
