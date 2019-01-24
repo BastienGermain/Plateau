@@ -12,7 +12,43 @@ Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
-//var harmony = new Harmony();
+var harmony = new Harmony("A3");
+function updateHarmony()
+	{
+		if (relativ==1){
+			harmony.gamme = minorRelative(harmony.gamme);
+		}
+
+		harmony.randInt = getRandomInt(5);
+
+		switch (harmony.randInt)
+		{
+			case 0 :
+				harmony.sequence0();
+				break;
+
+			case 1 :
+				harmony.sequence1();
+				break;
+
+			case 2 :
+				harmony.sequence2();
+				break;
+
+			case 3 :
+				harmony.sequence3();
+				break;
+
+			case 4 :
+				harmony.sequence4();
+				break;
+
+			default:
+				break;
+		}
+
+		window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
+	}
 
 // MELODY ////////////////////////////////////////////
 /*
@@ -56,7 +92,7 @@ async function updateTheme()
 
 	if (data["player"] == "White")
 		melody = melodyP2;
-	else 
+	else
 		melody = melodyP1;
 
 
@@ -76,38 +112,7 @@ function updateTechnoMelody()
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
 
-function updateHarmony()
-{
-	harmony.randInt = getRandomInt(5);
 
-	switch (harmony.randInt)
-	{
-		case 0 :
-			harmony.sequence0();
-			break;
-
-		case 1 :
-			harmony.sequence1();
-			break;
-
-		case 2 :
-			harmony.sequence2();
-			break;
-
-		case 3 :
-			harmony.sequence3();
-			break;
-
-		case 4 :
-			harmony.sequence4();
-			break;
-
-		default:
-			break;
-	}
-
-	window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
-}
 
 //preparation ambianceDub
 async function updateBassLine(phase)
@@ -124,7 +129,7 @@ async function updateBassLine(phase)
 			//ambianceDub.bassLine = createBassLine("A3", 1);
 		}
 		else {
-			//ambianceDub.bassLine = createBassLine("A3", 0);	
+			//ambianceDub.bassLine = createBassLine("A3", 0);
 		}
 	}
 	if (phase==2){
@@ -132,7 +137,7 @@ async function updateBassLine(phase)
 			ambianceDub.bassLine = createBassLine("A3", 1);
 		}
 		else {
-			ambianceDub.bassLine = createBassLine("A3", 0);	
+			ambianceDub.bassLine = createBassLine("A3", 0);
 		}
 	}
 	if (phase==3){
@@ -141,7 +146,7 @@ async function updateBassLine(phase)
 		}
 		else {
 			ambianceDub.beat.play();
-			ambianceDub.bassLine = createBassLine("A3", 3);	
+			ambianceDub.bassLine = createBassLine("A3", 3);
 		}
 	}
 	if (phase==4){
@@ -150,22 +155,22 @@ async function updateBassLine(phase)
 		}
 		else {
 			ambianceDub.beat.play();
-			ambianceDub.bassLine = createBassLine("A3", 3);	
+			ambianceDub.bassLine = createBassLine("A3", 3);
 		}
 	}
 
 	//ambianceDub.bassLine.start();
-	
+
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
 }
-
-
 */
+
 
 var lastData;
 var phase = 0;
 var start = 0;
-
+var actualAmbiance;
+var tonalite;
 $(document).ready(function()
 {
     document.querySelector('#addMove').addEventListener('mouseup', function(e)
@@ -174,45 +179,96 @@ $(document).ready(function()
         * it will be created in the "suspended" state,
         * and you will need to call resume() after a user gesture is received.
         */
-        if (Tone.context.state !== 'running') 
-           
+        if (Tone.context.state !== 'running')
+
            	Tone.context.resume();
 
-		if (start == 0) 
+        ////CODE INITIALISATION
+		if (start == 0)
 		{
 			start = 1;
 			//phase = 1;
 			startTime = Tone.context.currentTime.toFixed(4);
 
+			//joueur1 choisit l'ambiance
+			let horizontalPos = data["stonePosition"][0];
+			if (horizontalPos >= 12){
+				actualAmbiance = ambianceDub;
+			}
+			else if (horizontalPos >= 6){
+				actualAmbiance = ambiance1;
+			}
+			else if (horizontalPos >= 0){
+				actualAmbiance = ambianceHarmony;
+			}
+			console.log("selected ambiance = " + actualAmbiance.nom);
 			
-			//ICI CODE D INITIALISATION JOUEUR 1 
-			//en fonction de la position des pierres, choix tonalite, instruments
-			//(en vrai ça concerne pas que le 1er tour ...)
 
-			var actualAmbiance = ambianceDrum;
-			var tonalite = "A3"
-
-			lastData = data;
+			actualAmbiance.beat.playKick();
 		}
+
+		//joueur2 choisit la tonalite
+		let horizontalPos = data["stonePosition"][0];
+		if (data["stoneOnBoard"]==2){
+			if (horizontalPos >= 16){
+				tonalite = "G3";
+			}
+			else if (horizontalPos >= 13){
+				tonalite = "F3";
+			}
+			else if (horizontalPos >= 10){
+				tonalite = "E3";
+			}
+			else if (horizontalPos >= 8){
+				tonalite = "D3";
+			}
+			else if (horizontalPos >= 6){
+				tonalite = "C3";
+			}
+			else if (horizontalPos >= 3){
+				tonalite = "B3";
+			}
+			else if (horizontalPos >= 0){
+				tonalite = "A3";
+			}
+		}
+		console.log("selected tonalite = " + tonalite);
+
+
+		////FIN INITIALISATION
+
+
 
 		//ICI NOTIFICATION DES CHGTS DE DATA
+
+		//valable pour toutes les ambiances
 		if (data["blackCaptures"]>lastData["blackCaptures"]){
-			createVictoryMelody(actualAmbiance.player1Instrument, tonalite).start();
+			victoryMelody(actualAmbiance.player1Instrument, tonalite).start();
 		}
 		if (data["whiteCaptures"]>lastData["whiteCaptures"]){
-			createVictoryMelody(actualAmbiance.player2Instrument, tonalite).start();
+			victoryMelody(actualAmbiance.player2Instrument, tonalite).start();
 		}
+
+
+
+		//valable pour une ambiance précise :
 
 
 		if (actualAmbiance == ambianceDrum){
-			if (data["player"]=="Black"){ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[0];}
-			else{ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];}
-			ambianceDrum.beat.playHihat();
+			if (data["player"]=="Black")
+			{
+				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[0];
+			}
+			else{
+				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];
+			}
+			
 		}
 		
-		//lastData = data;
 
-		
+
+
+
     })
 })
 
@@ -228,7 +284,7 @@ $(document).ready(function()
 			//updateBassLine(phase);
 			//bassLineLow.start();
 
-		
+
 		/*
 
 		if (data["stoneOnBoard"]>4){
@@ -248,5 +304,4 @@ $(document).ready(function()
 			ambianceDub.melody.melodyInterval = '1n';
 		}*/
 
-		//updateBassLine(phase);	
-
+		//updateBassLine(phase);

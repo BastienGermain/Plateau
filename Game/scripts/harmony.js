@@ -20,26 +20,26 @@ player2Instrument.sampler.volume.value = -48;
 var relativ=0;
 //config harmonie
 var tonalite = "D#3"
-var gamme = gammeMajor(notes[tonalite])
-if (relativ==1){
-	gamme = minorRelative(gamme);
-}
+var gamme = gammeMajor(notes[this.tonalite])
+
 
 
 
 class Harmony {
-	constructor()
+	constructor(tonalite, relative=0)
 	{
+		this.tonalite = tonalite;
 		this.mesureCount = 0;
 		this.randInt = 0;
-		this.leftHand = this.createLeftHand(tonalite, 1);
-		this.rightHand = this.createRightHand(tonalite, 1);
-		
+		this.relative = relative;
+		this.gamme = gammeMajor(notes[tonalite]);
+		this.leftHand = this.createLeftHand( 1);
+		this.rightHand = this.createRightHand( 1);		
 	}
 
 	
 
-	createLeftHand(tonalite, degré, finCadence=0)
+	createLeftHand( degré, finCadence=0)
 	{
 		var modifDegré = 1;
 		switch(degré){
@@ -65,12 +65,12 @@ class Harmony {
 		var leftHand =  new Tone.Event(
 			function(time){
 				harmonyInstrument.play(
-					Tone.Frequency(gamme[0]*modifDegré/2).toNote(),
+					Tone.Frequency(this.gamme[0]*modifDegré/2).toNote(),
 					Tone.Time("2n").toSeconds()*(1+2*finCadence),
 					time
 				);
 				harmonyInstrument.play(
-					Tone.Frequency(gamme[4]*modifDegré/2).toNote(),
+					Tone.Frequency(this.gamme[4]*modifDegré/2).toNote(),
 					Tone.Time("2n").toSeconds()*(1+2*finCadence),
 					time
 				);
@@ -81,11 +81,11 @@ class Harmony {
 		return leftHand;
 	}
 
-	createRightHand(tonalite, degré, finCadence=0)
+	createRightHand(degré, finCadence=0)
 	{
-		gamme = gammeMajor(notes[tonalite]);
+		this.gamme = gammeMajor(notes[this.tonalite]);
 		if (relativ==1){
-			gamme = minorRelative(gamme);
+			this.gamme = minorRelative(this.gamme);
 		}
 		var modifDegré = 1;
 		switch(degré){
@@ -95,8 +95,8 @@ class Harmony {
 
 			case 2:
 				modifDegré =  Math.pow(freqIncrement, 2);
-				gamme = gammeMinor(notes[tonalite]);
-				if (relativ==1){gamme = minorRelative(gamme);}
+				this.gamme = gammeMinor(notes[this.tonalite]);
+				if (relativ==1){this.gamme = minorRelative(this.gamme);}
 				break;
 
 			case 4:
@@ -105,8 +105,8 @@ class Harmony {
 
 			case 6:
 				modifDegré =  Math.pow(freqIncrement, -3);
-				gamme = gammeMinor(notes[tonalite]);
-				if (relativ==1){gamme = minorRelative(gamme);}
+				this.gamme = gammeMinor(notes[this.tonalite]);
+				if (relativ==1){this.gamme = minorRelative(this.gamme);}
 				break;
 
 			default:
@@ -116,12 +116,12 @@ class Harmony {
 			var rightHand = new Tone.Event(
 				function(time){
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[2]*modifDegré).toNote(),
+						Tone.Frequency(this.gamme[2]*modifDegré).toNote(),
 						Tone.Time("2n").toSeconds()*3,
 						time 
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[4]*modifDegré).toNote(),
+						Tone.Frequency(this.gamme[4]*modifDegré).toNote(),
 						Tone.Time("2n").toSeconds()*3,
 						time 
 					);
@@ -132,22 +132,22 @@ class Harmony {
 			var rightHand = new Tone.Event(
 				function(time){
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[2]*modifDegré).toNote(),
+						Tone.Frequency(this.gamme[2]*modifDegré).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[4]*modifDegré).toNote(),
+						Tone.Frequency(this.gamme[4]*modifDegré).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[2]*modifDegré).toNote(),
+						Tone.Frequency(this.gamme[2]*modifDegré).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[4]*modifDegré).toNote(),
+						Tone.Frequency(this.gamme[4]*modifDegré).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
@@ -164,14 +164,14 @@ class Harmony {
 	modifLeftHand(degré, finCadence =0)
 	{
 		this.leftHand.stop();
-		this.leftHand = this.createLeftHand(tonalite, degré, finCadence);
+		this.leftHand = this.createLeftHand(this.tonalite, degré, finCadence);
 		this.leftHand.start();
 	}
 
 	modifRightHand(degré, finCadence =0)
 	{
 		this.rightHand.stop();
-		this.rightHand = this.createRightHand(tonalite, degré, finCadence);
+		this.rightHand = this.createRightHand(this.tonalite, degré, finCadence);
 		this.rightHand.start()
 	}
 

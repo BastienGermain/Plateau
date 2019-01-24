@@ -45,6 +45,7 @@ const ambianceX =
 
 const ambiance1 = 
 {
+	nom : "ambiance1",
 	beat: new Beat(),
 	themeP1: new Theme
 	(
@@ -63,24 +64,64 @@ const ambiance1 =
 	
 }
 
-///////////////////////////////////////////////////////////////////
+const ambianceHarmony =
+{
+	nom : "ambianceHarmony",
+	harmony : new Harmony(),
+	updateHarmony()
+	{
+		if (relativ==1){
+			this.harmony.gamme = minorRelative(this.harmony.gamme);
+		}
 
-/* AMBIANCE DESCRIPTION */
-/*
-*
-*
-*
-*
-*
-*
-*////////////////////////
+		this.harmony.randInt = getRandomInt(5);
+
+		switch (this.harmony.randInt)
+		{
+			case 0 :
+				this.harmony.sequence0();
+				break;
+
+			case 1 :
+				this.harmony.sequence1();
+				break;
+
+			case 2 :
+				this.harmony.sequence2();
+				break;
+
+			case 3 :
+				thisharmony.sequence3();
+				break;
+
+			case 4 :
+				this.harmony.sequence4();
+				break;
+
+			default:
+				break;
+		}
+
+		window.setTimeout(this.updateHarmony, Tone.Time("4m").toMilliseconds());
+	}
+
+}
+
+
+
+
+
 const ambianceDrum =
 {
-	beat : new Beat("techno")
+	nom : "ambianceDrum",
+	beat : new Beat("techno"),
+	player1Instrument : new InstrumentSampler('french-horn'),
+	player2Instrument : new InstrumentSampler('french-horn')
 }
 
 const ambianceDub = 
 {
+	nom : "ambianceDub",
 	player1Instrument : new InstrumentSampler('violin'),
 	player2Instrument : new InstrumentSampler('trumpet'),
 	beat : new Beat("dub"),
