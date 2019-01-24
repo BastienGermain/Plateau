@@ -33,7 +33,7 @@ JGO.BOARD.large = {
     // Coordinate color and font
     coordinates: {color: '#808080', font: 'normal 18px sanf-serif'},
 
-    // Stone radius  and alpha for semi-transparent stones
+    // Stone radius and alpha for semi-transparent stones
     stone: {radius: 24, dimAlpha:0.6},
 
     // Shadow offset from center

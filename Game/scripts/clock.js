@@ -1,3 +1,5 @@
+/* à faire : ajouter les heures */
+
 let timer = null;
 let isCurrentWhite = false;
 let secW = 0;

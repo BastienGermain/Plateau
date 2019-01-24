@@ -22,8 +22,8 @@ data["previousMoveTime"] = 0;
 data["totalWhiteTime"] = 0; // In seconds
 data["totalBlackTime"] = 0;
 data["cornerMove"] = "" // Values : "San-san", "Hoshi", "Komoku", "Takamoku", "Mokuhazushi"
-// connexion de chaines (seulement 4 libertés)
 
+// à faire : connexion de chaines (seulement 4 libertés)
 
 var boardMat = math.zeros(19, 19);
 
@@ -202,6 +202,86 @@ function checkKnownMoves(dataObject, mat) {
 
 }
 
+/* Tobi : Saut d'un espace
+* [1, 0, 1]
+* [0, 0, 0]
+* [0, 0, 0]
+*/
+function checkTobi(dataObject, mat) {
+    let isTobi = false;
+    const x = dataObject["stonePosition"][0];
+    const y = dataObject["stonePosition"][1];
+
+    for (x <= 1 ? i = 0 : i = x - 2; i <= (x >= 17 ? x : x + 2); i++) {
+        for (y <= 1 ? j = 0 : j = y - 2; j <= (y >= 17 ? y : y + 2); j++) {
+            if ((i == x || j == y) && (i == x - 2 || j == y - 2 || i == x + 2 || j  == y + 2)) {
+
+                const matValue = math.subset(mat, math.index(j, i));
+                if (matValue == (dataObject["player"] == "White" ? 1 : -1)) {
+                    isTobi = true;
+                }
+
+            }
+        }
+    }
+
+    return isTobi;
+}
+
+/* Kogeima : Saut de cheval
+* [1, 0, 0]
+* [0, 0, 1]
+* [0, 0, 0]
+*/
+function checkKogeima(dataObject, mat) {
+    let isKogeima = false;
+    const x = dataObject["stonePosition"][0];
+    const y = dataObject["stonePosition"][1];
+
+    for (x <= 2 ? i = 0 : i = x - 3; i <= (x >= 16 ? x : x + 3); i++) {
+        for (y <= 2 ? j = 0 : j = y - 3; j <= (y >= 16 ? y : y + 3); j++) {
+
+            if (
+                (i == x - 2 && (j == y - 1 || j == y + 1)) ||
+                (i == x + 2 && (j == y - 1 || j == y + 1)) ||
+                (j == y - 2 && (i == x - 1 || i == x + 1)) ||
+                (j == y + 2 && (i == x - 1 || i == x + 1))
+            ) {
+                const matValue = math.subset(mat, math.index(j, i));
+                if (matValue == (dataObject["player"] == "White" ? 1 : -1)) {
+                    isKogeima = true;
+                }
+            }
+
+        }
+    }
+
+    return isKogeima;
+}
+
+function checkAtari(mat) {
+    data["whiteAtariNumber"] = 0;
+    data["blackAtariNumber"] = 0;
+    let i, j;
+    for (i = 0; i < 19; i++) {
+        for (j = 0; j < 19; j++) {
+            const currentMat = getCurrentMatrix(mat, i, j);
+            const sum = currentMat.get([0, 1]) + currentMat.get([1, 0]) + currentMat.get([2, 1]) + currentMat.get([1, 2]);
+            if (sum == 3 || sum == -3) {
+                if(currentMat.get([1, 1]) == 1) {
+                    console.log("Atari");
+                    data["whiteAtariNumber"] += 1;
+                } else if (currentMat.get([1, 1]) == -1) {
+                    console.log("Atari");
+                    data["blackAtariNumber"] += 1;
+                }
+            }
+        }
+    }
+
+    data["atariNumber"] = data["whiteAtariNumber"] + data["blackAtariNumber"];
+}
+
 function getCornerMove() {
     const x = data["stonePosition"][0];
     const y = data["stonePosition"][1];
@@ -284,86 +364,6 @@ function getCornerMove() {
     } else {
         return "";
     }
-}
-
-/* Tobi : Saut d'un espace
-* [1, 0, 1]
-* [0, 0, 0]
-* [0, 0, 0]
-*/
-function checkTobi(dataObject, mat) {
-    let isTobi = false;
-    const x = dataObject["stonePosition"][0];
-    const y = dataObject["stonePosition"][1];
-
-    for (x <= 1 ? i = 0 : i = x - 2; i <= (x >= 17 ? x : x + 2); i++) {
-        for (y <= 1 ? j = 0 : j = y - 2; j <= (y >= 17 ? y : y + 2); j++) {
-            if ((i == x || j == y) && (i == x - 2 || j == y - 2 || i == x + 2 || j  == y + 2)) {
-
-                const matValue = math.subset(mat, math.index(j, i));
-                if (matValue == (dataObject["player"] == "White" ? 1 : -1)) {
-                    isTobi = true;
-                }
-
-            }
-        }
-    }
-
-    return isTobi;
-}
-
-/* Kogeima : Saut de cheval
-* [1, 0, 0]
-* [0, 0, 1]
-* [0, 0, 0]
-*/
-function checkKogeima(dataObject, mat) {
-    let isKogeima = false;
-    const x = dataObject["stonePosition"][0];
-    const y = dataObject["stonePosition"][1];
-
-    for (x <= 2 ? i = 0 : i = x - 3; i <= (x >= 16 ? x : x + 3); i++) {
-        for (y <= 2 ? j = 0 : j = y - 3; j <= (y >= 16 ? y : y + 3); j++) {
-
-            if (
-                (i == x - 2 && (j == y - 1 || j == y + 1)) ||
-                (i == x + 2 && (j == y - 1 || j == y + 1)) ||
-                (j == y - 2 && (i == x - 1 || i == x + 1)) ||
-                (j == y + 2 && (i == x - 1 || i == x + 1))
-            ) {
-                const matValue = math.subset(mat, math.index(j, i));
-                if (matValue == (dataObject["player"] == "White" ? 1 : -1)) {
-                    isKogeima = true;
-                }
-            }
-
-        }
-    }
-
-    return isKogeima;
-}
-
-function checkAtari(mat) {
-    data["whiteAtariNumber"] = 0;
-    data["blackAtariNumber"] = 0;
-    let i, j;
-    for (i = 0; i < 19; i++) {
-        for (j = 0; j < 19; j++) {
-            const currentMat = getCurrentMatrix(mat, i, j);
-            const sum = currentMat.get([0, 1]) + currentMat.get([1, 0]) + currentMat.get([2, 1]) + currentMat.get([1, 2]);
-            if (sum == 3 || sum == -3) {
-                if(currentMat.get([1, 1]) == 1) {
-                    console.log("Atari");
-                    data["whiteAtariNumber"] += 1;
-                } else if (currentMat.get([1, 1]) == -1) {
-                    console.log("Atari");
-                    data["blackAtariNumber"] += 1;
-                }
-            }
-        }
-    }
-
-    data["atariNumber"] = data["whiteAtariNumber"] + data["blackAtariNumber"];
 }
 
 function printData() {
