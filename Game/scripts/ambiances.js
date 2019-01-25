@@ -52,21 +52,29 @@ const ambiance1 =
 	player2Instrument1 : new InstrumentSampler('french-horn'),
 	player2Instrument2 : new InstrumentSampler('french-horn'),
 	themeP1: new Theme
-		(
-			'minor',
-			4,
-			'violin', 
-			'cello'
-		),
+	(
+		'minor',
+		3,
+		'guitar-acoustic', 
+		'guitar-electric'
+	),
 	themeP2: new Theme
-		(
-			'major', 
-			3,
-			'flute', 
-			'contrabass'
-		),
-	
+	(
+		'major', 
+		3,
+		'flute', 
+		'contrabass'
+	),
+	fx: new FXRack()
 }
+
+//ambiance1.fx.selectFX('lowPassFilter', {frequency: 200, rollof: -48});
+ambiance1.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
+ambiance1.fx.selectFX('reverb', {reverb: 0.1});
+ambiance1.fx.selectFX('pingPongDelay', {delayTime: "8n"});
+ambiance1.themeP1.bass.catchFXs(ambiance1.fx);
+ambiance1.themeP1.lead.catchFXs(ambiance1.fx);
+
 
 const ambianceHarmony =
 {
@@ -76,9 +84,6 @@ const ambianceHarmony =
 	player2Instrument1 : new InstrumentSampler('flute'),
 	player2Instrument2 : new InstrumentSampler('flute')
 }
-
-
-
 
 const ambianceDrum =
 {

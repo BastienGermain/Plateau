@@ -35,6 +35,36 @@ class FXRack
     this.appliedFXs[this.appliedFXs.length].gain = gain;
   }
 
+  addPingPongDelay(delayTime = 0.25, feedBack = 0.2) 
+  {
+    this.appliedFXs.push({type : "pingPongDelay", fx : new Tone.PingPongDelay(delayTime, feedBack).toMaster()});
+  }
+
+  addFeedbackDelay(delayTime = 0.25, feedBack = 0.5)
+  {
+    this.appliedFXs.push({type : "feedbackDelay", fx : new Tone.FeedbackDelay(delayTime, feedBack).toMaster()});
+  }
+
+  addVibrato(frequency = 5, depth = 0.1)
+  {
+    this.appliedFXs.push({type : "vibrato", fx : new Tone.Vibrato(frequency, depth).toMaster()});
+  }
+
+  addDistorsion(distorsion = 0.4)
+  {
+    this.appliedFXs.push({type : "distorsion", fx : new Tone.Distorsion(distorsion).toMaster()});
+  }
+
+  addHighPassFilter(frequency = 1000 , rolloff = -12)
+  {
+    this.appliedFXs.push({type : "highPassFilter", fx : new Tone.Filter(frequency, "highpass", rolloff).toMaster()});
+  }
+
+  addLowPassFilter(frequency = 350 , rolloff = -12)
+  {
+    this.appliedFXs.push({type : "lowPassFilter", fx : new Tone.Filter(frequency, "lowpass", rolloff).toMaster()});
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   
   static applyFX(instrument, fx) 
@@ -68,32 +98,116 @@ class FXRack
   {
     if (!this.appliedFXs.find(fx => fx.type == name))
     {
-      switch(name) 
+      try
       {
-        case 'chorus':
-        this.addChorus(4, 2.5, 0.5);
-        break;
+        switch(name) 
+        {
+          case 'chorus':
+          this.addChorus(params.frequency, params.delayTime, params.depth);
+          break;
 
-        case 'reverb':
-        this.addReverb(params.reverb);
-        break;
+          case 'reverb':
+          this.addReverb(params.reverb);
+          break;
 
-        case 'tremolo':
-        this.addTremolo(9, 0.75);
-        break;
+          case 'tremolo':
+          this.addTremolo(params.frequency, params.depth);
+          break;
 
-        case 'pitchShift':
-        this.addPitchShift(params.pitch);
-        break;
+          case 'pitchShift':
+          this.addPitchShift(params.pitch);
+          break;
 
-        case 'autoWah':
-        this.addAutoWah(100, 2, -40, 5);
-        break;
+          case 'autoWah':
+          this.addAutoWah(params.baseFrequency, params.octaves, params.sensitivity, params.Q, params.gain);
+          break;
 
-        default:
-        break;
+          case 'pingPongDelay':
+          this.addPingPongDelay(params.delayTime, params.feedBack);
+          break;
+
+          case 'feedbackDelay':
+          this.addFeedbackDelay(params.delayTime, params.feedBack);
+          break;
+
+          case 'vibrato':
+          this.addVibrato(params.frequency, params.depth);
+          break;
+
+          case 'distorsion':
+          this.addVibrato(params.distorsion);
+          break;
+
+          case 'highPassFilter':
+          this.addHighPassFilter(params.frequency, params.rolloff);
+          break;
+
+          case 'lowPassFilter':
+          this.addLowPassFilter(params.frequency, params.rolloff);
+          break;
+
+          default:
+          break;
+        }
+      }
+      catch(error)
+      {
+        console.log(error);
+        console.log("EFFECT ADDED WITH DEFAULT PARAMETERS");
+
+         switch(name) 
+        {
+          case 'chorus':
+          this.addChorus();
+          break;
+
+          case 'reverb':
+          this.addReverb();
+          break;
+
+          case 'tremolo':
+          this.addTremolo();
+          break;
+
+          case 'pitchShift':
+          this.addPitchShift();
+          break;
+
+          case 'autoWah':
+          this.addAutoWah();
+          break;
+
+          case 'pingPongDelay':
+          this.addPingPongDelay();
+          break;
+
+          case 'feedbackDelay':
+          this.addFeedbackDelay();
+          break;
+
+          case 'vibrato':
+          this.addVibrato();
+          break;
+
+          case 'distorsion':
+          this.addVibrato();
+          break;
+
+          case 'highPassFilter':
+          this.addHighPassFilter();
+          break;
+
+          case 'lowPassFilter':
+          this.addLowPassFilter();
+          break;
+          
+          default:
+          break;
+        }
       }
     }
+
+    console.log(this.appliedFXs);
   }
 
 }

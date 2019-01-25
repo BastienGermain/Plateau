@@ -69,6 +69,7 @@ class InstrumentSampler
             if (this.sampler)
             {   
                 this.samplerFX = fxRack.applyFXs(this.sampler);
+                this.samplerFX.volume.value = this.sampler.volume.value;
             }
             else 
                 console.log("ERROR WHILE APPLYING EFFECTS TO InstrumentSampler in InstrumentSampler.js : Sampler not created");
@@ -76,9 +77,15 @@ class InstrumentSampler
         else
         {
             if (switched)
+            {   
                 this.samplerFX = fxRack.applyFXs(this.sampler);
+                this.samplerFX.volume.value = this.sampler.volume.value;
+            }
             else
+            {   
                 this.samplerFX = fxRack.applyFXs(this.samplerFX);   
+                this.samplerFX.volume.value = this.sampler.volume.value;
+            }
         }
     }
 

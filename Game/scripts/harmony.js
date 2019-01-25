@@ -1,28 +1,20 @@
-//Choix harmonyInstrument
-//var harmonyInstrument = new Tone.PolySynth(4, Tone.Synth).toMaster();
-//harmonyInstrument = harmonyInstrument.connect(vibrato);
 
-
-
-
-var harmonyInstrument = new InstrumentSampler('violin');
-
-var gamme;
+var gamme = gammeMajor("A3");
 var relativ;
 //config harmonievar gamme = gammeMajor(notes[tonalite])
 if (relativ==1){
 	gamme = minorRelative(gamme);
 }
 
-
+var harmonyInstrument = new Tone.Synth().toMaster();
 
 class Harmony {
-	constructor()
+	constructor(tonalite)
 	{
 		this.mesureCount = 0;
 		this.randInt = 0;
-		this.leftHand = this.createLeftHand(tonalite, 1);
-		this.rightHand = this.createRightHand(tonalite, 1);
+		this.leftHand = this.createLeftHand(notes[tonalite], 1);
+		this.rightHand = this.createRightHand(notes[tonalite], 1);
 
 		this.stop = 0;
 	}
@@ -347,42 +339,6 @@ class Harmony {
 
 
 
-var harmony;
-
-function updateHarmony()
-{
-	harmony.randInt = getRandomInt(5);
-
-	switch (harmony.randInt)
-	{
-		case 0 :
-			harmony.sequence0();
-			break;
-
-		case 1 :
-			harmony.sequence1();
-			break;
-
-		case 2 :
-			harmony.sequence2();
-			break;
-
-		case 3 :
-			harmony.sequence3();
-			break;
-
-		case 4 :
-			harmony.sequence4();
-			break;
-
-		default:
-			break;
-	}
-
-	if (harmony.stop != 1){
-		window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
-	}
-}
 
 
 

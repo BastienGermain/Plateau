@@ -2,19 +2,14 @@ class Theme
 {
 	constructor(mode, octave, lead, bass = null) 
 	{	
-		this.fx = new FXRack();
-		this.fx.selectFX('reverb', {'reverb': 0.1});
-
 		this.lead = new InstrumentSampler(lead);
-		this.lead.sampler.volume.value = -10;
+		this.lead.sampler.volume.value = -12;
 		this.lead.sampler.release = 1;
-		this.lead.catchFXs(this.fx);
-		this.lead.samplerFX.volume.value = -10;
 
 		if (bass)
 		{
 			this.bass = new InstrumentSampler(bass);
-			this.bass.sampler.volume.value = -6;
+			this.bass.sampler.volume.value = -3;
 		}
 
 		this.mode = mode || Theme.ModesNames[0];
@@ -99,6 +94,7 @@ class Theme
 
 		base.loop = Infinity;
 		base.loopEnd = "1m";
+		base.playbackRate = 2;
 
 		return base;
 	}
@@ -130,6 +126,7 @@ class Theme
 
 	init(params) 
 	{	
+		console.log(params);
 		if (params && params.interval) this.melodyInterval = params.interval;
 		if (params && params.chordNoteCount) this.chordNoteCount = params.chordNoteCount;
 		if (params && params.arpeggioNoteCount) this.arpeggioNoteCount = params.arpeggioNoteCount;
