@@ -50,6 +50,8 @@ jsetup.create('board', function(canvas) {
       }
 
       boardMat = fillMatrixPlay(boardMat, player, coord.i, coord.j);
+      lastData = JSON.parse(JSON.stringify(data));
+
       if (player == 1) {
           data["player"] = "Black";
       } else {
