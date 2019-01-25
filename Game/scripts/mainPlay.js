@@ -18,6 +18,13 @@ var tonalite;
 var whitePlayerFeature = new PlayerFeature();
 var blackPlayerFeature = new PlayerFeature();
 
+const instrument1List = ['piano',  'bassoon', 'cello', 'clarinet', 
+ 'flute', 'french-horn', 'guitar-acoustic', 
+'guitar-electric','guitar-nylon', 'harmonium', 'harp', 'organ', 
+'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone']
+
+const instrument2List = ['bass-electric', 'bassoon' ]
+
 const beat = new Beat();
 
 //////////////////////////////////////
@@ -183,10 +190,11 @@ $("#board").on('click', function(coord)
 		else if (horizontalPos >= 0){
 			ambiance = ambianceHarmony;
 		}
-		//ambiance = ambiance1;
+		ambiance = ambianceHarmony;
 		console.log("selected ambiance = " + ambiance.nom);
 
 		//1ers sons...
+		/*
 		if (ambiance == ambiance1)
 		{
 			updateMode();
@@ -201,7 +209,7 @@ $("#board").on('click', function(coord)
 			basePlaying = true;
 			currentTheme = ambiance.themeP1;
 			update();
-		}
+		}*/
 		//ambiance.beat.playKick();
 
 
@@ -209,9 +217,9 @@ $("#board").on('click', function(coord)
 	}
 
 	//joueur2 choisit la tonalite
-	let horizontalPos = data["stonePosition"][0];
-	if (data["stoneOnBoard"]==2){
-
+	if (data["stoneOnBoard"]==2)
+	{
+		let horizontalPos = data["stonePosition"][0];
 		if (horizontalPos >= 16){
 			tonalite = "G3";
 		}
@@ -235,184 +243,19 @@ $("#board").on('click', function(coord)
 		}
 		console.log("selected tonalite = " + tonalite);
 		//une fois qu'on a la tonalité on initialise, harmony , et d'autres...
-		harmony = new Harmony(tonalite);
-
-
-		//harmony.play();
+		harmony = new Harmony(tonalite);	
 	}
+
+	if (data["stoneOnBoard"]==3)
+	{
+		ambiance.player1Instrument1 = 
+	}	
 	////FIN INITIALISATION
 
+
 	//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
-	switch (data["knownMove"]){
-		case "Nobi" :
-			if (data["player"]!="White"){	// /!\ "player" mean player playing, "knownMove" concern the player who just played
-				//!=White mean that Black player did the "Nobi"
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 1);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 1);
-			}
-			break;
-
-		case "Tsuke" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,2);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,2);
-			}
-			break;
-
-		case "Kata":
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
-			}
-			break;
-
-		case "Nozuki":
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
-			}
-			break;
-
-		case "Coupe":
-			if (data["player"]!="White"){
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
-			}
-			break;
-
-		case "Hane" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,3);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,3);
-			}
-			break;
-
-		case "Connect":
-			if (data["player"]!="White"){
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
-			}
-			break;
-
-		case "Kosumi":
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
-			}
-			break;
-
-		case "Tobi" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 1);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 1);
-			}
-			break;
-
-		case "Kogeima" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,2);
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab,2);
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,2);
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab,2);
-			}
-			break;
-
-		default:
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab, 0);
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 0);
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab, 0);
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab, 0);
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab, 0);
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 0);
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab, 0);
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab, 0);
-			break;
-	}
-
-
-	switch(data["cornerMove"]){
-		case "Komoku" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
-			}
-			break;
-
-		case"Takamoku":
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
-			}
-			break;
-
-		case "Hoshi" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
-			}
-			break;
-
-
-		case "San-san" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,2, "corner");
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,2, "corner");
-			}
-			break;
-
-		case "Mokuhazuki" :
-			if (data["player"]!="White"){	
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,3, "corner");
-				blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab,1, "corner");
-			}
-			else{
-				whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab,1,"corner");
-			}
-			break;
-
-		default:
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab, 0, "corner");
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 0, "corner");
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab, 0, "corner");
-			blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab, 0, "corner");
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab, 0, "corner");
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 0, "corner");
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab, 0, "corner");
-			whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab, 0, "corner");
-			break;
-	}
-	blackPlayerFeature.update();
-	whitePlayerFeature.update();
+	updateFeatures();
+	/*
 	console.log("blackPlayerFeature :");
 	console.log("offensive :"+blackPlayerFeature.offensive);
 	console.log("defensive :"+blackPlayerFeature.defensive);
@@ -423,7 +266,7 @@ $("#board").on('click', function(coord)
 	console.log("defensive :"+whitePlayerFeature.defensive);
 	console.log("expensive :"+whitePlayerFeature.expensive);
 	console.log("offensive :"+whitePlayerFeature.risky);
-
+*/
 
 	if (data["stoneOnBoard"]>2)		//2 si l'initialisation se fait en 2 coups
 	{
@@ -434,15 +277,14 @@ $("#board").on('click', function(coord)
 
 		updateTempo();
 		updateTheme();
-		console.log(data["blackCaptures"]);
-		console.log(lastData["blackCaptures"]);
+
 		if (data["blackCaptures"]>lastData["blackCaptures"]){
 			console.log("BLACK CAPTURES");
-			victoryMelody(ambiance.player1Instrument, tonalite);
+			victoryMelody(ambiance.player1Instrument1, tonalite);
 		}
 		if (data["whiteCaptures"]>lastData["whiteCaptures"]){
 			console.log("WHITE CAPTURES");
-			victoryMelody(ambiance.player2Instrument, tonalite);
+			victoryMelody(ambiance.player2Instrument1, tonalite);
 		}
 
 
@@ -461,12 +303,12 @@ $("#board").on('click', function(coord)
 
 			if (data["player"]=="Black")
 			{
-				//harmony.stop = 0;
-				//updateHarmony();
+				harmony.stop = 0;
+				updateHarmony();
 
 			}
 			else{
-				//harmony.stop = 1;	//ça marche mais décalage 4mesure
+				harmony.stop = 1;	//ça marche mais décalage 4mesure
 			}
 		}
 

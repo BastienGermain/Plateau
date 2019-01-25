@@ -41,3 +41,176 @@ class PlayerFeature{
 		}
 	}
 }
+
+function updateFeatures(){
+	switch (data["knownMove"]){
+		case "Nobi" :
+			if (data["player"]!="White"){	// /!\ "player" mean player playing, "knownMove" concern the player who just played
+				//!=White mean that Black player did the "Nobi"
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 1);
+			}
+			break;
+
+		case "Tsuke" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,2);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,2);
+			}
+			break;
+
+		case "Kata":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
+			}
+			break;
+
+		case "Nozuki":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
+			}
+			break;
+
+		case "Coupe":
+			if (data["player"]!="White"){
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
+			}
+			break;
+
+		case "Hane" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,3);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,3);
+			}
+			break;
+
+		case "Connect":
+			if (data["player"]!="White"){
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
+			}
+			break;
+
+		case "Kosumi":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
+			}
+			break;
+
+		case "Tobi" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 1);
+			}
+			break;
+
+		case "Kogeima" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,2);
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab,2);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,2);
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab,2);
+			}
+			break;
+
+		default:
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab, 0);
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 0);
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab, 0);
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab, 0);
+			break;
+	}
+
+
+	switch(data["cornerMove"]){
+		case "Komoku" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
+			}
+			break;
+
+		case"Takamoku":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
+			}
+			break;
+
+		case "Hoshi" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
+			}
+			break;
+
+
+		case "San-san" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,2, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,2, "corner");
+			}
+			break;
+
+		case "Mokuhazuki" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,3, "corner");
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab,1,"corner");
+			}
+			break;
+
+		default:
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab, 0, "corner");
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 0, "corner");
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab, 0, "corner");
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab, 0, "corner");
+			break;
+	}
+	blackPlayerFeature.update();
+	whitePlayerFeature.update();
+}

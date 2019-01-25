@@ -11,7 +11,7 @@ Tone.Transport.bpm.value = tempo;
 Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
-
+var harmony = new Harmony("A3");
 
 // MELODY ////////////////////////////////////////////
 /*
@@ -129,7 +129,12 @@ async function updateBassLine(phase)
 	//window.setTimeout(updateBassLine, Tone.Time("4m").toMilliseconds());
 }
 */
+const Instrument1List = ['piano', 'bassoon', 'cello', 'clarinet', 
+ 'flute', 'french-horn', 'guitar-acoustic', 
+'guitar-electric','guitar-nylon', 'harmonium', 'harp', 'organ', 
+'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone'];
 
+const Instrument2List = ['bass-electric', 'bassoon', 'cello', 'french-horn', 'contrabass', 'tuba'];
 
 
 var phase = 0;
@@ -149,6 +154,7 @@ $(document).ready(function()
            	Tone.context.resume();
 
         ////CODE INITIALISATION
+        //1er coup
 		if (start == 0)
 		{
 			start = 1;
@@ -158,10 +164,10 @@ $(document).ready(function()
 			//joueur1 choisit l'ambiance
 			let horizontalPos = data["stonePosition"][0];
 			if (horizontalPos >= 12){
-				actualAmbiance = ambianceDub;
+				actualAmbiance = ambiance1;
 			}
 			else if (horizontalPos >= 6){
-				actualAmbiance = ambiance1;
+				actualAmbiance = ambianceDub;
 			}
 			else if (horizontalPos >= 0){
 				actualAmbiance = ambianceHarmony;
@@ -169,6 +175,8 @@ $(document).ready(function()
 			actualAmbiance = ambianceHarmony;
 			console.log("selected ambiance = " + actualAmbiance.nom);
 
+
+			updateHarmony();
 
 			//actualAmbiance.beat.playKick();
 		}
@@ -201,9 +209,9 @@ $(document).ready(function()
 
 			tonalite = "C3";
 			console.log("selected tonalite = " + tonalite);
-			harmony = new Harmony(tonalite);
+			//harmony = new Harmony(tonalite);
 
-			harmony.play();
+			//harmony.play();
 		}
 
 
