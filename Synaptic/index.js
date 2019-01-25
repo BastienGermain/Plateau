@@ -1,14 +1,14 @@
 // create the network
 const { Neuron, Layer, Network } = window.synaptic;
 
-const nbInput = 2; //361
+const nbInput = 2; // should be 361
 const nbHidden = 3;
 
 var inputLayer = new Layer(nbInput);
 var hiddenLayer = new Layer(nbHidden);
 var outputLayer = new Layer(1);
 
-// Change squashing function to tanh and bias
+// Change squashing function to tanh and handle bias
 inputLayer.set({
 	squash: Neuron.squash.TANH,
 	bias: 0
@@ -28,6 +28,7 @@ outputLayer.set({
 inputLayer.project(hiddenLayer, Layer.connectionType.ALL_TO_ALL);
 hiddenLayer.project(outputLayer, Layer.connectionType.ALL_TO_ALL);
 
+// Create network
 var myNetwork = new Network({
 	input: inputLayer,
 	hidden: [hiddenLayer],
@@ -60,10 +61,10 @@ for (i = 0; i < nbHidden; i++) {
 }
 
 // Train the network
-var learningRate = .3;
+const learningRate = .3;
 for (i = 0; i < 20000; i++)
 {
-	// 0,0 => 0
+	// 0,0 => -1
 	myNetwork.activate([0,0]);
 	myNetwork.propagate(learningRate, [-1]);
 
@@ -75,13 +76,24 @@ for (i = 0; i < 20000; i++)
 	myNetwork.activate([1,0]);
 	myNetwork.propagate(learningRate, [1]);
 
-	// 1,1 => 0
+	// 1,1 => -1
 	myNetwork.activate([1,1]);
 	myNetwork.propagate(learningRate, [-1]);
 }
+
+// after training export to JSON
+var exported = myNetwork.toJSON();
+var imported = Network.fromJSON(exported);
+console.log(exported);
 
 // test the network
 console.log(myNetwork.activate([0,0]));
 console.log(myNetwork.activate([0,1]));
 console.log(myNetwork.activate([1,0]));
 console.log(myNetwork.activate([1,1]));
+
+// test imported
+console.log(imported.activate([0,0]));
+console.log(imported.activate([0,1]));
+console.log(imported.activate([1,0]));
+console.log(imported.activate([1,1]));
