@@ -18,12 +18,15 @@ var tonalite;
 var whitePlayerFeature = new PlayerFeature();
 var blackPlayerFeature = new PlayerFeature();
 
-const instrument1List = ['piano',  'bassoon', 'cello', 'clarinet', 
- 'flute', 'french-horn', 'guitar-acoustic', 
-'guitar-electric','guitar-nylon', 'harmonium', 'harp', 'organ', 
-'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone']
+const instrument1List = [new InstrumentSampler('piano'),  new InstrumentSampler('bassoon'), new InstrumentSampler('cello'), 
+new InstrumentSampler('clarinet'), new InstrumentSampler('flute'), new InstrumentSampler('french-horn'), 
+new InstrumentSampler('guitar-acoustic'), new InstrumentSampler('guitar-electric'), new InstrumentSampler('guitar-nylon'), 
+new InstrumentSampler('harmonium'), new InstrumentSampler('harp'), new InstrumentSampler('organ'), new InstrumentSampler('saxophone'), 
+new InstrumentSampler('trombone'), new InstrumentSampler('trumpet'), new InstrumentSampler('tuba'), 
+new InstrumentSampler('violin'), new InstrumentSampler('xylophone')]
 
-const instrument2List = ['bass-electric', 'bassoon' ]
+const instrument2List = [new InstrumentSampler('bass-electric'), new InstrumentSampler('bassoon'), new InstrumentSampler('cello'), 
+new InstrumentSampler('french-horn'), new InstrumentSampler('constrabass'), new InstrumentSampler('tuba')]
 
 const beat = new Beat();
 
@@ -36,8 +39,6 @@ var basePlaying = false;
 
 function updateMode()
 {
-	console.log(data["cornerMove"]);
-
 	switch (data["cornerMove"])
 	{
 		case "San-san":
@@ -190,7 +191,7 @@ $("#board").on('click', function(coord)
 		else if (horizontalPos >= 0){
 			ambiance = ambianceHarmony;
 		}
-		ambiance = ambianceHarmony;
+		ambiance = ambiance1;
 		console.log("selected ambiance = " + ambiance.nom);
 
 		//1ers sons...
@@ -248,8 +249,76 @@ $("#board").on('click', function(coord)
 
 	if (data["stoneOnBoard"]==3)
 	{
-		ambiance.player1Instrument1 = 
+		ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
+		ambiance.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
 	}	
+	if (data["stoneOnBoard"]==4)
+	{
+		ambiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
+		ambiance.player2Instrument2 = instrument1List[data["stonePosition"][1]%6];
+
+	}
+	
+
+	if (data["stoneOnBoard"]>4 && data["stoneOnBoard"]<=8)
+	{
+		let nextAmbianceInit;
+		if (ambiance != ambiance1)
+		{
+			nextAmbiance = ambiance1;
+		}
+		else {
+			nextAmbiance = ambianceHarmony;
+		}
+
+		if (data["stoneOnBoard"]==5)
+		{
+			nextAmbiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
+			nextAmbiance.player1Instrument2 = instrument1List[data["stonePosition"][1]%6];
+		}	
+		if (data["stoneOnBoard"]==6)
+		{
+			nextAmbiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
+			nextAmbiance.player2Instrument2 = instrument1List[data["stonePosition"][1]%6];
+		}	
+	}
+
+	if (data["stoneOnBoard"]>6 && data["stoneOnBoard"]<=8)
+	{
+		let nextAmbianceInit;
+		if (ambiance == ambianceDub)
+		{
+			nextAmbiance = ambianceHarmony;
+		}
+		else {
+			nextAmbiance = ambianceDub;
+		}
+
+		if (data["stoneOnBoard"]==7)
+		{
+			nextAmbiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
+			nextAmbiance.player1Instrument2 = instrument1List[data["stonePosition"][1]%6];
+		}	
+		if (data["stoneOnBoard"]==8)
+		{
+			nextAmbiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
+			nextAmbiance.player2Instrument2 = instrument1List[data["stonePosition"][1]%6];
+		}
+	}
+
+	if (data["stoneOnBoard"]>8 && data["stoneOnBoard"]<=10)
+	{
+		if (data["stoneOnBoard"]==9)
+		{
+			ambianceDrum.player1Instrument1 = instrument1List[data["stonePosition"][0]];
+			ambianceDrum.player1Instrument2 = instrument1List[data["stonePosition"][1]%6];
+		}	
+		if (data["stoneOnBoard"]==10)
+		{
+			ambianceDrum.player2Instrument1 = instrument1List[data["stonePosition"][0]];
+			ambianceDrum.player2Instrument2 = instrument1List[data["stonePosition"][1]%6];
+		}
+	}
 	////FIN INITIALISATION
 
 
@@ -268,8 +337,24 @@ $("#board").on('click', function(coord)
 	console.log("offensive :"+whitePlayerFeature.risky);
 */
 
-	if (data["stoneOnBoard"]>2)		//2 si l'initialisation se fait en 2 coups
+	if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 	{
+
+		//if (ambiance == ambiance1)
+		//{
+			updateMode();
+			ambiance.themeP1.init();
+			ambiance.themeP2.init();
+
+			beat.playKick(startTime);
+			beat.playSnare(startTime);
+			beat.playHihat(startTime);
+
+			ambiance.themeP1.startBase(startTime);
+			basePlaying = true;
+			currentTheme = ambiance.themeP1;
+			update();
+		//}
 
 	//ICI NOTIFICATION DES CHGTS DE DATA
 
@@ -303,12 +388,12 @@ $("#board").on('click', function(coord)
 
 			if (data["player"]=="Black")
 			{
-				harmony.stop = 0;
-				updateHarmony();
+				//harmony.stop = 0;
+				//updateHarmony();
 
 			}
 			else{
-				harmony.stop = 1;	//ça marche mais décalage 4mesure
+				//harmony.stop = 1;	//ça marche mais décalage 4mesure
 			}
 		}
 
