@@ -9,8 +9,12 @@ Tone.Master.volume.value = -12;
 Tone.Transport.start();
 
 //////////////////////////////////////
+var lastData;
+var phase;
 
-const ambiance = ambiance1;
+var ambiance;
+var tonalite;
+
 const beat = new Beat();
 
 //////////////////////////////////////
@@ -147,38 +151,6 @@ function updateBassLine()
 	bassLine.start();
 }
 
-function updateHarmony() 
-{
-	harmony.randInt = getRandomInt(5);
-
-	switch (harmony.randInt) {
-		case 0:
-		harmony.sequence0();
-		break;
-
-		case 1:
-		harmony.sequence1();
-		break;
-
-		case 2:
-		harmony.sequence2();
-		break;
-
-		case 3:
-		harmony.sequence3();
-		break;
-
-		case 4:
-		harmony.sequence4();
-		break;
-
-		default:
-		break;
-	}
-
-	window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
-}
-
 
 
 $("#board").on('click', function(coord) 
@@ -186,29 +158,142 @@ $("#board").on('click', function(coord)
 	if (Tone.context.state !== 'running')
 		Tone.context.resume();
 
+	////CODE INITIALISATION
 	if (start == 0) 
 	{
 		startTime = Tone.context.currentTime.toFixed(4);
 
-		updateMode();
 
-		ambiance.themeP1.init();
-		ambiance.themeP2.init();
+		//joueur1 choisit l'ambiance
+		let horizontalPos = data["stonePosition"][0];
+		if (horizontalPos >= 12){
+			ambiance = ambianceDub;
+		}
+		else if (horizontalPos >= 6){
+			ambiance = ambiance1;
+		}
+		else if (horizontalPos >= 0){
+			ambiance = ambianceHarmony;
+		}
+		ambiance = ambiance1;
+		console.log("selected ambiance = " + ambiance.nom);
 
+		//1ers sons...
+		if (ambiance == ambiance1)
+		{
+			updateMode();
+			ambiance.themeP1.init();
+			ambiance.themeP2.init();
 
-		beat.playKick(startTime);
-		beat.playSnare(startTime);
-		beat.playHihat(startTime);
+			beat.playKick(startTime);
+			beat.playSnare(startTime);
+			beat.playHihat(startTime);
 
-		ambiance.themeP1.startBase(startTime);
-		basePlaying = true;
-		currentTheme = ambiance.themeP1;
+			ambiance.themeP1.startBase(startTime);
+			basePlaying = true;
+			currentTheme = ambiance.themeP1;
+			update();
+		}
+		//actualAmbiance.beat.playKick();
 
-		update();
 
 		start = 1; 
 	}
 
-	updateTempo();
-	updateTheme();
+	//joueur2 choisit la tonalite
+	let horizontalPos = data["stonePosition"][0];
+	if (data["stoneOnBoard"]==2){
+
+		if (horizontalPos >= 16){
+			tonalite = "G3";
+		}
+		else if (horizontalPos >= 13){
+			tonalite = "F3";
+		}
+		else if (horizontalPos >= 10){
+			tonalite = "E3";
+		}
+		else if (horizontalPos >= 8){
+			tonalite = "D3";
+		}
+		else if (horizontalPos >= 6){
+			tonalite = "C3";
+		}
+		else if (horizontalPos >= 3){
+			tonalite = "B3";
+		}
+		else if (horizontalPos >= 0){
+			tonalite = "A3";
+		}
+		console.log("selected tonalite = " + tonalite);
+		//une fois qu'on a la tonalité on initialise, harmony , et d'autres...
+		harmony = new Harmony(tonalite);
+
+
+		//harmony.play();
+	}
+	////FIN INITIALISATION
+
+
+	if (data["stoneOnBoard"]>2)		//2 si l'initialisation se fait en 2 coups
+	{	
+
+	//ICI NOTIFICATION DES CHGTS DE DATA
+
+		//valable pour toutes les ambiances
+
+		updateTempo();
+		updateTheme();
+
+		if (data["blackCaptures"]>lastData["blackCaptures"]){
+			victoryMelody(actualAmbiance.player1Instrument, tonalite).start();
+		}
+		if (data["whiteCaptures"]>lastData["whiteCaptures"]){
+			victoryMelody(actualAmbiance.player2Instrument, tonalite).start();
+		}
+
+
+
+		//valable pour une ambiance précise :
+
+		//REGLES AMBIANCE1
+		if (actualAmbiance == ambianc1){
+
+		}
+
+
+		//REGLES AMBIANCE HARMONY
+		if (actualAmbiance == ambianceHarmony){
+
+			if (data["player"]=="Black")
+			{
+				//harmony.stop = 0;
+				//updateHarmony();
+
+			}
+			else{
+				//harmony.stop = 1;	//ça marche mais décalage 4mesure
+			}
+		}
+
+		//REGLES AMBIANCEDUB
+		if (actualAmbiance == ambianceDub){
+
+		}
+
+
+		//REGLES AMBIANCEDRUM
+		if (actualAmbiance == ambianceDrum){
+			if (data["player"]=="Black")
+			{
+				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[0];
+			}
+			else{
+				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];
+			}
+			
+		}
+	}
+
+
 });

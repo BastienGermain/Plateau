@@ -67,46 +67,9 @@ const ambiance1 =
 const ambianceHarmony =
 {
 	nom : "ambianceHarmony",
-	harmony : new Harmony(),
-	updateHarmony()
-	{
-		if (relativ==1){
-			this.harmony.gamme = minorRelative(this.harmony.gamme);
-		}
-
-		this.harmony.randInt = getRandomInt(5);
-
-		switch (this.harmony.randInt)
-		{
-			case 0 :
-				this.harmony.sequence0();
-				break;
-
-			case 1 :
-				this.harmony.sequence1();
-				break;
-
-			case 2 :
-				this.harmony.sequence2();
-				break;
-
-			case 3 :
-				thisharmony.sequence3();
-				break;
-
-			case 4 :
-				this.harmony.sequence4();
-				break;
-
-			default:
-				break;
-		}
-
-		window.setTimeout(this.updateHarmony, Tone.Time("4m").toMilliseconds());
-	}
-
+	player1Instrument : new InstrumentSampler('violin'),
+	player2Instrument : new InstrumentSampler('flute')
 }
-
 
 
 
@@ -130,7 +93,7 @@ const ambianceDub =
 	fx : new FXRack()
 }
 
-ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
-ambianceDub.beat.snare.catchFXs(fx);
+//ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
+//ambianceDub.beat.snare.catchFXs(fx);
 ambianceDub.theme.init();
 

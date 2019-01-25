@@ -12,43 +12,6 @@ Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
-var harmony = new Harmony("A3");
-function updateHarmony()
-	{
-		if (relativ==1){
-			harmony.gamme = minorRelative(harmony.gamme);
-		}
-
-		harmony.randInt = getRandomInt(5);
-
-		switch (harmony.randInt)
-		{
-			case 0 :
-				harmony.sequence0();
-				break;
-
-			case 1 :
-				harmony.sequence1();
-				break;
-
-			case 2 :
-				harmony.sequence2();
-				break;
-
-			case 3 :
-				harmony.sequence3();
-				break;
-
-			case 4 :
-				harmony.sequence4();
-				break;
-
-			default:
-				break;
-		}
-
-		window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
-	}
 
 // MELODY ////////////////////////////////////////////
 /*
@@ -85,6 +48,8 @@ var beat = new Beat();
 
 async function updateTheme()
 {
+	await waitForRightTime();
+
 	console.log(Tone.Transport.bpm.value);
 	melody.stopBase();
 
@@ -201,15 +166,17 @@ $(document).ready(function()
 			else if (horizontalPos >= 0){
 				actualAmbiance = ambianceHarmony;
 			}
+			actualAmbiance = ambianceHarmony;
 			console.log("selected ambiance = " + actualAmbiance.nom);
 			
 
-			actualAmbiance.beat.playKick();
+			//actualAmbiance.beat.playKick();
 		}
 
 		//joueur2 choisit la tonalite
 		let horizontalPos = data["stonePosition"][0];
 		if (data["stoneOnBoard"]==2){
+
 			if (horizontalPos >= 16){
 				tonalite = "G3";
 			}
@@ -231,8 +198,14 @@ $(document).ready(function()
 			else if (horizontalPos >= 0){
 				tonalite = "A3";
 			}
+
+			tonalite = "C3";
+			console.log("selected tonalite = " + tonalite);
+			harmony = new Harmony(tonalite);
+
+			harmony.play();
 		}
-		console.log("selected tonalite = " + tonalite);
+
 
 
 		////FIN INITIALISATION
@@ -252,6 +225,19 @@ $(document).ready(function()
 
 
 		//valable pour une ambiance précise :
+
+		if (actualAmbiance == ambianceHarmony){
+
+			if (data["player"]=="Black")
+			{
+				//harmony.stop = 0;
+				//updateHarmony();
+
+			}
+			else{
+				//harmony.stop = 1;	//ça marche mais décalage 4mesure
+			}
+		}
 
 
 		if (actualAmbiance == ambianceDrum){
