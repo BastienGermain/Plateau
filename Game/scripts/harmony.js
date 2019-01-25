@@ -3,9 +3,11 @@
 //harmonyInstrument = harmonyInstrument.connect(vibrato);
 
 
-var harmonyInstrument;
 
 
+var harmonyInstrument = new InstrumentSampler('violin');
+
+var gamme;
 var relativ;
 //config harmonievar gamme = gammeMajor(notes[tonalite])
 if (relativ==1){

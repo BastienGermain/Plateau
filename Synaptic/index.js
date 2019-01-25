@@ -84,7 +84,7 @@ for (i = 0; i < 20000; i++)
 // after training export to JSON
 var exported = myNetwork.toJSON();
 var imported = Network.fromJSON(exported);
-console.log(exported);
+console.log(exported.connections);
 
 // test the network
 console.log(myNetwork.activate([0,0]));

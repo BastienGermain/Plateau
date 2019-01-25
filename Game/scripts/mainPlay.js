@@ -15,6 +15,16 @@ var phase;
 var ambiance;
 var tonalite;
 
+var whitePlayerFeature = new PlayerFeature();
+var blackPlayerFeature = new PlayerFeature();
+
+const instrument1List = ['piano',  'bassoon', 'cello', 'clarinet', 
+ 'flute', 'french-horn', 'guitar-acoustic', 
+'guitar-electric','guitar-nylon', 'harmonium', 'harp', 'organ', 
+'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone']
+
+const instrument2List = ['bass-electric', 'bassoon' ]
+
 const beat = new Beat();
 
 //////////////////////////////////////
@@ -24,11 +34,11 @@ var currentTheme = null;
 var melodyPlaying = false;
 var basePlaying = false;
 
-function updateMode() 
+function updateMode()
 {
 	console.log(data["cornerMove"]);
 
-	switch (data["cornerMove"]) 
+	switch (data["cornerMove"])
 	{
 		case "San-san":
 		ambiance.themeP1.updateMode("dorian");
@@ -64,17 +74,17 @@ function updateMode()
 	console.log(ambiance.themeP2.mode);
 }
 
-function updateBase(theme) 
-{	
+function updateBase(theme)
+{
 	theme.stopBase();
-	
+
 	if (data["stonesAround"] == 0)
 		theme.updateBaseNoteCount(1);
-	else 
+	else
 	{
 		if (data["stonesAround"] <= 2)
 			theme.updateBaseNoteCount(2);
-		else 
+		else
 		{
 			if (data["stonesAround"] == 3)
 				theme.updateBaseNoteCount(3);
@@ -86,7 +96,7 @@ function updateBase(theme)
 	theme.startBase();
 }
 
-function updateTempo() 
+function updateTempo()
 {
 	console.log(Tone.Transport.bpm.value);
 
@@ -97,7 +107,7 @@ function updateTempo()
 		Tone.Transport.bpm.value -= 10;
 }
 
-function updateTheme() 
+function updateTheme()
 {
 	console.log(data["player"]);
 
@@ -124,7 +134,7 @@ function updateTheme()
 
 }
 
-function update() 
+function update()
 {
 	currentTheme.updateBaseChord();
 	updateTheme();
@@ -132,7 +142,7 @@ function update()
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
 }
 
-function updateBassLine() 
+function updateBassLine()
 {
 	bassLine = createBassLine(tonalite);
 	bassLine.start();
@@ -140,13 +150,18 @@ function updateBassLine()
 
 
 
+//Evenement Pose de pierre :
 $("#board").on('click', function(coord) 
+
 {
+	console.log(data);
+	console.log(lastData);
+
 	if (Tone.context.state !== 'running')
 		Tone.context.resume();
 
 	////CODE INITIALISATION
-	if (start == 0) 
+	if (start == 0)
 	{
 		startTime = Tone.context.currentTime.toFixed(4);
 
@@ -165,6 +180,7 @@ $("#board").on('click', function(coord)
 		console.log("selected ambiance = " + ambiance.nom);
 
 		//1ers sons...
+		/*
 		if (ambiance == ambiance1)
 		{
 			updateMode();
@@ -222,8 +238,24 @@ $("#board").on('click', function(coord)
 
 	////FIN INITIALISATION
 
+
+	//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
+	updateFeatures();
+	/*
+	console.log("blackPlayerFeature :");
+	console.log("offensive :"+blackPlayerFeature.offensive);
+	console.log("defensive :"+blackPlayerFeature.defensive);
+	console.log("expensive :"+blackPlayerFeature.expensive);
+	console.log("offensive :"+blackPlayerFeature.risky);
+	console.log("whitePlayerFeature :");
+	console.log("offensive :"+whitePlayerFeature.offensive);
+	console.log("defensive :"+whitePlayerFeature.defensive);
+	console.log("expensive :"+whitePlayerFeature.expensive);
+	console.log("offensive :"+whitePlayerFeature.risky);
+*/
+
 	if (data["stoneOnBoard"]>2)		//2 si l'initialisation se fait en 2 coups
-	{	
+	{
 
 	//ICI NOTIFICATION DES CHGTS DE DATA
 
@@ -256,17 +288,16 @@ $("#board").on('click', function(coord)
 
 
 		//REGLES AMBIANCE HARMONY
-		if (ambiance == ambianceHarmony)
-		{
+		if (ambiance == ambianceHarmony){
 
 			if (data["player"]=="Black")
 			{
-				//harmony.stop = 0;
-				//updateHarmony();
+				harmony.stop = 0;
+				updateHarmony();
 
 			}
 			else{
-				//harmony.stop = 1;	//ça marche mais décalage 4mesure
+				harmony.stop = 1;	//ça marche mais décalage 4mesure
 			}
 		}
 
@@ -285,7 +316,7 @@ $("#board").on('click', function(coord)
 			else{
 				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];
 			}
-			
+
 		}
 	}
 
