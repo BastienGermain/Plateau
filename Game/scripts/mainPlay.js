@@ -24,11 +24,11 @@ var currentTheme = null;
 var melodyPlaying = false;
 var basePlaying = false;
 
-function updateMode() 
+function updateMode()
 {
 	console.log(data["cornerMove"]);
 
-	switch (data["cornerMove"]) 
+	switch (data["cornerMove"])
 	{
 		case "San-san":
 		ambiance.themeP1.updateMode("dorian");
@@ -64,17 +64,17 @@ function updateMode()
 	console.log(ambiance.themeP2.mode);
 }
 
-function updateBase(theme) 
-{	
+function updateBase(theme)
+{
 	theme.stopBase();
-	
+
 	if (data["stonesAround"] == 0)
 		theme.updateBaseNoteCount(1);
-	else 
+	else
 	{
 		if (data["stonesAround"] <= 2)
 			theme.updateBaseNoteCount(2);
-		else 
+		else
 		{
 			if (data["stonesAround"] == 3)
 				theme.updateBaseNoteCount(3);
@@ -86,7 +86,7 @@ function updateBase(theme)
 	theme.startBase();
 }
 
-function updateTempo() 
+function updateTempo()
 {
 	console.log(Tone.Transport.bpm.value);
 
@@ -97,11 +97,11 @@ function updateTempo()
 		Tone.Transport.bpm.value -= 10;
 }
 
-function updateTheme() 
+function updateTheme()
 {
 	console.log(data["player"]);
 
-	if (data["player"] == "White") 
+	if (data["player"] == "White")
 	{
 		if (basePlaying)
 		{
@@ -117,9 +117,9 @@ function updateTheme()
 		}
 
 		currentTheme = ambiance.themeP2;
-	} 
+	}
 
-	else 
+	else
 	{
 		if (basePlaying)
 		{
@@ -138,14 +138,14 @@ function updateTheme()
 	}
 }
 
-function update() 
+function update()
 {
 	currentTheme.updateBaseChord();
 
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
 }
 
-function updateBassLine() 
+function updateBassLine()
 {
 	bassLine = createBassLine(tonalite);
 	bassLine.start();
@@ -153,13 +153,16 @@ function updateBassLine()
 
 
 
-$("#board").on('click', function(coord) 
+$("#board").on('click', function(coord)
 {
+	console.log(data);
+	console.log(lastData);
+
 	if (Tone.context.state !== 'running')
 		Tone.context.resume();
 
 	////CODE INITIALISATION
-	if (start == 0) 
+	if (start == 0)
 	{
 		startTime = Tone.context.currentTime.toFixed(4);
 
@@ -197,7 +200,7 @@ $("#board").on('click', function(coord)
 		//actualAmbiance.beat.playKick();
 
 
-		start = 1; 
+		start = 1;
 	}
 
 	//joueur2 choisit la tonalite
@@ -236,7 +239,7 @@ $("#board").on('click', function(coord)
 
 
 	if (data["stoneOnBoard"]>2)		//2 si l'initialisation se fait en 2 coups
-	{	
+	{
 
 	//ICI NOTIFICATION DES CHGTS DE DATA
 
@@ -291,7 +294,7 @@ $("#board").on('click', function(coord)
 			else{
 				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];
 			}
-			
+
 		}
 	}
 

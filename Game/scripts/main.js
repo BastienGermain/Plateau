@@ -131,7 +131,7 @@ async function updateBassLine(phase)
 */
 
 
-var lastData;
+
 var phase = 0;
 var start = 0;
 var actualAmbiance;
@@ -168,7 +168,7 @@ $(document).ready(function()
 			}
 			actualAmbiance = ambianceHarmony;
 			console.log("selected ambiance = " + actualAmbiance.nom);
-			
+
 
 			//actualAmbiance.beat.playKick();
 		}
@@ -248,9 +248,9 @@ $(document).ready(function()
 			else{
 				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];
 			}
-			
+
 		}
-		
+
 
 
 
