@@ -152,7 +152,6 @@ function updateBassLine()
 
 //Evenement Pose de pierre :
 $("#board").on('click', function(coord) 
-
 {
 	console.log(data);
 	console.log(lastData);
@@ -180,7 +179,6 @@ $("#board").on('click', function(coord)
 		console.log("selected ambiance = " + ambiance.nom);
 
 		//1ers sons...
-		/*
 		if (ambiance == ambiance1)
 		{
 			updateMode();
@@ -252,7 +250,7 @@ $("#board").on('click', function(coord)
 	console.log("defensive :"+whitePlayerFeature.defensive);
 	console.log("expensive :"+whitePlayerFeature.expensive);
 	console.log("offensive :"+whitePlayerFeature.risky);
-*/
+	*/
 
 	if (data["stoneOnBoard"]>2)		//2 si l'initialisation se fait en 2 coups
 	{
@@ -319,6 +317,4 @@ $("#board").on('click', function(coord)
 
 		}
 	}
-
-
 });
