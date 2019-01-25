@@ -15,6 +15,9 @@ var phase;
 var ambiance;
 var tonalite;
 
+var whitePlayerFeature = new PlayerFeature();
+var blackPlayerFeature = new PlayerFeature();
+
 const beat = new Beat();
 
 //////////////////////////////////////
@@ -152,7 +155,7 @@ function updateBassLine()
 }
 
 
-
+//Evenement Pose de pierre :
 $("#board").on('click', function(coord) 
 {
 	if (Tone.context.state !== 'running')
@@ -175,7 +178,7 @@ $("#board").on('click', function(coord)
 		else if (horizontalPos >= 0){
 			ambiance = ambianceHarmony;
 		}
-		ambiance = ambiance1;
+		//ambiance = ambiance1;
 		console.log("selected ambiance = " + ambiance.nom);
 
 		//1ers sons...
@@ -194,7 +197,7 @@ $("#board").on('click', function(coord)
 			currentTheme = ambiance.themeP1;
 			update();
 		}
-		//actualAmbiance.beat.playKick();
+		//ambiance.beat.playKick();
 
 
 		start = 1; 
@@ -234,6 +237,188 @@ $("#board").on('click', function(coord)
 	}
 	////FIN INITIALISATION
 
+	//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
+	switch (data["knownMove"]){
+		case "Nobi" :
+			if (data["player"]!="White"){	// /!\ "player" mean player playing, "knownMove" concern the player who just played
+				//!=White mean that Black player did the "Nobi"
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 1);
+			}
+			break;
+
+		case "Tsuke" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,2);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,2);
+			}
+			break;
+
+		case "Kata":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
+			}
+			break;
+
+		case "Nozuki":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
+			}
+			break;
+
+		case "Coupe":
+			if (data["player"]!="White"){
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,1);
+			}
+			break;
+
+		case "Hane" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab,3);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab,3);
+			}
+			break;
+
+		case "Connect":
+			if (data["player"]!="White"){
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
+			}
+			break;
+
+		case "Kosumi":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
+			}
+			break;
+
+		case "Tobi" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1);
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 1);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1);
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 1);
+			}
+			break;
+
+		case "Kogeima" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,2);
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab,2);
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,2);
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab,2);
+			}
+			break;
+
+		default:
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab, 0);
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 0);
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab, 0);
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab, 0);
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab, 0);
+			break;
+	}
+
+
+	switch(data["cornerMove"]){
+		case "Komoku" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
+			}
+			break;
+
+		case"Takamoku":
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
+			}
+			break;
+
+		case "Hoshi" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,1, "corner");
+			}
+			break;
+
+
+		case "San-san" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,2, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab,2, "corner");
+			}
+			break;
+
+		case "Mokuhazuki" :
+			if (data["player"]!="White"){	
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab,3, "corner");
+				blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab,1, "corner");
+			}
+			else{
+				whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab,1,"corner");
+			}
+			break;
+
+		default:
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.offensiveTab, 0, "corner");
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.defensiveTab, 0, "corner");
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.expensiveTab, 0, "corner");
+			blackPlayerFeature.notifyFeature(blackPlayerFeature.riskyTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.offensiveTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.defensiveTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.expensiveTab, 0, "corner");
+			whitePlayerFeature.notifyFeature(whitePlayerFeature.riskyTab, 0, "corner");
+			break;
+	}
+	blackPlayerFeature.update();
+	whitePlayerFeature.update();
+	console.log("blackPlayerFeature :");
+	console.log("offensive :"+blackPlayerFeature.offensive);
+	console.log("defensive :"+blackPlayerFeature.defensive);
+	console.log("expensive :"+blackPlayerFeature.expensive);
+	console.log("offensive :"+blackPlayerFeature.risky);
+	console.log("whitePlayerFeature :");
+	console.log("offensive :"+whitePlayerFeature.offensive);
+	console.log("defensive :"+whitePlayerFeature.defensive);
+	console.log("expensive :"+whitePlayerFeature.expensive);
+	console.log("offensive :"+whitePlayerFeature.risky);
+
 
 	if (data["stoneOnBoard"]>2)		//2 si l'initialisation se fait en 2 coups
 	{	
@@ -244,26 +429,30 @@ $("#board").on('click', function(coord)
 
 		updateTempo();
 		updateTheme();
-
+		console.log(data["blackCaptures"]);
+		console.log(lastData["blackCaptures"]);
 		if (data["blackCaptures"]>lastData["blackCaptures"]){
-			victoryMelody(actualAmbiance.player1Instrument, tonalite).start();
+			console.log("BLACK CAPTURES");
+			victoryMelody(ambiance.player1Instrument, tonalite);
 		}
 		if (data["whiteCaptures"]>lastData["whiteCaptures"]){
-			victoryMelody(actualAmbiance.player2Instrument, tonalite).start();
+			console.log("WHITE CAPTURES");
+			victoryMelody(ambiance.player2Instrument, tonalite);
 		}
+
 
 
 
 		//valable pour une ambiance précise :
 
 		//REGLES AMBIANCE1
-		if (actualAmbiance == ambianc1){
+		if (ambiance == ambiance1){
 
 		}
 
 
 		//REGLES AMBIANCE HARMONY
-		if (actualAmbiance == ambianceHarmony){
+		if (ambiance == ambianceHarmony){
 
 			if (data["player"]=="Black")
 			{
@@ -277,13 +466,13 @@ $("#board").on('click', function(coord)
 		}
 
 		//REGLES AMBIANCEDUB
-		if (actualAmbiance == ambianceDub){
+		if (ambiance == ambianceDub){
 
 		}
 
 
 		//REGLES AMBIANCEDRUM
-		if (actualAmbiance == ambianceDrum){
+		if (ambiance == ambianceDrum){
 			if (data["player"]=="Black")
 			{
 				//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[0];

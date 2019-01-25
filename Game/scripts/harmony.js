@@ -7,6 +7,7 @@ var harmonyInstrument;
 
 
 var relativ;
+var gamme;
 //config harmonievar gamme = gammeMajor(notes[tonalite])
 if (relativ==1){
 	gamme = minorRelative(gamme);
