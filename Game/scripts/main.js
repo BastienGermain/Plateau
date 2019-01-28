@@ -19,40 +19,7 @@ var beat = new Beat();
 //HARMONY
 var harmony = new Harmony("A3");
 
-function updateHarmony()
-{
-	harmony.randInt = getRandomInt(5);
 
-	switch (harmony.randInt)
-	{
-		case 0 :
-			harmony.sequence0();
-			break;
-
-		case 1 :
-			harmony.sequence1();
-			break;
-
-		case 2 :
-			harmony.sequence2();
-			break;
-
-		case 3 :
-			harmony.sequence3();
-			break;
-
-		case 4 :
-			harmony.sequence4();
-			break;
-
-		default:
-			break;
-	}
-
-	if (harmony.stop != 1){
-		window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
-	}
-}
 
 // MELODY ////////////////////////////////////////////
 /*
@@ -132,14 +99,11 @@ $(document).ready(function()
 			startTime = Tone.context.currentTime.toFixed(4);
 
 
-
 			updateHarmony();
+			
+
+
 		}
-
-
-			//harmony = new Harmony(tonalite);
-
-			//harmony.play();
 		
 
 

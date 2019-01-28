@@ -10,15 +10,16 @@ for(let i = 1; i < notesNames.length; ++i)
 	notes[notesNames[i]] = notes[notesNames[i-1]] * freqIncrement;
 
 function pythagoricienne(tonale){
-	let gamme = [tonale]
+	let gamme = [notes[tonale]]
 	for (let i = 0; i<12; i++){
 		gamme[i+1]=gamme[i]*freqIncrement;
 	}
-	return gamme
+	return gamme;
 }
 
 function gammeMajor(tonale){
 	let pytha = pythagoricienne(tonale);
+
 	let gamme = [pytha[0]];
 	gamme.push(pytha[2]);
 	gamme.push(pytha[4]);
@@ -27,6 +28,7 @@ function gammeMajor(tonale){
 	gamme.push(pytha[9]);
 	gamme.push(pytha[11]);
 	gamme.push(pytha[12]);
+
 	return gamme;
 }
 

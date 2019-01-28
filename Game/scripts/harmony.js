@@ -1,20 +1,20 @@
 
-var gamme = gammeMajor("A3");
-var relativ;
-//config harmonievar gamme = gammeMajor(notes[tonalite])
+var relativ=0;
 if (relativ==1){
 	gamme = minorRelative(gamme);
 }
 
-var harmonyInstrument = new Tone.Synth().toMaster();
+var harmonyInstrument = new InstrumentSampler('violin');
 
 class Harmony {
 	constructor(tonalite)
 	{
+		this.tonalite = tonalite;
+		this.gamme = gammeMajor(tonalite);
 		this.mesureCount = 0;
 		this.randInt = 0;
-		this.leftHand = this.createLeftHand(notes[tonalite], 1);
-		this.rightHand = this.createRightHand(notes[tonalite], 1);
+		this.leftHand = this.createLeftHand(tonalite, 1);
+		this.rightHand = this.createRightHand(tonalite, 1);
 
 		this.stop = 0;
 	}
@@ -44,15 +44,16 @@ class Harmony {
 			default:
 				break;
 		}
+		let _gamme = this.gamme;
 		var leftHand =  new Tone.Event(
 			function(time){
 				harmonyInstrument.play(
-					Tone.Frequency(gamme[0]*modifDegré/2).toNote(),
+					Tone.Frequency(_gamme[0]*modifDegré/2).toNote(),
 					Tone.Time("2n").toSeconds()*(1+2*finCadence),
 					time
 				);
 				harmonyInstrument.play(
-					Tone.Frequency(gamme[4]*modifDegré/2).toNote(),
+					Tone.Frequency(_gamme[4]*modifDegré/2).toNote(),
 					Tone.Time("2n").toSeconds()*(1+2*finCadence),
 					time
 				);
@@ -65,9 +66,10 @@ class Harmony {
 
 	createRightHand(tonalite, degré, finCadence=0)
 	{
-		gamme = gammeMajor(notes[tonalite]);
+		this.gamme = gammeMajor(tonalite);
+		let _gamme = this.gamme;
 		if (relativ==1){
-			gamme = minorRelative(gamme);
+			_gamme = minorRelative(_gamme);
 		}
 		var modifDegré = 1;
 		switch(degré){
@@ -77,8 +79,8 @@ class Harmony {
 
 			case 2:
 				modifDegré =  Math.pow(freqIncrement, 2);
-				gamme = gammeMinor(notes[tonalite]);
-				if (relativ==1){gamme = minorRelative(gamme);}
+				_gamme = gammeMinor(tonalite);
+				if (relativ==1){_gamme = minorRelative(_gamme);}
 				break;
 
 			case 4:
@@ -87,23 +89,24 @@ class Harmony {
 
 			case 6:
 				modifDegré =  Math.pow(freqIncrement, -3);
-				gamme = gammeMinor(notes[tonalite]);
-				if (relativ==1){gamme = minorRelative(gamme);}
+				_gamme = gammeMinor(tonalite);
+				if (relativ==1){_gamme = minorRelative(_gamme);}
 				break;
 
 			default:
 				break;
 		}
+		
 		if (finCadence){
 			var rightHand = new Tone.Event(
 				function(time){
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[2]*modifDegré).toNote(),
+						Tone.Frequency(_gamme[2]*modifDegré).toNote(),
 						Tone.Time("2n").toSeconds()*3,
 						time 
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[4]*modifDegré).toNote(),
+						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
 						Tone.Time("2n").toSeconds()*3,
 						time 
 					);
@@ -114,22 +117,22 @@ class Harmony {
 			var rightHand = new Tone.Event(
 				function(time){
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[2]*modifDegré).toNote(),
+						Tone.Frequency(_gamme[2]*modifDegré).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[4]*modifDegré).toNote(),
+						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[2]*modifDegré).toNote(),
+						Tone.Frequency(_gamme[2]*modifDegré).toNote(),					
 						"4n",
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
 					harmonyInstrument.play(
-						Tone.Frequency(gamme[4]*modifDegré).toNote(),
+						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
@@ -158,12 +161,13 @@ class Harmony {
 			}		
 		}
 		this.leftHand.stop();
-		this.leftHand = this.createLeftHand(tonalite, degré, finCadence);
+		this.leftHand = this.createLeftHand(this.tonalite, degré, finCadence);
 		this.leftHand.start();
 	}
 
 	modifRightHand(degré, finCadence =0)
 	{
+		/*
 		if (data["player"]=="Black"){
 			harmonyInstrument =  ambianceHarmony.player1Instrument;
 			if (relativ != 1){
@@ -175,9 +179,9 @@ class Harmony {
 			if (relativ != 0){
 				relativ = 0;
 			}		
-		}
+		}*/
 		this.rightHand.stop();
-		this.rightHand = this.createRightHand(tonalite, degré, finCadence);
+		this.rightHand = this.createRightHand(this.tonalite, degré, finCadence);
 		this.rightHand.start()
 	}
 
@@ -337,7 +341,40 @@ class Harmony {
 }
 
 
+function updateHarmony()
+{
+	harmony.randInt = getRandomInt(5);
 
+	switch (harmony.randInt)
+	{
+		case 0 :
+			harmony.sequence0();
+			break;
+
+		case 1 :
+			harmony.sequence1();
+			break;
+
+		case 2 :
+			harmony.sequence2();
+			break;
+
+		case 3 :
+			harmony.sequence3();
+			break;
+
+		case 4 :
+			harmony.sequence4();
+			break;
+
+		default:
+			break;
+	}
+
+	if (harmony.stop != 1){
+		window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
+	}
+}
 
 
 

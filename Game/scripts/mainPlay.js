@@ -237,7 +237,7 @@ $("#board").on('click', function(coord)
 		//harmony.play();
 	}
 
-<<<<<<< HEAD
+
 	if (data["stoneOnBoard"]==3)
 	{
 		ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
@@ -310,8 +310,7 @@ $("#board").on('click', function(coord)
 			ambianceDrum.player2Instrument2 = instrument1List[data["stonePosition"][1]%6];
 		}
 	}
-=======
->>>>>>> 86220aef0d01e8974bd5c8e25b64a2e95001f35c
+
 	////FIN INITIALISATION
 
 
