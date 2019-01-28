@@ -26,12 +26,14 @@ var tonalite;
 var whitePlayerFeature = new PlayerFeature();
 var blackPlayerFeature = new PlayerFeature();
 
+
 //////////////////////////////////////
 
 var currentTheme = null;
 
 var melodyPlaying = false;
 var basePlaying = false;
+
 
 function concat(first, second) 
 {
@@ -60,6 +62,7 @@ function saveMusic()
 			for (let i = 0; i < soundFile.buffer.numberOfChannels; ++i)
 				lastSoundFile.buffer.copyToChannel(concat(lastSoundFile.buffer.getChannelData(i), soundFile.buffer.getChannelData(i)), i, 0);
 		}
+
 
 		console.log(soundFile);
 		console.log(lastSoundFile);

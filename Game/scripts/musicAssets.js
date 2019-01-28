@@ -45,12 +45,13 @@ function gammeMinor(tonale){
 	return gamme;
 }
 
-function minorRelative(gamme){
-	return gammeMinor(gamme[0]/freqIncrement/freqIncrement/freqIncrement);
+function minorRelative(tonale){
+	//console.log(Tone.Frequency(notes[tonale]/freqIncrement/freqIncrement/freqIncrement).toNote());
+	return gammeMinor(Tone.Frequency(notes[tonale]/freqIncrement/freqIncrement/freqIncrement).toNote());
 }
 
-function majorRelative(gamme){
-	return gammeMajor(gamme[0]*freqIncrement*freqIncrement*freqIncrement);
+function majorRelative(tonale){
+	return gammeMajor(Tone.Frequency(notes[tonale]*freqIncrement*freqIncrement*freqIncrement).toNote());
 }
 
 function getRandomInt(max) {
