@@ -1,11 +1,11 @@
 class Beat {
 
 	constructor(ambiance = "")
-	{	
+	{
 		this.kick = new InstrumentSampler('kick');
 		this.snare = new InstrumentSampler('snare');
 		this.hihat = new InstrumentSampler('hihat');
-		
+
 		this.kick.sampler.volume.value = -3;
 		this.snare.sampler.volume.value = -3;
 		this.hihat.sampler.volume.value = -3;
@@ -38,11 +38,11 @@ class Beat {
 	}
 
 /// PATTERN BUILDER ////////////////////////////////////////////////////////////
-	
-	instancePatterns(ambiance) 
+
+	instancePatterns(ambiance)
 	{
 		if(ambiance=="techno")
-		{			
+		{
 			this.kickPattern = Beat.KickTechnoPatterns[0];
     		this.snarePattern = Beat.SnareTechnoPatterns[0];
   		  	this.hihatPattern = Beat.HihatTechnoPatterns[0];
@@ -62,15 +62,15 @@ class Beat {
 	}
 
 /// LOOP CREATORS ///////////////////////////////////////////////////////////////
-	
-	createKick() 
-	{	
+
+	createKick()
+	{
 		console.log(this.kickPattern);
 		let _this = this;
 
 		let kickLoop =  new Tone.Event(
 			function(time)
-			{	
+			{
 				if (_this.kickPattern.charAt(_this.kickIndex) === "x")
 				{
 					_this.kick.play(_this.kickNote, 0.25, time);
@@ -85,13 +85,13 @@ class Beat {
 		return kickLoop;
 	}
 
-	createSnare() 
-	{	
+	createSnare()
+	{
 		let _this = this;
 
 		let snareLoop =  new Tone.Event(
 			function(time)
-			{	
+			{
 				if (_this.snarePattern.charAt(_this.snareIndex) === "x")
 					_this.snare.play(_this.snareNote, 0.25, time);
 
@@ -104,13 +104,13 @@ class Beat {
 		return snareLoop;
 	}
 
-	createHihat() 
-	{	
+	createHihat()
+	{
 		let _this = this;
 
 		let hihatLoop =  new Tone.Event(
 			function(time)
-			{	
+			{
 				if (_this.hihatPattern.charAt(_this.hihatIndex) === "x")
 					_this.hihat.play(_this.hihatNote, 0.25, time, 0.1);
 				_this.hihatIndex = (_this.hihatIndex + 1) % _this.kickSubdivisions;
@@ -121,9 +121,9 @@ class Beat {
 		hihatLoop.playbackRate = 1;
 		return hihatLoop;
 	}
- 
+
 /// PLAY FUNCTIONS //////////////////////////////////////////////////////////////
-	
+
 	playKick(startTime = 0)
 	{
 		//await waitForRightTime();
@@ -157,7 +157,7 @@ class Beat {
 	}
 
 /// STOP FUNCTIONS //////////////////////////////////////////////////////////////
-	
+
 	stopKick(){
 		this.kickLoop.stop();
 		this.playingKick = false;
@@ -190,9 +190,14 @@ class Beat {
 ["-", "-", "-", "|", "-", "-", "-", "|", "-", "-", "-", "|", "-", "-", "-", "|"],
 */
 
-Beat.KickPatterns = 
+Beat.KickPatterns =
 [
+// Minimalist
+"x---------------x---------------",
+"x-------x-------x-------x-------",
+
 "x---x---x---x---x---x---x---x---",
+
 "x-----x---------x-----x---x--x--",
 "x---------x-----x---------x-----",
 "x-------x-------x--------x------",
@@ -208,7 +213,7 @@ Beat.KickPatterns =
 "x------x-x-x---xx----------x----",
 ];
 
-Beat.SnarePatterns = 
+Beat.SnarePatterns =
 [
 "-------x-------x-------x-------x",
 "----x-------x-------x-------x---",
@@ -219,7 +224,7 @@ Beat.SnarePatterns =
 "--x-x---x--xx-xx----x-x---x-x---"
 ];
 
-Beat.HihatPatterns = 
+Beat.HihatPatterns =
 [
 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
@@ -233,7 +238,7 @@ Beat.HihatPatterns =
 
 
 //TECHNO PATTERNS
-Beat.KickTechnoPatterns = 
+Beat.KickTechnoPatterns =
 [
 "x---------x-----x---------x-----",
 "x---------x-----x---------x---x-",
@@ -241,7 +246,7 @@ Beat.KickTechnoPatterns =
 "x---x---x---x---x---x---x---x---"
 ];
 
-Beat.SnareTechnoPatterns = 
+Beat.SnareTechnoPatterns =
 [
 "----x-------x-------x-------x---",
 "--x---x---x---x---x---x---x---x-",
@@ -250,7 +255,7 @@ Beat.SnareTechnoPatterns =
 
 ];
 
-Beat.HihatTechnoPatterns = 
+Beat.HihatTechnoPatterns =
 [
 "x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-xxx-x-x-x-x-x-x-xxx-x-x-x-"
@@ -259,21 +264,20 @@ Beat.HihatTechnoPatterns =
 
 
 //DUB PATTERNS
-Beat.KickDubPatterns = 
+Beat.KickDubPatterns =
 [
 "x---x---x---x---x---x---x---x---",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
 ];
 
-Beat.SnareDubPatterns = 
+Beat.SnareDubPatterns =
 [
 "----x-------x-------x-------x---",
 "----x-------x-------x-------x---"
 
 ];
 
-Beat.HihatDubPatterns = 
+Beat.HihatDubPatterns =
 [
 "",
 ];
-

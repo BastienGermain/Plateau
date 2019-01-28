@@ -9,8 +9,6 @@ var player = JGO.BLACK; // next player
 var ko = false, lastMove = false; // ko coordinate and last move coordinate
 var lastHover = false, lastX = -1, lastY = -1; // hover helper vars
 
-var isOkMove = false;
-
 // Handle handicap
 //jboard.setType(JGO.util.getHandicapCoordinates(jboard.width, 2), JGO.BLACK);
 

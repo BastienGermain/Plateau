@@ -35,13 +35,13 @@ var melodyPlaying = false;
 var basePlaying = false;
 
 
-function concat(first, second) 
+function concat(first, second)
 {
 	let result = new Float32Array(first.length + second.length);
 
 	for (let i = 0; i < first.length; ++i)
 		result[i] = first[i];
-	
+
 	for (let i = first.length; i < first.length + second.length; ++i)
 		result[i] = second[i];
 
@@ -73,14 +73,14 @@ function saveMusic()
 }
 
 
-window.onload = function() 
+window.onload = function()
 {
-	Tone.Buffer.on('load', function() 
-	{  
+	Tone.Buffer.on('load', function()
+	{
 		console.log("PLAYABLE");
 
 		//Evenement Pose de pierre :
-		$("#board canvas").on('click', function(coord) 
+		$("#board canvas").on('click', function(coord)
 		{
 			console.log(data);
 			console.log(lastData);
@@ -92,7 +92,7 @@ window.onload = function()
 			if (start == 0)
 			{
 				startTime = Tone.context.currentTime.toFixed(4);
-		  		
+
 		  		recorder.record(soundFile);
 
 				//joueur1 choisit l'ambiance
@@ -114,19 +114,20 @@ window.onload = function()
 
 				//1ers sons...
 				updateMode();
-				
-				
+
+
 				ambiance.beat.kickPattern=Beat.KickPatterns[0];
 				ambiance.beat.playKick(startTime);
-				start = 1; 
+				start = 1;
 			}
+
 		
 		init();	//initie la tonalité et les instruments en fonction des coups des joueurs
 
 
 		if (data["stoneOnBoard"] == 2)
 			ambiance.beat.playHihat(startTime);
-		
+
 		if (data["stoneOnBoard"] == 3)
 			ambiance.beat.playSnare(startTime);
 
@@ -155,7 +156,11 @@ window.onload = function()
 
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
+<<<<<<< HEAD
 		/*
+=======
+
+>>>>>>> 1d2ac7c2c5f25aa126e6c5c6b450b297af9f47ec
 		console.log("blackPlayerFeature :");
 		console.log("offensive :"+blackPlayerFeature.offensive);
 		console.log("defensive :"+blackPlayerFeature.defensive);
@@ -166,21 +171,23 @@ window.onload = function()
 		console.log("defensive :"+whitePlayerFeature.defensive);
 		console.log("expensive :"+whitePlayerFeature.expensive);
 		console.log("risky :"+whitePlayerFeature.risky);
+<<<<<<< HEAD
 		*/
+=======
+
+>>>>>>> 1d2ac7c2c5f25aa126e6c5c6b450b297af9f47ec
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
 		}
-		
+
 /*
 				updateMode();
 				ambiance.themeP1.init();
 				ambiance.themeP2.init();
-
 				ambiance.beat.playKick(startTime);
 				ambiance.beat.playSnare(startTime);
 				ambiance.beat.playHihat(startTime);
-
 				ambiance.themeP1.startBase(startTime);
 				basePlaying = true;
 				currentTheme = ambiance.themeP1;
@@ -212,16 +219,16 @@ window.onload = function()
 			{
 				if (data["stoneOnBoard"] >= 10)
 				{
-					
+
 					{if (data["stoneOnBoard"] >= 10)
 						currentTheme.startMelody(startTime);
-					
+
 						melodyPlaying = true;
 					}
 
 					if (data["player"] == "White")
 						ambiance.themeP2.startMelody(startTime);
-				
+
 					melodyPlaying = true;
 				}
 
