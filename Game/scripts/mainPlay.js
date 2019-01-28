@@ -72,7 +72,6 @@ function saveMusic()
 	}
 }
 
-var isOkMove = false;
 
 window.onload = function()
 {
@@ -129,37 +128,10 @@ window.onload = function()
 		if (data["stoneOnBoard"] == 3)
 			ambiance.beat.playSnare(startTime);
 
-					start = 1;
-				}
-			}
 
-			//joueur2 choisit la tonalite
-
-			init();
-
-			////FIN INITIALISATION
-
-
-			//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
-			updateFeatures();
-			/*
-			console.log("blackPlayerFeature :");
-			console.log("offensive :"+blackPlayerFeature.offensive);
-			console.log("defensive :"+blackPlayerFeature.defensive);
-			console.log("expensive :"+blackPlayerFeature.expensive);
-			console.log("offensive :"+blackPlayerFeature.risky);
-			console.log("whitePlayerFeature :");
-			console.log("offensive :"+whitePlayerFeature.offensive);
-			console.log("defensive :"+whitePlayerFeature.defensive);
-			console.log("expensive :"+whitePlayerFeature.expensive);
-			console.log("offensive :"+whitePlayerFeature.risky);
-			*/
-
-			if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
-			{
-					updateMode();
-					ambiance.themeP1.init();
-					ambiance.themeP2.init();
+		//Coup 4 kick change
+		//coup 5 hihat change
+		//coup 6 hihat change
 
 		//Coup 7 kick change
 		//coup 8 hihat change
@@ -201,11 +173,9 @@ window.onload = function()
 				updateMode();
 				ambiance.themeP1.init();
 				ambiance.themeP2.init();
-
 				ambiance.beat.playKick(startTime);
 				ambiance.beat.playSnare(startTime);
 				ambiance.beat.playHihat(startTime);
-
 				ambiance.themeP1.startBase(startTime);
 				basePlaying = true;
 				currentTheme = ambiance.themeP1;
@@ -233,10 +203,10 @@ window.onload = function()
 			{
 				if (data["stoneOnBoard"] >= 10)
 				{
-					
+
 					{if (data["stoneOnBoard"] >= 10)
 						currentTheme.startMelody(startTime);
-					
+
 						melodyPlaying = true;
 					}
 
@@ -279,6 +249,6 @@ window.onload = function()
 				}
 
 			}
-		});
-	})
+		})
+	});
 }

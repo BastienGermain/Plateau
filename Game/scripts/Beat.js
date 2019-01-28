@@ -62,16 +62,10 @@ class Beat {
 	}
 
 /// LOOP CREATORS ///////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-
-	createKick()
-	{
-=======
 
 	createKick()
 	{
 		console.log(this.kickPattern);
->>>>>>> f7e6d8e6990acfc94913f9a4dbc352e5a3d17fa5
 		let _this = this;
 
 		let kickLoop =  new Tone.Event(
