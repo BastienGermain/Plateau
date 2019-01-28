@@ -8,8 +8,6 @@ Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
-var recorder, soundFile;
-
 //////////////////////////////////////
 var lastData;
 var phase;
@@ -32,22 +30,14 @@ new InstrumentSampler('french-horn'), new InstrumentSampler('constrabass'), new 
 
 const beat = new Beat();
 
+var harmony;
+
 //////////////////////////////////////
 
 var currentTheme = null;
 
 var melodyPlaying = false;
 var basePlaying = false;
-
-function saveMusic()
-{
-	if (recorder)
-	{
-		//recorder.stop(); // stop recorder, and send the result to soundFile
-		saveSound(soundFile, 'mySound.wav'); // save file
-		console.log("Recorded ! ");
-	}
-}
 
 function updateMode()
 {
@@ -111,7 +101,7 @@ function updateBase(theme)
 
 function updateTempo()
 {
-	console.log(Tone.Transport.bpm.value);
+	//console.log(Tone.Transport.bpm.value);
 
 	if (data["moveTime"] < 0 && Tone.Transport.bpm.value < tempo + 60)
 		Tone.Transport.bpm.value += 10;
@@ -166,8 +156,6 @@ function updateBassLine()
 //Evenement Pose de pierre :
 $("#board").on('click', function(coord) 
 {
-	console.log(data);
-	console.log(lastData);
 
 	if (Tone.context.state !== 'running')
 		Tone.context.resume();
@@ -176,11 +164,6 @@ $("#board").on('click', function(coord)
 	if (start == 0)
 	{
 		startTime = Tone.context.currentTime.toFixed(4);
-
-  		recorder = new p5.SoundRecorder();
-  		recorder.setInput();
-  		soundFile = new p5.SoundFile();
-  		recorder.record(soundFile);
 
 		//joueur1 choisit l'ambiance
 		let horizontalPos = data["stonePosition"][0];
@@ -193,8 +176,6 @@ $("#board").on('click', function(coord)
 
 		else if (horizontalPos >= 0)
 			ambiance = ambianceHarmony;
-
-		ambiance = ambiance1;
 
 		console.log("selected ambiance = " + ambiance.nom);
 
@@ -220,36 +201,39 @@ $("#board").on('click', function(coord)
 	if (data["stoneOnBoard"]==2)
 	{
 		if (horizontalPos >= 16)
-			tonalite = "G4";
+			tonalite = "B2";
 		else if (horizontalPos >= 13)
-			tonalite = "F4";
+			tonalite = "C2";
 		else if (horizontalPos >= 10)
-			tonalite = "E4";
+			tonalite = "D2";
 		else if (horizontalPos >= 8)
-			tonalite = "D4";
+			tonalite = "E2";
 		else if (horizontalPos >= 6)
-			tonalite = "C4";
+			tonalite = "F2";
 		else if (horizontalPos >= 3)
-			tonalite = "B4";
+			tonalite = "G2";
 		else if (horizontalPos >= 0)
-			tonalite = "A4";
+			tonalite = "A3";
 
+		tonalite = "A3";
 		console.log("selected tonalite = " + tonalite);
 
 		//une fois qu'on a la tonalité on initialise, harmony , et d'autres...
-		if (ambiance == ambiance1)
-		{
-			ambiance.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-			ambiance.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-			
-			ambiance.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
-			basePlaying = true;
-			currentTheme = ambiance.themeP1;
-			update();
-		}
+		
+		//initialisation d'ambiance1
+		/*
+		ambiance1.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
+		ambiance1.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
+		
+		ambiance1.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+		basePlaying = true;
+		currentTheme = ambiance1.themeP1;
+		update();
+		*/
+		
 
-		else if (ambiance == ambianceHarmony)
-			harmony = new Harmony(tonalite);
+		//initialisation harmonie
+		harmony = new Harmony("A3");
 
 		//harmony.play();
 	}
@@ -346,11 +330,11 @@ $("#board").on('click', function(coord)
 	console.log("offensive :"+whitePlayerFeature.risky);
 	*/
 
-	if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
+	if (data["stoneOnBoard"]>4)		//4 si l'initialisation se fait en 4 coups
 	{
-
-		//if (ambiance == ambiance1)
-		//{
+		/*
+		if (ambiance == ambiance1)
+		{
 			updateMode();
 			ambiance.themeP1.init();
 			ambiance.themeP2.init();
@@ -363,7 +347,9 @@ $("#board").on('click', function(coord)
 			basePlaying = true;
 			currentTheme = ambiance.themeP1;
 			update();
-		//}
+		}*/
+
+		//harmony.play();
 
 	//ICI NOTIFICATION DES CHGTS DE DATA
 
@@ -372,10 +358,10 @@ $("#board").on('click', function(coord)
 		updateTempo();
 
 		if (data["blackCaptures"]>lastData["blackCaptures"])
-			victoryMelody(ambiance.player1Instrument, tonalite);
+			victoryMelody(ambiance.player1Instrument1, tonalite);
 
 		if (data["whiteCaptures"]>lastData["whiteCaptures"])
-			victoryMelody(ambiance.player2Instrument, tonalite);
+			victoryMelody(ambiance.player2Instrument1, tonalite);
 
 		//valable pour une ambiance précise :
 
@@ -392,8 +378,8 @@ $("#board").on('click', function(coord)
 			
 				melodyPlaying = true;
 			}
-
 		}
+
 
 		//REGLES AMBIANCE HARMONY
 		if (ambiance == ambianceHarmony){

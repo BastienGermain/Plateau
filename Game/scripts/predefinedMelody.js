@@ -1,13 +1,13 @@
 function victoryMelody(instrument, tonalite)
 {
-	let gamme = gammeMajor(notes[tonalite]);
+	let gamme = gammeMajor(tonalite);
 	let victoryMelody = new Tone.Event
 		(
 			function(time)
 			{	
-				instrument.play(gamme[0], "16n", time);
-				instrument.play(gamme[0], "16n", time + Tone.Time("16n").toSeconds());
-				instrument.play(gamme[3], "2n", time + Tone.Time("8n").toSeconds());
+				instrument.play(Tone.Frequency(gamme[0]).toNote(), "16n", time);
+				instrument.play(Tone.Frequency(gamme[0]).toNote(), "16n", time + Tone.Time("16n").toSeconds());
+				instrument.play(Tone.Frequency(gamme[3]).toNote(), "2n", time + Tone.Time("8n").toSeconds());
 
 			}
 		);

@@ -1,8 +1,8 @@
-
+/*
 var relativ=0;
 if (relativ==1){
-	gamme = minorRelative(gamme);
-}
+	gamme = gammeMinor(tonalite;
+}*/
 
 var harmonyInstrument = new InstrumentSampler('violin');
 
@@ -16,14 +16,15 @@ class Harmony {
 		this.leftHand = this.createLeftHand(tonalite, 1);
 		this.rightHand = this.createRightHand(tonalite, 1);
 
-		this.stop = 0;
+		this.relativ = 1;
+		this.stop = 1;
 	}
 
 	
 
 	createLeftHand(tonalite, degré, finCadence=0)
 	{
-		var modifDegré = 1;
+		let modifDegré = 1;
 		switch(degré){
 			case 5:
 				modifDegré =  Math.pow(freqIncrement, 7);
@@ -68,10 +69,11 @@ class Harmony {
 	{
 		this.gamme = gammeMajor(tonalite);
 		let _gamme = this.gamme;
-		if (relativ==1){
-			_gamme = minorRelative(_gamme);
+		let _relativ = this.relativ;
+		if (_relativ==1){
+			_gamme = gammeMinor(tonalite);
 		}
-		var modifDegré = 1;
+		let modifDegré = 1;
 		switch(degré){
 			case 5:
 				modifDegré =  Math.pow(freqIncrement, 7);
@@ -80,7 +82,7 @@ class Harmony {
 			case 2:
 				modifDegré =  Math.pow(freqIncrement, 2);
 				_gamme = gammeMinor(tonalite);
-				if (relativ==1){_gamme = minorRelative(_gamme);}
+				if (_relativ==1){_gamme = gammeMinor(tonalite);}
 				break;
 
 			case 4:
@@ -90,13 +92,12 @@ class Harmony {
 			case 6:
 				modifDegré =  Math.pow(freqIncrement, -3);
 				_gamme = gammeMinor(tonalite);
-				if (relativ==1){_gamme = minorRelative(_gamme);}
+				//if (_relativ==1){_gamme = gammeMinor(tonalite);}
 				break;
 
 			default:
 				break;
 		}
-		
 		if (finCadence){
 			var rightHand = new Tone.Event(
 				function(time){
@@ -149,17 +150,18 @@ class Harmony {
 	modifLeftHand(degré, finCadence =0)
 	{
 		if (data["player"]=="Black"){
-			harmonyInstrument = ambianceHarmony.player1Instrument;
-			if (relativ != 1){
-				relativ = 1;
+			//harmonyInstrument = ambianceHarmony.player1Instrument1;
+			if (this.relativ != 1){
+				this.relativ = 1;
 			}
 		}
 		else{
-			harmonyInstrument = ambianceHarmony.player2Instrument;
-			if (relativ != 0){
-				relativ = 0;
-			}		
+			//harmonyInstrument = ambianceHarmony.player2Instrument1;
+			if (this.relativ != 0){
+				this.relativ = 0;
+			}	
 		}
+		//console.log("relativ = "+this.relativ);
 		this.leftHand.stop();
 		this.leftHand = this.createLeftHand(this.tonalite, degré, finCadence);
 		this.leftHand.start();
@@ -169,13 +171,13 @@ class Harmony {
 	{
 		/*
 		if (data["player"]=="Black"){
-			harmonyInstrument =  ambianceHarmony.player1Instrument;
+			harmonyInstrument =  ambianceHarmony.player1Instrument1;
 			if (relativ != 1){
 				relativ = 1;
 			}
 		}
 		else{
-			harmonyInstrument =  ambianceHarmony.player2Instrument;
+			harmonyInstrument =  ambianceHarmony.player2Instrument1;
 			if (relativ != 0){
 				relativ = 0;
 			}		
@@ -186,8 +188,10 @@ class Harmony {
 	}
 
 	play(){
-		harmony.stop = 0;
-		updateHarmony();
+		if (this.stop==1){
+			this.stop = 0;
+			updateHarmony();
+		}
 	}
 
 	end(){
@@ -212,17 +216,17 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(1);
 			this.modifRightHand(1);
-			//console.log("degré1");
+			console.log("degré1");
 		}
 		else if (this.mesureCount==1){
 			this.modifLeftHand(5);
 			this.modifRightHand(5);
-			//console.log("degré5");
+			console.log("degré5");
 		}
 		else if (this.mesureCount==2){
 			this.modifLeftHand(1, 1);
 			this.modifRightHand(1, 1);
-			//console.log("degré1");
+			console.log("degré1");
 		}
 
 		this.incrementMesure(1);
@@ -238,17 +242,17 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(5);
 			this.modifRightHand(5);
-			//console.log("degré1");
+			console.log("degré5");
 		}
 		else if (this.mesureCount==1){
 			this.modifLeftHand(1);
 			this.modifRightHand(1);
-			//console.log("degré5");
+			console.log("degré1");
 		}
 		else if (this.mesureCount==2){
 			this.modifLeftHand(5, 1);
 			this.modifRightHand(5, 1);
-			//console.log("degré1");
+			console.log("degré5");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
@@ -263,17 +267,17 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(2);
 			this.modifRightHand(2);
-			//console.log("degré1");
+			console.log("degré2");
 		}
 		else if (this.mesureCount==1){
 			this.modifLeftHand(5);
 			this.modifRightHand(5);
-			//console.log("degré5");
+			console.log("degré5");
 		}
 		else if (this.mesureCount==2){
 			this.modifLeftHand(1, 1);
 			this.modifRightHand(1, 1);
-			//console.log("degré1");
+			console.log("degré1");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
@@ -287,22 +291,22 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(1);
 			this.modifRightHand(1);
-			//console.log("degré1");
+			console.log("degré1");
 		}
 		else if (this.mesureCount ==1){
 			this.modifLeftHand(4);
 			this.modifRightHand(4);
-			//console.log("degré4");
+			console.log("degré4");
 		}
 		else if (this.mesureCount ==2){
 			this.modifLeftHand(2);
 			this.modifRightHand(2);
-			//console.log("degré2");
+			console.log("degré2");
 		}
 		else if (this.mesureCount ==3){
 			this.modifLeftHand(5);
 			this.modifRightHand(5);
-			//console.log("degré5");
+			console.log("degré5");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
@@ -316,22 +320,22 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(2);
 			this.modifRightHand(2);
-			//console.log("degré1");
+			console.log("degré1");
 		}
 		else if (this.mesureCount ==1){
 			this.modifLeftHand(5);
 			this.modifRightHand(5);
-			//console.log("degré4");
+			console.log("degré4");
 		}
 		else if (this.mesureCount ==2){
 			this.modifLeftHand(1);
 			this.modifRightHand(1);
-			//console.log("degré2");
+			console.log("degré2");
 		}
 		else if (this.mesureCount ==3){
 			this.modifLeftHand(6);
 			this.modifRightHand(6);
-			//console.log("degré5");
+			console.log("degré6");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
