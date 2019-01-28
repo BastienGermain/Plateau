@@ -65,6 +65,7 @@ class Beat {
 	
 	createKick() 
 	{	
+		console.log(this.kickPattern);
 		let _this = this;
 
 		let kickLoop =  new Tone.Event(
@@ -125,7 +126,8 @@ class Beat {
 	playKick(startTime = 0)
 	{
 		//await waitForRightTime();
-
+		console.log(this.kickPattern);
+		console.log(ambiance.kickPattern);
 		if (!this.playingKick)
 		{
 			this.playingKick = true;
@@ -189,8 +191,7 @@ class Beat {
 
 Beat.KickPatterns = 
 [
-"---x---x---x---x---x---x---x---x",
-
+"x---x---x---x---x---x---x---x---",
 "x-----x---------x-----x---x--x--",
 "x---------x-----x---------x-----",
 "x-------x-------x--------x------",
@@ -201,6 +202,7 @@ Beat.KickPatterns =
 "x---x-----x----x------x---x-----",
 "x-----x---x-------x-----x-------",
 "x-----x---------x-----x---x--x--",
+
 "x--x---x-xx----xx-x----xxxx-----",
 "x------x-x-x---xx----------x----",
 ];
@@ -218,7 +220,7 @@ Beat.SnarePatterns =
 
 Beat.HihatPatterns = 
 [
-"xxxxxxxxxxxxxxxx",
+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
 "x-x-x-x-xxx-x-x-x-x-x-xxx-x---x-",
 "--x---x---x---x---x---x---x---x-",

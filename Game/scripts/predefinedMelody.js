@@ -11,6 +11,7 @@ function victoryMelody(instrument, tonalite)
 
 			}
 		);
+	console.log("victoryMelody !")
 	victoryMelody.start();
 }
 

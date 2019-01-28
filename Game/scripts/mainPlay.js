@@ -114,25 +114,37 @@ Tone.Buffer.on('load', function()
 				console.log("selected ambiance = " + ambiance.nom);
 
 				//1ers sons...
-				if (ambiance == ambiance1)
-				{
-					updateMode();
-					ambiance.themeP1.init({probability: 0.9});
-					ambiance.themeP2.init({probability: 0.9});
-
-					ambiance.beat.playKick(startTime);
-					ambiance.beat.playSnare(startTime);
-					ambiance.beat.playHihat(startTime);
-				}
-
-				//ambiance.beat.playKick();
+				updateMode();
+				
+				
+				ambiance.beat.kickPattern=Beat.KickPatterns[0];
+				ambiance.beat.playKick(startTime);
 				start = 1; 
 			}
-		}		
+		}
 
+		if (data["stoneOnBoard"] == 2)
+			ambiance.beat.playHihat(startTime);
 		
+		if (data["stoneOnBoard"] == 3)
+			ambiance.beat.playSnare(startTime);
 
-		//joueur2 choisit la tonalite
+
+		//Coup 4 kick change
+		//coup 5 hihat change
+		//coup 6 hihat change
+
+		//Coup 7 kick change
+		//coup 8 hihat change
+		//coup 9 hihat change
+
+		if (data["stoneOnBoard"] == 4)
+		{
+			currentTheme = ambiance.themeP1;
+			ambiance.themeP1.startBase(startTime);
+			basePlaying = true;
+			update();
+		}
 			
 		init();
 
@@ -156,7 +168,8 @@ Tone.Buffer.on('load', function()
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
-
+		}
+/*
 				updateMode();
 				ambiance.themeP1.init();
 				ambiance.themeP2.init();
@@ -169,7 +182,7 @@ Tone.Buffer.on('load', function()
 				basePlaying = true;
 				currentTheme = ambiance.themeP1;
 				update();
-
+*/
 
 		//ICI NOTIFICATION DES CHGTS DE DATA
 
@@ -178,10 +191,10 @@ Tone.Buffer.on('load', function()
 			updateTempo();
 
 			if (data["blackCaptures"]>lastData["blackCaptures"])
-				victoryMelody(ambiance.player1Instrument, tonalite);
+				victoryMelody(ambiance.player1Instrument1, tonalite);
 
 			if (data["whiteCaptures"]>lastData["whiteCaptures"])
-				victoryMelody(ambiance.player2Instrument, tonalite);
+				victoryMelody(ambiance.player2Instrument1, tonalite);
 
 			//valable pour une ambiance précise :
 
@@ -233,6 +246,5 @@ Tone.Buffer.on('load', function()
 				}
 
 			}
-		}
 	});
 })

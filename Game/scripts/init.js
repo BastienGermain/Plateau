@@ -28,21 +28,22 @@ function initTonic()
 		console.log("selected tonalite = " + tonalite);
 
 		//une fois qu'on a la tonalité on initialise, harmony , et d'autres...
-		if (ambiance == ambiance1)
-		{
-			ambiance.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-			ambiance.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-			
-			ambiance.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
-			basePlaying = true;
-			currentTheme = ambiance.themeP1;
-			update();
-		}
+		ambiance1.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
+		ambiance1.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
 
-		else if (ambiance == ambianceHarmony)
-			harmony = new Harmony(tonalite);
+		ambianceHarmony.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
+		ambianceHarmony.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
 
-		//harmony.play();
+		ambianceDub.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
+		ambianceDub.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
+
+		//ambiance.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+		//basePlaying = true;
+		//currentTheme = ambiance.themeP1;
+		update();
+		
+
+		harmony = new Harmony(tonalite);
 	}	
 }
 
