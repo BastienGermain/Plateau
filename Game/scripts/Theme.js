@@ -20,7 +20,7 @@ class Theme
 		this.probability = 1;
 		this.chordNoteCount = 1;
 		this.arpeggioNoteCount = 3;
-		this.arpeggioPattern = "random";
+		this.arpeggioPattern = "upDown";
 
 		this.progression = [];
 		this.arpeggio = [];
@@ -148,7 +148,7 @@ class Theme
 		this.melody = this.createMelody(
 			this.lead, 
 			this.arpeggio,
-			this.pattern, 
+			this.arpeggioPattern, 
 			this.melodyInterval, 
 			this.probability);
 	}

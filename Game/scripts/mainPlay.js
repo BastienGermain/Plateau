@@ -75,7 +75,7 @@ function saveMusic()
 
 Tone.Buffer.on('load', function() 
 {  
-
+	console.log("PLAYABLE");
 
 	//Evenement Pose de pierre :
 	$("#board canvas").on('click', function(coord) 
@@ -153,18 +153,18 @@ Tone.Buffer.on('load', function()
 
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
-		/*
+		
 		console.log("blackPlayerFeature :");
 		console.log("offensive :"+blackPlayerFeature.offensive);
 		console.log("defensive :"+blackPlayerFeature.defensive);
 		console.log("expensive :"+blackPlayerFeature.expensive);
-		console.log("offensive :"+blackPlayerFeature.risky);
+		console.log("risky :"+blackPlayerFeature.risky);
 		console.log("whitePlayerFeature :");
 		console.log("offensive :"+whitePlayerFeature.offensive);
 		console.log("defensive :"+whitePlayerFeature.defensive);
 		console.log("expensive :"+whitePlayerFeature.expensive);
-		console.log("offensive :"+whitePlayerFeature.risky);
-		*/
+		console.log("risky :"+whitePlayerFeature.risky);
+		
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
@@ -186,9 +186,9 @@ Tone.Buffer.on('load', function()
 */
 
 		//ICI NOTIFICATION DES CHGTS DE DATA
+			//valable pour toutes les ambiancesg
 
-			//valable pour toutes les ambiances
-
+			console.log(currentTheme.melody.pattern);
 			updateTempo();
 
 			if (data["blackCaptures"]>lastData["blackCaptures"])
@@ -205,11 +205,11 @@ Tone.Buffer.on('load', function()
 				if (data["stoneOnBoard"] >= 10)
 				{
 					if (data["player"] == "Black")
-						ambiance.themeP1.startMelody(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+						ambiance.themeP1.startMelody(startTime);
 
 
 					if (data["player"] == "White")
-						ambiance.themeP2.startMelody(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+						ambiance.themeP2.startMelody(startTime);
 				
 					melodyPlaying = true;
 				}
