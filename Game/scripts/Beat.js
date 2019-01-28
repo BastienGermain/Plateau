@@ -62,9 +62,16 @@ class Beat {
 	}
 
 /// LOOP CREATORS ///////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 
 	createKick()
 	{
+=======
+
+	createKick()
+	{
+		console.log(this.kickPattern);
+>>>>>>> f7e6d8e6990acfc94913f9a4dbc352e5a3d17fa5
 		let _this = this;
 
 		let kickLoop =  new Tone.Event(
@@ -126,6 +133,7 @@ class Beat {
 	playKick(startTime = 0)
 	{
 		//await waitForRightTime();
+
 		if (!this.playingKick)
 		{
 			this.playingKick = true;
@@ -206,6 +214,7 @@ Beat.KickPatterns =
 "x---x-----x----x------x---x-----",
 "x-----x---x-------x-----x-------",
 "x-----x---------x-----x---x--x--",
+
 "x--x---x-xx----xx-x----xxxx-----",
 "x------x-x-x---xx----------x----",
 ];
@@ -223,7 +232,7 @@ Beat.SnarePatterns =
 
 Beat.HihatPatterns =
 [
-"xxxxxxxxxxxxxxxx",
+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
 "x-x-x-x-xxx-x-x-x-x-x-xxx-x---x-",
 "--x---x---x---x---x---x---x---x-",

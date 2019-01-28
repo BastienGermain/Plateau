@@ -83,41 +83,51 @@ window.onload = function()
 		//Evenement Pose de pierre :
 		$("#board canvas").on('click', function(coord)
 		{
-			if (isOkMove)
+			console.log(data);
+			console.log(lastData);
+
+			if (Tone.context.state !== 'running')
+				Tone.context.resume();
+
+			////CODE INITIALISATION
+			if (start == 0)
 			{
-				console.log(data);
-				console.log(lastData);
+				startTime = Tone.context.currentTime.toFixed(4);
 
-				if (Tone.context.state !== 'running')
-					Tone.context.resume();
+		  		recorder.record(soundFile);
 
-				////CODE INITIALISATION
-				if (start == 0)
-				{
-					startTime = Tone.context.currentTime.toFixed(4);
-			  		recorder.record(soundFile);
+				//joueur1 choisit l'ambiance
+				let horizontalPos = data["stonePosition"][0];
 
-			  		let horizontalPos = data["stonePosition"][0];
 
-					if (horizontalPos >= 12)
-						ambiance = ambianceDub;
+				if (horizontalPos >= 12)
+					ambiance = ambianceDub;
 
-					else if (horizontalPos >= 6)
-						ambiance = ambiance1;
+				else if (horizontalPos >= 6)
+					ambiance = ambiance1;
 
-					else if (horizontalPos >= 0)
-						ambiance = ambianceHarmony;
+				else if (horizontalPos >= 0)
+					ambiance = ambianceHarmony;
 
-					//ambiance = ambiance1;
+				ambiance = ambiance1;
 
-					console.log("selected ambiance = " + ambiance.nom);
+				console.log("selected ambiance = " + ambiance.nom);
 
-					//1ers sons...
-					if (ambiance == ambiance1)
-					{
-						updateMode();
-						ambiance.beat.playKick(startTime);
-					}
+				//1ers sons...
+				updateMode();
+
+
+				ambiance.beat.kickPattern=Beat.KickPatterns[0];
+				ambiance.beat.playKick(startTime);
+				start = 1;
+			}
+
+
+		if (data["stoneOnBoard"] == 2)
+			ambiance.beat.playHihat(startTime);
+
+		if (data["stoneOnBoard"] == 3)
+			ambiance.beat.playSnare(startTime);
 
 					start = 1;
 				}
@@ -151,75 +161,120 @@ window.onload = function()
 					ambiance.themeP1.init();
 					ambiance.themeP2.init();
 
-					ambiance.beat.playSnare(startTime);
-					ambiance.beat.playHihat(startTime);
+		//Coup 7 kick change
+		//coup 8 hihat change
+		//coup 9 hihat change
 
-					ambiance.themeP1.startBase(startTime);
-					basePlaying = true;
-					currentTheme = ambiance.themeP1;
-					update();
+		if (data["stoneOnBoard"] == 4)
+		{
+			currentTheme = ambiance.themeP1;
+			ambiance.themeP1.startBase(startTime);
+			basePlaying = true;
+			update();
+		}
 
-			//ICI NOTIFICATION DES CHGTS DE DATA
 
-				//valable pour toutes les ambiances
 
-				updateTempo();
 
-				if (data["blackCaptures"]>lastData["blackCaptures"])
-					victoryMelody(ambiance.player1Instrument, tonalite);
+		////FIN INITIALISATION
 
-				if (data["whiteCaptures"]>lastData["whiteCaptures"])
-					victoryMelody(ambiance.player2Instrument, tonalite);
+		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
+		updateFeatures();
 
-				//valable pour une ambiance précise :
+		console.log("blackPlayerFeature :");
+		console.log("offensive :"+blackPlayerFeature.offensive);
+		console.log("defensive :"+blackPlayerFeature.defensive);
+		console.log("expensive :"+blackPlayerFeature.expensive);
+		console.log("risky :"+blackPlayerFeature.risky);
+		console.log("whitePlayerFeature :");
+		console.log("offensive :"+whitePlayerFeature.offensive);
+		console.log("defensive :"+whitePlayerFeature.defensive);
+		console.log("expensive :"+whitePlayerFeature.expensive);
+		console.log("risky :"+whitePlayerFeature.risky);
 
-				//REGLES AMBIANCE1
-				if (ambiance == ambiance1)
+
+		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
+		{
+		}
+
+/*
+				updateMode();
+				ambiance.themeP1.init();
+				ambiance.themeP2.init();
+
+				ambiance.beat.playKick(startTime);
+				ambiance.beat.playSnare(startTime);
+				ambiance.beat.playHihat(startTime);
+
+				ambiance.themeP1.startBase(startTime);
+				basePlaying = true;
+				currentTheme = ambiance.themeP1;
+				update();
+*/
+
+		//ICI NOTIFICATION DES CHGTS DE DATA
+			//valable pour toutes les ambiancesg
+
+			console.log(currentTheme.melody.pattern);
+			updateTempo();
+
+
+			if (data["blackCaptures"]>lastData["blackCaptures"])
+				victoryMelody(ambiance.player1Instrument1, tonalite);
+
+			if (data["whiteCaptures"]>lastData["whiteCaptures"])
+				victoryMelody(ambiance.player2Instrument1, tonalite);
+
+
+			//valable pour une ambiance précise :
+
+			//REGLES AMBIANCE1
+			if (ambiance == ambiance1)
+			{
+				if (data["stoneOnBoard"] >= 10)
 				{
+					if (data["player"] == "Black")
+						ambiance.themeP1.startMelody(startTime);
 
-					{if (data["stoneOnBoard"] >= 10)
-						if (data["player"] == "Black")
-							ambiance.themeP1.startMelody(startTime);
 
-						if (data["player"] == "White")
-							ambiance.themeP2.startMelody(startTime);
+					if (data["player"] == "White")
+						ambiance.themeP2.startMelody(startTime);
 
-						melodyPlaying = true;
-					}
-
+					melodyPlaying = true;
 				}
 
-				//REGLES AMBIANCE HARMONY
-				if (ambiance == ambianceHarmony){
+			}
 
-					if (data["player"]=="Black")
-					{
-						//harmony.stop = 0;
-						//updateHarmony();
+			//REGLES AMBIANCE HARMONY
+			if (ambiance == ambianceHarmony){
 
-					}
-					else{
-						//harmony.stop = 1;	//ça marche mais décalage 4mesure
-					}
-				}
-
-				//REGLES AMBIANCEDUB
-				if (ambiance == ambianceDub){
+				if (data["player"]=="Black")
+				{
+					//harmony.stop = 0;
+					//updateHarmony();
 
 				}
-
-
-				//REGLES AMBIANCEDRUM
-				if (ambiance == ambianceDrum){
-					if (data["player"]=="Black")
-					{
-						//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[0];
-					}
-					else{
-						//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];
-					}
-
+				else{
+					//harmony.stop = 1;	//ça marche mais décalage 4mesure
 				}
+			}
+
+			//REGLES AMBIANCEDUB
+			if (ambiance == ambianceDub){
+
+			}
+
+
+			//REGLES AMBIANCEDRUM
+			if (ambiance == ambianceDrum){
+				if (data["player"]=="Black")
+				{
+					//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[0];
+				}
+				else{
+					//ambianceDrum.beat.hihatPattern=Beat.HihatTechnoPatterns[1];
+				}
+
 			}
 		});
 	})

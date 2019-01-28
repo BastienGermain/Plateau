@@ -75,7 +75,7 @@ const ambianceX =
 *
 *////////////////////////
 
-const ambiance1 = 
+var ambiance1 = 
 {
 	nom : "ambiance1",
 
@@ -98,7 +98,7 @@ ambiance1.themeP1.bass.catchFXs(ambiance1.fx);
 ambiance1.themeP1.lead.catchFXs(ambiance1.fx);
 
 
-const ambianceHarmony =
+var ambianceHarmony =
 {
 	nom : "ambianceHarmony",
 
@@ -113,7 +113,7 @@ const ambianceHarmony =
 	themeP2: new Theme('major', 3, 'flute', 'contrabass')
 }
 
-const ambianceDrum =
+var ambianceDrum =
 {
 	nom : "ambianceDrum",
 
@@ -128,7 +128,7 @@ const ambianceDrum =
 	themeP2: new Theme('major', 3, 'flute', 'contrabass')
 }
 
-const ambianceDub = 
+var ambianceDub = 
 {
 	nom : "ambianceDub",
 

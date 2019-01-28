@@ -41,17 +41,30 @@ function updateBase(theme)
 	theme.stopBase();
 
 	if (data["stonesAround"] == 0)
+	{
 		theme.updateBaseNoteCount(1);
+		updateMelody(8);
+	}
 	else
 	{
 		if (data["stonesAround"] <= 2)
+		{
 			theme.updateBaseNoteCount(2);
+			updateMelody(5);
+		}
 		else
 		{
 			if (data["stonesAround"] == 3)
+			{
 				theme.updateBaseNoteCount(3);
+				updateMelody(3);
+			}
 			else
+			{
 				theme.updateBaseNoteCount(4);
+				updateMelody(3);
+			}
+
 		}
 	}
 
