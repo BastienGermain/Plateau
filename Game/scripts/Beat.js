@@ -55,9 +55,9 @@ class Beat {
 		}
 		else
 		{
-    		this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() * 10)) % Beat.KickPatterns.length];
-    		this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() * 10)) % Beat.SnarePatterns.length];
-  		  	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() * 10)) % Beat.HihatPatterns.length];
+    		this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() *Beat.KickPatterns.length))];
+    		this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() *Beat.SnarePatterns.length))];
+  		  	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() *Beat.HihatPatterns.length))];
 		}
 	}
 

@@ -40,8 +40,9 @@ function initTonic()
 
 		//ambiance.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
 		//basePlaying = true;
-		//currentTheme = ambiance.themeP1;		
 
+		//currentTheme = ambiance.themeP1;
+		
 		harmony = new Harmony(tonalite);
 	}	
 }
