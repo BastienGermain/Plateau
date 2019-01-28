@@ -19,7 +19,7 @@ class Theme
 		this.melodyInterval = "8n";
 		this.probability = 1;
 		this.chordNoteCount = 1;
-		this.arpeggioNoteCount = 3;
+		this.arpeggioNoteCount = 8;
 		this.arpeggioPattern = "up";
 
 		this.progression = [];
@@ -72,7 +72,6 @@ class Theme
 		{
 			if (i > notes.length)
 			{
-				console.log(this.adjustNoteOctave(notes[i % notes.length], (parseInt(this.octave, 10) + parseInt(Math.floor(i / notes.length), 10))));
 				arpeggio.push(this.adjustNoteOctave(notes[i % notes.length], (parseInt(this.octave, 10) + parseInt(Math.floor(i / notes.length), 10))));
 			}
 			else
@@ -81,7 +80,6 @@ class Theme
 			}
 
 		}
-		console.log(arpeggio);
 		return arpeggio;
 	}
 

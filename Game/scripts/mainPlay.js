@@ -117,7 +117,6 @@ window.onload = function()
 		
 		init();	//initie la tonalité et les instruments en fonction des coups des joueurs
 
-
 		if (data["stoneOnBoard"] == 2)
 			ambiance.beat.playHihat(startTime);
 
@@ -149,11 +148,8 @@ window.onload = function()
 
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
-<<<<<<< HEAD
 		/*
-=======
 
->>>>>>> 1d2ac7c2c5f25aa126e6c5c6b450b297af9f47ec
 		console.log("blackPlayerFeature :");
 		console.log("offensive :"+blackPlayerFeature.offensive);
 		console.log("defensive :"+blackPlayerFeature.defensive);
@@ -164,11 +160,7 @@ window.onload = function()
 		console.log("defensive :"+whitePlayerFeature.defensive);
 		console.log("expensive :"+whitePlayerFeature.expensive);
 		console.log("risky :"+whitePlayerFeature.risky);
-<<<<<<< HEAD
 		*/
-=======
-
->>>>>>> 1d2ac7c2c5f25aa126e6c5c6b450b297af9f47ec
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
@@ -190,7 +182,6 @@ window.onload = function()
 		//ICI NOTIFICATION DES CHGTS DE DATA
 			//valable pour toutes les ambiancesg
 
-			console.log(currentTheme.arpeggioNoteCount);
 			updateTempo();
 
 
