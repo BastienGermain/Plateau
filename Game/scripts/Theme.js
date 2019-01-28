@@ -19,8 +19,8 @@ class Theme
 		this.melodyInterval = "8n";
 		this.probability = 1;
 		this.chordNoteCount = 1;
-		this.arpeggioNoteCount = 3;
-		this.arpeggioPattern = "upDown";
+		this.arpeggioNoteCount = 8;
+		this.arpeggioPattern = "random";
 
 		this.progression = [];
 		this.arpeggio = [];
@@ -58,12 +58,28 @@ class Theme
 		return result;
 	}
 
+	// Input : a single note
+	adjustNoteOctave(note, octave)
+	{
+		return (note.substring(0, note.length - 1) + octave.toString());
+	}
+
 	createArpeggio(notes, noteCount = 8)
 	{
 		let arpeggio = [];
 
 		for (let i = 0; i < noteCount; i++)
-			arpeggio.push(notes[i % notes.length]);
+		{
+			if (i > notes.length)
+			{
+				arpeggio.push(this.adjustNoteOctave(notes[i % notes.length], (Math.floor(i / notes.length))));
+			}
+			else
+			{
+				arpeggio.push(notes[i % notes.length]);
+			}
+
+		}
 		
 		return arpeggio;
 	}

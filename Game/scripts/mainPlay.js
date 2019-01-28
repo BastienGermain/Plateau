@@ -233,9 +233,12 @@ window.onload = function()
 			{
 				if (data["stoneOnBoard"] >= 10)
 				{
-					if (data["player"] == "Black")
-						ambiance.themeP1.startMelody(startTime);
-
+					
+					{if (data["stoneOnBoard"] >= 10)
+						currentTheme.startMelody(startTime);
+					
+						melodyPlaying = true;
+					}
 
 					if (data["player"] == "White")
 						ambiance.themeP2.startMelody(startTime);
