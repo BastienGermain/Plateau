@@ -1,0 +1,1 @@
+Tone.setContext(p5.prototype.getAudioContext());
