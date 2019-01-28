@@ -35,13 +35,13 @@ var melodyPlaying = false;
 var basePlaying = false;
 
 
-function concat(first, second) 
+function concat(first, second)
 {
 	let result = new Float32Array(first.length + second.length);
 
 	for (let i = 0; i < first.length; ++i)
 		result[i] = first[i];
-	
+
 	for (let i = first.length; i < first.length + second.length; ++i)
 		result[i] = second[i];
 
@@ -72,14 +72,16 @@ function saveMusic()
 	}
 }
 
-window.onload = function() 
+var isOkMove = false;
+
+window.onload = function()
 {
-	Tone.Buffer.on('load', function() 
-	{  
+	Tone.Buffer.on('load', function()
+	{
 		console.log("PLAYABLE");
 
 		//Evenement Pose de pierre :
-		$("#board canvas").on('click', function(coord) 
+		$("#board canvas").on('click', function(coord)
 		{
 			if (isOkMove)
 			{
@@ -117,12 +119,12 @@ window.onload = function()
 						ambiance.beat.playKick(startTime);
 					}
 
-					start = 1; 
+					start = 1;
 				}
-			}		
+			}
 
 			//joueur2 choisit la tonalite
-				
+
 			init();
 
 			////FIN INITIALISATION
@@ -174,14 +176,14 @@ window.onload = function()
 				//REGLES AMBIANCE1
 				if (ambiance == ambiance1)
 				{
-					
+
 					{if (data["stoneOnBoard"] >= 10)
 						if (data["player"] == "Black")
 							ambiance.themeP1.startMelody(startTime);
 
 						if (data["player"] == "White")
 							ambiance.themeP2.startMelody(startTime);
-					
+
 						melodyPlaying = true;
 					}
 
