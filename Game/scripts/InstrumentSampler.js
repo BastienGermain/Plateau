@@ -8,7 +8,7 @@ class InstrumentSampler
         this.ext = '.[mp3|ogg]';
         this.baseUrl = './assets/samples/';
 
-        this.onload = function(instrument) {console.log("Samples loaded for " + instrument);};
+        this.onload = function() {};
 
         this.sampler = this.load();
         this.samplerFX = null;
