@@ -72,11 +72,12 @@ function saveMusic()
 	}
 }
 
-window.onload = function() {
+window.onload = function() 
+{
 	Tone.Buffer.on('load', function() 
 	{  
 		console.log("PLAYABLE");
-		
+
 		//Evenement Pose de pierre :
 		$("#board canvas").on('click', function(coord) 
 		{
@@ -148,10 +149,10 @@ window.onload = function() {
 					ambiance.themeP1.init();
 					ambiance.themeP2.init();
 
-					ambiance.beat.playSnare(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
-					ambiance.beat.playHihat(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+					ambiance.beat.playSnare(startTime);
+					ambiance.beat.playHihat(startTime);
 
-					ambiance.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+					ambiance.themeP1.startBase(startTime);
 					basePlaying = true;
 					currentTheme = ambiance.themeP1;
 					update();
@@ -173,13 +174,13 @@ window.onload = function() {
 				//REGLES AMBIANCE1
 				if (ambiance == ambiance1)
 				{
-					if (data["stoneOnBoard"] >= 10)
-					{
+					
+					{if (data["stoneOnBoard"] >= 10)
 						if (data["player"] == "Black")
-							ambiance.themeP1.startMelody(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+							ambiance.themeP1.startMelody(startTime);
 
 						if (data["player"] == "White")
-							ambiance.themeP2.startMelody(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
+							ambiance.themeP2.startMelody(startTime);
 					
 						melodyPlaying = true;
 					}
