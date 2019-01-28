@@ -73,15 +73,14 @@ function saveMusic()
 }
 
 
-Tone.Buffer.on('load', function() 
-{  
-	console.log("PLAYABLE");
+window.onload = function() 
+{
+	Tone.Buffer.on('load', function() 
+	{  
+		console.log("PLAYABLE");
 
-	//Evenement Pose de pierre :
-	$("#board canvas").on('click', function(coord) 
-	{
-
-		if (isOkMove)
+		//Evenement Pose de pierre :
+		$("#board canvas").on('click', function(coord) 
 		{
 			console.log(data);
 			console.log(lastData);
@@ -121,7 +120,7 @@ Tone.Buffer.on('load', function()
 				ambiance.beat.playKick(startTime);
 				start = 1; 
 			}
-		}
+		
 
 		if (data["stoneOnBoard"] == 2)
 			ambiance.beat.playHihat(startTime);
@@ -148,8 +147,8 @@ Tone.Buffer.on('load', function()
 
 
 
-		////FIN INITIALISATION
 
+		////FIN INITIALISATION
 
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
@@ -191,11 +190,13 @@ Tone.Buffer.on('load', function()
 			console.log(currentTheme.melody.pattern);
 			updateTempo();
 
+
 			if (data["blackCaptures"]>lastData["blackCaptures"])
 				victoryMelody(ambiance.player1Instrument1, tonalite);
 
 			if (data["whiteCaptures"]>lastData["whiteCaptures"])
 				victoryMelody(ambiance.player2Instrument1, tonalite);
+
 
 			//valable pour une ambiance précise :
 
@@ -247,6 +248,6 @@ Tone.Buffer.on('load', function()
 				}
 
 			}
-
+		})
 	});
-})
+}
