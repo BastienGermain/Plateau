@@ -1,6 +1,5 @@
 var soundFile = new p5.SoundFile();
 var lastSoundFile = new p5.SoundFile();
-console.log(lastSoundFile);
 
 var recorder = new p5.SoundRecorder();
 
@@ -52,7 +51,6 @@ function saveMusic()
 {
 	if (recorder)
 	{
-		console.log(lastSoundFile);
 		recorder.stop(); // stop recorder, and send the result to soundFile
 
 		if (!lastSoundFile.buffer)
@@ -63,11 +61,7 @@ function saveMusic()
 				lastSoundFile.buffer.copyToChannel(concat(lastSoundFile.buffer.getChannelData(i), soundFile.buffer.getChannelData(i)), i, 0);
 		}
 
-
-		console.log(soundFile);
-		console.log(lastSoundFile);
 		p5.prototype.saveSound(lastSoundFile, 'goMusic.wav'); // save file
-		console.log("Recorded ! ");
 		recorder.record(soundFile);
 	}
 }
@@ -115,8 +109,8 @@ window.onload = function()
 				//1ers sons...
 				updateMode();
 
+				ambiance.beat.kickPattern=Beat.KickPatterns[0];
 
-				ambiance.beat.kickPattern=Beat.KickPatterns[1];
 				ambiance.beat.playKick(startTime);
 				start = 1;
 			}
@@ -124,7 +118,7 @@ window.onload = function()
 		
 		init();	//initie la tonalité et les instruments en fonction des coups des joueurs
 
-		console.log("stones on board : "+data["stoneOnBoard"]);
+
 		if (data["stoneOnBoard"] == 2)
 		{
 			console.log("START HIHAT");
@@ -163,8 +157,13 @@ window.onload = function()
 
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
+<<<<<<< HEAD
 
 /*
+=======
+		/*
+
+>>>>>>> 1b13716bc10c273ccab2e5f78e2b27b823cd9804
 		console.log("blackPlayerFeature :");
 		console.log("offensive :"+blackPlayerFeature.offensive);
 		console.log("defensive :"+blackPlayerFeature.defensive);
@@ -175,9 +174,7 @@ window.onload = function()
 		console.log("defensive :"+whitePlayerFeature.defensive);
 		console.log("expensive :"+whitePlayerFeature.expensive);
 		console.log("risky :"+whitePlayerFeature.risky);
-
-		*/
-
+*/
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
@@ -198,6 +195,7 @@ window.onload = function()
 
 		//ICI NOTIFICATION DES CHGTS DE DATA
 			//valable pour toutes les ambiancesg
+
 
 			//console.log(currentTheme.arpeggioNoteCount);
 			updateTempo();

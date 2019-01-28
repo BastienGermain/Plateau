@@ -206,8 +206,6 @@ class FXRack
         }
       }
     }
-
-    console.log(this.appliedFXs);
   }
 
 }
