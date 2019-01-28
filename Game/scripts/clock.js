@@ -9,12 +9,12 @@ let oldSecB = 0;
 
 function pad (val) { return val > 9 ? val : "0" + val; }
 
-$(document).ready(function() {
+function startClock() {
     timer = setInterval( function(){
         $("#secondsB").html(pad(++secB % 60));
         $("#minutesB").html(pad(parseInt(secB / 60, 10)));
     }, 1000);
-})
+}
 
 function switchTimer() {
     if (isCurrentWhite) {
