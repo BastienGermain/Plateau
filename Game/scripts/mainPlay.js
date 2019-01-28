@@ -121,6 +121,8 @@ window.onload = function()
 				start = 1; 
 			}
 		
+		init();	//initie la tonalité et les instruments en fonction des coups des joueurs
+
 
 		if (data["stoneOnBoard"] == 2)
 			ambiance.beat.playHihat(startTime);
@@ -139,6 +141,7 @@ window.onload = function()
 
 		if (data["stoneOnBoard"] == 4)
 		{
+
 			currentTheme = ambiance.themeP1;
 			ambiance.themeP1.startBase(startTime);
 			basePlaying = true;
@@ -152,7 +155,7 @@ window.onload = function()
 
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
-		
+		/*
 		console.log("blackPlayerFeature :");
 		console.log("offensive :"+blackPlayerFeature.offensive);
 		console.log("defensive :"+blackPlayerFeature.defensive);
@@ -163,7 +166,7 @@ window.onload = function()
 		console.log("defensive :"+whitePlayerFeature.defensive);
 		console.log("expensive :"+whitePlayerFeature.expensive);
 		console.log("risky :"+whitePlayerFeature.risky);
-		
+		*/
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
@@ -187,16 +190,20 @@ window.onload = function()
 		//ICI NOTIFICATION DES CHGTS DE DATA
 			//valable pour toutes les ambiancesg
 
-			console.log(currentTheme.melody.pattern);
+			console.log(currentTheme.arpeggioNoteCount);
 			updateTempo();
 
 
 			if (data["blackCaptures"]>lastData["blackCaptures"])
+			{	
+				//console.log("blackCaptures")
 				victoryMelody(ambiance.player1Instrument1, tonalite);
-
+			}
 			if (data["whiteCaptures"]>lastData["whiteCaptures"])
+			{
+				//console.log("whiteCaptures")
 				victoryMelody(ambiance.player2Instrument1, tonalite);
-
+			}
 
 			//valable pour une ambiance précise :
 

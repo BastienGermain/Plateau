@@ -11,19 +11,19 @@ function initTonic()
 	if (data["stoneOnBoard"]==2)
 	{
 		if (horizontalPos >= 16)
-			tonalite = "G4";
+			tonalite = "G3";
 		else if (horizontalPos >= 13)
-			tonalite = "F4";
+			tonalite = "F3";
 		else if (horizontalPos >= 10)
-			tonalite = "E4";
+			tonalite = "E3";
 		else if (horizontalPos >= 8)
-			tonalite = "D4";
+			tonalite = "D3";
 		else if (horizontalPos >= 6)
-			tonalite = "C4";
+			tonalite = "C3";
 		else if (horizontalPos >= 3)
-			tonalite = "B4";
+			tonalite = "B3";
 		else if (horizontalPos >= 0)
-			tonalite = "A4";
+			tonalite = "A3";
 
 		console.log("selected tonalite = " + tonalite);
 
