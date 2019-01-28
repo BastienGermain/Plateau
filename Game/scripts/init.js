@@ -48,6 +48,8 @@ function initTonic()
 
 function initInstruments()
 {
+	let nextAmbianceInit;
+
 	if (data["stoneOnBoard"]==3)
 	{
 		ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
@@ -61,8 +63,6 @@ function initInstruments()
 
 	if (data["stoneOnBoard"]>4 && data["stoneOnBoard"]<=8)
 	{
-		let nextAmbianceInit;
-
 		if (ambiance != ambiance1)
 			nextAmbianceInit = ambiance1;
 		else 
@@ -83,8 +83,6 @@ function initInstruments()
 
 	if (data["stoneOnBoard"]>6 && data["stoneOnBoard"]<=8)
 	{
-		let nextAmbianceInit;
-
 		if (ambiance == ambianceDub)
 			nextAmbianceInit = ambianceHarmony;
 		else
@@ -116,8 +114,11 @@ function initInstruments()
 		}
 	}
 
-	nextAmbianceInit.themeP1.updateLead(nextAmbianceInit.player1Instrument1);
-	nextAmbianceInit.themeP1.updateBase(nextAmbianceInit.player1Instrument2);
-	nextAmbianceInit.themeP2.updateLead(nextAmbianceInit.player2Instrument1);
-	nextAmbianceInit.themeP2.updateBase(nextAmbianceInit.player2Instrument2);
+	if(nextAmbianceInit)
+	{	
+		nextAmbianceInit.themeP1.updateLead(nextAmbianceInit.player1Instrument1);
+		nextAmbianceInit.themeP1.updateBase(nextAmbianceInit.player1Instrument2);
+		nextAmbianceInit.themeP2.updateLead(nextAmbianceInit.player2Instrument1);
+		nextAmbianceInit.themeP2.updateBase(nextAmbianceInit.player2Instrument2);
+	}
 }

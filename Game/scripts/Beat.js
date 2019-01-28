@@ -93,6 +93,7 @@ class Beat {
 			{	
 				if (_this.snarePattern.charAt(_this.snareIndex) === "x")
 					_this.snare.play(_this.snareNote, 0.25, time);
+
 				_this.snareIndex = (_this.snareIndex + 1) % _this.kickSubdivisions;
 			});
 
@@ -125,7 +126,6 @@ class Beat {
 	playKick(startTime = 0)
 	{
 		//await waitForRightTime();
-
 		if (!this.playingKick)
 		{
 			this.playingKick = true;
@@ -137,7 +137,8 @@ class Beat {
 	{
 		//waitForRightTime();
 
-		if (!this.playingSnare){
+		if (!this.playingSnare)
+		{
 			this.playingSnare = true;
 			this.snareLoop = this.createSnare().start(startTime);
 		}

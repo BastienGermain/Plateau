@@ -75,6 +75,8 @@ function saveMusic()
 window.onload = function() {
 	Tone.Buffer.on('load', function() 
 	{  
+		console.log("PLAYABLE");
+		
 		//Evenement Pose de pierre :
 		$("#board canvas").on('click', function(coord) 
 		{
@@ -90,8 +92,9 @@ window.onload = function() {
 				if (start == 0)
 				{
 					startTime = Tone.context.currentTime.toFixed(4);
-			  		
 			  		recorder.record(soundFile);
+
+			  		let horizontalPos = data["stonePosition"][0];
 
 					if (horizontalPos >= 12)
 						ambiance = ambianceDub;
