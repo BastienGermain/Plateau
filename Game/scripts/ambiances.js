@@ -94,8 +94,6 @@ var ambiance1 =
 ambiance1.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
 ambiance1.fx.selectFX('reverb', {reverb: 0.1});
 ambiance1.fx.selectFX('pingPongDelay', {delayTime: "8n"});
-ambiance1.themeP1.bass.catchFXs(ambiance1.fx);
-ambiance1.themeP1.lead.catchFXs(ambiance1.fx);
 
 
 var ambianceHarmony =
