@@ -9,6 +9,8 @@ var player = JGO.BLACK; // next player
 var ko = false, lastMove = false; // ko coordinate and last move coordinate
 var lastHover = false, lastX = -1, lastY = -1; // hover helper vars
 
+var isOkMove = false;
+
 // Handle handicap
 //jboard.setType(JGO.util.getHandicapCoordinates(jboard.width, 2), JGO.BLACK);
 
@@ -42,25 +44,25 @@ jsetup.create('board', function(canvas) {
       node.setType(play.captures, JGO.CLEAR); // clear opponent's stones
 
       if (play.captures.length != 0) {
-          let i;
-          for (i = 0; i < play.captures.length; i++) {
-              data["stoneOnBoard"] -= 1;
-              boardMat = insertIntoMatrixXY(boardMat, play.captures[i].i, play.captures[i].j, 0);
-          }
+        let i;
+        for (i = 0; i < play.captures.length; i++) {
+          data["stoneOnBoard"] -= 1;
+          boardMat = insertIntoMatrixXY(boardMat, play.captures[i].i, play.captures[i].j, 0);
+        }
       }
 
       boardMat = fillMatrixPlay(boardMat, player, coord.i, coord.j);
       lastData = JSON.parse(JSON.stringify(data));
 
       if (player == 1) {
-          data["player"] = "Black";
+        data["player"] = "Black";
       } else {
-          data["player"] = "White";
+        data["player"] = "White";
       }
 
-	  if (data["stoneOnBoard"] != 0) {
-		  data["previousStonePosition"] = data["stonePosition"];
-	  }
+      if (data["stoneOnBoard"] != 0) {
+        data["previousStonePosition"] = data["stonePosition"];
+      }
 
       data["stonePosition"] = [coord.i, coord.j];
       getStonesAround();
@@ -70,12 +72,12 @@ jsetup.create('board', function(canvas) {
       data["knownMove"] = checkKnownMoves(data, boardMat);
       checkAtari(boardMat);
       if (data["stonesAround"] == 0) {
-         data["cornerMove"] = getCornerMove();
-      } else {
-         data["cornerMove"] = "";
-      }
+       data["cornerMove"] = getCornerMove();
+     } else {
+       data["cornerMove"] = "";
+     }
 
-      if(lastMove)
+     if(lastMove)
         node.setMark(lastMove, JGO.MARK.NONE); // clear previous mark
       if(ko)
         node.setMark(ko, JGO.MARK.NONE); // clear previous ko mark
@@ -90,9 +92,14 @@ jsetup.create('board', function(canvas) {
       player = opponent;
       updateCaptures(node);
 
-	  switchTimer();
+      switchTimer();
 
-    } else alert('Illegal move: ' + play.errorMsg);
+      isOkMove = true;
+
+    } else {
+      isOkMove = false;
+      alert('Illegal move: ' + play.errorMsg);
+    }
   });
 
   canvas.addListener('mousemove', function(coord, ev) {
@@ -109,7 +116,7 @@ jsetup.create('board', function(canvas) {
       jboard.setType(coord, player == JGO.WHITE ? JGO.DIM_WHITE : JGO.DIM_BLACK);
       lastHover = true;
     } else
-      lastHover = false;
+    lastHover = false;
   });
 
   canvas.addListener('mouseout', function(ev) {

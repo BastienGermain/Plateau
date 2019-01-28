@@ -73,52 +73,57 @@ Tone.Buffer.on('load', function()
 {  
 
 	//Evenement Pose de pierre :
-	$("#board").on('click', function(coord) 
+	$("#board canvas").on('click', function(coord) 
 	{
-		console.log(data);
-		console.log(lastData);
-
-		if (Tone.context.state !== 'running')
-			Tone.context.resume();
-
-		////CODE INITIALISATION
-		if (start == 0)
+		if (isOkMove)
 		{
-			startTime = Tone.context.currentTime.toFixed(4);
-	  		
-	  		recorder.record(soundFile);
+			console.log(data);
+			console.log(lastData);
 
-			//joueur1 choisit l'ambiance
-			let horizontalPos = data["stonePosition"][0];
+			if (Tone.context.state !== 'running')
+				Tone.context.resume();
 
-			if (horizontalPos >= 12)
-				ambiance = ambianceDub;
+			////CODE INITIALISATION
+			if (start == 0)
+			{
+				startTime = Tone.context.currentTime.toFixed(4);
+		  		
+		  		recorder.record(soundFile);
 
-			else if (horizontalPos >= 6)
+				//joueur1 choisit l'ambiance
+				let horizontalPos = data["stonePosition"][0];
+
+				if (horizontalPos >= 12)
+					ambiance = ambianceDub;
+
+				else if (horizontalPos >= 6)
+					ambiance = ambiance1;
+
+				else if (horizontalPos >= 0)
+					ambiance = ambianceHarmony;
+
 				ambiance = ambiance1;
 
-			else if (horizontalPos >= 0)
-				ambiance = ambianceHarmony;
+				console.log("selected ambiance = " + ambiance.nom);
 
-			ambiance = ambiance1;
+				//1ers sons...
+				if (ambiance == ambiance1)
+				{
+					updateMode();
+					ambiance.themeP1.init({probability: 0.9});
+					ambiance.themeP2.init({probability: 0.9});
 
-			console.log("selected ambiance = " + ambiance.nom);
+					ambiance.beat.playKick(startTime);
+					ambiance.beat.playSnare(startTime);
+					ambiance.beat.playHihat(startTime);
+				}
 
-			//1ers sons...
-			if (ambiance == ambiance1)
-			{
-				updateMode();
-				ambiance.themeP1.init({probability: 0.9});
-				ambiance.themeP2.init({probability: 0.9});
-
-				ambiance.beat.playKick(startTime);
-				ambiance.beat.playSnare(startTime);
-				ambiance.beat.playHihat(startTime);
+				//ambiance.beat.playKick();
+				start = 1; 
 			}
+		}		
 
-			//ambiance.beat.playKick();
-			start = 1; 
-		}
+		
 
 		//joueur2 choisit la tonalite
 			
