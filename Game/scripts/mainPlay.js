@@ -1,6 +1,5 @@
 var soundFile = new p5.SoundFile();
 var lastSoundFile = new p5.SoundFile();
-console.log(lastSoundFile);
 
 var recorder = new p5.SoundRecorder();
 
@@ -52,7 +51,6 @@ function saveMusic()
 {
 	if (recorder)
 	{
-		console.log(lastSoundFile);
 		recorder.stop(); // stop recorder, and send the result to soundFile
 
 		if (!lastSoundFile.buffer)
@@ -63,11 +61,7 @@ function saveMusic()
 				lastSoundFile.buffer.copyToChannel(concat(lastSoundFile.buffer.getChannelData(i), soundFile.buffer.getChannelData(i)), i, 0);
 		}
 
-
-		console.log(soundFile);
-		console.log(lastSoundFile);
 		p5.prototype.saveSound(lastSoundFile, 'goMusic.wav'); // save file
-		console.log("Recorded ! ");
 		recorder.record(soundFile);
 	}
 }
@@ -114,8 +108,7 @@ window.onload = function()
 
 				//1ers sons...
 				updateMode();
-
-
+				
 				ambiance.beat.kickPattern=Beat.KickPatterns[0];
 				ambiance.beat.playKick(startTime);
 				start = 1;

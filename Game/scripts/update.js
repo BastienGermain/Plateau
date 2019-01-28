@@ -104,7 +104,7 @@ function updateTheme()
 
 	if(melodyPlaying)
 	{
-		currentTheme.updateMelody(3);
+		currentTheme.updateMelody(8);
 		currentTheme.startMelody();
 	}
 
@@ -112,6 +112,7 @@ function updateTheme()
 
 function update()
 {
+	console.log("UPDATE");
 	currentTheme.updateBaseChord();
 	updateTheme();
 

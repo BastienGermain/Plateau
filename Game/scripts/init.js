@@ -8,22 +8,23 @@ function initTonic()
 {
 	let horizontalPos = data["stonePosition"][0];
 
+	let octave = 2; 
 	if (data["stoneOnBoard"]==2)
 	{
 		if (horizontalPos >= 16)
-			tonalite = "G3";
+			tonalite = "G" + octave;
 		else if (horizontalPos >= 13)
-			tonalite = "F3";
+			tonalite = "F" + octave;
 		else if (horizontalPos >= 10)
-			tonalite = "E3";
+			tonalite = "E" + octave;
 		else if (horizontalPos >= 8)
-			tonalite = "D3";
+			tonalite = "D" + octave;
 		else if (horizontalPos >= 6)
-			tonalite = "C3";
+			tonalite = "C" + octave;
 		else if (horizontalPos >= 3)
-			tonalite = "B3";
+			tonalite = "B" + octave;
 		else if (horizontalPos >= 0)
-			tonalite = "A3";
+			tonalite = "A" + octave;
 
 		console.log("selected tonalite = " + tonalite);
 
@@ -39,9 +40,7 @@ function initTonic()
 
 		//ambiance.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
 		//basePlaying = true;
-		//currentTheme = ambiance.themeP1;
-		update();
-		
+		//currentTheme = ambiance.themeP1;		
 
 		harmony = new Harmony(tonalite);
 	}	

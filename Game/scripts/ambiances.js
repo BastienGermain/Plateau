@@ -149,6 +149,3 @@ var ambianceDub =
 
 //ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
 //ambianceDub.beat.snare.catchFXs(fx);
-
-console.log("samplesloaded");
-
