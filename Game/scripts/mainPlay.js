@@ -145,8 +145,8 @@ Tone.Buffer.on('load', function()
 			basePlaying = true;
 			update();
 		}
-			
-		init();
+
+
 
 		////FIN INITIALISATION
 
@@ -169,6 +169,7 @@ Tone.Buffer.on('load', function()
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
 		}
+		
 /*
 				updateMode();
 				ambiance.themeP1.init();
@@ -246,5 +247,6 @@ Tone.Buffer.on('load', function()
 				}
 
 			}
+
 	});
 })
