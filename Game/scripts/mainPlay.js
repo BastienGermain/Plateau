@@ -8,6 +8,8 @@ Tone.Master.volume.value = -12;
 
 Tone.Transport.start();
 
+var recorder, soundFile;
+
 //////////////////////////////////////
 var lastData;
 var phase;
@@ -36,6 +38,16 @@ var currentTheme = null;
 
 var melodyPlaying = false;
 var basePlaying = false;
+
+function saveMusic()
+{
+	if (recorder)
+	{
+		//recorder.stop(); // stop recorder, and send the result to soundFile
+		saveSound(soundFile, 'mySound.wav'); // save file
+		console.log("Recorded ! ");
+	}
+}
 
 function updateMode()
 {
@@ -164,6 +176,11 @@ $("#board").on('click', function(coord)
 	if (start == 0)
 	{
 		startTime = Tone.context.currentTime.toFixed(4);
+
+  		recorder = new p5.SoundRecorder();
+  		recorder.setInput();
+  		soundFile = new p5.SoundFile();
+  		recorder.record(soundFile);
 
 		//joueur1 choisit l'ambiance
 		let horizontalPos = data["stonePosition"][0];
@@ -375,8 +392,8 @@ $("#board").on('click', function(coord)
 			
 				melodyPlaying = true;
 			}
-		}
 
+		}
 
 		//REGLES AMBIANCE HARMONY
 		if (ambiance == ambianceHarmony){

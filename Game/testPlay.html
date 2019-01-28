@@ -11,6 +11,10 @@
     <script src="scripts/ext/scribbletune.js" ></script>
     <script src="scripts/ext/StartAudioContext.js" ></script>
 
+    <script src="scripts/ext/p5/p5.min.js" ></script>
+    <script src="scripts/ext/p5/addons/p5.dom.min.js" ></script>
+    <script src="scripts/ext/p5/addons/p5.sound.min.js" ></script>
+
     <script src="scripts/matrix.js"></script>
 
     <script src="assets/samples/dataSample.js"></script>
@@ -18,7 +22,7 @@
     <script type="text/javascript" src="dist/jgoboard-latest.js"></script>
 
     <script type="text/javascript" src="large/boardStyle.js"></script>
-    
+
     <script src="scripts/InstrumentSampler.js" ></script>
     <script src="scripts/FXRack.js" ></script>
     <script src="scripts/Beat.js" ></script>
@@ -27,12 +31,12 @@
     <script src="scripts/musicAssets.js" ></script>
     <script src="scripts/PlayerFeature.js" ></script>
 
-    
+
     <script src="scripts/predefinedMelody.js" ></script>
     <script src="scripts/bassLine.js" ></script>
     <script src="scripts/Theme.js" ></script>
     <script src="scripts/harmony.js" ></script>
-    
+
     <script src="scripts/ambiances.js" ></script>
     <script src="scripts/moveMatrices.js" ></script>
     <script src="scripts/dataProcess.js" ></script>
@@ -46,6 +50,8 @@
         <button onclick="printMatrix()">Print Matrix</button>
         White : <span id="minutesW">00</span>:<span id="secondsW">00</span>
         Black : <span id="minutesB">00</span>:<span id="secondsB">00</span>
+        <button onclick="saveMusic()">Save Sound</button>
+        <button onclick="startClock()">Start</button>
     </p>
 
     <div id="board"></div>

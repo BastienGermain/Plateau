@@ -169,6 +169,28 @@ class Theme
 
 /// UPDATERS //////////////////////////////////////////////////////////////////////////////
 
+	// Updates the lead instrument
+	// Resets base chord progression and melody arpeggio
+
+	updateLead(lead)
+	{
+		this.lead = lead;
+		this.init();
+	}
+
+/////////////////////////////
+
+	// Updates the base instrument
+	// Resets base chord progression and melody arpeggio
+
+	updateBase(base)
+	{
+		this.base = base;
+		this.init();
+	}
+
+////////////////////////////
+
 	// Updates the tonic note of the Theme
 	// Resets base chord progression and melody arpeggio
 
