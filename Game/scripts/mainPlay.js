@@ -1,6 +1,5 @@
 var soundFile = new p5.SoundFile();
 var lastSoundFile = new p5.SoundFile();
-console.log(lastSoundFile);
 
 var recorder = new p5.SoundRecorder();
 
@@ -52,7 +51,6 @@ function saveMusic()
 {
 	if (recorder)
 	{
-		console.log(lastSoundFile);
 		recorder.stop(); // stop recorder, and send the result to soundFile
 
 		if (!lastSoundFile.buffer)
@@ -63,11 +61,7 @@ function saveMusic()
 				lastSoundFile.buffer.copyToChannel(concat(lastSoundFile.buffer.getChannelData(i), soundFile.buffer.getChannelData(i)), i, 0);
 		}
 
-
-		console.log(soundFile);
-		console.log(lastSoundFile);
 		p5.prototype.saveSound(lastSoundFile, 'goMusic.wav'); // save file
-		console.log("Recorded ! ");
 		recorder.record(soundFile);
 	}
 }
@@ -122,6 +116,9 @@ window.onload = function()
 			}
 
 
+		init();	//initie la tonalité et les instruments en fonction des coups des joueurs
+
+
 		if (data["stoneOnBoard"] == 2) {
 			ambiance.beat.hihatPattern = Beat.HihatPatterns[0];
 			ambiance.beat.playHihat(startTime);
@@ -145,6 +142,7 @@ window.onload = function()
 
 		if (data["stoneOnBoard"] == 4)
 		{
+
 			currentTheme = ambiance.themeP1;
 			ambiance.themeP1.startBase(startTime);
 			basePlaying = true;
@@ -159,6 +157,7 @@ window.onload = function()
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
 
+/*
 		console.log("blackPlayerFeature :");
 		console.log("offensive :"+blackPlayerFeature.offensive);
 		console.log("defensive :"+blackPlayerFeature.defensive);
@@ -169,7 +168,7 @@ window.onload = function()
 		console.log("defensive :"+whitePlayerFeature.defensive);
 		console.log("expensive :"+whitePlayerFeature.expensive);
 		console.log("risky :"+whitePlayerFeature.risky);
-
+*/
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
@@ -191,16 +190,21 @@ window.onload = function()
 		//ICI NOTIFICATION DES CHGTS DE DATA
 			//valable pour toutes les ambiancesg
 
-			console.log(currentTheme.melody.pattern);
+
+			//console.log(currentTheme.arpeggioNoteCount);
 			updateTempo();
 
 
 			if (data["blackCaptures"]>lastData["blackCaptures"])
+			{
+				//console.log("blackCaptures")
 				victoryMelody(ambiance.player1Instrument1, tonalite);
-
+			}
 			if (data["whiteCaptures"]>lastData["whiteCaptures"])
+			{
+				//console.log("whiteCaptures")
 				victoryMelody(ambiance.player2Instrument1, tonalite);
-
+			}
 
 			//valable pour une ambiance précise :
 

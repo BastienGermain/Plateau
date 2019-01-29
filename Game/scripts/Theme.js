@@ -20,7 +20,7 @@ class Theme
 		this.probability = 1;
 		this.chordNoteCount = 1;
 		this.arpeggioNoteCount = 8;
-		this.arpeggioPattern = "random";
+		this.arpeggioPattern = "up";
 
 		this.progression = [];
 		this.arpeggio = [];
@@ -72,7 +72,7 @@ class Theme
 		{
 			if (i > notes.length)
 			{
-				arpeggio.push(this.adjustNoteOctave(notes[i % notes.length], (Math.floor(i / notes.length))));
+				arpeggio.push(this.adjustNoteOctave(notes[i % notes.length], (parseInt(this.octave, 10) + parseInt(Math.floor(i / notes.length), 10))));
 			}
 			else
 			{
@@ -80,7 +80,6 @@ class Theme
 			}
 
 		}
-		
 		return arpeggio;
 	}
 
@@ -91,7 +90,6 @@ class Theme
 			Theme.Modes[mode].join(' ')
 		).split(' ');
 
-		console.log(progression);
 		this.shuffleChords(progression);
 		return progression;
 	}
@@ -142,7 +140,6 @@ class Theme
 
 	init(params) 
 	{	
-		console.log(params);
 		if (params && params.interval) this.melodyInterval = params.interval;
 		if (params && params.chordNoteCount) this.chordNoteCount = params.chordNoteCount;
 		if (params && params.arpeggioNoteCount) this.arpeggioNoteCount = params.arpeggioNoteCount;
@@ -196,12 +193,12 @@ class Theme
 
 /////////////////////////////
 
-	// Updates the base instrument
+	// Updates the bass instrument
 	// Resets base chord progression and melody arpeggio
 
-	updateBase(base)
+	updateBass(basse)
 	{
-		this.base = base;
+		this.bass = bass;
 		this.init();
 	}
 

@@ -39,36 +39,37 @@ function updateMode()
 function updateBase(theme)
 {
 	theme.stopBase();
-
+	theme.stopMelody();
 	if (data["stonesAround"] == 0)
 	{
 		theme.updateBaseNoteCount(1);
-		updateMelody(8);
+		theme.updateMelody(8);
 	}
 	else
 	{
 		if (data["stonesAround"] <= 2)
 		{
 			theme.updateBaseNoteCount(2);
-			updateMelody(5);
+			theme.updateMelody(5);
 		}
 		else
 		{
 			if (data["stonesAround"] == 3)
 			{
 				theme.updateBaseNoteCount(3);
-				updateMelody(3);
+				theme.updateMelody(3);
 			}
 			else
 			{
 				theme.updateBaseNoteCount(4);
-				updateMelody(3);
+				theme.updateMelody(3);
 			}
 
 		}
 	}
 
 	theme.startBase();
+	if (melodyPlaying) theme.startMelody()
 }
 
 function updateTempo()
@@ -103,7 +104,7 @@ function updateTheme()
 
 	if(melodyPlaying)
 	{
-		currentTheme.updateMelody(3);
+		currentTheme.updateMelody(8);
 		currentTheme.startMelody();
 	}
 
@@ -111,6 +112,7 @@ function updateTheme()
 
 function update()
 {
+	console.log("UPDATE");
 	currentTheme.updateBaseChord();
 	updateTheme();
 
