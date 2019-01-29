@@ -14,6 +14,12 @@ class InstrumentSampler
         this.samplerFX = null;
     }
 
+    // Input : a single note
+    adjustNoteOctave(note, octave)
+    {
+        return (note.substring(0, note.length - 1) + octave.toString());
+    }
+
     load() 
     {   
         let sampler = new Tone.Sampler(dataSample[this.instrument], {baseUrl: this.baseUrl + this.instrument + "/", onload: this.onload(this.instrument)});
@@ -54,10 +60,25 @@ class InstrumentSampler
     play(note, duration, time, velocity = 1) 
     {   
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
+
+        let octave = parseInt(note.charAt(note.length - 1));
+        let playableNote = note;
+
         
+        if (this.instrument != 'kick' && this.instrument != 'snare' && this.instrument != 'hihat')
+        {
+            console.log(this.instrument);
+            if (parseInt(octave) > octaves[this.instrument].max)
+                playableNote = this.adjustNoteOctave(playableNote, octaves[this.instrument].max);
+            
+            if (parseInt(octave) < octaves[this.instrument].min)
+                playableNote = this.adjustNoteOctave(playableNote, octaves[this.instrument].min);
+        }
+
+
         sampler.release = 1;
-        sampler = sampler.connect(new Tone.Compressor(-20, 20));
-        sampler.triggerAttackRelease(note, duration, time, velocity);
+        sampler.attack = 1;
+        sampler.triggerAttackRelease(playableNote, duration, time, velocity);
         sampler.toMaster();
     }
 

@@ -196,7 +196,7 @@ class Theme
 	// Updates the bass instrument
 	// Resets base chord progression and melody arpeggio
 
-	updateBass(basse)
+	updateBass(bass)
 	{
 		this.bass = bass;
 		this.init();

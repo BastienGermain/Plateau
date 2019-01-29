@@ -55,9 +55,9 @@ class Beat {
 		}
 		else
 		{
-    		this.kickPattern = Beat.KickPatterns[(Math.round(Math.random() *Beat.KickPatterns.length))];
-    		this.snarePattern = Beat.SnarePatterns[(Math.round(Math.random() *Beat.SnarePatterns.length))];
-  		  	this.hihatPattern = Beat.HihatPatterns[(Math.round(Math.random() *Beat.HihatPatterns.length))];
+    		this.kickPattern = Beat.KickPatterns[(Math.floor(Math.random() *Beat.KickPatterns.length))];
+    		this.snarePattern = Beat.SnarePatterns[(Math.floor(Math.random() *Beat.SnarePatterns.length))];
+  		  	this.hihatPattern = Beat.HihatPatterns[(Math.floor(Math.random() *Beat.HihatPatterns.length))];
 		}
 	}
 
@@ -65,7 +65,6 @@ class Beat {
 
 	createKick()
 	{
-		console.log(this.kickPattern);
 		let _this = this;
 
 		let kickLoop =  new Tone.Event(
@@ -200,7 +199,6 @@ Beat.KickPatterns =
 "x---------x-------x----x--x-----",
 "x-----x-x-------x-------x-------",
 "x---x---x---x---x---x---x---x---",
-
 // Complex
 "x--x---x--x----xx--x---x--x----x",
 "x-----x---------x-----x---x--x--",
@@ -210,7 +208,7 @@ Beat.KickPatterns =
 "x-----x---x-------x-----x-------",
 "x-----x---------x-----x---x--x--",
 "x--x---x-xx----xx-x----xxxx-----",
-"x------x-x-x---xx----------x----",
+"x------x-x-x---xx----------x----"
 ];
 
 Beat.SnarePatterns =
@@ -223,7 +221,6 @@ Beat.SnarePatterns =
 "---x--------x-------x-------x---",
 "----x---------x-----x-------x---",
 "--------x-----x-----x-------x---",
-
 // Complex
 "----x----x----x-------x--x--x---",
 "--x-x---x--xx-xx----x-x---x-x---"
@@ -239,7 +236,6 @@ Beat.HihatPatterns =
 "x-xxx-x---------x-xxx-x---------",
 "x-xxx-x---------xx-xx-x-xx------",
 "--------x-xx-xxx---------x-xx-x-",
-
 // Complex
 "x-xxx-x-x-xxx-x-x-xxx-x-x-xxx-x-",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
