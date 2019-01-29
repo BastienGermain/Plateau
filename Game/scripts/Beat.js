@@ -7,7 +7,7 @@ class Beat {
 		this.hihat = new InstrumentSampler('hihat');
 
 		this.kick.sampler.volume.value = -3;
-		this.snare.sampler.volume.value = -3;
+		this.snare.sampler.volume.value = -4;
 		this.hihat.sampler.volume.value = -3;
 
 		this.kickSubdivisions = 32;
@@ -195,41 +195,55 @@ Beat.KickPatterns =
 // Minimalist
 "x---------------x---------------",
 "x-------x-------x-------x-------",
-
-"x---x---x---x---x---x---x---x---",
-
-"x-----x---------x-----x---x--x--",
 "x---------x-----x---------x-----",
-"x-------x-------x--------x------",
-"x------x--x-----x-x---x---x-----",
-"x------x--x-----x------x--x-----",
 "x---------x-------x-------x-----",
 "x---------x-------x----x--x-----",
+"x-----x-x-------x-------x-------",
+"x---x---x---x---x---x---x---x---",
+
+// Complex
+"x--x---x--x----xx--x---x--x----x",
+"x-----x---------x-----x---x--x--",
+"x------x--x-----x-x---x---x-----",
+"x------x--x-----x------x--x-----",
 "x---x-----x----x------x---x-----",
 "x-----x---x-------x-----x-------",
 "x-----x---------x-----x---x--x--",
-
 "x--x---x-xx----xx-x----xxxx-----",
 "x------x-x-x---xx----------x----",
 ];
 
 Beat.SnarePatterns =
 [
+// Minimalist
+"--x----------x------x-x---------",
+"----x-------x-------x-------x---",
 "-------x-------x-------x-------x",
 "----x-------x-------x-------x---",
 "---x--------x-------x-------x---",
-"----x----x----x-------x--x--x---",
 "----x---------x-----x-------x---",
 "--------x-----x-----x-------x---",
+
+// Complex
+"----x----x----x-------x--x--x---",
 "--x-x---x--xx-xx----x-x---x-x---"
 ];
 
 Beat.HihatPatterns =
 [
-"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+// Minimalist
+"--xx-xx-x---xxx-x----x-x-x------",
+"-----x-x-xxx-xx------x-x-x------",
+"-x---x---x---x---x---x---x---x--",
+"x-xx-xx---------x-xx-xx---------",
+"x-xxx-x---------x-xxx-x---------",
+"x-xxx-x---------xx-xx-x-xx------",
+"--------x-xx-xxx---------x-xx-x-",
+
+// Complex
+"x-xxx-x-x-xxx-x-x-xxx-x-x-xxx-x-",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",
 "x-x-x-x-xxx-x-x-x-x-x-xxx-x---x-",
-"--x---x---x---x---x---x---x---x-",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-xxxxx-x-x-x-x-x-xxxxx-x-x-",

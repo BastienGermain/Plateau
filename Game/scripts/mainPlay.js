@@ -116,17 +116,23 @@ window.onload = function()
 				updateMode();
 
 
-				ambiance.beat.kickPattern=Beat.KickPatterns[0];
+				ambiance.beat.kickPattern = Beat.KickPatterns[0];
 				ambiance.beat.playKick(startTime);
 				start = 1;
 			}
 
 
-		if (data["stoneOnBoard"] == 2)
+		if (data["stoneOnBoard"] == 2) {
+			ambiance.beat.hihatPattern = Beat.HihatPatterns[0];
 			ambiance.beat.playHihat(startTime);
+		}
 
-		if (data["stoneOnBoard"] == 3)
+
+		if (data["stoneOnBoard"] == 3) {
+			ambiance.beat.snarePattern = Beat.SnarePatterns[0];
 			ambiance.beat.playSnare(startTime);
+		}
+
 
 
 		//Coup 4 kick change

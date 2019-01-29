@@ -17,7 +17,7 @@
     <script src="scripts/ext/p5/addons/p5.sound.min.js" ></script>
 
     <script src="scripts/matrix.js"></script>
-    
+
     <script src="scripts/p5Context.js"></script>
 
     <script src="assets/samples/dataSample.js"></script>
@@ -52,18 +52,19 @@
     <p id="menu">
         <button onclick="printData()">Print Data</button>
         <button onclick="printMatrix()">Print Matrix</button>
-        White : <span id="minutesW">00</span>:<span id="secondsW">00</span>
-        Black : <span id="minutesB">00</span>:<span id="secondsB">00</span>
         <button onclick="saveMusic()">Save Sound</button>
         <button onclick="startClock()">Start</button>
+        <p>
+            White : <span id="minutesW">00</span>:<span id="secondsW">00</span>
+            Black : <span id="minutesB">00</span>:<span id="secondsB">00</span>
+        </p>
+        <p>
+            Black captures : <span id="black-captures">0</span>
+            White captures : <span id="white-captures">0</span>
+        </p>
     </p>
 
     <div id="board"></div>
-
-    <div>
-        <div id="black-captures">0</div>
-        <div id="white-captures">0</div>
-    </div>
 
     <script src="scripts/update.js" ></script>
     <script src="scripts/init.js" ></script>
