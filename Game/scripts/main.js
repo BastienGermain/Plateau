@@ -72,12 +72,12 @@ async function updateTheme()
 	window.setTimeout(updateMelody, Tone.Time("1m").toMilliseconds());
 }
 
-
-
+var gamme = gammeMajor("A3");
+instru = new InstrumentSampler("violin");
 var phase = 0;
 var start = 0;
 var actualAmbiance;
-var tonalite;
+var tonalite = "A3";
 $(document).ready(function()
 {
     document.querySelector('#addMove').addEventListener('mouseup', function(e)
@@ -99,9 +99,11 @@ $(document).ready(function()
 			startTime = Tone.context.currentTime.toFixed(4);
 
 
-			updateHarmony();
+			//updateHarmony();
+			impro();
 			
 
+			//victoryMelody(instru, tonalite)
 
 		}
 		

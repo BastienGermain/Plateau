@@ -113,6 +113,8 @@ window.onload = function()
 
 				ambiance.beat.playKick(startTime);
 				start = 1;
+
+			
 			}
 
 		
@@ -130,6 +132,8 @@ window.onload = function()
 		{
 			console.log("START SNARE");
 			ambiance.beat.playSnare(startTime);
+
+			startImpro(tonalite, "indian");
 		}
 
 
@@ -143,62 +147,41 @@ window.onload = function()
 
 		if (data["stoneOnBoard"] == 4)
 		{
-
 			currentTheme = ambiance.themeP1;
 			ambiance.themeP1.startBase(startTime);
 			basePlaying = true;
 			update();
 		}
 
+		if (data["stoneOnBoard"] == 5)
+		{
+			//endImpro();
+		}
 
 
 
 		////FIN INITIALISATION
 
-		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
-		updateFeatures();
-<<<<<<< HEAD
-
-/*
-=======
-		/*
-
->>>>>>> 1b13716bc10c273ccab2e5f78e2b27b823cd9804
-		console.log("blackPlayerFeature :");
-		console.log("offensive :"+blackPlayerFeature.offensive);
-		console.log("defensive :"+blackPlayerFeature.defensive);
-		console.log("expensive :"+blackPlayerFeature.expensive);
-		console.log("risky :"+blackPlayerFeature.risky);
-		console.log("whitePlayerFeature :");
-		console.log("offensive :"+whitePlayerFeature.offensive);
-		console.log("defensive :"+whitePlayerFeature.defensive);
-		console.log("expensive :"+whitePlayerFeature.expensive);
-		console.log("risky :"+whitePlayerFeature.risky);
-*/
 
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
 		}
 
-/*
-				updateMode();
-				ambiance.themeP1.init();
-				ambiance.themeP2.init();
-				ambiance.beat.playKick(startTime);
-				ambiance.beat.playSnare(startTime);
-				ambiance.beat.playHihat(startTime);
-				ambiance.themeP1.startBase(startTime);
-				basePlaying = true;
-				currentTheme = ambiance.themeP1;
-				update();
-*/
 
 		//ICI NOTIFICATION DES CHGTS DE DATA
 			//valable pour toutes les ambiancesg
 
+			if (data["player"]!="Black"){
+				console.log(ambiance.player1Instrument1);
+				improInstrument = ambiance.player1Instrument1;
+			}
+			else{
+				console.log(ambiance.player2Instrument1)
+				improInstrument = ambiance.player2Instrument1;
+			}
+
 
 			//console.log(currentTheme.arpeggioNoteCount);
-			updateTempo();
 
 
 			if (data["blackCaptures"]>lastData["blackCaptures"])
@@ -265,6 +248,24 @@ window.onload = function()
 				}
 
 			}
+
+		updateTempo();
+
+		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
+		updateFeatures();
+		/*
+		console.log("blackPlayerFeature :");
+		console.log("offensive :"+blackPlayerFeature.offensive);
+		console.log("defensive :"+blackPlayerFeature.defensive);
+		console.log("expensive :"+blackPlayerFeature.expensive);
+		console.log("risky :"+blackPlayerFeature.risky);
+		console.log("whitePlayerFeature :");
+		console.log("offensive :"+whitePlayerFeature.offensive);
+		console.log("defensive :"+whitePlayerFeature.defensive);
+		console.log("expensive :"+whitePlayerFeature.expensive);
+		console.log("risky :"+whitePlayerFeature.risky);
+		*/
+
 		})
 	});
 }

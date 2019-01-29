@@ -14,6 +14,7 @@ Tone.Transport.start();
 
 var improInstrument = new InstrumentSampler("violin");
 
+var stopImpro=0;
 
 function gaussianRandom() {
     var r1, r2, w, X1, X2;
@@ -41,72 +42,102 @@ function normalize( array ) {
 	return new_array;
 }//transform an array --> contain values between 0 to 1
 
-var gammeA4Major = gammeMajor(A4);
-var gammeA3Major = gammeMajor(A4/2);
-var gamme = gammeA3Major.concat(gammeA4Major);
-//console.log(gamme.length)
+var gammeImproA4Major = gammeMajor("A4");
+var gammeImproA3Major = gammeMajor("A3");
+var gammeImpro;// = gammeImproA3Major.concat(gammeImproA4Major);
+//var gammeImpro = gammeImproMinor("A3")
 
-var randIntArray = []
-var nbNotes = 12;
 
-for (let i=0; i<nbNotes; i++){
+
+var epsilon = 0.05;
+
+
+function impro(){
+	
+	let gaussianIndex;
 	if (Math.floor(Math.random()*2)==0){
-		randIntArray.push((Math.floor(gaussianRandom())+8)%8); //random between -4 to 4 (center to 0); 
+		gaussianIndex = (Math.floor(gaussianRandom())+8)%8; //random between -4 to 4 (center to 0); 
 	}
 	else{
-		randIntArray.push(Math.floor(gaussianRandom())+4); //random center to 4;
+		gaussianIndex = Math.floor(gaussianRandom())+4; //random center to 4;
 	}
-	//console.log(randIntArray[i]);
+	if (Math.floor(Math.random()*2)==0){
+		gaussianIndex+=8;
+	}
+	let rand=Math.floor(Math.random()*3);
+	if (rand==0){	//1 chance sur 3 on joue une blanche
+		//console.log(gaussianIndex);
+		let blanche = new Tone.Event(
+			function(time){
+				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "2n", time);
+			}
+		);
+		blanche.start();
+		if (!stopImpro) window.setTimeout(impro, Tone.Time("2n").toMilliseconds());
+	}
+	else{
+
+		if (rand==1){	//1 chance sur 3 on joue une noire
+			//console.log("noire");
+			let noire = new Tone.Event(
+				function(time){
+					improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "4n", time);
+				}
+			);
+			noire.start();
+		}
+		else if (rand==2){	
+			//console.log("2 croches");
+			let croches = new Tone.Event(
+				function(time){
+					improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "8n", time);
+					if (Math.floor(Math.random()*2)==0){
+						gaussianIndex = (Math.floor(gaussianRandom())+8)%8; //random between -4 to 4 (center to 0); 
+					}
+					else{
+						gaussianIndex = Math.floor(gaussianRandom())+4; //random center to 4;
+					}
+					improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "8n", time+Tone.Time("8n").toSeconds());
+				}
+			);
+			croches.start();
+		}
+
+		//else if (rand ==3){}
+		if (!stopImpro) window.setTimeout(impro, Tone.Time("4n").toMilliseconds());
+	}
 }
 
 
-var epsilon = 0.05
-var index;
+async function startImpro(tonalite, mode = "major"){
+	await waitForRightTime(); 
 
-
-var impro = new Tone.Event(
-	function(time){
-		console.log("creating Impro pattern");
-		let nbBlanches;
-		let nbNoires;
-
-		for (let i=0; i<randIntArray.length; i++){
-			if (Math.floor(Math.random()*2)==0){
-				index = randIntArray[i];
-			}
-			else{
-				index = randIntArray[i]+8;
-			}
-			var rand=Math.floor(Math.random()*3);
-			//if (rand==0){	//1 chance sur 3 on joue une blanche
-				console.log("blanche");
-				improInstrument.play(gamme[index], "2n", time + Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires);
-				nbBlanches++;
-			/*}
-			else{
-
-				if (rand==1){	//1 chance sur 3 on joue une noire
-					console.log("noire");
-					improInstrument.play(gamme[index], "4n", time + Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires);
-					nbNoires++;
-				}
-				else{	//1 fois sur 3 on joue 2 croches
-					console.log("2 croches");
-					improInstrument.play(gamme[index], "8n", time+ Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires);
-					if (Math.floor(Math.random()*3)==0){
-						index = randIntArray[i];
-					}
-					else{
-						index = randIntArray[i]+8;
-					}
-					improInstrument.play(gamme[index], "8n", time + Tone.Time("2n").toSeconds()*nbBlanches + Tone.Time("4n").toSeconds()*nbNoires + Tone.Time("8n").toSeconds());
-					nbNoires++;
-				}
-			}*/
-		}
-		console.log("impro pattern created");
+	//improInstrument = ambiance.player1Instrument1;
+	stopImpro = false;
+	if (mode == "minor"){
+		let gam1 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		let gam2 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*4).toNote());
+		gammeImpro = gam1.concat(gam2);
 	}
-);
+	else if (mode == "indian"){
+		console.log("indian mode")
+		let gam1 =indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		let gam2 = indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*4).toNote());
+		gammeImpro = gam1.concat(gam2);
+	}
+	else{
+		let gam1 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		let gam2 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*4).toNote());
+		gammeImpro = gam1.concat(gam2);
+	}
+	
+	
+	console.log(gammeImpro);
+	impro();
+}
 
-
+async function endImpro(){
+	await waitForRightTime();
+	stopImpro = true;
+}
 
