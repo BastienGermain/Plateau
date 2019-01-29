@@ -156,7 +156,6 @@ window.onload = function()
 
 		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
 		updateFeatures();
-
 /*
 		console.log("blackPlayerFeature :");
 		console.log("offensive :"+blackPlayerFeature.offensive);
