@@ -26,7 +26,7 @@ new InstrumentSampler('bass-electric'),
 new InstrumentSampler('bassoon'), 
 new InstrumentSampler('cello'), 
 new InstrumentSampler('french-horn'), 
-new InstrumentSampler('constrabass'), 
+new InstrumentSampler('contrabass'), 
 new InstrumentSampler('tuba')
 ];
 
@@ -88,14 +88,13 @@ var ambiance1 =
 	
 	themeP1: new Theme('minor', 3, 'guitar-acoustic', 'guitar-electric'),
 	themeP2: new Theme('major', 3, 'flute', 'contrabass'),
+
 	fx: new FXRack()
 }
 
 ambiance1.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
 ambiance1.fx.selectFX('reverb', {reverb: 0.1});
 ambiance1.fx.selectFX('pingPongDelay', {delayTime: "8n"});
-ambiance1.themeP1.bass.catchFXs(ambiance1.fx);
-ambiance1.themeP1.lead.catchFXs(ambiance1.fx);
 
 
 var ambianceHarmony =
@@ -110,8 +109,14 @@ var ambianceHarmony =
 	player2Instrument2 : new InstrumentSampler('flute'),
 
 	themeP1: new Theme('minor', 3, 'guitar-acoustic', 'guitar-electric'),
-	themeP2: new Theme('major', 3, 'flute', 'contrabass')
+	themeP2: new Theme('major', 3, 'flute', 'contrabass'),
+
+	fx: new FXRack()
 }
+
+ambianceHarmony.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
+ambianceHarmony.fx.selectFX('reverb', {reverb: 0.1});
+ambianceHarmony.fx.selectFX('pingPongDelay', {delayTime: "8n"});
 
 var ambianceDrum =
 {
@@ -125,8 +130,14 @@ var ambianceDrum =
 	player2Instrument2 : new InstrumentSampler('french-horn'),
 
 	themeP1: new Theme('minor', 3, 'guitar-acoustic', 'guitar-electric'),
-	themeP2: new Theme('major', 3, 'flute', 'contrabass')
+	themeP2: new Theme('major', 3, 'flute', 'contrabass'),
+
+	fx: new FXRack()
 }
+
+ambianceDrum.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
+ambianceDrum.fx.selectFX('reverb', {reverb: 0.1});
+ambianceDrum.fx.selectFX('pingPongDelay', {delayTime: "8n"});
 
 var ambianceDub = 
 {
@@ -146,6 +157,10 @@ var ambianceDub =
 
 	fx : new FXRack()
 }
+
+ambianceDub.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
+ambianceDub.fx.selectFX('reverb', {reverb: 0.1});
+ambianceDub.fx.selectFX('pingPongDelay', {delayTime: "8n"});
 
 //ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
 //ambianceDub.beat.snare.catchFXs(fx);

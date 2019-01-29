@@ -17,7 +17,7 @@
     <script src="scripts/ext/p5/addons/p5.sound.min.js" ></script>
 
     <script src="scripts/matrix.js"></script>
-    
+
     <script src="scripts/p5Context.js"></script>
 
     <script src="assets/samples/dataSample.js"></script>
@@ -48,27 +48,34 @@
     <script src="scripts/clock.js" ></script>
     <script src="scripts/boardPlay.js" ></script>
 
+    <link href="style/loading.css" rel="stylesheet" />
+    <link href="style/nprogress.css" rel="stylesheet" />
 </head>
+
 <body>
-    <p id="menu">
-        <button onclick="printData()">Print Data</button>
-        <button onclick="printMatrix()">Print Matrix</button>
-        White : <span id="minutesW">00</span>:<span id="secondsW">00</span>
-        Black : <span id="minutesB">00</span>:<span id="secondsB">00</span>
-        <button onclick="saveMusic()">Save Sound</button>
-        <button onclick="startClock()">Start</button>
-    </p>
+    <div id="content" class="loading">
+        <p id="menu">
+            <button onclick="printData()">Print Data</button>
+            <button onclick="printMatrix()">Print Matrix</button>
+            <button onclick="saveMusic()">Save Sound</button>
+            <button onclick="startClock()">Start</button>
+            <p>
+                White : <span id="minutesW">00</span>:<span id="secondsW">00</span>
+                Black : <span id="minutesB">00</span>:<span id="secondsB">00</span>
+            </p>
+            <p>
+                Black captures : <span id="black-captures">0</span>
+                White captures : <span id="white-captures">0</span>
+            </p>
+        </p>
 
-    <div id="board"></div>
+        <div id="board"></div>
 
-    <div>
-        <div id="black-captures">0</div>
-        <div id="white-captures">0</div>
+        <script src="scripts/update.js" ></script>
+        <script src="scripts/init.js" ></script>
+        <script src="scripts/ext/nprogress.js" ></script>
+        <script src="scripts/mainPlay.js" ></script>
     </div>
-
-    <script src="scripts/update.js" ></script>
-    <script src="scripts/init.js" ></script>
-    <script src="scripts/mainPlay.js" ></script>
 
 </body>
 </html>

@@ -549,3 +549,127 @@ const dataSample =
         "C0": "classic-hihat.wav"
     }
 }
+
+const octaves =
+{
+    "bass-electric":
+    {
+        "min": 2,
+        "max": 5
+    },
+
+    "bassoon": 
+    {
+        "min": 1,
+        "max": 4
+    },
+
+    "cello": 
+    {
+        "min": 2,
+        "max": 4
+    },
+
+    "clarinet": 
+    {
+        "min": 2,
+        "max": 5
+    },
+
+    "contrabass": 
+    {
+        "min": 0,
+        "max": 2
+    },
+
+    "flute": 
+    {
+        "min": 3,
+        "max": 6
+    },
+
+    "french-horn": 
+    {
+        "min": 0,
+        "max": 4
+    },
+
+    "guitar-acoustic": 
+    {
+        "min": 1,
+        "max": 4
+    },
+
+
+    "guitar-electric": 
+    {
+        "min": 2,
+        "max": 5
+    },
+    
+    "guitar-nylon": 
+    {
+        "min": 1,
+        "max": 5
+    },
+
+    "harmonium": 
+    {
+        "min": 2,
+        "max": 5
+    },
+
+    "harp": 
+    {
+        "min": 1,
+        "max": 7
+    },
+
+    "organ": 
+    {
+        "min": 1,
+        "max": 6
+    },
+
+    "piano": 
+    {
+        "min": 0,
+        "max": 7
+    },
+
+    "saxophone": 
+    {
+        "min": 2,
+        "max": 4
+    },
+
+    "trombone": 
+    {
+        "min": 1,
+        "max": 3
+    },
+
+    "trumpet":
+    {
+        "min": 2,
+        "max": 5
+    },
+
+    "tuba": 
+    {
+        "min": 0,
+        "max": 3
+    },
+
+    "violin": 
+    {
+        "min": 3,
+        "max": 7
+    },
+
+    "xylophone": 
+    {
+        "min": 3,
+        "max": 7
+    }
+}

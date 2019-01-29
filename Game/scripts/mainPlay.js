@@ -33,6 +33,7 @@ var currentTheme = null;
 var melodyPlaying = false;
 var basePlaying = false;
 
+NProgress.start();
 
 function concat(first, second)
 {
@@ -71,7 +72,9 @@ window.onload = function()
 {
 	Tone.Buffer.on('load', function()
 	{
-		console.log("PLAYABLE");
+		NProgress.done();
+		let content = document.getElementById("content");
+ 		content.classList.remove("loading");
 
 		//Evenement Pose de pierre :
 		$("#board canvas").on('click', function(coord)
@@ -109,32 +112,31 @@ window.onload = function()
 				//1ers sons...
 				updateMode();
 
-				ambiance.beat.kickPattern=Beat.KickPatterns[0];
-
+				console.log("kickpattern", ambiance.beat.kickPattern);
 				ambiance.beat.playKick(startTime);
 				start = 1;
 
 			
 			}
 
-		
+
 		init();	//initie la tonalité et les instruments en fonction des coups des joueurs
 
 
-		if (data["stoneOnBoard"] == 2)
-		{
-			console.log("START HIHAT");
-			ambiance.beat.hihatPattern=Beat.HihatPatterns[0];
+		if (data["stoneOnBoard"] == 2) {
 			ambiance.beat.playHihat(startTime);
+				console.log("hihat pattern",ambiance.beat.hihatPattern);
 		}
 
-		if (data["stoneOnBoard"] == 3)
-		{
-			console.log("START SNARE");
+
+		if (data["stoneOnBoard"] == 3) {
 			ambiance.beat.playSnare(startTime);
 
+
 			startImpro(tonalite, "indian");
+
 		}
+
 
 
 		//Coup 4 kick change
@@ -163,6 +165,22 @@ window.onload = function()
 		////FIN INITIALISATION
 
 
+		//reconnaissance des knownMove et cornerMove & update de PlayerFeature;
+		updateFeatures();
+/*
+		console.log("blackPlayerFeature :");
+		console.log("offensive :"+blackPlayerFeature.offensive);
+		console.log("defensive :"+blackPlayerFeature.defensive);
+		console.log("expensive :"+blackPlayerFeature.expensive);
+		console.log("risky :"+blackPlayerFeature.risky);
+		console.log("whitePlayerFeature :");
+		console.log("offensive :"+whitePlayerFeature.offensive);
+		console.log("defensive :"+whitePlayerFeature.defensive);
+		console.log("expensive :"+whitePlayerFeature.expensive);
+		console.log("risky :"+whitePlayerFeature.risky);
+*/
+
+
 		if (data["stoneOnBoard"]>4)		//2 si l'initialisation se fait en 2 coups
 		{
 		}
@@ -185,7 +203,7 @@ window.onload = function()
 
 
 			if (data["blackCaptures"]>lastData["blackCaptures"])
-			{	
+			{
 				//console.log("blackCaptures")
 				victoryMelody(ambiance.player1Instrument1, tonalite);
 			}
