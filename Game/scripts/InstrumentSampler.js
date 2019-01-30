@@ -67,7 +67,7 @@ class InstrumentSampler
         
         if (this.instrument != 'kick' && this.instrument != 'snare' && this.instrument != 'hihat')
         {
-            console.log(this.instrument);
+            //console.log(this.instrument);
             if (parseInt(octave) > octaves[this.instrument].max)
                 playableNote = this.adjustNoteOctave(playableNote, octaves[this.instrument].max);
             

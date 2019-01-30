@@ -117,8 +117,8 @@ function waitForRightTime()
 
       if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) 
       {
-        console.log('right time to update sound !');
-        console.log(Tone.context.currentTime.toFixed(2)*60);
+        //console.log('right time to update sound !');
+        //console.log(Tone.context.currentTime.toFixed(2)*60);
         resolve();
       } 
       else 

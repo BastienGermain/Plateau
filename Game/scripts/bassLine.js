@@ -1,5 +1,6 @@
 var bass = new InstrumentSampler("bass-electric");
 
+var bassLine;
 var relativ=0;
 //config harmonie
 /*
@@ -9,8 +10,13 @@ if (relativ==1){
 	gamme = minorRelative(gamme);
 }*/
 
+async function startBass(){
+	await waitForRightTime();
+	bassLine.start();
+}
+
 function createBassLine(tonalite, num){
-	var gamme = gammeMajor(notes[tonalite])
+	var gamme = gammeMinorHarmonique(tonalite)
 
 	var bassLine;
 
@@ -70,14 +76,14 @@ function createBassLine(tonalite, num){
 					);
 					bass.play(
 						Tone.Frequency(gamme[3]/2/2).toNote(),
-						"2n",
+						"1m",
 						time + Tone.Time("1m").toSeconds()
 					);
-					bass.play(
+					/*bass.play(
 						Tone.Frequency(gamme[3]/2/2).toNote(),
 						"4n",
 						time + Tone.Time("1m").toSeconds()*7/4
-					);
+					);*/
 				}
 			);
 			bassLine.loop = Infinity;
