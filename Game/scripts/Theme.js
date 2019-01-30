@@ -9,7 +9,7 @@ class Theme
 		if (bass)
 		{
 			this.bass = new InstrumentSampler(bass);
-			this.bass.sampler.volume.value = -3;
+			this.bass.sampler.volume.value = -12;
 		}
 
 		this.mode = mode || Theme.ModesNames[0];
@@ -17,7 +17,7 @@ class Theme
 		this.octave = octave || 3;
 
 		this.melodyInterval = "8n";
-		this.probability = 1;
+		this.probability = 0.9;
 		this.chordNoteCount = 1;
 		this.arpeggioNoteCount = 8;
 		this.arpeggioPattern = "up";
@@ -72,7 +72,7 @@ class Theme
 		{
 			if (i > notes.length)
 			{
-				arpeggio.push(this.adjustNoteOctave(notes[i % notes.length], (parseInt(this.octave, 10) + parseInt(Math.floor(i / notes.length), 10))));
+				arpeggio.push(this.adjustNoteOctave(notes[i % notes.length], (parseInt(this.octave, 10) + parseInt(Math.min(1, Math.floor(i / notes.length), 10)))));
 			}
 			else
 			{
@@ -108,7 +108,7 @@ class Theme
 
 		base.loop = Infinity;
 		base.loopEnd = "1m";
-		base.playbackRate = 2;
+		base.playbackRate = 1;
 
 		return base;
 	}
@@ -188,6 +188,7 @@ class Theme
 	updateLead(lead)
 	{
 		this.lead = lead;
+		this.lead.sampler.volume.value = -16;
 		this.init();
 	}
 
@@ -199,6 +200,7 @@ class Theme
 	updateBass(bass)
 	{
 		this.bass = bass;
+		this.bass.sampler.volume.value = -16;
 		this.init();
 	}
 

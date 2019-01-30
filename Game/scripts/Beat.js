@@ -6,9 +6,9 @@ class Beat {
 		this.snare = new InstrumentSampler('snare');
 		this.hihat = new InstrumentSampler('hihat');
 
-		this.kick.sampler.volume.value = -3;
-		this.snare.sampler.volume.value = -4;
-		this.hihat.sampler.volume.value = -3;
+		this.kick.sampler.volume.value = 3;
+		this.snare.sampler.volume.value = 1;
+		this.hihat.sampler.volume.value = 6;
 
 		this.kickSubdivisions = 32;
 		this.hihatSubdivisions = 32;
@@ -111,7 +111,7 @@ class Beat {
 			function(time)
 			{
 				if (_this.hihatPattern.charAt(_this.hihatIndex) === "x")
-					_this.hihat.play(_this.hihatNote, 0.25, time, 0.1);
+					_this.hihat.play(_this.hihatNote, 0.25, time, 0.6);
 				_this.hihatIndex = (_this.hihatIndex + 1) % _this.kickSubdivisions;
 			});
 

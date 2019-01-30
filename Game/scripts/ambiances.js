@@ -96,7 +96,6 @@ ambiance1.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
 ambiance1.fx.selectFX('reverb', {reverb: 0.1});
 ambiance1.fx.selectFX('pingPongDelay', {delayTime: "8n"});
 
-
 var ambianceHarmony =
 {
 	nom : "ambianceHarmony",
