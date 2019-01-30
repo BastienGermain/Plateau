@@ -30,6 +30,7 @@ new InstrumentSampler('contrabass'),
 new InstrumentSampler('tuba')
 ];
 
+instrument1List[14].sampler.volume.value -= 6;
 // MODELE /////////////////////////////////////////////////
 
 /* AMBIANCE DESCRIPTION */

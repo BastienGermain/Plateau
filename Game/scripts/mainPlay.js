@@ -84,7 +84,10 @@ window.onload = function() {
                             //Random Simple Kick
                             start = 1;
                         }
-
+                        	console.log(ambiance.player1Instrument1);
+                        	console.log(ambiance.player1Instrument2);
+                        	console.log(ambiance.player2Instrument1);
+                        	console.log(ambiance.player2Instrument2);
 
                             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
                             ////FIN INITIALISATION
@@ -129,7 +132,7 @@ window.onload = function() {
                                     break;
 
                                 case 5:
-                                    //startImpro(tonalite, "major", true);
+                                    startImpro(tonalite, "major", true);
                                     break;
 
                                 case 8:
@@ -233,8 +236,12 @@ window.onload = function() {
                             }
 
 
-                            if (data["atariNumber"] > 1) {
-                                Tone.Transport.bpm.rampTo(Tone.Transport.bpm * 120 / 100, 10);
+                            if (data["atariNumber"] > 1) 
+                            {
+                                //Tone.Transport.bpm.rampTo(Tone.Transport.bpm * 120 / 100, 10);
+                            }
+                            else{
+
                             }
 
 
