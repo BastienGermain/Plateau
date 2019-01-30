@@ -72,9 +72,9 @@ window.onload = function() {
                             else if (horizontalPos >= 0)
                                 ambiance = ambianceHarmony;
 
-                            //ambiance = ambiance1;
+                            ambiance = ambiance1;
 
-                            ambiance = ambianceDub;
+                            //ambiance = ambianceDub;
 
                             //1ers sons...
                             updateMode();
