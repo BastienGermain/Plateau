@@ -92,6 +92,20 @@ function indian(tonale){
 	return gamme;
 }
 
+function locrien(tonale){
+	let pytha = pythagoricienne(tonale);
+	let gamme = [pytha[0]];
+	gamme.push(pytha[1]);
+	gamme.push(pytha[3]);
+	gamme.push(pytha[5]);
+	gamme.push(pytha[6]);
+	gamme.push(pytha[8]);
+	gamme.push(pytha[10]);
+	gamme.push(pytha[12]);
+	return gamme;
+}
+
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));  //getRadomInt(3) return 0 1 or 2
 }
@@ -116,6 +130,26 @@ function waitForRightTime()
     {
 
       if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100)  == 0.00) 
+      {
+        //console.log('right time to update sound !');
+        //console.log(Tone.context.currentTime.toFixed(2)*60);
+        resolve();
+      } 
+      else 
+        window.setTimeout(check, 10);
+    }
+    check();
+  });
+}
+
+function wait() 
+{
+  return new Promise(resolve => 
+  {
+    function check() 
+    {
+
+      if (Math.round(Tone.context.currentTime.toFixed(2)*60*100) % Math.round(Tone.Transport.bpm.value*100*2)  == 0.00) 
       {
         //console.log('right time to update sound !');
         //console.log(Tone.context.currentTime.toFixed(2)*60);

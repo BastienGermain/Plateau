@@ -35,8 +35,12 @@ instrument1List[14].sampler.volume.value -= 15;
 instrument1List[12].sampler.volume.value -= 5;
 instrument1List[1].sampler.volume.value += 3;
 instrument1List[11].sampler.volume.value -= 12;
+instrument1List[3].sampler.volume.value -= 12;
+instrument1List[7].sampler.volume.value += 6;
+
 
 instrument2List[0].sampler.volume.value += 12;
+
 
 
 // MODELE /////////////////////////////////////////////////

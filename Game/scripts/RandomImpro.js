@@ -12,7 +12,7 @@ Tone.Transport.bpm.value = 120;
 Tone.Transport.start();
 
 
-var improInstrument = new InstrumentSampler("violin");
+var improInstrument = new InstrumentSampler("guitar-electric");
 improInstrument.sampler.value -= 9;
 
 var stopImpro=0;
@@ -54,8 +54,117 @@ var epsilon = 0.05;
 
 
 function impro(){
-	console.log("impro Instrument :");
-	console.log(improInstrument);
+	let gaussianIndex;
+	if (Math.floor(Math.random()*2)==0){
+		gaussianIndex = (Math.floor(gaussianRandom())+8)%8; //random between -4 to 4 (center to 0); 
+	}
+	else{
+		gaussianIndex = Math.floor(gaussianRandom())+4; //random center to 4;
+	}
+	if (Math.floor(Math.random()*2)==0){
+		gaussianIndex+=8;
+	}
+
+	if (tmpImpro<=8)
+	{
+		let croches = new Tone.Event(
+			function(time){
+				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "8n", time);
+				if (Math.floor(Math.random()*2)==0){
+					gaussianIndex = (Math.floor(gaussianRandom())+8)%8; //random between -4 to 4 (center to 0); 
+				}
+				else{
+					gaussianIndex = Math.floor(gaussianRandom())+4; //random center to 4;
+				}
+				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "8n", time+Tone.Time("8n").toSeconds());
+			}
+		);
+		croches.start();
+		tmpImpro+=1;
+		window.setTimeout(impro, Tone.Time("4n").toMilliseconds());
+	}
+	else if (tmpImpro<=16)
+	{
+		let noire = new Tone.Event(
+			function(time){
+				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "4n", time);
+			}
+		);
+		noire.start();
+		tmpImpro+=1;
+		window.setTimeout(impro, Tone.Time("4n").toMilliseconds());
+	}
+	else if (tmpImpro<=24)
+	{
+		let blanche = new Tone.Event(
+			function(time){
+				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "2n", time);
+			}
+		);
+		blanche.start();
+		tmpImpro+=2;
+		window.setTimeout(impro, Tone.Time("2n").toMilliseconds());
+	}
+	else
+	{
+		let ronde = new Tone.Event(
+			function(time){
+				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "1m", time);
+			}
+		);
+		ronde.start();		
+	}
+
+}
+
+var tmpImpro;
+async function startImpro(tonalite, mode = "major", silences = false){
+	await waitForRightTime(); 
+
+	//improInstrument = ambiance.player1Instrument1;
+	stopImpro = false;
+	if (mode == "minor"){
+		let gam1 = gammeMinorHarmonique(Tone.Frequency(tonalite).toNote());
+		let gam2 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		if (silences) gam2 = gammeMajor("");
+		gammeImpro = gam1.concat(gam2);
+	}
+	else if (mode == "indian"){
+		console.log("indian mode")
+		let gam1 =indianRast(Tone.Frequency(tonalite).toNote());
+		let gam2 = indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		if (silences) gam2 = gammeMajor("");
+		gammeImpro = gam1.concat(gam2);
+	}
+	else if (mode == "locrian"){
+		console.log("locrian mode")
+		let gam1 =locrien(Tone.Frequency(tonalite).toNote());
+		let gam2 = locrien(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		if (silences) gam2 = gammeMajor("");
+		gammeImpro = gam1.concat(gam2);
+	}
+	else{
+		let gam1 = gammeMajor(Tone.Frequency(tonalite).toNote());
+		let gam2 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		if (silences) gam2 = gammeMajor("");
+		gammeImpro = gam1.concat(gam2);
+	}
+	
+	
+	//console.log(gammeImpro);
+	tmpImpro = 0;
+	impro();
+}
+
+async function endImpro(){
+	await wait();
+	stopImpro = true;
+}
+
+
+
+
+/*function impro(){
 	let gaussianIndex;
 	if (Math.floor(Math.random()*2)==0){
 		gaussianIndex = (Math.floor(gaussianRandom())+8)%8; //random between -4 to 4 (center to 0); 
@@ -67,7 +176,7 @@ function impro(){
 		gaussianIndex+=8;
 	}
 	let rand=Math.floor(Math.random()*3);
-	if (rand==0){	//1 chance sur 3 on joue une blanche
+	/*if (rand==0){	//1 chance sur 3 on joue une blanche
 		//console.log(gaussianIndex);
 		let blanche = new Tone.Event(
 			function(time){
@@ -75,7 +184,9 @@ function impro(){
 			}
 		);
 		blanche.start();
-		if (!stopImpro) window.setTimeout(impro, Tone.Time("2n").toMilliseconds());
+		//if (!stopImpro) window.setTimeout(impro, Tone.Time("2n").toMilliseconds());
+		if (tmpImpro<=8) window.setTimeout(impro, Tone.Time("2n").toMilliseconds());
+		tmpImpro+=2;
 	}
 	else{
 
@@ -103,46 +214,11 @@ function impro(){
 				}
 			);
 			croches.start();
-		}
+		//}
 
 		//else if (rand ==3){}
-		if (!stopImpro) window.setTimeout(impro, Tone.Time("4n").toMilliseconds());
-	}
-}
-
-
-async function startImpro(tonalite, mode = "major", silences = false){
-	await waitForRightTime(); 
-
-	//improInstrument = ambiance.player1Instrument1;
-	stopImpro = false;
-	if (mode == "minor"){
-		let gam1 = gammeMinorHarmonique(Tone.Frequency(tonalite).toNote());
-		let gam2 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
-		if (silences) gam2 = gammeMajor("");
-		gammeImpro = gam1.concat(gam2);
-	}
-	else if (mode == "indian"){
-		console.log("indian mode")
-		let gam1 =indianRast(Tone.Frequency(tonalite).toNote());
-		let gam2 = indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
-		if (silences) gam2 = gammeMajor("");
-		gammeImpro = gam1.concat(gam2);
-	}
-	else{
-		let gam1 = gammeMajor(Tone.Frequency(tonalite).toNote());
-		let gam2 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
-		if (silences) gam2 = gammeMajor("");
-		gammeImpro = gam1.concat(gam2);
-	}
-	
-	
-	console.log(gammeImpro);
-	impro();
-}
-
-async function endImpro(){
-	await waitForRightTime();
-	stopImpro = true;
-}
-
+		//if (!stopImpro) window.setTimeout(impro, Tone.Time("4n").toMilliseconds());
+		if (tmpImpro<=8) window.setTimeout(impro, Tone.Time("4n").toMilliseconds());
+		tmpImpro+=1;
+	//}
+}*/

@@ -68,10 +68,10 @@ class InstrumentSampler
         if (this.instrument != 'kick' && this.instrument != 'snare' && this.instrument != 'hihat')
         {
             if (this.instrument == 'clarinet')
-            {
-                playableNote = Tone.Frequency(playableNote).transpose(-2);
-            }
-
+                playableNote = Tone.Frequency(playableNote).transpose(-2).toNote();
+            if (this.instrument == 'bassoon' || this.instrument == 'contrabass' )
+                playableNote = Tone.Frequency(playableNote).transpose(-12).toNote();
+            
             if (parseInt(octave) > octaves[this.instrument].max)
                 playableNote = this.adjustNoteOctave(playableNote, octaves[this.instrument].max);
             
@@ -82,8 +82,8 @@ class InstrumentSampler
 
         sampler.release = 1;
         sampler.attack = 1;
-        sampler.triggerAttackRelease(playableNote, duration, time, velocity);
         sampler.toMaster();
+        sampler.triggerAttackRelease(playableNote, duration, time, velocity);
     }
 
 
