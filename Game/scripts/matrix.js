@@ -145,3 +145,19 @@ function letterToNumber(string) {
     }
     return sum;
 }
+
+function readMatrix(matrix) {
+    let arrayFromMatrix = new Array();
+	let i, j;
+
+	for (i = 0; i < matrix.size()[0]; i++) {
+		for (j = 0; j < matrix.size()[1]; j++) {
+
+			const value = matrix.get([i, j]);
+
+			arrayFromMatrix.push(value);
+		}
+	}
+
+    return arrayFromMatrix;
+}

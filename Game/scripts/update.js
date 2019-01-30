@@ -39,37 +39,43 @@ function updateMode()
 function updateBase(theme)
 {
 	theme.stopBase();
-	theme.stopMelody();
+
 	if (data["stonesAround"] == 0)
-	{
 		theme.updateBaseNoteCount(1);
-		theme.updateMelody(8);
-	}
 	else
 	{
 		if (data["stonesAround"] <= 2)
-		{
 			theme.updateBaseNoteCount(2);
-			theme.updateMelody(5);
-		}
 		else
 		{
 			if (data["stonesAround"] == 3)
-			{
 				theme.updateBaseNoteCount(3);
-				theme.updateMelody(3);
-			}
 			else
-			{
 				theme.updateBaseNoteCount(4);
-				theme.updateMelody(3);
-			}
-
 		}
 	}
-
 	theme.startBase();
-	if (melodyPlaying) theme.startMelody()
+}
+
+function updateMelody(theme)
+{
+	theme.stopMelody();
+
+	if (data["stonesAround"] == 0)
+		theme.updateMelody(8);
+	else
+	{
+		if (data["stonesAround"] <= 2)
+			theme.updateMelody(5);
+		else
+		{
+			if (data["stonesAround"] == 3)
+				theme.updateMelody(3);
+			else
+				theme.updateMelody(3);
+		}
+	}
+	theme.startMelody();
 }
 
 function updateTempo()
@@ -90,30 +96,28 @@ function updateTheme()
 	currentTheme.stopBase();
 	currentTheme.stopMelody();
 
+
 	if (data["player"] == "White") 
 		currentTheme = ambiance.themeP2;
 
 	else
 		currentTheme = ambiance.themeP1;
 
+	currentTheme.updateBaseChord();
+
 	if (basePlaying)
-	{
 		updateBase(currentTheme);
-		currentTheme.startBase();
-	}
 
 	if(melodyPlaying)
-	{
-		currentTheme.updateMelody(8);
-		currentTheme.startMelody();
-	}
-
+		updateMelody(currentTheme);
 }
 
 function update()
 {
+
 	//console.log("UPDATE");
 	currentTheme.updateBaseChord();
+
 	updateTheme();
 
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
