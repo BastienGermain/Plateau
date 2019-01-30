@@ -1,8 +1,5 @@
 var soundFile = new p5.SoundFile();
-var lastSoundFile = new p5.SoundFile();
-
 var recorder = new p5.SoundRecorder();
-
 recorder.setInput(Tone.Master);
 
 var start = 0;
@@ -35,35 +32,12 @@ var basePlaying = false;
 
 NProgress.start();
 
-function concat(first, second)
-{
-	let result = new Float32Array(first.length + second.length);
-
-	for (let i = 0; i < first.length; ++i)
-		result[i] = first[i];
-
-	for (let i = first.length; i < first.length + second.length; ++i)
-		result[i] = second[i];
-
-	return result;
-}
-
 function saveMusic()
 {
 	if (recorder)
 	{
 		recorder.stop(); // stop recorder, and send the result to soundFile
-
-		if (!lastSoundFile.buffer)
-			lastSoundFile.buffer = soundFile.buffer;
-		else
-		{
-			for (let i = 0; i < soundFile.buffer.numberOfChannels; ++i)
-				lastSoundFile.buffer.copyToChannel(concat(lastSoundFile.buffer.getChannelData(i), soundFile.buffer.getChannelData(i)), i, 0);
-		}
-
 		p5.prototype.saveSound(lastSoundFile, 'goMusic.wav'); // save file
-		recorder.record(soundFile);
 	}
 }
 
