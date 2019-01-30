@@ -30,6 +30,8 @@ new InstrumentSampler('contrabass'),
 new InstrumentSampler('tuba')
 ];
 
+
+
 // MODELE /////////////////////////////////////////////////
 
 /* AMBIANCE DESCRIPTION */

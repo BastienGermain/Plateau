@@ -60,17 +60,19 @@ class InstrumentSampler
     play(note, duration, time, velocity = 1) 
     {   
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
-
-        let octave = parseInt(note.charAt(note.length - 1));
         let playableNote = note;
 
-        
         if (this.instrument != 'kick' && this.instrument != 'snare' && this.instrument != 'hihat')
         {
             if (this.instrument == 'clarinet')
-            {
-                playableNote = Tone.Frequency(playableNote).transpose(-2);
-            }
+                playableNote = Tone.Frequency(playableNote).transpose(-2).toNote();
+
+            if (this.instrument == 'bassoon' || this.instrument == 'contrabass' || this.instrument == 'tuba')
+                playableNote = Tone.Frequency(playableNote).transpose(-12).toNote();
+
+            console.log(playableNote);
+
+            let octave = parseInt(playableNote.charAt(note.length - 1));
 
             if (parseInt(octave) > octaves[this.instrument].max)
                 playableNote = this.adjustNoteOctave(playableNote, octaves[this.instrument].max);
