@@ -67,7 +67,11 @@ class InstrumentSampler
         
         if (this.instrument != 'kick' && this.instrument != 'snare' && this.instrument != 'hihat')
         {
-            //console.log(this.instrument);
+            if (this.instrument == 'clarinet')
+            {
+                playableNote = Tone.Frequency(playableNote).transpose(-2);
+            }
+
             if (parseInt(octave) > octaves[this.instrument].max)
                 playableNote = this.adjustNoteOctave(playableNote, octaves[this.instrument].max);
             
