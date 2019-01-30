@@ -89,6 +89,123 @@ function updateTempo()
 		Tone.Transport.bpm.value -= 10;
 }
 
+function updateMelodyProbability()
+{
+	switch(data["stoneOnBoard"])
+	{
+		case 10:
+		ambiance.themeP1.updateMelodyNoteProbability(0.1);
+		ambiance.themeP2.updateMelodyNoteProbability(0.1);
+		break;
+
+		case 20:
+		ambiance.themeP1.updateMelodyNoteProbability(0.2);
+		ambiance.themeP2.updateMelodyNoteProbability(0.2);
+		break;
+
+		case 30:
+		ambiance.themeP1.updateMelodyNoteProbability(0.3);
+		ambiance.themeP2.updateMelodyNoteProbability(0.3);
+		break;
+
+		case 40:
+		ambiance.themeP1.updateMelodyNoteProbability(0.4);
+		ambiance.themeP2.updateMelodyNoteProbability(0.4);
+		break;
+
+		case 50:
+		ambiance.themeP1.updateMelodyNoteProbability(0.5);
+		ambiance.themeP2.updateMelodyNoteProbability(0.5);
+		break;
+
+		case 60:
+		ambiance.themeP1.updateMelodyNoteProbability(0.6);
+		ambiance.themeP2.updateMelodyNoteProbability(0.6);
+		break;
+
+		case 70:
+		ambiance.themeP1.updateMelodyNoteProbability(0.75);
+		ambiance.themeP2.updateMelodyNoteProbability(0.75);
+		break;
+
+		case 80:
+		ambiance.themeP1.updateMelodyNoteProbability(0.80);
+		ambiance.themeP2.updateMelodyNoteProbability(0.80);
+		break;
+
+		case 90:
+		ambiance.themeP1.updateMelodyNoteProbability(0.85);
+		ambiance.themeP2.updateMelodyNoteProbability(0.85);
+		break;
+
+		case 100:
+		ambiance.themeP1.updateMelodyNoteProbability(0.90);
+		ambiance.themeP2.updateMelodyNoteProbability(0.90);
+		break;
+
+		case 110:
+		ambiance.themeP1.updateMelodyNoteProbability(0.95);
+		ambiance.themeP2.updateMelodyNoteProbability(0.95);
+		break;
+
+		default:
+		break;
+	}
+}
+
+function updateMelodyPattern()
+{
+	if (data["player"] == "White")
+	{
+		let gameStyleIndicator = whitePlayerFeature.defensive - whitePlayerFeature.offensive;
+		
+		if (gameStyleIndicator == 0)
+			ambiance.themeP2.updateMelodyPattern("random");
+		else 
+		{
+			if (gameStyleIndicator > 0)
+			{
+				if (gameStyleIndicator <= 2)
+					ambiance.themeP2.updateMelodyPattern("downUp");
+				else 
+					ambiance.themeP2.updateMelodyPattern("down");
+			}
+			else
+			{
+				if (gameStyleIndicator >= -2)
+					ambiance.themeP2.updateMelodyPattern("upDown");
+				else 
+					ambiance.themeP2.updateMelodyPattern("up");
+			}
+		}
+	}
+
+	else 
+	{
+		let gameStyleIndicator = blackPlayerFeature.defensive - blackPlayerFeature.offensive;
+		
+		if (gameStyleIndicator == 0)
+			ambiance.themeP1.updateMelodyPattern("random");
+		else 
+		{
+			if (gameStyleIndicator > 0)
+			{
+				if (gameStyleIndicator <= 2)
+					ambiance.themeP1.updateMelodyPattern("downUp");
+				else 
+					ambiance.themeP1.updateMelodyPattern("down");
+			}
+			else
+			{
+				if (gameStyleIndicator >= -2)
+					ambiance.themeP1.updateMelodyPattern("upDown");
+				else 
+					ambiance.themeP1.updateMelodyPattern("up");
+			}
+		}
+	}
+}
+
 function updateTheme()
 {
 	//console.log(data["player"]);
@@ -118,7 +235,10 @@ function update()
 	//console.log("UPDATE");
 	currentTheme.updateBaseChord();
 
+	updateMelodyProbability();
+	updateMelodyPattern();
 	updateTheme();
+	console.log(currentTheme.melody.pattern);
 
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
 }

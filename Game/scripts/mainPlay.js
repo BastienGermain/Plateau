@@ -283,9 +283,8 @@ window.onload = function() {
 
 
 
-                            if (data["atariNumber"] > 1) 
-                            {
-                                //Tone.Transport.bpm.rampTo(Tone.Transport.bpm * 120 / 100, 10);
+                            if (data["atariNumber"] > 1) {
+                                Tone.Transport.bpm.rampTo(Floor(Tone.Transport.bpm * 120 / 100), 10);
                             }
                             else{
 
@@ -302,7 +301,21 @@ window.onload = function() {
                             }
 
 
-/*
+                            //reconnaissance des knownMove et cornerMove & update de PlayerFeature;
+                            updateFeatures();
+
+                            console.log("blackPlayerFeature :");
+                            console.log("offensive :"+blackPlayerFeature.offensive);
+                            console.log("defensive :"+blackPlayerFeature.defensive);
+                            console.log("expensive :"+blackPlayerFeature.expensive);
+                            console.log("risky :"+blackPlayerFeature.risky);
+                            console.log("whitePlayerFeature :");
+                            console.log("offensive :"+whitePlayerFeature.offensive);
+                            console.log("defensive :"+whitePlayerFeature.defensive);
+                            console.log("expensive :"+whitePlayerFeature.expensive);
+                            console.log("risky :"+whitePlayerFeature.risky);
+                            
+
                             if (data["stoneOnBoard"] >= 10) {
                             	if (ambiance == ambiance1)
                             	{
