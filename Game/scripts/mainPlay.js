@@ -72,10 +72,10 @@ window.onload = function() {
                             else if (horizontalPos >= 0)
                                 ambiance = ambianceHarmony;
 
-                            //ambiance = ambiance1;
+                            ambiance = ambiance1;
 
                             //ambiance = ambianceDub;
-                            ambiance = ambianceHarmony;
+                            //ambiance = ambianceHarmony;
                             //1ers sons...
                             updateMode(); //choix du mode, != si cornerMove
 
@@ -128,30 +128,7 @@ window.onload = function() {
                                     ambiance.beat.playKick(startTime);
                                     break;
 
-                                case 4:
-                                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
-                                    ambiance.beat.playHihat(startTime);
-                                    break;
-
-                                case 7:
-                                    ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 7) + 4];
-                                    break;
-
-                                case 10:
-                                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 4)];
-                                    ambiance.beat.playSnare(startTime);
-
-                                case 14:
-                                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 7) + 4];
-                                    break;
-
-                                case 17:
-                                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
-                                    break;
-
-                                /*case 4:
-
-
+                             	case 4:
                                     switch (ambiance) {
                                         case ambiance1:
                                             currentTheme = ambiance.themeP1;
@@ -172,10 +149,16 @@ window.onload = function() {
                                         default:
                                             break;
                                     }
+
+                                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
+                                    ambiance.beat.playHihat(startTime);
                                     break;
 
                                 case 5:
                                     //startImpro(tonalite, "indian");
+                                    break;
+                                case 7:
+                                    ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 7) + 4];
                                     break;
 
                                 case 8:
@@ -189,6 +172,18 @@ window.onload = function() {
                                             bassLine.stop();
                                             bassLine = createBassLine(tonalite, 1);
                                             startBass();
+                                            break;
+                                    }
+                                    break;
+
+                                case 10:
+                                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 4)];
+                                    ambiance.beat.playSnare(startTime);
+
+                                    switch (ambiance) {
+                                        case ambiance1:
+                                            currentTheme.startMelody(startTime);
+                                    		melodyPlaying = true;
                                             break;
                                     }
                                     break;
@@ -208,6 +203,10 @@ window.onload = function() {
                                     }
                                     break;
 
+                                case 14:
+                                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 7) + 4];
+                                    break;
+
                                 case 16:
                                     switch (ambiance) {
                                         case ambianceHarmony:
@@ -221,21 +220,11 @@ window.onload = function() {
                                             startBass();
                                             break;
                                     }
-
-                                case 16:
-                                    switch (ambiance) {
-                                        case ambianceHarmony:
-                                            harmony.addRightHand();
-                                            break;
-
-                                        case ambianceDub:
-                                            console.log("bass 4");
-                                            bassLine.stop();
-                                            bassLine = createBassLine(tonalite, 4);
-                                            startBass();
-                                            break;
-                                    }
-                            */
+                                    break;
+                                    
+                                case 17:
+                                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
+                                    break;
                             }
 
 
@@ -246,21 +235,17 @@ window.onload = function() {
 
 
                             //REGLES AMBIANCE1
-                            /*/if (ambiance == ambiance1) {
+                            if (ambiance == ambiance1) {
                                 if (data["stoneOnBoard"] >= 10) {
-                                    currentTheme.startMelody(startTime);
-                                    melodyPlaying = true;
+                                    
                                 }
-                            }*/
-
-
-
+                            }
 
 
                                 //ICI NOTIFICATION DES CHGTS DE DATA
                                 //valable pour toutes les ambiancesg
 
-                                /*
+                                
                                 if (data["player"] != "Black") {
                                 	//startImpro(tonalite, "major");
                                 	
@@ -279,7 +264,7 @@ window.onload = function() {
                                     leftHarmonyInstrument = ambiance.player2Instrument1;
                                     bass = ambiance.player2Instrument2;
 									
-                                }*/
+                                }
 
 
 
@@ -299,33 +284,6 @@ window.onload = function() {
                                 //console.log("whiteCaptures")
                                 victoryMelody(ambiance.player2Instrument1, tonalite);
                             }
-
-
-                            //reconnaissance des knownMove et cornerMove & update de PlayerFeature;
-                            updateFeatures();
-
-                            console.log("blackPlayerFeature :");
-                            console.log("offensive :"+blackPlayerFeature.offensive);
-                            console.log("defensive :"+blackPlayerFeature.defensive);
-                            console.log("expensive :"+blackPlayerFeature.expensive);
-                            console.log("risky :"+blackPlayerFeature.risky);
-                            console.log("whitePlayerFeature :");
-                            console.log("offensive :"+whitePlayerFeature.offensive);
-                            console.log("defensive :"+whitePlayerFeature.defensive);
-                            console.log("expensive :"+whitePlayerFeature.expensive);
-                            console.log("risky :"+whitePlayerFeature.risky);
-                            
-
-                            if (data["stoneOnBoard"] >= 10) {
-                            	if (ambiance == ambiance1)
-                            	{
-                            		currentTheme.startMelody(startTime);
-                                	melodyPlaying = true;
-                            	}
-
-                            }
-*/
-
 
                             //REGLES AMBIANCE HARMONY
 
