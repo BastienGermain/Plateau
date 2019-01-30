@@ -383,4 +383,5 @@ function printData() {
 
 function printMatrix() {
     console.log(boardMat);
+    console.log(readMatrix(boardMat));
 }
