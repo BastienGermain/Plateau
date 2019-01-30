@@ -59,12 +59,6 @@ function initInstruments()
 
 		ambiance.themeP1.updateLead(ambiance.player1Instrument1);
 		ambiance.themeP1.updateBass(ambiance.player1Instrument2);
-		
-		if (ambiance.fx)
-		{
-			ambiance.themeP1.bass.catchFXs(ambiance.fx, true);
-			ambiance.themeP1.lead.catchFXs(ambiance.fx, true);
-		}
 	}	
 
 	if (data["stoneOnBoard"]==4)
@@ -74,12 +68,6 @@ function initInstruments()
 
 		ambiance.themeP2.updateLead(ambiance.player2Instrument1);
 		ambiance.themeP2.updateBass(ambiance.player2Instrument2);
-
-		if (ambiance.fx)
-		{
-			ambiance.themeP2.bass.catchFXs(ambiance.fx, true);
-			ambiance.themeP2.lead.catchFXs(ambiance.fx, true);
-		}
 	}
 
 	if (data["stoneOnBoard"]>4 && data["stoneOnBoard"]<=8)
