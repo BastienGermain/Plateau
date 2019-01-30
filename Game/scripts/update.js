@@ -80,7 +80,7 @@ function updateMelody(theme)
 
 function updateTempo()
 {
-	console.log(Tone.Transport.bpm.value);
+	//console.log(Tone.Transport.bpm.value);
 
 	if (data["moveTime"] < 0 && Tone.Transport.bpm.value < tempo + 60)
 		Tone.Transport.bpm.value += 10;
@@ -91,7 +91,7 @@ function updateTempo()
 
 function updateTheme()
 {
-	console.log(data["player"]);
+	//console.log(data["player"]);
 
 	currentTheme.stopBase();
 	currentTheme.stopMelody();
@@ -114,7 +114,10 @@ function updateTheme()
 
 function update()
 {
-	console.log("UPDATE");
+
+	//console.log("UPDATE");
+	currentTheme.updateBaseChord();
+
 	updateTheme();
 
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());

@@ -117,6 +117,8 @@ ambianceHarmony.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
 ambianceHarmony.fx.selectFX('reverb', {reverb: 0.1});
 ambianceHarmony.fx.selectFX('pingPongDelay', {delayTime: "8n"});
 
+
+
 var ambianceDrum =
 {
 	nom : "ambianceDrum",
@@ -137,6 +139,8 @@ var ambianceDrum =
 ambianceDrum.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
 ambianceDrum.fx.selectFX('reverb', {reverb: 0.1});
 ambianceDrum.fx.selectFX('pingPongDelay', {delayTime: "8n"});
+
+
 
 var ambianceDub = 
 {

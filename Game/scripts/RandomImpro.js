@@ -13,6 +13,7 @@ Tone.Transport.start();
 
 
 var improInstrument = new InstrumentSampler("violin");
+improInstrument.sampler.value -= 9;
 
 var stopImpro=0;
 
@@ -109,25 +110,28 @@ function impro(){
 }
 
 
-async function startImpro(tonalite, mode = "major"){
+async function startImpro(tonalite, mode = "major", silences = false){
 	await waitForRightTime(); 
 
 	//improInstrument = ambiance.player1Instrument1;
 	stopImpro = false;
 	if (mode == "minor"){
-		let gam1 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
-		let gam2 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*4).toNote());
+		let gam1 = gammeMinorHarmonique(Tone.Frequency(tonalite).toNote());
+		let gam2 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		if (silences) gam2 = gammeMajor("");
 		gammeImpro = gam1.concat(gam2);
 	}
 	else if (mode == "indian"){
 		console.log("indian mode")
-		let gam1 =indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
-		let gam2 = indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*4).toNote());
+		let gam1 =indianRast(Tone.Frequency(tonalite).toNote());
+		let gam2 = indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		if (silences) gam2 = gammeMajor("");
 		gammeImpro = gam1.concat(gam2);
 	}
 	else{
-		let gam1 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
-		let gam2 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*4).toNote());
+		let gam1 = gammeMajor(Tone.Frequency(tonalite).toNote());
+		let gam2 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		if (silences) gam2 = gammeMajor("");
 		gammeImpro = gam1.concat(gam2);
 	}
 	
