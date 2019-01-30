@@ -72,7 +72,7 @@ window.onload = function() {
                             else if (horizontalPos >= 0)
                                 ambiance = ambianceHarmony;
 
-                            ambiance = ambiance1;
+                            //ambiance = ambiance1;
 
                             ambiance = ambianceDub;
 
@@ -129,7 +129,7 @@ window.onload = function() {
                                     break;
 
                                 case 5:
-                                    startImpro(tonalite, "major", true);
+                                    //startImpro(tonalite, "major", true);
                                     break;
 
                                 case 8:
@@ -172,6 +172,20 @@ window.onload = function() {
                                             console.log("bass 3");
                                             bassLine.stop();
                                             bassLine = createBassLine(tonalite, 3);
+                                            startBass();
+                                            break;
+                                    }
+
+                                case 16:
+                                    switch (ambiance) {
+                                        case ambianceHarmony:
+                                            harmony.addRightHand();
+                                            break;
+
+                                        case ambianceDub:
+                                            console.log("bass 4");
+                                            bassLine.stop();
+                                            bassLine = createBassLine(tonalite, 4);
                                             startBass();
                                             break;
                                     }
@@ -252,8 +266,12 @@ window.onload = function() {
 
 
                             if (data["stoneOnBoard"] >= 10) {
-                                currentTheme.startMelody(startTime);
-                                melodyPlaying = true;
+                            	if (ambiance == ambiance1)
+                            	{
+                            		currentTheme.startMelody(startTime);
+                                	melodyPlaying = true;
+                            	}
+                                
                             }
 
 

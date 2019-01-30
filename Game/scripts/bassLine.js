@@ -30,6 +30,26 @@ function createBassLine(tonalite, num){
 						time
 					);
 					bass.play(
+						Tone.Frequency(gamme[3]/2/2).toNote(),
+						"2n",
+						time + Tone.Time("1m").toSeconds()
+					);
+
+				}
+			);
+			bassLine.loop = Infinity;
+			bassLine.loopEnd = "2m";
+			break;
+
+		case 1 :
+			bassLine = new Tone.Event(
+				function(time){
+					bass.play(
+						Tone.Frequency(gamme[0]/2).toNote(),
+						"2n",
+						time
+					);
+					bass.play(
 						Tone.Frequency(gamme[0]/2).toNote(),
 						"2n",
 						time + Tone.Time("1m").toSeconds()*2/4
@@ -51,7 +71,7 @@ function createBassLine(tonalite, num){
 			bassLine.loopEnd = "2m";
 			break;
 
-		case 1 :
+		case 2 :
 			bassLine = new Tone.Event(
 				function(time){
 					bass.play(
@@ -91,7 +111,7 @@ function createBassLine(tonalite, num){
 			break;
 
 
-		case 2:
+		case 3:
 			bassLine = new Tone.Event(
 				function(time){
 					bass.play(
@@ -140,7 +160,7 @@ function createBassLine(tonalite, num){
 			bassLine.loopEnd = "2m";
 			break;
 
-		case 3:
+		case 4:
 			bassLine = new Tone.Event(
 				function(time){
 					bass.play(
