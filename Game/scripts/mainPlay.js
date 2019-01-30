@@ -84,10 +84,7 @@ window.onload = function() {
                             //Random Simple Kick
                             start = 1;
                         }
-                        	console.log(ambiance.player1Instrument1);
-                        	console.log(ambiance.player1Instrument2);
-                        	console.log(ambiance.player2Instrument1);
-                        	console.log(ambiance.player2Instrument2);
+    
 
                             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
                             ////FIN INITIALISATION
@@ -132,7 +129,7 @@ window.onload = function() {
                                     break;
 
                                 case 5:
-                                    startImpro(tonalite, "major", true);
+                                    //startImpro(tonalite, "major", true);
                                     break;
 
                                 case 8:
@@ -210,9 +207,6 @@ window.onload = function() {
                             }
 
 
-                            if (data["player"] == "Black") {
-                                //harmony.stop = 0;
-                                //updateHarmony();
 
 
 
@@ -220,20 +214,24 @@ window.onload = function() {
                                 //valable pour toutes les ambiancesg
 
                                 if (data["player"] != "Black") {
-                                    //console.log(ambiance.player1Instrument1);
+                                
+
                                     improInstrument = ambiance.player1Instrument1;
-                                    rightHarmonyInstrument = ambiance.player1Instrument1;
-                                    leftHarmonyInstrument = ambiance.player1Instrument2;
-                                    bass = ambiance.player1Instrument2;
+                                    rightHarmonyInstrument = ambianceHarmony.player1Instrument1;
+                                    leftHarmonyInstrument = ambianceHarmony.player1Instrument2;
+                                    bass = ambianceDub.player1Instrument2;
+
+                                    console.log(bass);
                                 } else {
                                     //console.log(ambiance.player2Instrument1)
                                     improInstrument = ambiance.player2Instrument1;
                                     rightHarmonyInstrument = ambiance.player2Instrument1;
                                     leftHarmonyInstrument = ambiance.player2Instrument2;
                                     bass = ambiance.player2Instrument2;
+
+                                    console.log(bass);
                                 }
 
-                            }
 
 
                             if (data["atariNumber"] > 1) 
@@ -254,22 +252,6 @@ window.onload = function() {
                                 victoryMelody(ambiance.player2Instrument1, tonalite);
                             }
 
-                            updateTempo();
-
-                            //reconnaissance des knownMove et cornerMove & update de PlayerFeature;
-                            updateFeatures();
-                            /*
-                            console.log("blackPlayerFeature :");
-                            console.log("offensive :"+blackPlayerFeature.offensive);
-                            console.log("defensive :"+blackPlayerFeature.defensive);
-                            console.log("expensive :"+blackPlayerFeature.expensive);
-                            console.log("risky :"+blackPlayerFeature.risky);
-                            console.log("whitePlayerFeature :");
-                            console.log("offensive :"+whitePlayerFeature.offensive);
-                            console.log("defensive :"+whitePlayerFeature.defensive);
-                            console.log("expensive :"+whitePlayerFeature.expensive);
-                            console.log("risky :"+whitePlayerFeature.risky);
-                            */
 
 
                             if (data["stoneOnBoard"] >= 10) {

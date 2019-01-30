@@ -3,13 +3,11 @@ class Theme
 	constructor(mode, octave, lead, bass = null) 
 	{	
 		this.lead = new InstrumentSampler(lead);
-		this.lead.sampler.volume.value = -12;
 		this.lead.sampler.release = 1;
 
 		if (bass)
 		{
 			this.bass = new InstrumentSampler(bass);
-			this.bass.sampler.volume.value = -12;
 		}
 
 		this.mode = mode || Theme.ModesNames[0];

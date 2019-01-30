@@ -54,7 +54,8 @@ var epsilon = 0.05;
 
 
 function impro(){
-	
+	console.log("impro Instrument :");
+	console.log(improInstrument);
 	let gaussianIndex;
 	if (Math.floor(Math.random()*2)==0){
 		gaussianIndex = (Math.floor(gaussianRandom())+8)%8; //random between -4 to 4 (center to 0); 
