@@ -91,21 +91,32 @@ window.onload = function() {
 
                             switch (data["stoneOnBoard"]) {
                                 case 1:
-                                    ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 7)];
+                                    ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 4)];
                                     ambiance.beat.playKick(startTime);
                                     break;
 
-                                case 2:
-                                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 7)];
+                                case 4:
+                                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
                                     ambiance.beat.playHihat(startTime);
                                     break;
 
-                                case 3:
-                                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7)];
-                                    ambiance.beat.playSnare(startTime);
+                                case 7:
+                                    ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 7) + 4];
                                     break;
 
-                                case 4:
+                                case 10:
+                                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 4)];
+                                    ambiance.beat.playSnare(startTime);
+
+                                case 14:
+                                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 7) + 4];
+                                    break;
+
+                                case 17:
+                                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
+                                    break;
+
+                                /*case 4:
                                     switch (ambiance) {
                                         case ambiance1:
                                             currentTheme = ambiance.themeP1;
@@ -174,7 +185,7 @@ window.onload = function() {
                                             bassLine = createBassLine(tonalite, 3);
                                             startBass();
                                             break;
-                                    }
+                                    }*/
                             }
 
 
