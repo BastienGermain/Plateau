@@ -14,11 +14,11 @@ class Theme
 		this.tonic = Theme.Notes[0];
 		this.octave = octave || 3;
 
-		this.melodyInterval = "8n";
-		this.probability = 0.9;
+		this.melodyInterval = "16n";
+		this.probability = 0.1;
 		this.chordNoteCount = 1;
 		this.arpeggioNoteCount = 8;
-		this.arpeggioPattern = "up";
+		this.arpeggioPattern = "down";
 
 		this.progression = [];
 		this.arpeggio = [];
@@ -262,7 +262,10 @@ class Theme
 		if (Theme.ArpeggioPaterns.includes(patternType))
 			this.arpeggioPattern = patternType;
 		else
+		{
+			console.log("ERROR : INVALID PATTERN");
 			this.arpeggioPattern = "random";
+		}
 
 		this.melody.pattern = this.arpeggioPattern;
 	}
@@ -287,10 +290,13 @@ class Theme
 
 	updateMelodyNoteProbability(probability)
 	{
-		if(probabilty)
-			this.probabilty = probabilty;
+		console.log(probability);
+		if(probability)
+			this.probability = probability;
 
 		this.melody.probability = Math.min(1, Math.abs(this.probability));
+		console.log(this.melody.probability);
+		console.log(this.probability);
 	}
 
 /////////////////////////

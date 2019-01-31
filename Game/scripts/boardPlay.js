@@ -68,6 +68,7 @@ jsetup.create('board', function(canvas) {
       data["whiteCaptures"] = node.info.captures[2];
       data["blackCaptures"] = node.info.captures[1];
       data["knownMove"] = checkKnownMoves(data, boardMat);
+      data["globalInterpretation"] = neuronNetwork.activate(readMatrix(boardMat));
       checkAtari(boardMat);
       if (data["stonesAround"] == 0) {
        data["cornerMove"] = getCornerMove();

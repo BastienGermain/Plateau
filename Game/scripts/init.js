@@ -2,7 +2,6 @@ function init()
 {
 	initTonic();
 	initInstruments();
-	ambiance.themeP1.updateMelodyPattern("random");
 }
 
 function initTonic() 
@@ -54,7 +53,9 @@ function initInstruments()
 
 	if (data["stoneOnBoard"]==3)
 	{
-		ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
+		ambiance.player1Instrument1 = instrument1List[7];
+		//ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
+		ambiance.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
 		ambiance.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
 
 		ambiance.themeP1.updateLead(ambiance.player1Instrument1);
@@ -63,7 +64,8 @@ function initInstruments()
 
 	if (data["stoneOnBoard"]==4)
 	{
-		ambiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
+		//ambiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
+		ambiance.player2Instrument1 = instrument1List[7];
 		ambiance.player2Instrument2 = instrument2List[data["stonePosition"][1]%6];
 
 		ambiance.themeP2.updateLead(ambiance.player2Instrument1);
