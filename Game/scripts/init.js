@@ -58,16 +58,19 @@ function initInstruments()
 
 		ambiance.themeP1.updateLead(ambiance.player1Instrument1);
 		ambiance.themeP1.updateBass(ambiance.player1Instrument2);
+		console.log(ambiance.themeP1.lead.instrument);
+		console.log(ambiance.themeP1.bass.instrument);
 	}	
 
 	if (data["stoneOnBoard"]==4)
 	{
 		ambiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
-		//ambiance.player2Instrument1 = instrument1List[7];
 		ambiance.player2Instrument2 = instrument2List[data["stonePosition"][1]%6];
 
 		ambiance.themeP2.updateLead(ambiance.player2Instrument1);
 		ambiance.themeP2.updateBass(ambiance.player2Instrument2);
+		console.log(ambiance.themeP2.lead.instrument);
+		console.log(ambiance.themeP2.bass.instrument);
 	}
 
 	if (data["stoneOnBoard"]>4 && data["stoneOnBoard"]<=6)

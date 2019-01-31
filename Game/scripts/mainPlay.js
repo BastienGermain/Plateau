@@ -61,6 +61,7 @@ function decrescendo() {
             currentTheme.stopMelody();
             currentTheme.updateMelody(Math.min(0, currentTheme.arpeggioNoteCount - 3));
             currentTheme.startMelody(startTime);
+            9
         }
 
     } else if (time == 30 && ambiance.beat.playingKick) {
@@ -84,60 +85,63 @@ function decrescendo() {
 
 window.onload = function() {
     Tone.Buffer.on('load', function() {
-            NProgress.done();
-            let content = document.getElementById("content");
-            content.classList.remove("loading");
+        NProgress.done();
+        let content = document.getElementById("content");
+        content.classList.remove("loading");
 
-            //Evenement Pose de pierre :
-            $("#board canvas").on('click', function(coord) {
-                    //console.log(data);
-                    //console.log(lastData);
+        //Evenement Pose de pierre :
+        $("#board canvas").on('click', function(coord) {
+            //console.log(data);
+            //console.log(lastData);
 
-                    if (Tone.context.state !== 'running')
-                        Tone.context.resume();
+            if (Tone.context.state !== 'running')
+                Tone.context.resume();
 
-                    ////CODE INITIALISATION
-                    if (start == 0) {
-                        startTime = Tone.context.currentTime.toFixed(4);
+            ////CODE INITIALISATION
+            if (start == 0) {
+                startTime = Tone.context.currentTime.toFixed(4);
 
-                        recorder.record(soundFile);
+                recorder.record(soundFile);
 
-                        //joueur1 choisit l'ambiance
-                        let horizontalPos = data["stonePosition"][0];
+                //joueur1 choisit l'ambiance
+                let horizontalPos = data["stonePosition"][0];
 
-                        if (horizontalPos >= 12)
-                            ambiance = ambianceDub;
+                if (horizontalPos <= 3)
+                    ambiance = ambianceHarmony;
 
-                        else if (horizontalPos >= 6)
-                            ambiance = ambiance1;
+                else if (horizontalPos <= 9)
+                    ambiance = ambiance1;
 
-                        else if (horizontalPos >= 0)
-                            ambiance = ambianceHarmony;
+                else if (horizontalPos <= 15)
+                    ambiance = ambianceHarmony;
 
-                        ambiance = ambianceHarmony;
+                else if (horizontalPos <= 18)
+                    ambiance = ambiance1;
 
- 						console.log("selected ambiance : "+ambiance.nom);
-                        updateMode(); //choix du mode, != si cornerMove
+                console.log("Selected ambiance", ambiance.nom);
 
-                        decrescendo();
+                //ambiance = ambiance1;
 
-                        //Random Simple Kick
-                        start = 1;
-                    }
+                //ambiance = ambianceDub;
+                //ambiance = ambianceHarmony;
+                //1ers sons...
+                updateMode(); //choix du mode, != si cornerMove
 
+                decrescendo();
 
-                    init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
-                    ////FIN INITIALISATION
+                init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
 
-                    if (data["player"] != "Black") {
-                    	improInstrument = ambiance.player1Instrument1;
-                       	//console.log(improInstrument)  
-                    }
-                    else {	
-                    	improInstrument = ambiance.player2Instrument1;
-                        //console.log(improInstrument)  
-                    }
+                start = 1;
+            }
 
+            ////FIN INITIALISATION
+
+            if (data["player"] != "Black") {
+                improInstrument = ambiance.player1Instrument1;
+            } else {
+
+                improInstrument = ambiance.player2Instrument1;
+            }
 
                     if (ambiance == ambianceHarmony)
                     {
@@ -175,7 +179,15 @@ window.onload = function() {
                         			}
                         		}
                         }
+                    } else {
+                        if (pos[1] > 9) {
+                            startImpro(tonalite, "indian");
+                        } else {
+                            startImpro(tonalite, "locrian");
+                        }
                     }
+                }
+            }
 
 
                     switch (data["stoneOnBoard"]) {
@@ -183,99 +195,88 @@ window.onload = function() {
                             ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 4)];
                             break;
 
-                        case 4:
-                            switch (ambiance) {
-                                case ambiance1:
-                                    currentTheme = ambiance.themeP1;
-                                    update();
-                                    break;
-
-                                case ambianceHarmony:
-                                    //harmony.play();
-                                    break;
-
-                                case ambianceDub:
-                                    bassLine = createBassLine(tonalite, 0);
-                                    startBass();
-                                    break;
-
-                                default:
-                                    break;
-                            }
-
-                            ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
+                        case ambianceHarmony:
+                            //harmony.play();
                             break;
 
-                        case 5:
-                            //startImpro(tonalite, "indian");
-                            break;
-                        case 7:
-                            ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 7) + 4];
+                        case ambianceDub:
+                            bassLine = createBassLine(tonalite, 0);
+                            startBass();
                             break;
 
-                        case 8:
-                            switch (ambiance) {
-                                case ambianceHarmony:
-                                    harmony.addRightHand();
-                                    break;
-
-                                case ambianceDub:
-                                    console.log("bass 1");
-                                    bassLine.stop();
-                                    bassLine = createBassLine(tonalite, 1);
-                                    startBass();
-                                    break;
-                            }
-                            break;
-
-                        case 10:
-                            ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 4)];
-
-                        case 12:
-                            switch (ambiance) {
-                                case ambianceHarmony:
-                                    harmony.addRightHand();
-                                    break;
-
-                                case ambianceDub:
-                                    console.log("bass 2");
-                                    bassLine.stop();
-                                    bassLine = createBassLine(tonalite, 2);
-                                    startBass();
-                                    break;
-                            }
-                            break;
-
-                        case 14:
-                            ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 7) + 4];
-                            break;
-
-                        case 16:
-                            switch (ambiance) {
-                                case ambianceHarmony:
-                                    harmony.addRightHand();
-                                    break;
-
-                                case ambianceDub:
-                                    console.log("bass 3");
-                                    bassLine.stop();
-                                    bassLine = createBassLine(tonalite, 3);
-                                    startBass();
-                                    break;
-                            }
-                            break;
-
-                        case 17:
-                            ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
+                        default:
                             break;
                     }
 
-                    // Start again beat pattern
-                    ambiance.beat.playKick(startTime);
+                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
+                    break;
 
-                    if (data["stoneOnBoard"] >= 4) {
-                        console.log("restart hihat");
-                        ambiance.beat.playHihat(startTime);
+                case 5:
+                    //startImpro(tonalite, "indian");
+                    break;
+                case 7:
+                    ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 7) + 4];
+                    break;
+
+                case 8:
+                    switch (ambiance) {
+                        case ambianceHarmony:
+                            harmony.addRightHand();
+                            break;
+
+                        case ambianceDub:
+                            console.log("bass 1");
+                            bassLine.stop();
+                            bassLine = createBassLine(tonalite, 1);
+                            startBass();
+                            break;
+                    }
+                    break;
+
+                case 10:
+                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 4)];
+
+                case 12:
+                    switch (ambiance) {
+                        case ambianceHarmony:
+                            harmony.addRightHand();
+                            break;
+
+                        case ambianceDub:
+                            console.log("bass 2");
+                            bassLine.stop();
+                            bassLine = createBassLine(tonalite, 2);
+                            startBass();
+                            break;
+                    }
+                    break;
+
+                case 14:
+                    ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 7) + 4];
+                    break;
+
+                case 16:
+                    switch (ambiance) {
+                        case ambianceHarmony:
+                            harmony.addRightHand();
+                            break;
+
+                        case ambianceDub:
+                            console.log("bass 3");
+                            bassLine.stop();
+                            bassLine = createBassLine(tonalite, 3);
+                            startBass();
+                            break;
+                    }
+                    break;
+
+                case 17:
+                    ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
+                    break;
+            }
+
+            // Start again beat pattern
+            ambiance.beat.playKick(startTime);
 
                         switch (ambiance) {
                             case ambiance1:
@@ -285,87 +286,94 @@ window.onload = function() {
 
                                 break;
 
-                            case ambianceHarmony:
-                                break;
-
-                            case ambianceDub:
-                                break;
-
-                            default:
-                                break;
+                switch (ambiance) {
+                    case ambiance1:
+                        if (!basePlaying) {
+                            basePlaying = true;
                         }
-                    }
-                    if (data["stoneOnBoard"] >= 10) {
-                        console.log("restart snare");
-                        ambiance.beat.playSnare(startTime);
+                        break;
 
-                        switch (ambiance) {
-                            case ambiance1:
-                                if (!melodyPlaying) {
-                                    melodyPlaying = true;
-                                }
-                                break;
+                    case ambianceHarmony:
+                        break;
 
-                            case ambianceHarmony:
-                                break;
+                    case ambianceDub:
+                        break;
 
-                            case ambianceDub:
-                                break;
+                    default:
+                        break;
+                }
+            }
+            if (data["stoneOnBoard"] >= 10) {
+                console.log("restart snare");
+                ambiance.beat.playSnare(startTime);
 
-                            default:
-                                break;
+                switch (ambiance) {
+                    case ambiance1:
+                        if (!melodyPlaying) {
+                            melodyPlaying = true;
                         }
-                    }
+                        break;
 
-                //console.log(currentTheme.arpeggioNoteCount);
+                    case ambianceHarmony:
+                        break;
 
+                    case ambianceDub:
+                        break;
 
-                //Tone.Transport.bpm.rampTo(360, 10);
-
-
-
-
-
-                if (data["atariNumber"] > lastData["atariNumber"]) {
-                    if (harmony.relativ == 0) harmony.relativ = 1;
-                    else harmony.relativ = 0;
+                    default:
+                        break;
                 }
+            }
+
+            //console.log(currentTheme.arpeggioNoteCount);
+
+
+            //Tone.Transport.bpm.rampTo(360, 10);
 
 
 
 
-                if (data["atariNumber"] > 1 && Tone.Transport.bpm <= (tempo * 120 / 100)) {
-                    Tone.Transport.bpm.rampTo(Math.floor(tempo * 120 / 100), 10);
-                }
+
+            if (data["atariNumber"] > lastData["atariNumber"]) {
+                if (harmony.relativ == 0) harmony.relativ = 1;
+                else harmony.relativ = 0;
+            }
 
 
 
-                if (data["blackCaptures"] > lastData["blackCaptures"]) {
-                    //console.log("blackCaptures")
-                    victoryMelody(ambiance.player1Instrument1, tonalite);
-                }
-                if (data["whiteCaptures"] > lastData["whiteCaptures"]) {
-                    //console.log("whiteCaptures")
-                    victoryMelody(ambiance.player2Instrument1, tonalite);
-                }
 
-                updateTempo();
+            if (data["atariNumber"] > 1 && Tone.Transport.bpm <= (tempo * 120 / 100)) {
+                Tone.Transport.bpm.rampTo(Math.floor(tempo * 120 / 100), 10);
+            }
 
-                //reconnaissance des knownMove et cornerMove & update de PlayerFeature;
-                updateFeatures();
-                /*
-                console.log("blackPlayerFeature :");
-                console.log("offensive :"+blackPlayerFeature.offensive);
-                console.log("defensive :"+blackPlayerFeature.defensive);
-                console.log("expensive :"+blackPlayerFeature.expensive);
-                console.log("risky :"+blackPlayerFeature.risky);
-                console.log("whitePlayerFeature :");
-                console.log("offensive :"+whitePlayerFeature.offensive);
-                console.log("defensive :"+whitePlayerFeature.defensive);
-                console.log("expensive :"+whitePlayerFeature.expensive);
-                console.log("risky :"+whitePlayerFeature.risky);
-                */
 
-            })
+
+            if (data["blackCaptures"] > lastData["blackCaptures"]) {
+                //console.log("blackCaptures")
+                victoryMelody(ambiance.player1Instrument1, tonalite);
+            }
+            if (data["whiteCaptures"] > lastData["whiteCaptures"]) {
+                //console.log("whiteCaptures")
+                victoryMelody(ambiance.player2Instrument1, tonalite);
+            }
+
+            updateTempo();
+
+            //reconnaissance des knownMove et cornerMove & update de PlayerFeature;
+            updateFeatures();
+            /*
+            console.log("blackPlayerFeature :");
+            console.log("offensive :"+blackPlayerFeature.offensive);
+            console.log("defensive :"+blackPlayerFeature.defensive);
+            console.log("expensive :"+blackPlayerFeature.expensive);
+            console.log("risky :"+blackPlayerFeature.risky);
+            console.log("whitePlayerFeature :");
+            console.log("offensive :"+whitePlayerFeature.offensive);
+            console.log("defensive :"+whitePlayerFeature.defensive);
+            console.log("expensive :"+whitePlayerFeature.expensive);
+            console.log("risky :"+whitePlayerFeature.risky);
+            */
+
+        })
     });
 }
