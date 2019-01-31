@@ -99,7 +99,7 @@ window.onload = function() {
                                 }
 
 
-                            if (data["stoneOnBoard"] >= 4) {
+                            if (data["stoneOnBoard"] >= 20) {
                             	if (ambiance == ambianceHarmony)
                             	{
                             		let pos = data["stonePosition"];

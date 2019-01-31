@@ -65,6 +65,8 @@ function impro(){
 		gaussianIndex+=8;
 	}
 
+	console.log(tmpImpro);
+
 	if (tmpImpro<=8)
 	{
 		let croches = new Tone.Event(
@@ -109,7 +111,7 @@ function impro(){
 	{
 		let ronde = new Tone.Event(
 			function(time){
-				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "1m", time);
+				improInstrument.play(Tone.Frequency(gammeImpro[gaussianIndex]).toNote(), "2m", time);
 			}
 		);
 		ronde.start();		
@@ -121,38 +123,46 @@ var tmpImpro;
 async function startImpro(tonalite, mode = "major", silences = false){
 	await waitForRightTime(); 
 
+
 	//improInstrument = ambiance.player1Instrument1;
 	stopImpro = false;
 	if (mode == "minor"){
 		let gam1 = gammeMinorHarmonique(Tone.Frequency(tonalite).toNote());
-		let gam2 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		let gam2 = gammeMinorHarmonique(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()/2).toNote());
 		if (silences) gam2 = gammeMajor("");
 		gammeImpro = gam1.concat(gam2);
 	}
 	else if (mode == "indian"){
 		console.log("indian mode")
 		let gam1 =indianRast(Tone.Frequency(tonalite).toNote());
-		let gam2 = indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		let gam2 = indianRast(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()/2).toNote());
 		if (silences) gam2 = gammeMajor("");
 		gammeImpro = gam1.concat(gam2);
 	}
 	else if (mode == "locrian"){
 		console.log("locrian mode")
 		let gam1 =locrien(Tone.Frequency(tonalite).toNote());
-		let gam2 = locrien(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		let gam2 = locrien(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()/2).toNote());
 		if (silences) gam2 = gammeMajor("");
 		gammeImpro = gam1.concat(gam2);
 	}
 	else{
 		let gam1 = gammeMajor(Tone.Frequency(tonalite).toNote());
-		let gam2 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()*2).toNote());
+		let gam2 = gammeMajor(Tone.Frequency(Tone.Frequency(tonalite).toFrequency()/2).toNote());
 		if (silences) gam2 = gammeMajor("");
 		gammeImpro = gam1.concat(gam2);
 	}
 	
 	
-	//console.log(gammeImpro);
-	tmpImpro = 0;
+	let nb = data["stoneOnBoard"];
+	
+	if (nb > 30) tmpImpro = 24;
+	if (nb > 40) tmpImpro = 20;
+	if (nb > 50) tmpImpro = 16;
+	if (nb > 60) tmpImpro = 12;
+	if (nb > 70) tmpImpro = 8;
+	if (nb > 80) tmpImpro = 4;
+	if (nb > 90) tmpImpro = 0;
 	impro();
 }
 

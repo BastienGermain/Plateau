@@ -70,7 +70,7 @@ class InstrumentSampler
             if (this.instrument == 'bassoon' || this.instrument == 'contrabass' || this.instrument == 'tuba')
                 playableNote = Tone.Frequency(playableNote).transpose(-12).toNote();
 
-            console.log(playableNote);
+            //console.log(playableNote);
 
             let octave = parseInt(playableNote.charAt(note.length - 1));
 
