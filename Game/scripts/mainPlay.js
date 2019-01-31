@@ -35,7 +35,7 @@ NProgress.start();
 function saveMusic() {
     if (recorder) {
         recorder.stop(); // stop recorder, and send the result to soundFile
-        p5.prototype.saveSound(lastSoundFile, 'goMusic.wav'); // save file
+        p5.prototype.saveSound(soundFile, 'goMusic.wav'); // save file
     }
 }
 
@@ -221,7 +221,7 @@ window.onload = function() {
                                             break;
                                     }
                                     break;
-                                    
+                                    x
                                 case 17:
                                     ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
                                     break;
@@ -269,7 +269,7 @@ window.onload = function() {
 
 
                             if (data["atariNumber"] > 1) {
-                                Tone.Transport.bpm.rampTo(Floor(Tone.Transport.bpm * 120 / 100), 10);
+                                Tone.Transport.bpm.rampTo(Math.floor(Tone.Transport.bpm * 120 / 100), 10);
                             }
                             else{
 
