@@ -55,13 +55,12 @@ function decrescendo() {
 	        currentTheme.startMelody(startTime);
         }
 
-    } else if (time == 20) {
     } else if (time == 20 && ambiance.beat.playingHihat) {
         console.log("stopHihat");
         ambiance.beat.stopHihat();
 
-        if (melodyPlaying) 
-        {	
+        if (melodyPlaying)
+        {
 	        currentTheme.stopMelody();
 	        currentTheme.updateMelody(Math.min(0, currentTheme.arpeggioNoteCount - 3));
 	        currentTheme.startMelody(startTime);
@@ -72,7 +71,7 @@ function decrescendo() {
         ambiance.beat.stopKick();
 
         if (melodyPlaying)
-        {	
+        {
 	        currentTheme.stopMelody();
 	        melodyPlaying = false;
         }
@@ -139,12 +138,12 @@ window.onload = function() {
 
 						if (data["player"] != "Black") {
 
-                        	improInstrument = ambiance.player1Instrument1;  
+                        	improInstrument = ambiance.player1Instrument1;
                         }
                          else {
-                        	
+
                         	improInstrument = ambiance.player2Instrument1;
-                           
+
                         }
 
 
@@ -153,7 +152,7 @@ window.onload = function() {
                         {
                             if (data["stoneOnBoard"] >= 32) {		//20
                             	//harmony.relativ = 1;
-                            	
+
                     		        if (data["stoneOnBoard"] < 52) playSequence(2);
                             		else if (data["stoneOnBoard"] < 72) playSequence(3);
                             		else playSequence(4);
@@ -161,7 +160,7 @@ window.onload = function() {
                             		if (data["stoneOnBoard"] >= 62) {
                             			if (data["stonesAround"] >= 1) harmony.addRightHand();
                             			else harmony.endRightHand();
-                            		}                             		                            	
+                            		}
                             }
 
                             if (data["stoneOnBoard"] >= 20){
@@ -279,11 +278,11 @@ window.onload = function() {
 
                         //Tone.Transport.bpm.rampTo(360, 10);
 
-                            
-                     
 
 
-                        if (data["atariNumber"] > lastData["atariNumber"]) 
+
+
+                        if (data["atariNumber"] > lastData["atariNumber"])
                         {
                         	if (harmony.relativ==0) harmony.relativ = 1;
                         	else harmony.relativ = 0;
@@ -295,7 +294,7 @@ window.onload = function() {
                         if (data["atariNumber"] > 1 && Tone.Transport.bpm <= (tempo * 120 / 100)) {
                             Tone.Transport.bpm.rampTo(Math.floor(tempo * 120 / 100), 10);
                         }
-                       
+
 
 
                         if (data["blackCaptures"] > lastData["blackCaptures"]) {
