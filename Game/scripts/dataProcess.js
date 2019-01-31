@@ -22,6 +22,7 @@ data["previousMoveTime"] = 0;
 data["totalWhiteTime"] = 0; // In seconds
 data["totalBlackTime"] = 0;
 data["cornerMove"] = "" // Values : "San-san", "Hoshi", "Komoku", "Takamoku", "Mokuhazushi"
+data["globalInterpretation"] = 0; // [-1; 1]
 
 // à faire : connexion de chaines (seulement 4 libertés)
 
@@ -45,6 +46,7 @@ function updateData(sgf, moveNumber) {
     data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
     data["blackCaptures"] = getInfo().captures[JGO.BLACK];
     data["knownMove"] = checkKnownMoves(data, boardMat);
+    data["globalInterpretation"] = neuronNetwork.activate(readMatrix(boardMat));
     data["moveTime"] = sgf[moveNumber].C;
     checkAtari(boardMat);
     if (data["stonesAround"] == 0) {
