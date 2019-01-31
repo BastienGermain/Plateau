@@ -149,7 +149,8 @@ class Beat {
 	{
 		//await waitForRightTime();
 
-		if (!this.playingHihat){
+		if (!this.playingHihat)
+		{
 			this.playingHihat = true;
 			this.hihatLoop = this.createHihat().start(startTime);
 		}
@@ -169,7 +170,7 @@ class Beat {
 
 	stopHihat(){
 		this.hihatLoop.stop();
-		this.playingHihath = false;
+		this.playingHihat = false;
 	}
 /////////////////////////////////////////////////////////////////////////////////
 

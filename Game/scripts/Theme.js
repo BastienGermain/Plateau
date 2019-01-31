@@ -20,6 +20,8 @@ class Theme
 		this.arpeggioNoteCount = 8;
 		this.arpeggioPattern = "down";
 
+		this.velocity = 0.5;
+
 		this.progression = [];
 		this.arpeggio = [];
 
@@ -121,7 +123,8 @@ class Theme
 					instrument.play(
 						note, 
 						1.25 * Tone.Time(interval).toSeconds(), 
-						time);
+						time, 
+						_this.velocity);
 			},
 			arpeggio, 
 			pattern
@@ -218,6 +221,16 @@ class Theme
 
 	// Updates the mode of the Theme
 	// Resets base chord progression and melody arpeggio
+
+	updateVelocity(velocity = 0.5)
+	{
+		this.velocity = velocity;
+		this.init();
+	}
+
+///////////////////////////
+
+	// Updates the velocity of the notes played in the Theme
 
 	updateMode(mode)
 	{
