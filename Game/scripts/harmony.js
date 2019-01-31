@@ -399,6 +399,7 @@ function updateHarmony()
 var seq;
 async function playSequence(nb)
 {
+	console.log(harmonyInstrument);
 	await waitForRightTime();
 	seq = nb;
 	sequenceChoice();

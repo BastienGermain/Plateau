@@ -229,16 +229,45 @@ function updateTheme()
 		updateMelody(currentTheme);
 }
 
+function updateTonic()
+{
+	let pos = data["stonePosition"];
+
+	if (pos[0]>9)
+	{
+		if (pos[1]>9)
+		{
+			currentTheme.updateTonic("C", 3);
+		}
+		else
+		{
+			currentTheme.updateTonic("E", 3);
+		}
+	}
+	else
+	{
+		if (pos[1]>9)
+		{
+			currentTheme.updateTonic("G", 3);
+		}
+		else
+		{
+			currentTheme.updateTonic("D", 3);
+		}
+	}
+}
+
 function update()
 {
 
+	//updateTonic();
 	//console.log("UPDATE");
 	currentTheme.updateBaseChord();
 
 	updateMelodyProbability();
 	updateMelodyPattern();
 	updateTheme();
-	//console.log(currentTheme.melody.pattern);
+
 
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
 }

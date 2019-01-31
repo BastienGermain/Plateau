@@ -17,14 +17,13 @@ data["atariNumber"] = 0; //  number of atari situations on the board
 data["whiteAtariNumber"] = 0; // number of white stones in atari
 data["blackAtariNumber"] = 0;
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
-data["moveTime"] = 0; // In seconds
+data["moveTime"] = 0; // In seconds, after each move
 data["previousMoveTime"] = 0;
 data["totalWhiteTime"] = 0; // In seconds
 data["totalBlackTime"] = 0;
 data["cornerMove"] = "" // Values : "San-san", "Hoshi", "Komoku", "Takamoku", "Mokuhazushi"
 data["globalInterpretation"] = 0; // [-1; 1]
-
-// à faire : connexion de chaines (seulement 4 libertés)
+data["decrescendoTime"] = 0; // In seconds, current time the player consume
 
 var boardMat = math.zeros(19, 19);
 
