@@ -75,7 +75,7 @@ function updateMelody(theme)
 				theme.updateMelody(3);
 		}
 	}
-	theme.startMelody();
+	theme.startMelody(startTime);
 }
 
 function updateTempo()
@@ -87,6 +87,25 @@ function updateTempo()
 
 	if (data["moveTime"] > 60 && Tone.Transport.bpm.value > tempo - 60)
 		Tone.Transport.bpm.value -= 10;
+}
+
+function updateVelocity()
+{
+	ambiance.themeP1.stopMelody();
+	ambiance.themeP2.stopMelody();
+
+	if (data["globalInterpretation"] > 0.5)
+		ambiance.themeP2.updateVelocity(data["globalInterpretation"]);
+	else if (data["globalInterpretation"] < -0.5)
+		ambiance.themeP1.updateVelocity(data["globalInterpretation"]);
+	else 
+	{
+		ambiance.themeP1.updateVelocity(0.5);
+		ambiance.themeP2.updateVelocity(0.5);
+	}
+
+	currentTheme.startMelody(startTime);
+
 }
 
 function updateMelodyProbability()
@@ -262,11 +281,14 @@ function update()
 
 	//updateTonic();
 	//console.log("UPDATE");
-	currentTheme.updateBaseChord();
 
 	updateMelodyProbability();
 	updateMelodyPattern();
+
 	updateTheme();
+
+	if (melodyPlaying)
+		updateVelocity();
 
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
 }

@@ -47,14 +47,43 @@ function decrescendo() {
     if (time == 10 && ambiance.beat.playingSnare) {
         console.log("stopSnare");
         ambiance.beat.stopSnare();
+
+        if(melodyPlaying)
+        {
+	        currentTheme.stopMelody();
+	        currentTheme.updateMelody(Math.min(0, currentTheme.arpeggioNoteCount - 3));
+	        currentTheme.startMelody(startTime);
+        }
+
+    } else if (time == 20) {
     } else if (time == 20 && ambiance.beat.playingHihat) {
         console.log("stopHihat");
         ambiance.beat.stopHihat();
+
+        if (melodyPlaying) 
+        {	
+	        currentTheme.stopMelody();
+	        currentTheme.updateMelody(Math.min(0, currentTheme.arpeggioNoteCount - 3));
+	        currentTheme.startMelody(startTime);
+        }
+
     } else if (time == 30) {
         console.log("stopKick");
         ambiance.beat.stopKick();
-    }
 
+        if (melodyPlaying)
+        {	
+	        currentTheme.stopMelody();
+	        melodyPlaying = false;
+        }
+
+    } else if (time == 40) {
+    	if (basePlaying)
+    	{
+    		currentTheme.stopBase();
+	        basePlaying = false;
+    	}
+    }
     setTimeout(decrescendo, 1000);
 }
 
@@ -299,8 +328,8 @@ window.onload = function() {
 
 
 
-                            if (data["atariNumber"] > 1) {
-                                Tone.Transport.bpm.rampTo(Math.floor(Tone.Transport.bpm * 120 / 100), 10);
+                            if (data["atariNumber"] > 1 && Tone.Transport.bpm <= (tempo * 120 / 100)) {
+                                Tone.Transport.bpm.rampTo(Math.floor(tempo * 120 / 100), 10);
                             }
                             else{
 
