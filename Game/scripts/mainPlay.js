@@ -39,6 +39,23 @@ function saveMusic() {
     }
 }
 
+function decrescendo() {
+    const time = data["decrescendoTime"];
+
+    if (time == 10) {
+        console.log("stopSnare");
+        ambiance.beat.stopSnare();
+    } else if (time == 20) {
+        console.log("stopHihat");
+        ambiance.beat.stopHihat();
+    } else if (time == 30) {
+        console.log("stopKick");
+        ambiance.beat.stopKick();
+    }
+
+    setTimeout(decrescendo, 1000);
+}
+
 
 window.onload = function() {
         Tone.Buffer.on('load', function() {
@@ -79,23 +96,25 @@ window.onload = function() {
                             //1ers sons...
                             updateMode(); //choix du mode, != si cornerMove
 
+                            decrescendo();
+
                             //Random Simple Kick
                             start = 1;
                         }
-    					
+
 
                             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
                             ////FIN INITIALISATION
 
 							if (data["player"] != "Black") {
-                                
+
                                 improInstrument = ambiance.player1Instrument1;
-                                  
+
 
                                 } else {
-                                	
+
                                 	improInstrument = ambiance.player2Instrument1;
-                                   
+
                                 }
 
 
@@ -221,7 +240,7 @@ window.onload = function() {
                                             break;
                                     }
                                     break;
-                                    
+
                                 case 17:
                                     ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
                                     break;
@@ -237,7 +256,7 @@ window.onload = function() {
                             //REGLES AMBIANCE1
                             if (ambiance == ambiance1) {
                                 if (data["stoneOnBoard"] >= 10) {
-                                    
+
                                 }
                             }
 
@@ -245,25 +264,25 @@ window.onload = function() {
                                 //ICI NOTIFICATION DES CHGTS DE DATA
                                 //valable pour toutes les ambiancesg
 
-                                
+
                                 if (data["player"] != "Black") {
                                 	//startImpro(tonalite, "major");
-                                	
+
                                     improInstrument = ambiance.player1Instrument1;
                                     rightHarmonyInstrument = ambianceHarmony.player1Instrument1;
                                     leftHarmonyInstrument = ambianceHarmony.player1Instrument1;
                                     bass = ambianceDub.player1Instrument2;
-                                    
+
 
                                 } else {
                                 	//startImpro(tonalite, "indian");
 
-                                	
+
                                 	improInstrument = ambiance.player2Instrument1;
                                     rightHarmonyInstrument = ambiance.player2Instrument1;
                                     leftHarmonyInstrument = ambiance.player2Instrument1;
                                     bass = ambiance.player2Instrument2;
-									
+
                                 }
 
 
