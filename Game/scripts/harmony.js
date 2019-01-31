@@ -4,8 +4,7 @@ if (relativ==1){
 	gamme = gammeMinor(tonalite;
 }*/
 
-var rightHarmonyInstrument = new InstrumentSampler('violin');
-var leftHarmonyInstrument = new InstrumentSampler('violin');
+var harmonyInstrument = new InstrumentSampler(InstrumentSampler.Instruments[getRandomInt(20)]);
 
 var rightHand = false;
 
@@ -53,14 +52,14 @@ class Harmony {
 		let _gamme = this.gamme;
 		var leftHand =  new Tone.Event(
 			function(time){
-				leftHarmonyInstrument.play(
+				harmonyInstrument.play(
 					Tone.Frequency(_gamme[0]*modifDegré/2).toNote(),
-					Tone.Time("2n").toSeconds()*(1+2*finCadence)-e,
+					Tone.Time("2n").toSeconds()*(1.2+2*finCadence)-e,
 					time
 				);
-				leftHarmonyInstrument.play(
+				harmonyInstrument.play(
 					Tone.Frequency(_gamme[4]*modifDegré/2).toNote(),
-					Tone.Time("2n").toSeconds()*(1+2*finCadence)-e,
+					Tone.Time("2n").toSeconds()*(1.2+2*finCadence)-e,
 					time
 				);
 			}
@@ -106,12 +105,12 @@ class Harmony {
 		if (finCadence){
 			var rightHand = new Tone.Event(
 				function(time){
-					rightHarmonyInstrument.play(
+					harmonyInstrument.play(
 						Tone.Frequency(_gamme[2]*modifDegré).toNote(),
 						Tone.Time("2n").toSeconds()*3-e,
 						time 
 					);
-					rightHarmonyInstrument.play(
+					harmonyInstrument.play(
 						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
 						Tone.Time("2n").toSeconds()*3-e,
 						time 
@@ -122,24 +121,24 @@ class Harmony {
 		else{
 			var rightHand = new Tone.Event(
 				function(time){
-					rightHarmonyInstrument.play(
+					harmonyInstrument.play(
 						Tone.Frequency(_gamme[2]*modifDegré).toNote(),
-						Tone.Time("4n").toSeconds()-e,
+						Tone.Time("4n").toSeconds()*1.2-e,
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
-					rightHarmonyInstrument.play(
+					harmonyInstrument.play(
 						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
-						Tone.Time("4n").toSeconds()-e,
+						Tone.Time("4n").toSeconds()*1.2-e,
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
-					rightHarmonyInstrument.play(
+					harmonyInstrument.play(
 						Tone.Frequency(_gamme[2]*modifDegré).toNote(),					
-						Tone.Time("4n").toSeconds()-e,
+						Tone.Time("4n").toSeconds()*1.2-e,
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
-					rightHarmonyInstrument.play(
+					harmonyInstrument.play(
 						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
-						Tone.Time("4n").toSeconds()-e,
+						Tone.Time("4n").toSeconds()*1.2-e,
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
 				}
@@ -233,17 +232,17 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(1);
 			if (rightHand) this.modifRightHand(1);
-			console.log("degré1");
+			//console.log("degré1");
 		}
 		else if (this.mesureCount==1){
 			this.modifLeftHand(5);
 			if (rightHand) this.modifRightHand(5);
-			console.log("degré5");
+			//console.log("degré5");
 		}
 		else if (this.mesureCount==2){
 			this.modifLeftHand(1, 1);
 			if (rightHand) this.modifRightHand(1, 1);
-			console.log("degré1");
+			//console.log("degré1");
 		}
 
 		this.incrementMesure(1);
@@ -259,17 +258,17 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(5);
 			if (rightHand) this.modifRightHand(5);
-			console.log("degré5");
+			//console.log("degré5");
 		}
 		else if (this.mesureCount==1){
 			this.modifLeftHand(1);
 			if (rightHand) this.modifRightHand(1);
-			console.log("degré1");
+			//console.log("degré1");
 		}
 		else if (this.mesureCount==2){
 			this.modifLeftHand(5, 1);
 			if (rightHand) this.modifRightHand(5, 1);
-			console.log("degré5");
+			//console.log("degré5");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
@@ -284,17 +283,17 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(2);
 			if (rightHand) this.modifRightHand(2);
-			console.log("degré2");
+			//console.log("degré2");
 		}
 		else if (this.mesureCount==1){
 			this.modifLeftHand(5);
 			if (rightHand) this.modifRightHand(5);
-			console.log("degré5");
+			//console.log("degré5");
 		}
 		else if (this.mesureCount==2){
 			this.modifLeftHand(1, 1);
 			if (rightHand) this.modifRightHand(1, 1);
-			console.log("degré1");
+			//console.log("degré1");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
@@ -308,22 +307,22 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(1);
 			if (rightHand) this.modifRightHand(1);
-			console.log("degré1");
+			//console.log("degré1");
 		}
 		else if (this.mesureCount ==1){
 			this.modifLeftHand(4);
 			if (rightHand) this.modifRightHand(4);
-			console.log("degré4");
+			//console.log("degré4");
 		}
 		else if (this.mesureCount ==2){
 			this.modifLeftHand(2);
 			if (rightHand) this.modifRightHand(2);
-			console.log("degré2");
+			//console.log("degré2");
 		}
 		else if (this.mesureCount ==3){
 			this.modifLeftHand(5);
 			if (rightHand) this.modifRightHand(5);
-			console.log("degré5");
+			//console.log("degré5");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
@@ -337,22 +336,22 @@ class Harmony {
 		if (this.mesureCount ==0){
 			this.modifLeftHand(2);
 			if (rightHand) this.modifRightHand(2);
-			console.log("degré1");
+			//console.log("degré1");
 		}
 		else if (this.mesureCount ==1){
 			this.modifLeftHand(5);
 			if (rightHand) this.modifRightHand(5);
-			console.log("degré4");
+			//console.log("degré4");
 		}
 		else if (this.mesureCount ==2){
 			this.modifLeftHand(1);
 			if (rightHand) this.modifRightHand(1);
-			console.log("degré2");
+			//console.log("degré2");
 		}
 		else if (this.mesureCount ==3){
 			this.modifLeftHand(6);
 			if (rightHand) this.modifRightHand(6);
-			console.log("degré6");
+			//console.log("degré6");
 		}
 		this.incrementMesure(1);
 		if (this.mesureCount !=0){
@@ -397,8 +396,63 @@ function updateHarmony()
 	}
 }
 
+var seq;
+async function playSequence(nb)
+{
+	await waitForRightTime();
+	seq = nb;
+	sequenceChoice();
+}
 
 
+function sequenceChoice(){
+	seq--;
+	if (seq >= 2)
+	{
+		console.log("debut de cadence")
+		let rand = getRandomInt(2);
+		switch (rand){
+			case 0:
+			harmony.sequence3();
+			break;
+
+			case 1:
+			harmony.sequence4();
+			break;
+
+			default:
+			break;
+		}
+		
+		window.setTimeout(updateHarmony, Tone.Time("4m").toMilliseconds());
+	}
+
+	else if (seq == 1)
+	{
+		console.log("fin de cadence")
+		let rand = getRandomInt(3);
+		switch (rand){
+			case 0:
+			console.log("seq1")
+			harmony.sequence0();
+			break;
+
+			case 1:
+			console.log("seq2")
+			harmony.sequence1();
+			break;
+
+			case 2:
+			console.log("seq3")
+			harmony.sequence2();
+			break;
+
+			default:
+			break;
+		}
+
+	}
+}
 
 
 

@@ -65,7 +65,7 @@ function impro(){
 		gaussianIndex+=8;
 	}
 
-	console.log(tmpImpro);
+	//console.log(tmpImpro);
 
 	if (tmpImpro<=8)
 	{
@@ -155,14 +155,14 @@ async function startImpro(tonalite, mode = "major", silences = false){
 	
 	
 	let nb = data["stoneOnBoard"];
-	
-	if (nb > 30) tmpImpro = 24;
-	if (nb > 40) tmpImpro = 20;
-	if (nb > 50) tmpImpro = 16;
-	if (nb > 60) tmpImpro = 12;
-	if (nb > 70) tmpImpro = 8;
-	if (nb > 80) tmpImpro = 4;
-	if (nb > 90) tmpImpro = 0;
+	tmpImpro = 24;
+	if (nb > 24) tmpImpro = 20;
+	if (nb > 28) tmpImpro = 16;
+	if (nb > 37) tmpImpro = 12;
+
+	if (nb > 57) tmpImpro = 8;
+	if (nb > 77) tmpImpro = 4;
+	if (nb > 87) tmpImpro = 0;
 	impro();
 }
 

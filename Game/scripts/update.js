@@ -238,7 +238,7 @@ function update()
 	updateMelodyProbability();
 	updateMelodyPattern();
 	updateTheme();
-	console.log(currentTheme.melody.pattern);
+	//console.log(currentTheme.melody.pattern);
 
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
 }
