@@ -39,7 +39,6 @@ function saveMusic() {
     }
 }
 
-let isKickStopped
 
 function decrescendo() {
     const time = data["decrescendoTime"];
@@ -115,9 +114,9 @@ window.onload = function() {
                         else if (horizontalPos >= 0)
                             ambiance = ambianceHarmony;
 
-                        //ambiance = ambianceHarmony;
+                        ambiance = ambianceHarmony;
 
- 
+ 						console.log("selected ambiance : "+ambiance.nom);
                         updateMode(); //choix du mode, != si cornerMove
 
                         decrescendo();
@@ -132,11 +131,11 @@ window.onload = function() {
 
                     if (data["player"] != "Black") {
                     	improInstrument = ambiance.player1Instrument1;
-                       	console.log(improInstrument)  
+                       	//console.log(improInstrument)  
                     }
                     else {	
                     	improInstrument = ambiance.player2Instrument1;
-                        console.log(improInstrument)  
+                        //console.log(improInstrument)  
                     }
 
 

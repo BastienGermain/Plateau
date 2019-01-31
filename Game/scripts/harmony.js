@@ -6,6 +6,8 @@ if (relativ==1){
 
 var harmonyInstrument =instrumentList[7];   //getRandomInt(20)
 
+harmonyInstrument.sampler.volume.value -= 12;
+
 var rightHand = false;
 
 var e = 0.1;
