@@ -39,7 +39,12 @@ instrument1List[3].sampler.volume.value -= 12;
 instrument1List[7].sampler.volume.value += 6;
 
 
-instrument2List[0].sampler.volume.value += 12;
+instrument2List[0].sampler.volume.value -= 3;
+
+
+
+const instrumentList = instrument1List.concat([instrument2List[0], instrument2List[4]]);
+
 
 
 

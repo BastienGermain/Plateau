@@ -118,45 +118,41 @@ window.onload = function() {
 
 
 
-                            if (data["stoneOnBoard"] >= 32) {		//20
-                            	//harmony.relativ = 1;
-                            	if (ambiance == ambianceHarmony)
-                            	{
-                    		        if (data["stoneOnBoard"] < 52) playSequence(2);
-                            		else if (data["stoneOnBoard"] < 72) playSequence(3);
-                            		else playSequence(4);
+                            if (ambiance == ambianceHarmony)
+                            {
+	                            if (data["stoneOnBoard"] >= 32) {		//20
+	                            	//harmony.relativ = 1;
+	                            	
+	                    		        if (data["stoneOnBoard"] < 52) playSequence(2);
+	                            		else if (data["stoneOnBoard"] < 72) playSequence(3);
+	                            		else playSequence(4);
 
-                            		if (data["stoneOnBoard"] >= 62) {
-                            			if (data["stonesAround"] >= 1) harmony.addRightHand();
-                            			else harmony.endRightHand();
-                            		} 
+	                            		if (data["stoneOnBoard"] >= 62) {
+	                            			if (data["stonesAround"] >= 1) harmony.addRightHand();
+	                            			else harmony.endRightHand();
+	                            		}                             		                            	
+	                            }
 
-
-                            		
-                            	}
-                            }
-
-
-
-                            if (data["stoneOnBoard"] >= 20){
-                            	let pos = data["stonePosition"];
-                            		if (pos[0]>9){
-                            			if (pos[1]>9){
-                            				startImpro(tonalite);
-                            			}
-                            			else{
-                            				startImpro(tonalite, "minor")
-                            			}
-                            		}
-                            		else{
-                            			if (pos[1]>9){
-                            				startImpro(tonalite, "indian");
-                            			}
-                            			else{
-                            				startImpro(tonalite, "locrian");
-                            			}
-                            		}
-                            }
+	                            if (data["stoneOnBoard"] >= 20){
+	                            	let pos = data["stonePosition"];
+	                            		if (pos[0]>=9){
+	                            			if (pos[1]>=9){
+	                            				startImpro(tonalite);
+	                            			}
+	                            			else{
+	                            				startImpro(tonalite, "minor")
+	                            			}
+	                            		}
+	                            		else{
+	                            			if (pos[1]>9){
+	                            				startImpro(tonalite, "indian");
+	                            			}
+	                            			else{
+	                            				startImpro(tonalite, "locrian");
+	                            			}
+	                            		}
+	                            }
+	                        }
 
                             switch (data["stoneOnBoard"]) {
                                 case 1:

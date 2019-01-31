@@ -4,7 +4,7 @@ if (relativ==1){
 	gamme = gammeMinor(tonalite;
 }*/
 
-var harmonyInstrument = new InstrumentSampler(InstrumentSampler.Instruments[getRandomInt(20)]);
+var harmonyInstrument =instrumentList[getRandomInt(20)];
 
 var rightHand = false;
 
