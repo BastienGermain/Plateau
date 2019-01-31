@@ -105,16 +105,17 @@ window.onload = function() {
                         //joueur1 choisit l'ambiance
                         let horizontalPos = data["stonePosition"][0];
 
-                        if (horizontalPos >= 12)
-                            ambiance = ambianceDub;
+                        if (horizontalPos <= 3)
+		                    ambiance = ambianceHarmony;
 
-                        else if (horizontalPos >= 6)
-                            ambiance = ambiance1;
+		                else if (horizontalPos <= 9)
+		                    ambiance = ambiance1;
 
-                        else if (horizontalPos >= 0)
-                            ambiance = ambianceHarmony;
+		                else if (horizontalPos <= 15)
+		                    ambiance = ambianceHarmony;
 
-                        ambiance = ambianceHarmony;
+		                else if (horizontalPos <= 18)
+		                    ambiance = ambiance1;
 
  						console.log("selected ambiance : "+ambiance.nom);
                         updateMode(); //choix du mode, != si cornerMove
@@ -190,15 +191,6 @@ window.onload = function() {
                                     update();
                                     break;
 
-                                case ambianceHarmony:
-                                    //harmony.play();
-                                    break;
-
-                                case ambianceDub:
-                                    bassLine = createBassLine(tonalite, 0);
-                                    startBass();
-                                    break;
-
                                 default:
                                     break;
                             }
@@ -206,69 +198,26 @@ window.onload = function() {
                             ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
                             break;
 
-                        case 5:
-                            //startImpro(tonalite, "indian");
-                            break;
                         case 7:
                             ambiance.beat.kickPattern = Beat.KickPatterns[Math.floor(Math.random() * 7) + 4];
                             break;
 
-                        case 8:
-                            switch (ambiance) {
-                                case ambianceHarmony:
-                                    harmony.addRightHand();
-                                    break;
-
-                                case ambianceDub:
-                                    console.log("bass 1");
-                                    bassLine.stop();
-                                    bassLine = createBassLine(tonalite, 1);
-                                    startBass();
-                                    break;
-                            }
-                            break;
 
                         case 10:
                             ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 4)];
 
-                        case 12:
-                            switch (ambiance) {
-                                case ambianceHarmony:
-                                    harmony.addRightHand();
-                                    break;
-
-                                case ambianceDub:
-                                    console.log("bass 2");
-                                    bassLine.stop();
-                                    bassLine = createBassLine(tonalite, 2);
-                                    startBass();
-                                    break;
-                            }
-                            break;
 
                         case 14:
                             ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 7) + 4];
                             break;
 
-                        case 16:
-                            switch (ambiance) {
-                                case ambianceHarmony:
-                                    harmony.addRightHand();
-                                    break;
-
-                                case ambianceDub:
-                                    console.log("bass 3");
-                                    bassLine.stop();
-                                    bassLine = createBassLine(tonalite, 3);
-                                    startBass();
-                                    break;
-                            }
-                            break;
 
                         case 17:
                             ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 7) + 4];
                             break;
                     }
+
+
 
                     // Start again beat pattern
                     ambiance.beat.playKick(startTime);
