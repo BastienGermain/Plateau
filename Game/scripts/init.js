@@ -53,9 +53,7 @@ function initInstruments()
 
 	if (data["stoneOnBoard"]==3)
 	{
-		ambiance.player1Instrument1 = instrument1List[7];
-		//ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
-		ambiance.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
+		ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
 		ambiance.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
 
 		ambiance.themeP1.updateLead(ambiance.player1Instrument1);
@@ -64,15 +62,15 @@ function initInstruments()
 
 	if (data["stoneOnBoard"]==4)
 	{
-		//ambiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
-		ambiance.player2Instrument1 = instrument1List[7];
+		ambiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
+		//ambiance.player2Instrument1 = instrument1List[7];
 		ambiance.player2Instrument2 = instrument2List[data["stonePosition"][1]%6];
 
 		ambiance.themeP2.updateLead(ambiance.player2Instrument1);
 		ambiance.themeP2.updateBass(ambiance.player2Instrument2);
 	}
 
-	if (data["stoneOnBoard"]>4 && data["stoneOnBoard"]<=8)
+	if (data["stoneOnBoard"]>4 && data["stoneOnBoard"]<=6)
 	{
 		if (ambiance != ambiance1)
 			nextAmbianceInit = ambiance1;
@@ -92,38 +90,6 @@ function initInstruments()
 		}
 	}
 
-	if (data["stoneOnBoard"]>6 && data["stoneOnBoard"]<=8)
-	{
-		if (ambiance == ambianceDub)
-			nextAmbianceInit = ambianceHarmony;
-		else
-			nextAmbianceInit = ambianceDub;
-		
-		if (data["stoneOnBoard"]==7)
-		{
-			nextAmbianceInit.player1Instrument1 = instrument1List[data["stonePosition"][0]];
-			nextAmbianceInit.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
-		}	
-		if (data["stoneOnBoard"]==8)
-		{
-			nextAmbianceInit.player2Instrument1 = instrument1List[data["stonePosition"][0]];
-			nextAmbianceInit.player2Instrument2 = instrument2List[data["stonePosition"][1]%6];
-		}
-	}
-
-	if (data["stoneOnBoard"]>8 && data["stoneOnBoard"]<=10)
-	{
-		if (data["stoneOnBoard"]==9)
-		{
-			ambianceDrum.player1Instrument1 = instrument1List[data["stonePosition"][0]];
-			ambianceDrum.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
-		}	
-		if (data["stoneOnBoard"]==10)
-		{
-			ambianceDrum.player2Instrument1 = instrument1List[data["stonePosition"][0]];
-			ambianceDrum.player2Instrument2 = instrument2List[data["stonePosition"][1]%6];
-		}
-	}
 
 	if(nextAmbianceInit)
 	{	

@@ -3,7 +3,7 @@ const instrument1List =
 new InstrumentSampler('piano'),  
 new InstrumentSampler('bassoon'), 
 new InstrumentSampler('cello'), 
-new InstrumentSampler('clarinet'), 
+//new InstrumentSampler('clarinet'), 
 new InstrumentSampler('flute'), 
 new InstrumentSampler('french-horn'), 
 new InstrumentSampler('guitar-acoustic'), 
@@ -30,34 +30,90 @@ new InstrumentSampler('contrabass'),
 new InstrumentSampler('tuba')
 ];
 
-instrument1List[0].sampler.volume.value -= 9;
-instrument1List[1].sampler.volume.value -= 12;
-instrument1List[2].sampler.volume.value -= 15;
-instrument1List[3].sampler.volume.value -= 6;
-instrument1List[4].sampler.volume.value -= 15;
-instrument1List[5].sampler.volume.value -= 8;
-instrument1List[6].sampler.volume.value -= 9;
-instrument1List[7].sampler.volume.value += 30;
-instrument1List[8].sampler.volume.value += 3;
-instrument1List[10].sampler.volume.value += 9;
 
-instrument1List[14].sampler.volume.value -= 15;
-instrument1List[16].sampler.volume.value -= 30;
-instrument1List[12].sampler.volume.value -= 5;
-instrument1List[1].sampler.volume.value += 3;
-instrument1List[11].sampler.volume.value -= 12;
-instrument1List[3].sampler.volume.value -= 12;
+// Avec clarinette 
+/*
+instrument1List[0].sampler.volume.value = -9;
+instrument1List[1].sampler.volume.value = -12;
+instrument1List[2].sampler.volume.value = -12;
+instrument1List[3].sampler.volume.value = -15;
+instrument1List[4].sampler.volume.value = 3;
+instrument1List[5].sampler.volume.value = 3;
+instrument1List[6].sampler.volume.value = -6;
+instrument1List[7].sampler.volume.value = -6;
+instrument1List[8].sampler.volume.value = 6;
+instrument1List[9].sampler.volume.value = -14;
+instrument1List[10].sampler.volume.value = -6;
+instrument1List[11].sampler.volume.value = -12;
+instrument1List[12].sampler.volume.value = 5;
+instrument1List[13].sampler.volume.value = -9;
+instrument1List[14].sampler.volume.value = -6;
+instrument1List[15].sampler.volume.value = 15;
+instrument1List[16].sampler.volume.value = 15;
+instrument1List[17].sampler.volume.value = 15;
+*/
+
+// Sans clarinette
+
+instrument1List[0].sampler.volume.value = -9;
+instrument1List[1].sampler.volume.value = -12;
+instrument1List[2].sampler.volume.value = -12;
+instrument1List[3].sampler.volume.value = -9;
+instrument1List[4].sampler.volume.value = -9;
+instrument1List[5].sampler.volume.value = -6;
+instrument1List[6].sampler.volume.value = -12;
+instrument1List[7].sampler.volume.value = 6;
+instrument1List[8].sampler.volume.value = -17;
+instrument1List[9].sampler.volume.value = -8;
+instrument1List[10].sampler.volume.value = -14;
+instrument1List[11].sampler.volume.value = -14;
+instrument1List[12].sampler.volume.value = -12;
+instrument1List[13].sampler.volume.value = -14;
+instrument1List[14].sampler.volume.value = -6;
+instrument1List[15].sampler.volume.value = -12;
+instrument1List[16].sampler.volume.value = -6;
 
 
-instrument2List[0].sampler.volume.value -= 3;
-instrument2List[1].sampler.volume.value -= 12;
-instrument2List[2].sampler.volume.value -= 15;
+instrument2List[0].sampler.volume.value = -9;
+instrument2List[1].sampler.volume.value = -12;
+instrument2List[2].sampler.volume.value = -12;
+instrument2List[3].sampler.volume.value = -14;
+instrument2List[4].sampler.volume.value = -16;
+instrument2List[5].sampler.volume.value = -10;
 
 
 const instrumentList = instrument1List.concat([instrument2List[0], instrument2List[4]]);
 
+var reverb = new FXRack();
+reverb.selectFX('vibrato', {frequency: 2, depth: 0.1});
+reverb.selectFX('reverb', {reverb: 0.01});
+reverb.selectFX('pingPongDelay', {delayTime: "8n"});
+
+instrument1List[0].catchFXs(reverb);
+instrument1List[1].catchFXs(reverb);
+instrument1List[2].catchFXs(reverb);
+instrument1List[3].catchFXs(reverb);
+instrument1List[4].catchFXs(reverb);
+instrument1List[5].catchFXs(reverb);
+instrument1List[6].catchFXs(reverb);
+instrument1List[7].catchFXs(reverb);
+instrument1List[8].catchFXs(reverb);
+instrument1List[9].catchFXs(reverb);
+instrument1List[10].catchFXs(reverb);
+instrument1List[11].catchFXs(reverb);
+instrument1List[12].catchFXs(reverb);
+instrument1List[13].catchFXs(reverb);
+instrument1List[14].catchFXs(reverb);
+instrument1List[15].catchFXs(reverb);
+instrument1List[16].catchFXs(reverb);
 
 
+//instrument2List[0].catchFXs(reverb);
+instrument2List[1].catchFXs(reverb);
+instrument2List[2].catchFXs(reverb);
+instrument2List[3].catchFXs(reverb);
+instrument2List[4].catchFXs(reverb);
+instrument2List[5].catchFXs(reverb);
 
 // MODELE /////////////////////////////////////////////////
 
@@ -120,10 +176,6 @@ var ambiance1 =
 
 	fx: new FXRack()
 }
-
-ambiance1.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
-ambiance1.fx.selectFX('reverb', {reverb: 0.1});
-ambiance1.fx.selectFX('pingPongDelay', {delayTime: "8n"});
 
 var ambianceHarmony =
 {
@@ -193,6 +245,3 @@ var ambianceDub =
 ambianceDub.fx.selectFX('vibrato', {frequency: 2, depth: 0.5});
 ambianceDub.fx.selectFX('reverb', {reverb: 0.1});
 ambianceDub.fx.selectFX('pingPongDelay', {delayTime: "8n"});
-
-//ambianceDub.fx.selectFX('reverb', {reverb : 0.55});
-//ambianceDub.beat.snare.catchFXs(fx);

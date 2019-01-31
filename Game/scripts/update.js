@@ -95,13 +95,13 @@ function updateVelocity()
 	ambiance.themeP2.stopMelody();
 
 	if (data["globalInterpretation"] > 0.5)
-		ambiance.themeP2.updateVelocity(data["globalInterpretation"]);
+		ambiance.themeP2.lead.velocity = data["globalInterpretation"];
 	else if (data["globalInterpretation"] < -0.5)
-		ambiance.themeP1.updateVelocity(data["globalInterpretation"]);
+		ambiance.themeP1.lead.velocity = data["globalInterpretation"];
 	else 
 	{
-		ambiance.themeP1.updateVelocity(0.5);
-		ambiance.themeP2.updateVelocity(0.5);
+		ambiance.themeP1.lead.velocity = 0.5;
+		ambiance.themeP2.lead.velocity = 0.5;
 	}
 
 	currentTheme.startMelody(startTime);

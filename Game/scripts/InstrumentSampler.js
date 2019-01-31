@@ -12,6 +12,8 @@ class InstrumentSampler
 
         this.sampler = this.load();
         this.samplerFX = null;
+
+        this.velocity = 0.5;
     }
 
     // Input : a single note
@@ -57,7 +59,7 @@ class InstrumentSampler
     }
 
      // Expect note at format "C4"
-    play(note, duration, time, velocity = 1) 
+    play(note, duration, time, velocity = this.velocity) 
     {   
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
         let playableNote = note;

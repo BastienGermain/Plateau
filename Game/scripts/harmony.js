@@ -4,7 +4,7 @@ if (relativ==1){
 	gamme = gammeMinor(tonalite;
 }*/
 
-var harmonyInstrument =instrumentList[11];   //getRandomInt(20)
+var harmonyInstrument =instrumentList[7];   //getRandomInt(20)
 
 var rightHand = false;
 
@@ -54,12 +54,12 @@ class Harmony {
 			function(time){
 				harmonyInstrument.play(
 					Tone.Frequency(_gamme[0]*modifDegré/2).toNote(),
-					Tone.Time("2n").toSeconds()*(1.2+2*finCadence)-e,
+					Tone.Time("2n").toSeconds()*(1+2*finCadence)-e,
 					time
 				);
 				harmonyInstrument.play(
 					Tone.Frequency(_gamme[4]*modifDegré/2).toNote(),
-					Tone.Time("2n").toSeconds()*(1.2+2*finCadence)-e,
+					Tone.Time("2n").toSeconds()*(1+2*finCadence)-e,
 					time
 				);
 			}
@@ -123,22 +123,22 @@ class Harmony {
 				function(time){
 					harmonyInstrument.play(
 						Tone.Frequency(_gamme[2]*modifDegré).toNote(),
-						Tone.Time("4n").toSeconds()*1.2-e,
+						Tone.Time("4n").toSeconds()*1-e,
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
 					harmonyInstrument.play(
 						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
-						Tone.Time("4n").toSeconds()*1.2-e,
+						Tone.Time("4n").toSeconds()*1-e,
 						time + Tone.Time("1m").toSeconds()*1/4
 					);
 					harmonyInstrument.play(
 						Tone.Frequency(_gamme[2]*modifDegré).toNote(),					
-						Tone.Time("4n").toSeconds()*1.2-e,
+						Tone.Time("4n").toSeconds()*1-e,
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
 					harmonyInstrument.play(
 						Tone.Frequency(_gamme[4]*modifDegré).toNote(),
-						Tone.Time("4n").toSeconds()*1.2-e,
+						Tone.Time("4n").toSeconds()*1-e,
 						time + Tone.Time("1m").toSeconds()*3/4
 					);
 				}
@@ -153,6 +153,7 @@ class Harmony {
 
 	modifLeftHand(degré, finCadence =0)
 	{
+
 		//Si black perd
 		/*
 		if (data["player"]=="Black"){
