@@ -20,8 +20,6 @@ class Theme
 		this.arpeggioNoteCount = 8;
 		this.arpeggioPattern = "down";
 
-		this.velocity = 0.5;
-
 		this.progression = [];
 		this.arpeggio = [];
 
@@ -214,17 +212,6 @@ class Theme
 	{
 		this.tonic = tonic;
 		this.octave = octave;
-		this.init();
-	}
-
-///////////////////////////	
-
-	// Updates the mode of the Theme
-	// Resets base chord progression and melody arpeggio
-
-	updateVelocity(velocity = 0.5)
-	{
-		this.velocity = velocity;
 		this.init();
 	}
 
