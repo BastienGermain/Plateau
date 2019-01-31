@@ -54,8 +54,6 @@ function decrescendo() {
 	        currentTheme.updateMelody(Math.min(0, currentTheme.arpeggioNoteCount - 3));
 	        currentTheme.startMelody(startTime);
         }
-
-    } else if (time == 20) {
     } else if (time == 20 && ambiance.beat.playingHihat) {
         console.log("stopHihat");
         ambiance.beat.stopHihat();
@@ -139,32 +137,35 @@ window.onload = function() {
 
 						if (data["player"] != "Black") {
 
-                        	improInstrument = ambiance.player1Instrument1;  
+                        	improInstrument = ambiance.player1Instrument1;
+                        	console.log(improInstrument)  
                         }
                          else {
                         	
                         	improInstrument = ambiance.player2Instrument1;
-                           
+                           console.log(improInstrument)  
                         }
 
 
 
                         if (ambiance == ambianceHarmony)
                         {
-                            if (data["stoneOnBoard"] >= 32) {		//20
+                            if (data["stoneOnBoard"] >= 2) {		//32
                             	//harmony.relativ = 1;
-                            	
+                            		if (data["stoneOnBoard"] >= 62) {
+                            			if (data["stonesAround"] >= 1) harmony.addRightHand();
+                            			else harmony.endRightHand();
+                            		}  
+                            		else harmony.endRightHand();   
+
                     		        if (data["stoneOnBoard"] < 52) playSequence(2);
                             		else if (data["stoneOnBoard"] < 72) playSequence(3);
                             		else playSequence(4);
 
-                            		if (data["stoneOnBoard"] >= 62) {
-                            			if (data["stonesAround"] >= 1) harmony.addRightHand();
-                            			else harmony.endRightHand();
-                            		}                             		                            	
+                            		                        		                            	
                             }
 
-                            if (data["stoneOnBoard"] >= 20){
+                            if (data["stoneOnBoard"] >= 2){	//20
                             	let pos = data["stonePosition"];
                             		if (pos[0]>=9){
                             			if (pos[1]>=9){
@@ -193,28 +194,6 @@ window.onload = function() {
 
 
                          	case 4:
-                                /*switch (ambiance) {
-                                    case ambiance1:
-                                        currentTheme = ambiance.themeP1;
-                                        ambiance.themeP1.startBase(startTime);
-                                        basePlaying = true;
-                                        update();
-                                        break;
-
-                                    case ambianceHarmony:
-                                        //harmony.play();
-                                        break;
-
-                                    case ambianceDub:
-                                        bassLine = createBassLine(tonalite, 0);
-                                        startBass();
-                                        break;
-
-                                    default:
-                                        break;
-                                }*/
-
-
                                 ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
                                 ambiance.beat.playHihat(startTime);
                                 break;
