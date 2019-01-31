@@ -39,6 +39,8 @@ function saveMusic() {
     }
 }
 
+let isKickStopped
+
 function decrescendo() {
     const time = data["decrescendoTime"];
 
@@ -246,6 +248,14 @@ window.onload = function() {
                                     break;
                             }
 
+                            // Start again beat pattern
+                            ambiance.beat.playKick(startTime);
+                            if (data["stoneOnBoard"] >= 4) {
+                                ambiance.beat.playHihat(startTime);
+                            }
+                            if (data["stoneOnBoard"] >= 7) {
+                                ambiance.beat.playSnare(startTime);
+                            }
 
                             //console.log(currentTheme.arpeggioNoteCount);
 
