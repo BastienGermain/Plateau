@@ -44,10 +44,10 @@ let isKickStopped
 function decrescendo() {
     const time = data["decrescendoTime"];
 
-    if (time == 10) {
+    if (time == 10 && ambiance.beat.playingSnare) {
         console.log("stopSnare");
         ambiance.beat.stopSnare();
-    } else if (time == 20) {
+    } else if (time == 20 && ambiance.beat.playingHihat) {
         console.log("stopHihat");
         ambiance.beat.stopHihat();
     } else if (time == 30) {
@@ -150,7 +150,7 @@ window.onload = function() {
                                     break;
 
                              	case 4:
-                                    switch (ambiance) {
+                                    /*switch (ambiance) {
                                         case ambiance1:
                                             currentTheme = ambiance.themeP1;
                                             ambiance.themeP1.startBase(startTime);
@@ -169,7 +169,7 @@ window.onload = function() {
 
                                         default:
                                             break;
-                                    }
+                                    }*/
 
                                     ambiance.beat.hihatPattern = Beat.HihatPatterns[Math.floor(Math.random() * 4)];
                                     ambiance.beat.playHihat(startTime);
@@ -183,7 +183,7 @@ window.onload = function() {
                                     break;
 
                                 case 8:
-                                    switch (ambiance) {
+                                    /*switch (ambiance) {
                                         case ambianceHarmony:
                                             harmony.addRightHand();
                                             break;
@@ -194,19 +194,19 @@ window.onload = function() {
                                             bassLine = createBassLine(tonalite, 1);
                                             startBass();
                                             break;
-                                    }
+                                    }*/
                                     break;
 
                                 case 10:
                                     ambiance.beat.snarePattern = Beat.SnarePatterns[Math.floor(Math.random() * 4)];
                                     ambiance.beat.playSnare(startTime);
 
-                                    switch (ambiance) {
+                                    /*switch (ambiance) {
                                         case ambiance1:
                                             currentTheme.startMelody(startTime);
                                     		melodyPlaying = true;
                                             break;
-                                    }
+                                    }*/
                                     break;
 
                                 case 12:
@@ -251,9 +251,11 @@ window.onload = function() {
                             // Start again beat pattern
                             ambiance.beat.playKick(startTime);
                             if (data["stoneOnBoard"] >= 4) {
+                                console.log("restart hihat");
                                 ambiance.beat.playHihat(startTime);
                             }
-                            if (data["stoneOnBoard"] >= 7) {
+                            if (data["stoneOnBoard"] >= 10) {
+                                console.log("restart snare");
                                 ambiance.beat.playSnare(startTime);
                             }
 
