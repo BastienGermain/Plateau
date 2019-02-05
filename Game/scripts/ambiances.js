@@ -74,20 +74,20 @@ instrument1List[15].sampler.volume.value = -12;
 instrument1List[16].sampler.volume.value = -6;
 
 
-instrument2List[0].sampler.volume.value = -9;
+instrument2List[0].sampler.volume.value = -6;
 instrument2List[1].sampler.volume.value = -12;
 instrument2List[2].sampler.volume.value = -12;
 instrument2List[3].sampler.volume.value = -14;
-instrument2List[4].sampler.volume.value = -16;
+instrument2List[4].sampler.volume.value = -18;
 instrument2List[5].sampler.volume.value = -10;
 
 
 const instrumentList = instrument1List.concat([instrument2List[0], instrument2List[4]]);
 
 var reverb = new FXRack();
-reverb.selectFX('vibrato', {frequency: 2, depth: 0.1});
-reverb.selectFX('reverb', {reverb: 0.01});
-reverb.selectFX('pingPongDelay', {delayTime: "8n"});
+//reverb.selectFX('vibrato', {frequency: 5, depth: 0.1});
+//reverb.selectFX('reverb', {reverb: 0.01});
+//reverb.selectFX('pingPongDelay', {delayTime: "8n"});
 
 instrument1List[0].catchFXs(reverb);
 instrument1List[1].catchFXs(reverb);
@@ -114,6 +114,8 @@ instrument2List[2].catchFXs(reverb);
 instrument2List[3].catchFXs(reverb);
 instrument2List[4].catchFXs(reverb);
 instrument2List[5].catchFXs(reverb);
+
+const instrumentList = instrument1List.concat([instrument2List[0], instrument2List[4]]);
 
 // MODELE /////////////////////////////////////////////////
 

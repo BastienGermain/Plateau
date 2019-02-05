@@ -5,7 +5,7 @@
     <title>Test SGF</title>
     <link rel="stylesheet" href="plateau.css" type="text/css">
 
-    <script src="scripts/ext/jquery.min.js"></script>
+     <script src="scripts/ext/jquery.min.js"></script>
     <script src="scripts/ext/math.js"></script>
     <script src="scripts/ext/sgfgrove.js" ></script>
     <script src="scripts/ext/tone.js" ></script>
@@ -13,7 +13,13 @@
     <script src="scripts/ext/StartAudioContext.js" ></script>
     <script src="scripts/ext/synaptic.js" ></script>
 
+    <script src="scripts/ext/p5/p5.min.js" ></script>
+    <script src="scripts/ext/p5/addons/p5.dom.min.js" ></script>
+    <script src="scripts/ext/p5/addons/p5.sound.min.js" ></script>
+
     <script src="scripts/matrix.js"></script>
+
+    <script src="scripts/p5Context.js"></script>
 
     <script src="assets/samples/dataSample.js"></script>
 
@@ -21,33 +27,28 @@
 
     <script type="text/javascript" src="medium/boardStyle.js"></script>
 
-    <script src="scripts/moveMatrices.js" ></script>
-    <script src="scripts/dataProcess.js" ></script>
-    <script src="scripts/boardSGF.js" ></script>
-
-    <script src="scripts/neuralNetwork.js"></script>
-
     <script src="scripts/InstrumentSampler.js" ></script>
     <script src="scripts/FXRack.js" ></script>
     <script src="scripts/Beat.js" ></script>
 
     <script src="scripts/musicAssets.js" ></script>
+    <script src="scripts/PlayerFeature.js" ></script>
 
+    <script src="scripts/predefinedMelody.js" ></script>
+    <script src="scripts/RandomImpro.js" ></script>
     <script src="scripts/bassLine.js" ></script>
     <script src="scripts/Theme.js" ></script>
 
-
-    <script src="scripts/predefinedMelody.js" ></script>
-
     <script src="scripts/ambiances.js" ></script>
-
     <script src="scripts/harmony.js" ></script>
 
-    <script src="scripts/RandomImpro.js" ></script>
-    <script src="scripts/main.js" ></script>
+    <script src="scripts/moveMatrices.js" ></script>
+    <script src="scripts/dataProcess.js" ></script>
+    <script src="scripts/boardSGF.js" ></script>
+    <script src="scripts/clock.js" ></script>
+    <script src="scripts/neuralNetwork.js"></script>
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
 </head>
 <body>
 <div id="main">
@@ -56,6 +57,8 @@
         <input style="padding-left: 2em;" id="file" type="file"> <button onclick="loadFile()">Load file</button>
         <button onclick="printData()">Print Data</button>
         <button onclick="printMatrix()">Print Matrix</button>
+        <button onclick="saveMusic()">Save Sound</button>
+        <button onclick="startClock()">Start</button>
     </p>
 
     <div style="text-align: center; width: 100%">
@@ -88,6 +91,11 @@
             <div style="clear: both;"></div>
         </div>
     </div>
+
+    <script src="scripts/update.js" ></script>
+    <script src="scripts/init.js" ></script>
+    <script src="scripts/main.js" ></script>
+    
 </div>
 </body>
 </html>

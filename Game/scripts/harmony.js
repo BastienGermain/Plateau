@@ -4,7 +4,7 @@ if (relativ==1){
 	gamme = gammeMinor(tonalite;
 }*/
 
-var harmonyInstrument =instrumentList[7];   //getRandomInt(20)
+var harmonyInstrument = instrumentList[getRandomInt(18)];
 
 harmonyInstrument.sampler.volume.value -= 12;
 
@@ -25,8 +25,6 @@ class Harmony {
 		this.relativ = 0;
 		this.stop = 1;
 	}
-
-	
 
 	createLeftHand(tonalite, degré, finCadence=0)
 	{
