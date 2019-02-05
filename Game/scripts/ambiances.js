@@ -4,20 +4,20 @@ new InstrumentSampler('piano'),
 new InstrumentSampler('bassoon'), 
 new InstrumentSampler('cello'), 
 //new InstrumentSampler('clarinet'), 
-new InstrumentSampler('flute'), 
+new InstrumentSampler('harp'), 
 new InstrumentSampler('french-horn'), 
 new InstrumentSampler('guitar-acoustic'), 
-new InstrumentSampler('guitar-electric'),
+new InstrumentSampler('xylophone'),
 new InstrumentSampler('guitar-nylon'), 
 new InstrumentSampler('harmonium'), 
-new InstrumentSampler('harp'), 
+new InstrumentSampler('flute'), 
 new InstrumentSampler('organ'), 
 new InstrumentSampler('saxophone'), 
 new InstrumentSampler('trombone'), 
 new InstrumentSampler('trumpet'), 
 new InstrumentSampler('tuba'), 
 new InstrumentSampler('violin'), 
-new InstrumentSampler('xylophone')
+new InstrumentSampler('guitar-electric')
 ];
 
 const instrument2List = 
@@ -58,31 +58,28 @@ instrument1List[17].sampler.volume.value = 15;
 instrument1List[0].sampler.volume.value = -9;
 instrument1List[1].sampler.volume.value = -12;
 instrument1List[2].sampler.volume.value = -12;
-instrument1List[3].sampler.volume.value = -9;
+instrument1List[3].sampler.volume.value = -5;
 instrument1List[4].sampler.volume.value = -9;
 instrument1List[5].sampler.volume.value = -6;
-instrument1List[6].sampler.volume.value = -12;
-instrument1List[7].sampler.volume.value = 6;
+instrument1List[6].sampler.volume.value = -2;
+instrument1List[7].sampler.volume.value = -3;
 instrument1List[8].sampler.volume.value = -17;
-instrument1List[9].sampler.volume.value = -8;
+instrument1List[9].sampler.volume.value = -12;
 instrument1List[10].sampler.volume.value = -14;
 instrument1List[11].sampler.volume.value = -14;
 instrument1List[12].sampler.volume.value = -12;
 instrument1List[13].sampler.volume.value = -14;
 instrument1List[14].sampler.volume.value = -6;
 instrument1List[15].sampler.volume.value = -12;
-instrument1List[16].sampler.volume.value = -6;
-
+instrument1List[16].sampler.volume.value = -5;
 
 instrument2List[0].sampler.volume.value = -6;
 instrument2List[1].sampler.volume.value = -12;
 instrument2List[2].sampler.volume.value = -12;
 instrument2List[3].sampler.volume.value = -14;
 instrument2List[4].sampler.volume.value = -18;
-instrument2List[5].sampler.volume.value = -10;
+instrument2List[5].sampler.volume.value = -12;
 
-
-const instrumentList = instrument1List.concat([instrument2List[0], instrument2List[4]]);
 
 var reverb = new FXRack();
 //reverb.selectFX('vibrato', {frequency: 5, depth: 0.1});

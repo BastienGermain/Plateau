@@ -7,8 +7,8 @@ class Beat {
 		this.hihat = new InstrumentSampler('hihat');
 
 		this.kick.sampler.volume.value = 3;
-		this.snare.sampler.volume.value = 1;
-		this.hihat.sampler.volume.value = 6;
+		this.snare.sampler.volume.value = -6;
+		this.hihat.sampler.volume.value = -3;
 
 		this.kickSubdivisions = 32;
 		this.hihatSubdivisions = 32;
