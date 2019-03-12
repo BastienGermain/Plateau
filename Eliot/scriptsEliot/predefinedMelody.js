@@ -8,7 +8,6 @@ function victoryMelody(instrument, tonalite)
 				instrument.play(Tone.Frequency(gamme[0]).toNote(), "16n", time);
 				instrument.play(Tone.Frequency(gamme[0]).toNote(), "16n", time + Tone.Time("16n").toSeconds());
 				instrument.play(Tone.Frequency(gamme[3]).toNote(), "2n", time + Tone.Time("8n").toSeconds());
-
 			}
 		);
 	console.log("victoryMelody !")
