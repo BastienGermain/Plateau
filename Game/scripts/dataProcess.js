@@ -72,19 +72,19 @@ function beginSGF(file) {
 
     let totalTime = 0;
 	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
-        for (let i = 1; i < Object.keys(sgf).length; i++) {
+        /*for (let i = 1; i < Object.keys(sgf).length; i++) {
             updatePrevious();
     		boardMat = fillMatrixSGF(boardMat, sgf, i);
             updateData(sgf, i);
             //console.log(data["moveTime"]);
             totalTime += Number(data["moveTime"]);
             console.log(totalTime);
-        }
-        /*updatePrevious();
+        }*/
+        updatePrevious();
         move(1);
 		boardMat = fillMatrixSGF(boardMat, sgf, moveNumber);
         updateData(sgf, moveNumber);
-		moveNumber++;*/
+		moveNumber++;
 	})
 };
 

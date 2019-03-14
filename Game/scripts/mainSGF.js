@@ -80,9 +80,6 @@ $(document).ready(function() {
             console.log(data);
             //console.log(lastData);
 
-             //console.log(data);
-            //console.log(lastData);
-
             if (Tone.context.state !== 'running')
                 Tone.context.resume();
 
@@ -107,7 +104,7 @@ $(document).ready(function() {
             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
             ////FIN INITIALISATION
 
-           
+
 
 
             //PERCU

@@ -81,7 +81,6 @@ function fillMatrixSGF(boardMat, sgf, moveNumber) {
 function fillMatrixPlay(boardMat, player, x, y) {
     if (player == 1) {
         return insertIntoMatrixXY(boardMat, x, y, -1);
-
     } else {
         return insertIntoMatrixXY(boardMat, x, y, 1);
     }

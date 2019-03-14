@@ -3,46 +3,49 @@
 <head>
     <meta charset="utf-8">
     <title>Test SGF</title>
-    <link rel="stylesheet" href="plateau.css" type="text/css">
 
-     <script src="scripts/ext/jquery.min.js"></script>
+    <!-- Styles et polices -->
+    <link rel="stylesheet" href="plateau.css" type="text/css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- Librairies externes utilisées -->
+    <script src="scripts/ext/jquery.min.js"></script>
     <script src="scripts/ext/math.js"></script>
+    <!-- SGFGrove pour la lecture des fichiers SGF -->
     <script src="scripts/ext/sgfgrove.js" ></script>
     <script src="scripts/ext/tone.js" ></script>
     <script src="scripts/ext/scribbletune.js" ></script>
     <script src="scripts/ext/StartAudioContext.js" ></script>
+    <!-- Synaptic pour le réseau de neurone -->
     <script src="scripts/ext/synaptic.js" ></script>
-
+    <!-- P5 pour l'enregistrement sonore -->
     <script src="scripts/ext/p5/p5.min.js" ></script>
     <script src="scripts/ext/p5/addons/p5.dom.min.js" ></script>
     <script src="scripts/ext/p5/addons/p5.sound.min.js" ></script>
-
-    <script src="scripts/matrix.js"></script>
-
     <script src="scripts/p5Context.js"></script>
 
+    <!-- Concerne l'affichage du plateau et le fonctionnement du jeu de go -->
+    <script type="text/javascript" src="dist/jgoboard-latest.js"></script>
+    <script type="text/javascript" src="medium/boardStyle.js"></script>
+    <script src="scripts/boardSGF.js" ></script>
+
+    <!-- Samples -->
     <script src="assets/samples/dataSample.js"></script>
 
-    <script type="text/javascript" src="dist/jgoboard-latest.js"></script>
-
-    <script type="text/javascript" src="medium/boardStyle.js"></script>
-
+    <!-- Tout ce qui concerne la musique  -->
     <script src="scripts/InstrumentSampler.js" ></script>
     <script src="scripts/FXRack.js" ></script>
     <script src="scripts/Beat.js" ></script>
-
     <script src="scripts/musicAssets.js" ></script>
-
     <script src="scripts/RandomImpro.js" ></script>
     <script src="scripts/Theme.js" ></script>
 
+    <!-- Traitement des données du jeu -->
+    <script src="scripts/matrix.js"></script>
     <script src="scripts/moveMatrices.js" ></script>
     <script src="scripts/dataProcess.js" ></script>
-    <script src="scripts/boardSGF.js" ></script>
     <script src="scripts/clock.js" ></script>
     <script src="scripts/neuralNetwork.js"></script>
-
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body>
 <div id="main">
@@ -61,13 +64,8 @@
                 <div id="board"></div>
 
                 <p class="controls" style="width: 500px;">
-                    <!--<a href="#" onclick="move(0); return false;"><i class="fa fa-fast-backward"></i></a>
-                    <a href="#" onclick="move(-10); return false;"><i class="fa fa-backward"></i></a>
-                    <a href="#" id="removeMove"><i class="fa fa-step-backward"></i></a>-->
                     <strong id="move">1</strong> / <strong id="moves">1</strong>
                     <a href="#" id="addMove"><i class="fa fa-step-forward"></i></a>
-                    <!--<a href="#" onclick="move(10); return false;"><i class="fa fa-forward"></i></a>
-                    <a href="#" onclick="move(1000); return false;"><i class="fa fa-fast-forward"></i></a>-->
                 </p>
             </div>
 
@@ -88,8 +86,8 @@
 
     <script src="scripts/update.js" ></script>
     <script src="scripts/init.js" ></script>
-    <script src="scripts/main.js" ></script>
-    
+    <script src="scripts/mainSGF.js" ></script>
+
 </div>
 </body>
 </html>
