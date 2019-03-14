@@ -59,7 +59,7 @@ class InstrumentSampler
     }
 
      // Expect note at format "C4"
-    play(note, duration, time, velocity = this.velocity) 
+    play(note, duration, time, velocity = 1) 
     {   
         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
         let playableNote = note;

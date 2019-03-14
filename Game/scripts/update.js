@@ -82,7 +82,7 @@ function updateTempo()
 {
 	//console.log(Tone.Transport.bpm.value);
 
-	if (data["moveTime"] < 0 && Tone.Transport.bpm.value < tempo + 60)
+	if (data["moveTime"] < 2 && Tone.Transport.bpm.value < tempo + 60)
 		Tone.Transport.bpm.value += 10;
 
 	if (data["moveTime"] > 60 && Tone.Transport.bpm.value > tempo - 60)
@@ -295,9 +295,11 @@ function update()
 
 	updateTheme();
 
+	/*
 	if (melodyPlaying)
 		updateVelocity();
-
+	*/
+	
 	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
 }
 
