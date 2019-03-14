@@ -77,7 +77,7 @@ $(document).ready(function() {
     Tone.Buffer.on('load', function() {
         //Evenement Pose de pierre :
         document.querySelector('#addMove').addEventListener('mouseup', function(e) {
-            console.log(data);
+            //console.log(data);
             //console.log(lastData);
 
             if (Tone.context.state !== 'running')

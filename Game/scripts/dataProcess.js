@@ -17,6 +17,9 @@ data["atariNumber"] = 0; //  number of atari situations on the board
 data["whiteAtariNumber"] = 0; // number of white stones in atari
 data["blackAtariNumber"] = 0;
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
+data["totalKnownMoves"] = 0
+data["whiteKnownMoves"] = 0
+data["blackKnownMoves"] = 0
 data["moveTime"] = 0; // In seconds, after each move
 data["previousMoveTime"] = 0;
 data["totalWhiteTime"] = 0; // In seconds
@@ -45,6 +48,14 @@ function updateData(sgf, moveNumber) {
     data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
     data["blackCaptures"] = getInfo().captures[JGO.BLACK];
     data["knownMove"] = checkKnownMoves(data, boardMat);
+    if (data["knownMove"] != "") {
+        data["totalKnownMoves"]++;
+        if (data["player"] == "White") {
+            data["whiteKnownMoves"]++;
+        } else {
+            data["blackKnownMoves"]++;
+        }
+    }
     data["globalInterpretation"] = neuronNetwork.activate(readMatrix(boardMat));
     data["moveTime"] = sgf[moveNumber].C;
     checkAtari(boardMat);
