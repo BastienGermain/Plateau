@@ -57,7 +57,7 @@ function getCurrentMatrix(mat, x, y) {
 }
 
 function rotateMatrix(mat) {
-    let newMat = math.matrix([
+    const newMat = math.matrix([
         [mat.get([2, 0]), mat.get([1, 0]), mat.get([0, 0])],
         [mat.get([2, 1]), mat.get([1, 1]), mat.get([0, 1])],
         [mat.get([2, 2]), mat.get([1, 2]), mat.get([0, 2])]
