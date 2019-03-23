@@ -12,7 +12,7 @@ Tone.Transport.bpm.value = 120;
 Tone.Transport.start();
 
 
-var improInstrument = new InstrumentSampler("guitar-electric");
+var improInstrument = new InstrumentSampler("piano");
 improInstrument.sampler.value -= 9;
 
 var stopImpro=0;
@@ -155,6 +155,8 @@ async function startImpro(tonalite, mode = "major", silences = false){
 	
 	
 	let nb = data["stoneOnBoard"];
+	tmpImpro = 0;
+	/*
 	tmpImpro = 24;
 	if (nb > 24) tmpImpro = 20;
 	if (nb > 28) tmpImpro = 16;
@@ -162,7 +164,7 @@ async function startImpro(tonalite, mode = "major", silences = false){
 
 	if (nb > 57) tmpImpro = 8;
 	if (nb > 77) tmpImpro = 4;
-	if (nb > 87) tmpImpro = 0;
+	if (nb > 87) tmpImpro = 0;*/
 	impro();
 }
 

@@ -41,24 +41,9 @@ class Beat {
 
 	instancePatterns(ambiance)
 	{
-		if(ambiance=="techno")
-		{
-			this.kickPattern = Beat.KickTechnoPatterns[0];
-    		this.snarePattern = Beat.SnareTechnoPatterns[0];
-  		  	this.hihatPattern = Beat.HihatTechnoPatterns[0];
-		}
-		else if(ambiance=="dub")
-		{
-			this.kickPattern = Beat.KickDubPatterns[1];
-    		this.snarePattern = Beat.SnareDubPatterns[0];
-  		  	this.hihatPattern = Beat.HihatDubPatterns[0];
-		}
-		else
-		{
     		this.kickPattern = Beat.KickPatterns[(Math.floor(Math.random() *Beat.KickPatterns.length))];
     		this.snarePattern = Beat.SnarePatterns[(Math.floor(Math.random() *Beat.SnarePatterns.length))];
   		  	this.hihatPattern = Beat.HihatPatterns[(Math.floor(Math.random() *Beat.HihatPatterns.length))];
-		}
 	}
 
 /// LOOP CREATORS ///////////////////////////////////////////////////////////////
@@ -270,47 +255,3 @@ Beat.HihatPatterns =
 ];
 
 
-//TECHNO PATTERNS
-Beat.KickTechnoPatterns =
-[
-"x---------x-----x---------x-----",
-"x---------x-----x---------x---x-",
-"x-------x-x-----x-------x-x-----",
-"x---x---x---x---x---x---x---x---"
-];
-
-Beat.SnareTechnoPatterns =
-[
-"----x-------x-------x-------x---",
-"--x---x---x---x---x---x---x---x-",
-"--x---x---x-x-x---x---x---x-x---",
-
-
-];
-
-Beat.HihatTechnoPatterns =
-[
-"x-x-x-xxx-x-x-x-x-x-x-x-x-x-x-x-",
-"x-x-x-xxx-x-x-x-x-x-x-xxx-x-x-x-"
-];
-
-
-
-//DUB PATTERNS
-Beat.KickDubPatterns =
-[
-"x---x---x---x---x---x---x---x---",
-"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
-];
-
-Beat.SnareDubPatterns =
-[
-"----x-------x-------x-------x---",
-"----x-------x-------x-------x---"
-
-];
-
-Beat.HihatDubPatterns =
-[
-"",
-];

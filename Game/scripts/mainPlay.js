@@ -127,10 +127,10 @@ window.onload = function() {
 
             if (data["player"] != "Black") {
                 improInstrument = ambiance.player1Instrument1;
-                //console.log(improInstrument)  
+                //console.log(improInstrument)
             } else {
                 improInstrument = ambiance.player2Instrument1;
-                //console.log(improInstrument)  
+                //console.log(improInstrument)
             }
 
 

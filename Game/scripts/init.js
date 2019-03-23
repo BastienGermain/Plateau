@@ -2,6 +2,7 @@ function init()
 {
 	initTonic();
 	initInstruments();
+	initMode();
 }
 
 function initTonic() 
@@ -28,77 +29,15 @@ function initTonic()
 
 		console.log("selected tonalite = " + tonalite);
 
-		//une fois qu'on a la tonalité on initialise, harmony , et d'autres...
-		ambiance1.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-		ambiance1.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-
-		ambianceHarmony.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-		ambianceHarmony.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-
-		ambianceDub.themeP1.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-		ambianceDub.themeP2.updateTonic(tonalite.charAt(0), tonalite.charAt(1));
-
-		//ambiance.themeP1.startBase(Tone.TransportTime(Tone.now() + "1m").quantize("1m"));
-		//basePlaying = true;
-
-		//currentTheme = ambiance.themeP1;
-		
-		harmony = new Harmony(tonalite);
 	}	
 }
 
 function initInstruments()
 {
-	let nextAmbianceInit;
+	
+}
 
-	if (data["stoneOnBoard"]==3)
-	{
-		ambiance.player1Instrument1 = instrument1List[data["stonePosition"][0]];
-		ambiance.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
+function initMode()
+{
 
-		ambiance.themeP1.updateLead(ambiance.player1Instrument1);
-		ambiance.themeP1.updateBass(ambiance.player1Instrument2);
-		console.log(ambiance.themeP1.lead.instrument);
-		console.log(ambiance.themeP1.bass.instrument);
-	}	
-
-	if (data["stoneOnBoard"]==4)
-	{
-		ambiance.player2Instrument1 = instrument1List[data["stonePosition"][0]];
-		ambiance.player2Instrument2 = instrument2List[data["stonePosition"][1]%6];
-
-		ambiance.themeP2.updateLead(ambiance.player2Instrument1);
-		ambiance.themeP2.updateBass(ambiance.player2Instrument2);
-		console.log(ambiance.themeP2.lead.instrument);
-		console.log(ambiance.themeP2.bass.instrument);
-	}
-
-	if (data["stoneOnBoard"]>4 && data["stoneOnBoard"]<=6)
-	{
-		if (ambiance != ambiance1)
-			nextAmbianceInit = ambiance1;
-		else 
-			nextAmbianceInit = ambianceHarmony;
-
-
-		if (data["stoneOnBoard"]==5)
-		{
-			nextAmbianceInit.player1Instrument1 = instrument1List[data["stonePosition"][0]];
-			nextAmbianceInit.player1Instrument2 = instrument2List[data["stonePosition"][1]%6];
-		}	
-		if (data["stoneOnBoard"]==6)
-		{
-			nextAmbianceInit.player2Instrument1 = instrument1List[data["stonePosition"][0]];
-			nextAmbianceInit.player2Instrument2 = instrument2List[data["stonePosition"][1]%6];
-		}
-	}
-
-
-	if(nextAmbianceInit)
-	{	
-		nextAmbianceInit.themeP1.updateLead(nextAmbianceInit.player1Instrument1);
-		nextAmbianceInit.themeP1.updateBass(nextAmbianceInit.player1Instrument2);
-		nextAmbianceInit.themeP2.updateLead(nextAmbianceInit.player2Instrument1);
-		nextAmbianceInit.themeP2.updateBass(nextAmbianceInit.player2Instrument2);
-	}
 }
