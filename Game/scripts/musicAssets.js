@@ -1,8 +1,39 @@
 const freqIncrement = 1.05946;
 
+const SCALES = {
+  'major': [2, 2, 1, 2, 2, 2, 1],
+  'minor': [2, 1, 2, 2, 1, 2, 2],
+  'melodicminor': [2, 1, 2, 2, 2, 2, 1],
+  'harmonicminor': [2, 1, 2, 2, 1, 3, 1],
+  'pentatonicmajor': [2, 2, 3, 2, 3],
+  'bluesmajor': [3, 2, 1, 1, 2, 3],
+  'pentatonicminor': [3, 2, 2, 3, 2],
+  'bluesminor': [3, 2, 1, 1, 3, 2],
+  'augmented': [3, 1, 3, 1, 3, 1],
+  'diminished': [2, 1, 2, 1, 2, 1, 2, 1],
+  'chromatic': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  'wholehalf': [2, 1, 2, 1, 2, 1, 2, 1],
+  'halfwhole': [1, 2, 1, 2, 1, 2, 1, 2],
+  'wholetone': [2, 2, 2, 2, 2, 2],
+  'augmentedfifth': [2, 2, 1, 2, 1, 1, 2, 1],
+  'japanese': [1, 4, 2, 1, 4],
+  'oriental': [1, 3, 1, 1, 3, 1, 2],
+  'ionian': [2, 2, 1, 2, 2, 2, 1],
+  'dorian': [2, 1, 2, 2, 2, 1, 2],
+  'phrygian': [1, 2, 2, 2, 1, 2, 2],
+  'lydian': [2, 2, 2, 1, 2, 2, 1],
+  'mixolydian': [2, 2, 1, 2, 2, 1, 2],
+  'aeolian': [2, 1, 2, 2, 1, 2, 2],
+  'locrian': [1, 2, 2, 1, 2, 2, 2]
+}
+
+
 
 const notes = new Object();
-const notesNames = ["A2", "A#2", "B2", "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A3", "A#3", "B3", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A4", "A#4", "B4", "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4"];
+const notesNames = [
+	"A2", "A#2", "B2", "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", 
+	"A3", "A#3", "B3", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", 
+	"A4", "A#4", "B4", "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4"];
 
 notes["A2"] = 110;
 
