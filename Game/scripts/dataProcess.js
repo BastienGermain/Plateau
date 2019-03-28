@@ -16,7 +16,11 @@ data["blackCaptures"] = 0;
 data["atariNumber"] = 0; //  number of atari situations on the board
 data["whiteAtariNumber"] = 0; // number of white stones in atari
 data["blackAtariNumber"] = 0;
+data["stonesConnectionNumber"] = 0; // total number of connection between two same colors stones
 data["knownMove"] = "" // Values : "Kata", "Tsuke", "Kosumi", "Nobi", "Hane", "Tobi", "Kogeima", "Nozoki", "Coupe", "Connect"
+data["totalKnownMoves"] = 0
+data["whiteKnownMoves"] = 0
+data["blackKnownMoves"] = 0
 data["moveTime"] = 0; // In seconds, after each move
 data["previousMoveTime"] = 0;
 data["totalWhiteTime"] = 0; // In seconds
@@ -24,6 +28,10 @@ data["totalBlackTime"] = 0;
 data["cornerMove"] = "" // Values : "San-san", "Hoshi", "Komoku", "Takamoku", "Mokuhazushi"
 data["globalInterpretation"] = 0; // [-1; 1]
 data["decrescendoTime"] = 0; // In seconds, current time the player consume
+data["playerSpeed"] = 0; // [-1; 1] Based on last 10 moves time
+
+let timeArray = new Array();
+const reducer = (accumulator, currentValue) => parseInt(accumulator, 10) + parseInt(currentValue, 10);
 
 var boardMat = math.zeros(19, 19);
 
@@ -41,17 +49,38 @@ function updateData(sgf, moveNumber) {
     }
     getStonePosition(sgf, moveNumber);
     getStonesAround();
+    getConnectedStones(boardMat);
     data["stoneOnBoard"] += 1;
     data["whiteCaptures"] = getInfo().captures[JGO.WHITE];
     data["blackCaptures"] = getInfo().captures[JGO.BLACK];
     data["knownMove"] = checkKnownMoves(data, boardMat);
+    if (data["knownMove"] != "") {
+        data["totalKnownMoves"]++;
+        if (data["player"] == "White") {
+            data["whiteKnownMoves"]++;
+        } else {
+            data["blackKnownMoves"]++;
+        }
+    }
     data["globalInterpretation"] = neuronNetwork.activate(readMatrix(boardMat));
     data["moveTime"] = sgf[moveNumber].C;
+    insertIntoTimeArray(data["moveTime"]);
+    data["playerSpeed"] = timeArray.reduce(reducer) / timeArray.length;
+    console.log(data["playerSpeed"]);
     checkAtari(boardMat);
     if (data["stonesAround"] == 0) {
        data["cornerMove"] = getCornerMove();
     } else {
        data["cornerMove"] = "";
+    }
+}
+
+function insertIntoTimeArray(newTime) {
+    if (timeArray.length < 10) {
+        timeArray.push(newTime);
+    } else {
+        timeArray.shift();
+        timeArray.push(newTime);
     }
 }
 
@@ -70,7 +99,16 @@ function beginSGF(file) {
     //boardMat = fillFullMatrix(boardMat, sgf);
     //console.log(boardMat);
 
+    let totalTime = 0;
 	document.querySelector('#addMove').addEventListener('mousedown', function(e) {
+        /*for (let i = 1; i < Object.keys(sgf).length; i++) {
+            updatePrevious();
+    		boardMat = fillMatrixSGF(boardMat, sgf, i);
+            updateData(sgf, i);
+            //console.log(data["moveTime"]);
+            totalTime += Number(data["moveTime"]);
+            console.log(totalTime);
+        }*/
         updatePrevious();
         move(1);
 		boardMat = fillMatrixSGF(boardMat, sgf, moveNumber);
@@ -128,6 +166,73 @@ function getStonesAround() {
     data["stonesAround"] = whiteStonesAround + blackStonesAround;
     data["whiteStonesAround"] = whiteStonesAround;
     data["blackStonesAround"] = blackStonesAround;
+}
+
+function getConnectedStones(mat) {
+    let stonesConnectionNumber = 0;
+    let i, j;
+    for (i = 0; i < 19; i++) {
+        if (i != 18) {
+            for (j = 0; j < 19; j++) {
+                if (j != 0 && j != 18) {
+                    // check droite droit-bas et bas gauche-bas
+                    const player = mat.get([i, j]);
+                    if (player != 0) {
+                        if (player == mat.get([i, j + 1])) {
+                            stonesConnectionNumber++;
+                        }
+                        if (player == mat.get([i + 1, j])) {
+                            stonesConnectionNumber++;
+                        }
+                        if (player == mat.get([i + 1, j + 1])) {
+                            stonesConnectionNumber++;
+                        }
+                        if (player == mat.get([i + 1, j - 1])) {
+                            stonesConnectionNumber++;
+                        }
+                    }
+                } else if (j == 0) {
+                    // check droite droit-bas et bas
+                    const player = mat.get([i, j]);
+                    if (player != 0) {
+                        if (player == mat.get([i, j + 1])) {
+                            stonesConnectionNumber++;
+                        }
+                        if (player == mat.get([i + 1, j])) {
+                            stonesConnectionNumber++;
+                        }
+                        if (player == mat.get([i + 1, j + 1])) {
+                            stonesConnectionNumber++;
+                        }
+                    }
+                } else if (j == 18) {
+                    // check que bas et gauche-bas
+                    const player = mat.get([i, j]);
+                    if (player != 0) {
+                        if (player == mat.get([i + 1, j])) {
+                            stonesConnectionNumber++;
+                        }
+                        if (player == mat.get([i + 1, j - 1])) {
+                            stonesConnectionNumber++;
+                        }
+                    }
+                }
+            }
+        } else {
+            for (j = 0; j < 19; j++) {
+                if (j != 18) {
+                    // check que droite
+                    const player = mat.get([i, j]);
+                    if (player != 0) {
+                        if (player == mat.get([i, j + 1])) {
+                            stonesConnectionNumber++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    data["stonesConnectionNumber"] = stonesConnectionNumber;
 }
 
 

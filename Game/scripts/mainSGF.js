@@ -80,11 +80,7 @@ $(document).ready(function() {
     Tone.Buffer.on('load', function() {
         //Evenement Pose de pierre :
         document.querySelector('#addMove').addEventListener('mouseup', function(e) {
-            //console.log(data);
-            //console.log(lastData);
 
-             //console.log(data);
-            //console.log(lastData);
 
             if (Tone.context.state !== 'running')
                 Tone.context.resume();
@@ -108,6 +104,7 @@ $(document).ready(function() {
 
             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
             ////FIN INITIALISATION
+
 
            
 		    //PERCU
@@ -152,6 +149,7 @@ $(document).ready(function() {
             		beat2.changePattern(2, 7);
             		break;
             }
+
 
             if (data.player == "Black"){
             	if (beat2.kickLoop){
