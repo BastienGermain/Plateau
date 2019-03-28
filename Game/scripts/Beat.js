@@ -1,6 +1,6 @@
 class Beat {
 
-	constructor(ambiance = "")
+	constructor(player)
 	{
 		this.kick = new InstrumentSampler('kick');
 		this.snare = new InstrumentSampler('snare');
@@ -8,7 +8,7 @@ class Beat {
 
 		this.kick.sampler.volume.value = 3;
 		this.snare.sampler.volume.value = -6;
-		this.hihat.sampler.volume.value = -3;
+		this.hihat.sampler.volume.value = -9;
 
 		this.kickSubdivisions = 32;
 		this.hihatSubdivisions = 32;
@@ -18,7 +18,7 @@ class Beat {
 		this.hihatPattern = [];
 		this.snarePattern = [];
 
-		this.instancePatterns(ambiance);
+		this.instancePatterns(player);
 
 		this.kickIndex = 0;
 		this.snareIndex = 0;
@@ -39,11 +39,40 @@ class Beat {
 
 /// PATTERN BUILDER ////////////////////////////////////////////////////////////
 
-	instancePatterns(ambiance)
+	instancePatterns(player)
 	{
+		if (player==1)
+		{
+			this.kickPattern = Beat.KickPatterns1[0];
+			this.snarePattern = Beat.SnarePatterns1[0];
+			this.hihatPattern = Beat.HihatPatterns1[0];
+		}
+		else{
+			this.kickPattern = Beat.KickPatterns2[0];
+			this.snarePattern = Beat.SnarePatterns2[0];
+			this.hihatPattern = Beat.HihatPatterns2[0];
+		}
+
+		/*random patterns
     		this.kickPattern = Beat.KickPatterns[(Math.floor(Math.random() *Beat.KickPatterns.length))];
     		this.snarePattern = Beat.SnarePatterns[(Math.floor(Math.random() *Beat.SnarePatterns.length))];
   		  	this.hihatPattern = Beat.HihatPatterns[(Math.floor(Math.random() *Beat.HihatPatterns.length))];
+	  	*/
+	}
+
+	changePattern(player, nb)
+	{
+		if (player==1)
+		{
+			this.kickPattern = Beat.KickPatterns1[nb];
+			this.snarePattern = Beat.SnarePatterns1[nb];
+			this.hihatPattern = Beat.HihatPatterns1[nb];
+		}
+		else{
+			this.kickPattern = Beat.KickPatterns2[nb];
+			this.snarePattern = Beat.SnarePatterns2[nb];
+			this.hihatPattern = Beat.HihatPatterns2[nb];
+		}
 	}
 
 /// LOOP CREATORS ///////////////////////////////////////////////////////////////
@@ -63,7 +92,7 @@ class Beat {
 			});
 
 		kickLoop.loop = Infinity;
-		kickLoop.loopEnd = "8n";
+		kickLoop.loopEnd = "16n";
 		kickLoop.playbackRate = 1;
 
 		return kickLoop;
@@ -83,7 +112,7 @@ class Beat {
 			});
 
 		snareLoop.loop = Infinity;
-		snareLoop.loopEnd = "8n";
+		snareLoop.loopEnd = "16n";
 		snareLoop.playbackRate = 1;
 		return snareLoop;
 	}
@@ -101,7 +130,7 @@ class Beat {
 			});
 
 		hihatLoop.loop = Infinity;
-		hihatLoop.loopEnd = "8n";
+		hihatLoop.loopEnd = "16n";
 		hihatLoop.playbackRate = 1;
 		return hihatLoop;
 	}
@@ -175,6 +204,84 @@ class Beat {
 ["-", "-", "-", "|", "-", "-", "-", "|", "-", "-", "-", "|", "-", "-", "-", "|"],
 */
 
+
+Beat.KickPatterns1 =
+[
+"x---------------x-----x---------",
+"x---------------x-----x---------",
+"x---------------x-----x---------",
+"x-------x-------x-------x-------",
+"x-----x---xx-xx-x-----x---------",
+"x-x---x-x-------x-x---x-x-x---x-",
+"x---------------x---xxx---------",
+"x-x-x-x-x-xxx-x-x-x-x-x-x-xxx-x-"
+]
+
+Beat.SnarePatterns1 =
+[
+"--------x---------------x-------",
+"--------x-----x---------x---x-x-",
+"--------x--xx-x---------x-xxx-x-", 
+"----x-------x-------x-------x---",
+"--------x---------------x---x-x-",
+"----x-------x-------x-------x---",
+"--------x--x--x---------x--x--x-",
+"----x-------x-------x-------x---"
+]
+
+Beat.HihatPatterns1 =
+[
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x---x-x-x-x-x---x---x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"--x---x---x---x---x---x---x---x-"
+] 
+
+
+Beat.KickPatterns2 =
+[ 
+"x---------------x-----x---------",
+"x---------------x-----x---------",
+"x---------------x-----x---------",
+"x-------x-------x-------x-------",
+"x-----x---------x-xx-xx---------",
+"x-x---x-x-------x-x---x-x-------",
+"x---------------x-----x---------",
+"x-----x---------x-----xx--------"
+]
+
+Beat.SnarePatterns2 =
+[
+"--------x---------------x-------",
+"--------x-----x---------x--x--x-", 
+"--------x--xx-x---------x-xxxxx-", 
+"----x-------x-------x-------x---",
+"--------x---------------x-----x-",
+"----x-------x-x-----x-------x---",
+"--------x--x-x----------x--x-xx-",
+"--------x---------------x-----x-"
+]
+
+Beat.HihatPatterns2 =
+[ 
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"--x---x---x---x---x---x---x---x-",
+"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
+"x-x-x-x-x-x-x-x-x-xx-xx-x-x-x-x-",
+"x---x-x-x-x-x-x-x---x---x-xxx-x-",
+"--x-x-x-x-xxx-x---xxx-----xxx-x-"
+]
+
+
+
+
+/*
 Beat.KickPatterns =
 [
 // Minimalist
@@ -255,3 +362,4 @@ Beat.HihatPatterns =
 ];
 
 
+*/
