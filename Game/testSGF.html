@@ -35,12 +35,12 @@
     <!-- Tout ce qui concerne la musique  -->
     <script src="scripts/InstrumentSampler.js" ></script>
     <script src="scripts/FXRack.js" ></script>
-    <script src="scripts/Beat.js" ></script>
     <script src="scripts/musicAssets.js" ></script>
+    <script src="scripts/Scale.js" ></script>
     <script src="scripts/RandomImpro.js" ></script>
     <script src="scripts/Improvise.js" ></script>
     <script src="scripts/Theme.js" ></script>
-
+    
     <!-- Traitement des données du jeu -->
     <script src="scripts/matrix.js"></script>
     <script src="scripts/moveMatrices.js" ></script>
@@ -48,46 +48,48 @@
     <script src="scripts/neuralNetwork.js"></script>
 </head>
 <body>
-<div id="main">
-
-    <p id="menu" class="controls" style="width: 900px;">
-        <input style="padding-left: 2em;" id="file" type="file"> <button onclick="loadFile()">Load file</button>
-        <button onclick="printData()">Print Data</button>
-        <button onclick="printMatrix()">Print Matrix</button>
-        <button onclick="saveMusic()">Save Sound</button>
-        <button onclick="startClock()">Start</button>
-    </p>
-
-    <div style="text-align: center; width: 100%">
-        <div style="display: inline-block;">
-            <div style="float: left;">
-                <div id="board"></div>
-
-                <p class="controls" style="width: 500px;">
-                    <strong id="move">1</strong> / <strong id="moves">1</strong>
-                    <a href="#" id="addMove"><i class="fa fa-step-forward"></i></a>
-                </p>
-            </div>
-
-            <div id="infopane" style="float: left; padding: 1em; text-align: left;">
-                <h2>Game information</h2>
-                <p id="information"></p>
-                <p>
-                    Black captures: <strong id="black_captures"></strong><br>
-                    White captures: <strong id="white_captures"></strong>
-                </p>
-                <h2>Comments</h2>
-                <p id="comments"></p>
-            </div>
-
-            <div style="clear: both;"></div>
-        </div>
-    </div>
-
-    <script src="scripts/update.js" ></script>
-    <script src="scripts/init.js" ></script>
-    <script src="scripts/mainSGF.js" ></script>
-
-</div>
-</body>
-</html>
+    <div id="main">
+        
+        <p id="menu" class="controls" style="width: 900px;">
+                <input style="padding-left: 2em;" id="file" type="file"> <button onclick="loadFile()">Load file</button>
+                <button onclick="printData()">Print Data</button>
+                <button onclick="printMatrix()">Print Matrix</button>
+                <button onclick="saveMusic()">Save Sound</button>
+                <button onclick="startClock()">Start</button>
+            </p>
+            
+            <div style="text-align: center; width: 100%">
+                    <div style="display: inline-block;">
+                            <div style="float: left;">
+                                    <div id="board"></div>
+                                    
+                                    <p class="controls" style="width: 500px;">
+                                            <strong id="move">1</strong> / <strong id="moves">1</strong>
+                                            <a href="#" id="addMove"><i class="fa fa-step-forward"></i></a>
+                                        </p>
+                                    </div>
+                                    
+                                    <div id="infopane" style="float: left; padding: 1em; text-align: left;">
+                                            <h2>Game information</h2>
+                                            <p id="information"></p>
+                                            <p>
+                                                Black captures: <strong id="black_captures"></strong><br>
+                                                White captures: <strong id="white_captures"></strong>
+                                            </p>
+                                            <h2>Comments</h2>
+                                            <p id="comments"></p>
+                                        </div>
+                                        
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </div>
+                                
+                                <script src="scripts/update.js" ></script>
+                                <script src="scripts/init.js" ></script>
+                                <script src="scripts/mainSGF.js" ></script>
+                                <script src="scripts/Beat.js" ></script>
+                                
+                            </div>
+                        </body>
+                        </html>
+                        

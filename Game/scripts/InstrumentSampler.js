@@ -34,30 +34,6 @@ class InstrumentSampler
         this.sampler = this.load();
     }
 
-    // Expect note at format {note : 50, state : false}
-    playKey(note) 
-    {           
-        let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
-
-        if (note.state === true) 
-            this.sampler.triggerAttack(Tone.Frequency(note.note, "midi").toNote());
-        else if (note.state === false) 
-            this.sampler.triggerRelease(Tone.Frequency(note.note, "midi").toNote());
-    }
-    
-    // Expect note at format {note : 50, state : false}
-    playKey(note, time, velocity = 1) 
-    {      
-        let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
-
-        if (note.state === true) 
-            sampler.triggerAttack(Tone.Frequency(note.note, "midi").toNote(), time, velocity);
-        else if (note.state === false) 
-            sampler.triggerRelease(Tone.Frequency(note.note, "midi").toNote(), time, velocity);
-
-        sampler.toMaster();
-    }
-
      // Expect note at format "C4"
     play(note, duration, time, velocity = 1) 
     {   
@@ -90,6 +66,17 @@ class InstrumentSampler
         sampler.triggerAttackRelease(playableNote, duration, time, velocity);
     }
 
+     // Expect note at format "440.0215161"
+     playFrequency(note, duration, time, velocity = 1) 
+     {   
+         let sampler = (this.samplerFX) ? this.samplerFX : this.sampler;
+
+         console.log(note)
+         sampler.release = 1;
+         sampler.attack = 1;
+         sampler.toMaster();
+         sampler.triggerAttackRelease(note, duration, time, velocity);
+     }
 
     catchFXs(fxRack, switched = false)
     {
