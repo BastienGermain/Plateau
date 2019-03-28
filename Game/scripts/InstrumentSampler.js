@@ -13,7 +13,7 @@ class InstrumentSampler
         this.sampler = this.load();
         this.samplerFX = null;
 
-        this.velocity = 0.5;
+        this.velocity = 1;
     }
 
     // Input : a single note

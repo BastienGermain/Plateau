@@ -1,7 +1,7 @@
 class Theme 
 {
-	constructor(mode, octave, lead, bass = null) 
-	{	
+	constructor(octave, lead, bass = null) 
+	{			
 		this.lead = new InstrumentSampler(lead);
 		this.lead.sampler.release = 1;
 
@@ -10,7 +10,7 @@ class Theme
 			this.bass = new InstrumentSampler(bass);
 		}
 
-		this.mode = mode || Theme.ModesNames[0];
+		this.mode = Scale.ModesNames[Math.floor(Math.random() * Scale.ModesNames.length)]
 		this.tonic = Theme.Notes[0];
 		this.octave = octave || 3;
 
@@ -20,7 +20,7 @@ class Theme
 		this.arpeggioNoteCount = 8;
 		this.arpeggioPattern = "down";
 
-		this.progression = [];
+		this.scale = [];
 		this.arpeggio = [];
 
 		this.base = null;
@@ -28,70 +28,6 @@ class Theme
 
 		this.baseIndex = 0;
 	}
-
-	shuffleChords(chords) 
-	{
-		let result = [];
-
-    	for (let i = chords.length - 1; i > 0; i--) 
-    	{
-	        let j = Math.floor(Math.random() * (i + 1));
-	        let temp = chords[i];
-	        chords[i] = chords[j];
-	        chords[j] = temp;
-    	}
-
-    	result = chords;
-    	return result;
-	}
-
-	// Input : array of notes
-	adjustNotesOctave(notes, octave)
-	{
-		let result = [];
-
-		for (var i = 0; i < notes.length; i++) 
-			result.push(notes[i].substring(0, notes[i].length - 1) + octave.toString());
-
-		return result;
-	}
-
-	// Input : a single note
-	adjustNoteOctave(note, octave)
-	{
-		return (note.substring(0, note.length - 1) + octave.toString());
-	}
-
-	createArpeggio(notes, noteCount = 8)
-	{
-		let arpeggio = [];
-
-		for (let i = 0; i < noteCount; i++)
-		{
-			if (i > notes.length)
-			{
-				arpeggio.push(this.adjustNoteOctave(notes[i % notes.length], (parseInt(this.octave, 10) + parseInt(Math.min(1, Math.floor(i / notes.length), 10)))));
-			}
-			else
-			{
-				arpeggio.push(notes[i % notes.length]);
-			}
-
-		}
-		return arpeggio;
-	}
-
-	createProgression(tonic, mode)
-	{
-		let progression = scribble.progression.getChords(
-			tonic + " " + mode, 
-			Theme.Modes[mode].join(' ')
-		).split(' ');
-
-		this.shuffleChords(progression);
-		return progression;
-	}
-
 
 	createBase(instrument) 
 	{
@@ -111,28 +47,26 @@ class Theme
 		return base;
 	}
 
-	createMelody(instrument, arpeggio, pattern, interval, probability = 1) 
+	createMelody(instrument) 
 	{
 		let _this = this;
-		let melody = new Tone.Pattern
-		(
-			function(time, note)
-			{
-					instrument.play(
-						note, 
-						1.25 * Tone.Time(interval).toSeconds(), 
-						time, 
-						_this.velocity);
-			},
-			arpeggio, 
-			pattern
-		);
-		melody.loop = Infinity;
-		melody.interval = interval;
-		melody.probability = probability;
-		melody.loopEnd = "1m";
 
-		return melody;
+		const layer2 = new Tone.Pattern
+		(
+			function()
+			{
+				console.log(note)
+				console.log(duration)			
+				
+				
+			},
+		);
+
+		layer2.loop = Infinity;
+		layer2.interval = '8n';
+		layer2.loopEnd = "1m";
+
+		return [layer2];
 	}
 
 ///////////////////////////
@@ -144,10 +78,12 @@ class Theme
 		if (params && params.arpeggioNoteCount) this.arpeggioNoteCount = params.arpeggioNoteCount;
 		if (params && params.probabilty) this.probability = params.probabilty;
 
-		this.progression = this.createProgression(this.tonic + "" + this.octave, this.mode);
+		this.scale = Scale.create(this.tonic + "" + this.octave, this.mode)
+		console.log(this.scale);
+		console.log(this.mode);
+		
 
-		let chord = scribble.chord(this.progression[this.baseIndex]);
-		this.arpeggio = this.createArpeggio(chord, this.arpeggioNoteCount);
+		let chord = scribble.chord(this.scale[this.baseIndex]);
 
 		if (this.bass) 
 		{
@@ -157,12 +93,7 @@ class Theme
 				this.octave);
 		}
 		
-		this.melody = this.createMelody(
-			this.lead, 
-			this.arpeggio,
-			this.arpeggioPattern, 
-			this.melodyInterval, 
-			this.probability);
+		this.melody = this.createMelody(this.lead);
 	}
 
 /// STARTERS //////////////////////////////////////////////////////////////////////////////
@@ -176,13 +107,21 @@ class Theme
 
 	startMelody(startTime = 0)
 	{
-		this.melody.start(startTime);
+		Tone.Transport.scheduleOnce((time) => {
+
+			const note = Improvise.random(Improvise.probabilize(this.scale.map(note => ({value: note}))))
+			const duration = Improvise.random(Improvise.probabilize(Improvise.Durations))
+
+			this.lead.play(note, duration, time)
+			this.startMelody(startTime)
+
+		}, ('+' + Improvise.random(Improvise.probabilize(Improvise.Durations))))
 	}
 
 /// UPDATERS //////////////////////////////////////////////////////////////////////////////
 
 	// Updates the lead instrument
-	// Resets base chord progression and melody arpeggio
+	// Resets base chord scale and melody arpeggio
 
 	updateLead(lead)
 	{
@@ -194,7 +133,7 @@ class Theme
 /////////////////////////////
 
 	// Updates the bass instrument
-	// Resets base chord progression and melody arpeggio
+	// Resets base chord scale and melody arpeggio
 
 	updateBass(bass)
 	{
@@ -206,7 +145,7 @@ class Theme
 ////////////////////////////
 
 	// Updates the tonic note of the Theme
-	// Resets base chord progression and melody arpeggio
+	// Resets base chord scale and melody arpeggio
 
 	updateTonic(tonic, octave)
 	{
@@ -243,9 +182,9 @@ class Theme
 
 	updateBaseChord()
 	{
-		this.baseIndex = (this.baseIndex + 1) % this.progression.length;
+		this.baseIndex = (this.baseIndex + 1) % this.scale.length;
 
-		let chord = scribble.chord(this.progression[this.baseIndex]);
+		let chord = scribble.chord(this.scale[this.baseIndex]);
 
 		this.base.value = this.adjustNotesOctave(
 			chord.splice(0, Math.min(chord.length, this.chordNoteCount)), 
@@ -276,7 +215,7 @@ class Theme
 
 	updateMelody(arpeggioNoteCount)
 	{
-		let chord = scribble.chord(this.progression[this.baseIndex]);
+		let chord = scribble.chord(this.scale[this.baseIndex]);
 
 		if (arpeggioNoteCount && arpeggioNoteCount > 0) this.arpeggioNoteCount = arpeggioNoteCount;
 		
@@ -331,26 +270,6 @@ class Theme
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Theme.Modes = {
-	ionian: ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'],
-	major: ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'],
-	dorian: ['i', 'ii', 'III', 'IV', 'v', 'vi°', 'VII'],
-	phrygian: ['i', 'II', 'III', 'iv', 'v°', 'VI', 'vii'],
-	lydian: ['I', 'II', 'iii', 'iv°', 'V', 'vi', 'vii'],
-	mixolydian: ['I', 'ii', 'iii°', 'IV', 'v', 'vi', 'VII'],
-	aeolian: ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'],
-	minor: ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'],
-	locrian: ['i°', 'II', 'iii', 'iv', 'V', 'VI', 'vii'],
-	'melodic minor': ['i', 'ii', 'III+', 'IV', 'V', 'vi°', 'vii°'],
-	'harmonic minor': ['i', 'ii°', 'III+', 'iv', 'V', 'VI', 'vii°']
-};
-
-Theme.ModesNames = [
-'major','minor','melodic minor','harmonic minor',
-'ionian','dorian','phrygian','lydian','mixolydian','aeolian','locrian'
-];
-
-Theme.Degrees = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
 
 Theme.Notes = ['C', 'C#', 'D', 'D#','E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 Theme.Octaves = [0, 1, 2, 3, 4, 5, 6];

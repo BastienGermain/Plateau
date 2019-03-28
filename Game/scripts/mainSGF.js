@@ -16,10 +16,10 @@ Tone.Transport.start();
 var lastData;
 
 var tonalite;
-var melodyInstrument;
-var bassInstrument;
 var beat1 = new Beat(1);
 var beat2 = new Beat(2);
+
+const theme = new Theme(4, 'guitar-acoustic')
 
 //////////////////////////////////////
 
@@ -92,9 +92,10 @@ $(document).ready(function() {
                 recorder.record(soundFile);
 
                 tonalite = "A3";
-                melodyInstrument = new InstrumentSampler("piano");
                 //decrescendo();
 
+                theme.init()
+                theme.startMelody()
                 //Random Simple Kick
                 start = 1;
 

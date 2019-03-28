@@ -81,7 +81,7 @@ class Beat {
 	{
 		let _this = this;
 
-		let kickLoop =  new Tone.Event(
+		this.kickLoop =  new Tone.Event(
 			function(time)
 			{
 				if (_this.kickPattern.charAt(_this.kickIndex) === "x")
@@ -102,7 +102,7 @@ class Beat {
 	{
 		let _this = this;
 
-		let snareLoop =  new Tone.Event(
+		this.snareLoop =  new Tone.Event(
 			function(time)
 			{
 				if (_this.snarePattern.charAt(_this.snareIndex) === "x")
@@ -121,7 +121,7 @@ class Beat {
 	{
 		let _this = this;
 
-		let hihatLoop =  new Tone.Event(
+		this.hihatLoop =  new Tone.Event(
 			function(time)
 			{
 				if (_this.hihatPattern.charAt(_this.hihatIndex) === "x")

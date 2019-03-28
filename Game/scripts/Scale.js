@@ -32,9 +32,7 @@ class Scale {
     static create(tonic, mode) {
 
         const intervals = this.absolute([0, ...this.Modes[mode]]);
-        const scale = Tone.Frequency(tonic).harmonize(intervals).map(element => Tone.Frequency(element).toNote());
-        console.log(scale);
-        
+        const scale = Tone.Frequency(tonic).harmonize(intervals).map(element => Tone.Frequency(element).toNote());        
         return scale;
     }
 
@@ -74,22 +72,32 @@ Scale.Modes = {
     'raga-kirvani': [2, 1, 4, 1, 3, 1],
 }
 
-
-const scale = Scale.create('A4', 'japanese');
-const piano = new InstrumentSampler('guitar-electric');
-const synth3 = new Tone.PluckSynth().toMaster()
-
-Tone.Buffer.on('load', function() {
-    const test = new Tone.Pattern
-            (
-                function(time, note)
-                {	
-                    piano.play(
-                        note, 
-                        1.25 * Tone.Time('4n').toSeconds(), 
-                        time, 
-                        1);
-                },
-                scale, 'up'
-            ).start();
-})
+Scale.ModesNames = [
+    'major',
+    'minor',
+    'melodic-minor',
+    'harmonic-minor',
+    'pentatonic-major',
+    'blues-major',
+    'pentatonic-minor',
+    'blues-minor',
+    'augmented',
+    'diminished',
+    'chromatic',
+    'whole-half',
+    'half-whole',
+    'wholetone',
+    'augmented-fifth',
+    'japanese',
+    'oriental',
+    'dorian',
+    'phrygian',
+    'lydian',
+    'mixolydian',
+    'locrian',
+    'raga-bhairava',
+    'raga-bihag',
+    'raga-darbari-kanada',
+    'raga-bhimpalasi',
+    'raga-kirvani'
+]
