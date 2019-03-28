@@ -18,6 +18,8 @@ var lastData;
 var tonalite;
 var melodyInstrument;
 var bassInstrument;
+var beat1 = new Beat(1);
+var beat2 = new Beat(2);
 
 //////////////////////////////////////
 
@@ -38,7 +40,7 @@ function saveMusic() {
 
 function decrescendo() {
     const time = data["decrescendoTime"];
-
+/*
     if (time == 10 && data["stoneOnBoard"] >= 10) {
         console.log("stopSnare");
         ambiance.beat.stopSnare();
@@ -68,6 +70,7 @@ function decrescendo() {
         console.log("stopKick");
         ambiance.beat.stopKick();
     }
+    */
 
     setTimeout(decrescendo, 1000);
 }
@@ -77,7 +80,7 @@ $(document).ready(function() {
     Tone.Buffer.on('load', function() {
         //Evenement Pose de pierre :
         document.querySelector('#addMove').addEventListener('mouseup', function(e) {
-            console.log(data);
+            //console.log(data);
             //console.log(lastData);
 
              //console.log(data);
@@ -103,19 +106,76 @@ $(document).ready(function() {
                 startImpro();
             }
 
-
             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
             ////FIN INITIALISATION
 
            
+		    //PERCU
+            switch(Math.trunc(10*Math.abs(data.globalInterpretation[0]))){
+            	case 0:
+            		beat1.changePattern(1, 0);
+            		beat2.changePattern(2, 0);
+            		break;
 
+            	case 1:
+            		beat1.changePattern(1, 1);
+            		beat2.changePattern(2, 1);
+            		break;
 
-            //PERCU
+            	case 2:
+            		beat1.changePattern(1, 2);
+            		beat2.changePattern(2, 2);
+            		break;
 
+            	case 3:
+            		beat1.changePattern(1, 3);
+            		beat2.changePattern(2, 3);
+            		break;
 
+            	case 4:
+            		beat1.changePattern(1, 4);
+            		beat2.changePattern(2, 4);
+            		break;
 
+            	case 5:
+            		beat1.changePattern(1, 5);
+            		beat2.changePattern(2, 5);
+            		break;
 
-            updateTempo();
+            	case 6:
+            		beat1.changePattern(1, 6);
+            		beat2.changePattern(2, 6);
+            		break;
+
+            	case 7: case 8: case 9:
+            		beat1.changePattern(1, 7);
+            		beat2.changePattern(2, 7);
+            		break;
+            }
+
+            if (data.player == "Black"){
+            	if (beat2.kickLoop){
+	            	beat2.stopKick();
+		        	beat2.stopSnare();
+		        	beat2.stopHihat();
+		        }	
+
+	            beat1.playKick();
+	            beat1.playSnare();
+	            beat1.playHihat();
+	        }
+	        else{
+	        	beat1.stopKick();
+	        	beat1.stopSnare();
+	        	beat1.stopHihat();
+
+	        	beat2.playKick();
+	            beat2.playSnare();
+	            beat2.playHihat();
+	        }
+
+	            	
+	        updateTempo();
 
 
         })
