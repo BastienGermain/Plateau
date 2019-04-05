@@ -61,7 +61,54 @@ class Improvise {
 
 }
 
-Improvise.Durations = [
+Improvise.BassDurations = [
+    {
+        name: 'carree',
+        value: '2m'
+    },
+    {
+        name: 'ronde',
+        value: '1m',
+    },
+    {
+        name: 'blanche',
+        value: '2n',
+    }
+]
+
+Improvise.MelodyDurations = [
+    {
+        name: 'carree',
+        value: '2m'
+    },
+    {
+        name: 'ronde',
+        value: '1m',
+    },
+    {
+        name: 'blanche',
+        value: '2n',
+    },
+    {
+        name: 'noire',
+        value: '4n',
+    },
+    {
+        name: 'croche',
+        value: '8n'
+    },
+    {
+        name: 'double-croche',
+        value: '16n',
+    },
+    {
+        name: 'triple-croche',
+        value: '32n',
+    }
+]
+
+
+Improvise.Intervals = [
     {
         name: 'carree',
         value: '2m'

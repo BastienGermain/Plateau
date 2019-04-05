@@ -19,7 +19,10 @@ var tonalite;
 var beat1 = new Beat(1);
 var beat2 = new Beat(2);
 
-const theme = new Theme(4, 'guitar-acoustic')
+const theme = new Theme(3, 'guitar-acoustic', 'bass-electric')
+
+let melodyPlaying = false
+let basePlaying = false
 
 //////////////////////////////////////
 
@@ -95,7 +98,7 @@ $(document).ready(function() {
                 //decrescendo();
 
                 theme.init()
-                theme.startMelody()
+                theme.startBase()
                 //Random Simple Kick
                 start = 1;
 
@@ -106,10 +109,13 @@ $(document).ready(function() {
             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
             ////FIN INITIALISATION
 
-
+            if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
+                theme.startMelody()
+                melodyPlaying = true
+            }
            
 		    //PERCU
-            switch(Math.trunc(10*Math.abs(data.globalInterpretation[0]))){
+            switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))){
             	case 0:
             		beat1.changePattern(1, 0);
             		beat2.changePattern(2, 0);
@@ -151,27 +157,73 @@ $(document).ready(function() {
             		break;
             }
 
+            if (data['stoneOnBoard'] >= 15) {
 
-            if (data.player == "Black"){
-            	if (beat2.kickLoop){
-	            	beat2.stopKick();
-		        	beat2.stopSnare();
-		        	beat2.stopHihat();
-		        }	
+                if (data.player == "Black"){
+                    if (beat2.kickLoop !== null){
+                        beat2.stopKick();
+                    }	
+                    
+                    beat1.playKick();
+                }
+                else{
+                    beat1.stopKick();          
+                    beat2.playKick();
+                }
+            }
 
-	            beat1.playKick();
-	            beat1.playSnare();
-	            beat1.playHihat();
-	        }
-	        else{
-	        	beat1.stopKick();
-	        	beat1.stopSnare();
-	        	beat1.stopHihat();
+            if (data['stoneOnBoard'] >= 30) {
 
-	        	beat2.playKick();
-	            beat2.playSnare();
-	            beat2.playHihat();
-	        }
+                if (data.player == "Black"){
+                    if (beat2.snareLoop !== null){
+                        beat2.stopSnare();
+                    }	
+                    
+                    beat1.playSnare();
+                }
+                else{
+                    if (beat1.snareLoop !== null){
+                        beat1.stopSnare();
+                    }
+                    beat2.playSnare();
+                }
+            }
+
+            if (data['stoneOnBoard'] >= 45) {
+
+                if (data.player == "Black"){
+                    if (beat2.hihatLoop !== null){
+                        beat2.stopHihat();
+                    }	
+                    beat1.playHihat();
+                }
+                else{
+                    beat1.stopHihat();
+                    beat2.playHihat();
+                }
+            }
+
+            if (data['stoneOnBoard'] > 20) {
+
+                if (data.globalInterpretation[0] > 0) {
+                    if (data.player === 'Black') {
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
+                    } else {
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
+                    }
+                }
+                
+                if (data.globalInterpretation[0] < 0) {
+                    if (data.player === 'Black') {
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
+                    } else {
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
+                    }
+                }
+                
+            }
+            console.log(theme.bass.sampler.volume.value);
+            
 
 	            	
 	        updateTempo();

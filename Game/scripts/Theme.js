@@ -4,6 +4,7 @@ class Theme
 	{			
 		this.lead = new InstrumentSampler(lead);
 		this.lead.sampler.release = 1;
+		this.lead.sampler.volume.value = -6;
 
 		if (bass)
 		{
@@ -23,50 +24,7 @@ class Theme
 		this.scale = [];
 		this.arpeggio = [];
 
-		this.base = null;
-		this.melody = null;
-
 		this.baseIndex = 0;
-	}
-
-	createBase(instrument) 
-	{
-		let base = new Tone.Event
-		(
-			function(time, note)
-			{	
-				note.forEach(element => instrument.play(element, "1m", time));
-			},
-		 	["C0"]
-		);
-
-		base.loop = Infinity;
-		base.loopEnd = "1m";
-		base.playbackRate = 1;
-
-		return base;
-	}
-
-	createMelody(instrument) 
-	{
-		let _this = this;
-
-		const layer2 = new Tone.Pattern
-		(
-			function()
-			{
-				console.log(note)
-				console.log(duration)			
-				
-				
-			},
-		);
-
-		layer2.loop = Infinity;
-		layer2.interval = '8n';
-		layer2.loopEnd = "1m";
-
-		return [layer2];
 	}
 
 ///////////////////////////
@@ -82,25 +40,21 @@ class Theme
 		console.log(this.scale);
 		console.log(this.mode);
 		
-
-		let chord = scribble.chord(this.scale[this.baseIndex]);
-
-		if (this.bass) 
-		{
-			this.base = this.createBase(this.bass);
-			this.base.value = this.adjustNotesOctave(
-				chord.splice(0, Math.min(chord.length, this.chordNoteCount)), 
-				this.octave);
-		}
-		
-		this.melody = this.createMelody(this.lead);
 	}
 
 /// STARTERS //////////////////////////////////////////////////////////////////////////////
 
 	startBase(startTime = 0)
 	{
-		if(this.base) this.base.start(startTime);
+		Tone.Transport.scheduleOnce((time) => {
+
+			const note = Improvise.random(Improvise.probabilize(this.scale.map(note => ({value: note}))))
+			const duration = Improvise.random(Improvise.probabilize(Improvise.BassDurations))
+
+			this.bass.play(note, duration, time)
+			this.startBase(startTime)
+
+		}, ('+' + Improvise.random(Improvise.probabilize(Improvise.Intervals))))
 	}
 
 ////////////////////////
@@ -110,12 +64,12 @@ class Theme
 		Tone.Transport.scheduleOnce((time) => {
 
 			const note = Improvise.random(Improvise.probabilize(this.scale.map(note => ({value: note}))))
-			const duration = Improvise.random(Improvise.probabilize(Improvise.Durations))
+			const duration = Improvise.random(Improvise.probabilize(Improvise.MelodyDurations))
 
 			this.lead.play(note, duration, time)
 			this.startMelody(startTime)
 
-		}, ('+' + Improvise.random(Improvise.probabilize(Improvise.Durations))))
+		}, ('+' + Improvise.random(Improvise.probabilize(Improvise.Intervals))))
 	}
 
 /// UPDATERS //////////////////////////////////////////////////////////////////////////////
@@ -229,13 +183,10 @@ class Theme
 
 	updateMelodyNoteProbability(probability)
 	{
-		console.log(probability);
 		if(probability)
 			this.probability = probability;
 
 		this.melody.probability = Math.min(1, Math.abs(this.probability));
-		console.log(this.melody.probability);
-		console.log(this.probability);
 	}
 
 /////////////////////////

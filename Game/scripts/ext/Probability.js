@@ -28,9 +28,7 @@
             probas = [],
             functions = [],
             sum = 0,
-            args = toString.call(arguments[0]) === '[object Array]' ? arguments[0] : slice.call(arguments);
-            console.log(args);
-            
+            args = toString.call(arguments[0]) === '[object Array]' ? arguments[0] : slice.call(arguments);            
 
         args.push({
             p: 0,

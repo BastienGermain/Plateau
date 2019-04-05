@@ -33,7 +33,7 @@ class Scale {
 
         const intervals = this.absolute([0, ...this.Modes[mode]]);
         const scale = Tone.Frequency(tonic).harmonize(intervals).map(element => Tone.Frequency(element).toNote());        
-        return scale;
+        return scale.concat(scale.map(note => Tone.Frequency(note).transpose(12).toNote()));
     }
 
 }
