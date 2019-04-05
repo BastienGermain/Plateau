@@ -64,6 +64,7 @@ jsetup.create('board', function(canvas) {
 
       data["stonePosition"] = [coord.i, coord.j];
       getStonesAround();
+      getConnectedStones(boardMat);
       data["stoneOnBoard"] += 1;
       data["whiteCaptures"] = node.info.captures[2];
       data["blackCaptures"] = node.info.captures[1];
