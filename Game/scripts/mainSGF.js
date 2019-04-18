@@ -40,10 +40,10 @@ function saveMusic() {
     }
 }
 
-
+/*
 function decrescendo() {
     const time = data["decrescendoTime"];
-/*
+
     if (time == 10 && data["stoneOnBoard"] >= 10) {
         console.log("stopSnare");
         ambiance.beat.stopSnare();
@@ -73,17 +73,15 @@ function decrescendo() {
         console.log("stopKick");
         ambiance.beat.stopKick();
     }
-    */
 
     setTimeout(decrescendo, 1000);
 }
-
+*/
 
 $(document).ready(function() {
     Tone.Buffer.on('load', function() {
         //Evenement Pose de pierre :
         document.querySelector('#addMove').addEventListener('mouseup', function(e) {
-
 
             if (Tone.context.state !== 'running')
                 Tone.context.resume();
@@ -113,8 +111,8 @@ $(document).ready(function() {
                 theme.startMelody()
                 melodyPlaying = true
             }
-           
-		    //PERCU
+
+    		    //PERCU
             switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))){
             	case 0:
             		beat1.changePattern(1, 0);
@@ -162,12 +160,12 @@ $(document).ready(function() {
                 if (data.player == "Black"){
                     if (beat2.kickLoop !== null){
                         beat2.stopKick();
-                    }	
-                    
+                    }
+
                     beat1.playKick();
                 }
                 else{
-                    beat1.stopKick();          
+                    beat1.stopKick();
                     beat2.playKick();
                 }
             }
@@ -177,8 +175,8 @@ $(document).ready(function() {
                 if (data.player == "Black"){
                     if (beat2.snareLoop !== null){
                         beat2.stopSnare();
-                    }	
-                    
+                    }
+
                     beat1.playSnare();
                 }
                 else{
@@ -194,7 +192,7 @@ $(document).ready(function() {
                 if (data.player == "Black"){
                     if (beat2.hihatLoop !== null){
                         beat2.stopHihat();
-                    }	
+                    }
                     beat1.playHihat();
                 }
                 else{
@@ -212,7 +210,7 @@ $(document).ready(function() {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
                     }
                 }
-                
+
                 if (data.globalInterpretation[0] < 0) {
                     if (data.player === 'Black') {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
@@ -220,14 +218,11 @@ $(document).ready(function() {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
                     }
                 }
-                
+
             }
             console.log(theme.bass.sampler.volume.value);
-            
 
-	            	
-	        updateTempo();
-
+            updateTempo();
 
         })
     });

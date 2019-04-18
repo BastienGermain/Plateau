@@ -6,7 +6,7 @@ let secW = 0;
 let secB = 0;
 let oldSecW = 0;
 let oldSecB = 0;
-let timeArray = new Array();
+let timeArrayPlay = new Array();
 
 function pad (val) { return val > 9 ? val : "0" + val; }
 
@@ -31,7 +31,9 @@ function switchTimer() {
         data["moveTime"] = secW - oldSecW;
         data["totalWhiteTime"] = secW;
         oldSecW = secW;
-        insertIntoTimeArray(data["moveTime"]);
+        insertIntotimeArrayPlay(data["moveTime"]);
+        data["playerSpeed"] = timeArrayPlay.reduce(reducer) / timeArrayPlay.length;
+        console.log(data["playerSpeed"]);
     } else {
         clearInterval(timer);
         isCurrentWhite = !isCurrentWhite;
@@ -44,19 +46,21 @@ function switchTimer() {
         data["moveTime"] = secB - oldSecB;
         data["totalBlackTime"] = secB;
         oldSecB = secB;
-        insertIntoTimeArray(data["moveTime"]);
+        insertIntotimeArrayPlay(data["moveTime"]);
+        data["playerSpeed"] = timeArrayPlay.reduce(reducer) / timeArrayPlay.length;
+        console.log(data["playerSpeed"]);
     }
 }
 
 // Pas testé !
-function insertIntoTimeArray(newTime) {
-    if (timeArray.length < 10) {
-        timeArray.push(newTime);
+function insertIntotimeArrayPlay(newTime) {
+    if (timeArrayPlay.length < 10) {
+        timeArrayPlay.push(newTime);
     } else {
-        timeArray.shift();
-        timeArray.push(newTime);
+        timeArrayPlay.shift();
+        timeArrayPlay.push(newTime);
     }
 
-    console.log("array length : " + timeArray.length);
-    console.log("array content : " + timeArray);
+    console.log("array length : " + timeArrayPlay.length);
+    console.log("array content : " + timeArrayPlay);
 }

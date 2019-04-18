@@ -26,11 +26,11 @@ data["previousMoveTime"] = 0;
 data["totalWhiteTime"] = 0; // In seconds
 data["totalBlackTime"] = 0;
 data["cornerMove"] = "" // Values : "San-san", "Hoshi", "Komoku", "Takamoku", "Mokuhazushi"
-data["globalInterpretation"] = 0; // [-1; 1]
+data["globalInterpretation"] = 0; // [-1; 1]; -1 => avantage noir
 data["decrescendoTime"] = 0; // In seconds, current time the player consume
-data["playerSpeed"] = 0; // [-1; 1] Based on last 10 moves time
+data["playerSpeed"] = 0; // Based on last 10 moves time
 
-let timeArray = new Array();
+let timeArraySGF = new Array();
 const reducer = (accumulator, currentValue) => parseInt(accumulator, 10) + parseInt(currentValue, 10);
 
 var boardMat = math.zeros(19, 19);
@@ -64,8 +64,8 @@ function updateData(sgf, moveNumber) {
     }
     data["globalInterpretation"] = neuronNetwork.activate(readMatrix(boardMat));
     data["moveTime"] = sgf[moveNumber].C;
-    insertIntoTimeArray(data["moveTime"]);
-    data["playerSpeed"] = timeArray.reduce(reducer) / timeArray.length;
+    insertIntotimeArraySGF(data["moveTime"]);
+    data["playerSpeed"] = timeArraySGF.reduce(reducer) / timeArraySGF.length;
     console.log(data["playerSpeed"]);
     checkAtari(boardMat);
     if (data["stonesAround"] == 0) {
@@ -75,12 +75,12 @@ function updateData(sgf, moveNumber) {
     }
 }
 
-function insertIntoTimeArray(newTime) {
-    if (timeArray.length < 10) {
-        timeArray.push(newTime);
+function insertIntotimeArraySGF(newTime) {
+    if (timeArraySGF.length < 10) {
+        timeArraySGF.push(newTime);
     } else {
-        timeArray.shift();
-        timeArray.push(newTime);
+        timeArraySGF.shift();
+        timeArraySGF.push(newTime);
     }
 }
 
