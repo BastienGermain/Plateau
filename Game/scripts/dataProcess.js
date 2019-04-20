@@ -73,6 +73,9 @@ function updateData(sgf, moveNumber) {
     } else {
        data["cornerMove"] = "";
     }
+    if (data["cornerMove"] != "") {
+      data["totalKnownMoves"]++;
+    }
 }
 
 function insertIntotimeArraySGF(newTime) {
