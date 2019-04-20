@@ -30,8 +30,10 @@ class Improvise {
     }
 
     static probabilize(objects) {
+
+        console.log(objects)
         
-        let remaining = 1;
+        let remaining = 1
 
         if (objects instanceof Array) {
 
@@ -54,7 +56,9 @@ class Improvise {
                     })
                 }
             })
-        } else throw new TypeError('Invalid argument : has to be an array of objects.')
+        } else
+            throw new TypeError('Invalid argument : has to be an array of objects.')
+
     }
         
 
