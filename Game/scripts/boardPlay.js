@@ -69,13 +69,25 @@ jsetup.create('board', function(canvas) {
       data["whiteCaptures"] = node.info.captures[2];
       data["blackCaptures"] = node.info.captures[1];
       data["knownMove"] = checkKnownMoves(data, boardMat);
+      if (data["knownMove"] != "") {
+          data["totalKnownMoves"]++;
+          if (data["player"] == "White") {
+              data["whiteKnownMoves"]++;
+          } else {
+              data["blackKnownMoves"]++;
+          }
+      }
       data["globalInterpretation"] = neuronNetwork.activate(readMatrix(boardMat));
       checkAtari(boardMat);
       if (data["stonesAround"] == 0) {
        data["cornerMove"] = getCornerMove();
-     } else {
+      } else {
        data["cornerMove"] = "";
-     }
+      }
+      if (data["cornerMove"] != "") {
+        data["totalKnownMoves"]++;
+      }
+
 
      if(lastMove)
         node.setMark(lastMove, JGO.MARK.NONE); // clear previous mark
