@@ -80,7 +80,7 @@ Improvise.BassDurations = [
     }
 ]
 
-Improvise.MelodyDurations = [
+Improvise.LeadDurations = [
     {
         name: 'carree',
         value: '2m'

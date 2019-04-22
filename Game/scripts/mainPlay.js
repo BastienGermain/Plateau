@@ -24,6 +24,7 @@ const theme = new Theme(3, 'guitar-acoustic', 'bass-electric')
 let melodyPlaying = false
 let basePlaying = false
 
+var tenLastMoveTimes = new Array();
 //////////////////////////////////////
 
 /*
@@ -112,7 +113,31 @@ window.onload = function() {
 
 
             init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
+            //ça sert encore à qqch ?
             ////FIN INITIALISATION
+
+            if (data.stoneOnBoard == 4){
+                if (data.totalKnownMoves >= 1){
+                    theme.pickClassicMode()
+                }
+                else{
+                    theme.pickStrangeMode()
+                }
+                console.log(theme.mode)
+                theme.startBase()
+            }
+            ////FIN INITIALISATION
+
+            if (data.stoneOnBoard <= 10){
+                tenLastMoveTimes.push(data.moveTime)
+            }
+            else{
+                if (tenLastMoveTimes.length == 10){
+                    tenLastMoveTimes.shift()
+                    tenLastMoveTimes.push(data.moveTime)
+                    updateTempo();
+                }
+            }
 
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
@@ -229,9 +254,33 @@ window.onload = function() {
             }
             console.log(theme.bass.sampler.volume.value);
 
-            updateTempo();
-
 
         })
     });
+}
+
+
+
+var minTimeAverage=4;
+var maxTimeAverage=3;
+function updateTempo()
+{
+    console.log(tenLastMoveTimes);
+    var average = 0.0
+    tenLastMoveTimes.forEach(x=>average+=parseFloat(x))
+    average /= 10
+    if (average < minTimeAverage){
+        minTimeAverage = average;
+    }
+    if (average > maxTimeAverage){
+        maxTimeAverage = average;
+    }
+    console.log(minTimeAverage+"   "+maxTimeAverage)
+    console.log(average)
+
+    //tempo entre 80 et 160
+    let tempo = 80 + 80*(average-minTimeAverage)/maxTimeAverage/(1-minTimeAverage/maxTimeAverage);
+    
+    Tone.Transport.bpm.value = tempo;
+    console.log("tempo : "+tempo)
 }

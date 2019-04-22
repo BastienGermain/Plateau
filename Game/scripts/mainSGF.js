@@ -1,84 +1,60 @@
-var soundFile = new p5.SoundFile()
-var recorder = new p5.SoundRecorder()
-recorder.setInput(Tone.Master)
+var soundFile = new p5.SoundFile();
+var recorder = new p5.SoundRecorder();
+recorder.setInput(Tone.Master);
 
-var start = 0
-var startTime = null
+var start = 0;
+var startTime = null;
 
-const tempo = 120
 
-Tone.Transport.bpm.value = tempo
-Tone.Master.volume.value = 0
+Tone.Transport.bpm.value = 80;
+Tone.Master.volume.value = 0;
 
 Tone.Transport.start()
 
 //////////////////////////////////////
-var lastData
+var lastData;
 
-var tonalite
-var beat1 = new Beat(1)
-var beat2 = new Beat(2)
+var beat1 = new Beat(1);
+var beat2 = new Beat(2);
 
-const theme = new Theme(3, 'guitar-acoustic', 'bass-electric')
+const theme = new Theme(3, 'piano', 'bass-electric')
 
 let melodyPlaying = false
 let basePlaying = false
 
-const lastAtariNumber = 0
-
-//////////////////////////////////////
-
-/*
-var currentTheme = null
-
-var melodyPlaying = false
-var basePlaying = false
-*/
+var tenLastMoveTimes = new Array();
 
 function saveMusic() {
     if (recorder) {
-        recorder.stop() // stop recorder, and send the result to soundFile
-        p5.prototype.saveSound(soundFile, 'goMusic.wav') // save file
+        recorder.stop(); // stop recorder, and send the result to soundFile
+        p5.prototype.saveSound(soundFile, 'goMusic.wav'); // save file
     }
 }
 
-/*
-function decrescendo() {
-    const time = data["decrescendoTime"]
+var minTimeAverage = 4
+var maxTimeAverage = 3
 
-    if (time == 10 && data["stoneOnBoard"] >= 10) {
-        console.log("stopSnare")
-        ambiance.beat.stopSnare()
-
-        if (melodyPlaying) {
-            currentTheme.stopMelody()
-            currentTheme.updateMelody(Math.min(0, currentTheme.arpeggioNoteCount - 3))
-            currentTheme.startMelody(startTime)
-        }
-
-    } else if (time == 20 && data["stoneOnBoard"] >= 4) {
-        console.log("stopHihat")
-        ambiance.beat.stopHihat()
-
-        if (melodyPlaying) {
-            currentTheme.stopMelody()
-            melodyPlaying = false
-        }
-
-    } else if (time == 25) {
-        if (basePlaying) {
-            currentTheme.stopBase()
-            basePlaying = false
-        }
-
-    } else if (time == 30) {
-        console.log("stopKick")
-        ambiance.beat.stopKick()
+function updateTempo() {
+    console.log(tenLastMoveTimes)
+    var average = 0.0
+    tenLastMoveTimes.forEach(x => average += parseFloat(x))
+    average /= 10
+    if (average < minTimeAverage) {
+        minTimeAverage = average
     }
+    else if (average > maxTimeAverage) {
+        maxTimeAverage = average
+    }
+    console.log(minTimeAverage + "   " + maxTimeAverage)
+    console.log(average)
 
-    setTimeout(decrescendo, 1000)
+    //tempo entre 80 et 160
+    let tempo = Math.round(120 + 120 * (average - minTimeAverage ) / maxTimeAverage / (1 - minTimeAverage / maxTimeAverage))
+
+    Tone.Transport.bpm.rampTo(tempo, 5)
+    console.log("tempo : " + tempo)
 }
-*/
+
 
 $(document).ready(function() {
     Tone.Buffer.on('load', function() {
@@ -89,26 +65,39 @@ $(document).ready(function() {
                 Tone.context.resume()
 
             ////CODE INITIALISATION
+
             if (start == 0) {
                 startTime = Tone.context.currentTime.toFixed(4)
-
                 recorder.record(soundFile)
-
-                tonalite = "A3"
-                //decrescendo()
-
+                init(theme) //initie la tonalité et les instruments en fonction des premiers coups des joueurs
                 theme.init()
-                console.log('startbasex')
-                theme.startBase()
-                //Random Simple Kick
+                theme.startBase(startTime)
+                basePlaying = true
                 start = 1
-
-
-                startImpro()
             }
 
-            init() //initie la tonalité et les instruments en fonction des premiers coups des joueurs
+            if (data.stoneOnBoard == 4){
+                if (data.totalKnownMoves >= 1){
+                    theme.pickClassicMode();
+                } else{
+                    theme.pickStrangeMode();
+                }
+                console.log(theme.mode)
+            }
+
             ////FIN INITIALISATION
+
+            /*
+
+            if (data.stoneOnBoard <= 10) {
+                tenLastMoveTimes.push(data.moveTime)
+            }
+            else if (tenLastMoveTimes.length == 10) {
+                tenLastMoveTimes.shift()
+                tenLastMoveTimes.push(data.moveTime)
+                updateTempo();
+            }
+            */
 
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
@@ -116,73 +105,67 @@ $(document).ready(function() {
             }
 
     		    //PERCU
-            switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))){
+            switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))) {
             	case 0:
-            		beat1.changePattern(1, 0)
-            		beat2.changePattern(2, 0)
-            		break
+            		beat1.changePattern(1, 0);
+            		beat2.changePattern(2, 0);
+            		break;
 
             	case 1:
-            		beat1.changePattern(1, 1)
-            		beat2.changePattern(2, 1)
-            		break
+            		beat1.changePattern(1, 1);
+            		beat2.changePattern(2, 1);
+            		break;
 
             	case 2:
-            		beat1.changePattern(1, 2)
-            		beat2.changePattern(2, 2)
-            		break
+            		beat1.changePattern(1, 2);
+            		beat2.changePattern(2, 2);
+            		break;
 
             	case 3:
-            		beat1.changePattern(1, 3)
-            		beat2.changePattern(2, 3)
-            		break
+            		beat1.changePattern(1, 3);
+            		beat2.changePattern(2, 3);
+            		break;
 
             	case 4:
-            		beat1.changePattern(1, 4)
-            		beat2.changePattern(2, 4)
-            		break
+            		beat1.changePattern(1, 4);
+            		beat2.changePattern(2, 4);
+            		break;
 
             	case 5:
-            		beat1.changePattern(1, 5)
-            		beat2.changePattern(2, 5)
-            		break
+            		beat1.changePattern(1, 5);
+            		beat2.changePattern(2, 5);
+            		break;
 
             	case 6:
-            		beat1.changePattern(1, 6)
-            		beat2.changePattern(2, 6)
-            		break
+            		beat1.changePattern(1, 6);
+            		beat2.changePattern(2, 6);
+            		break;
 
             	case 7: case 8: case 9:
-            		beat1.changePattern(1, 7)
-            		beat2.changePattern(2, 7)
-            		break
+            		beat1.changePattern(1, 7);
+            		beat2.changePattern(2, 7);
+            		break;
             }
 
             if (data['stoneOnBoard'] >= 15) {
-
-                if (data.player == "Black"){
-                    if (beat2.kickLoop !== null){
+                if (data.player == "Black") {
+                    if (beat2.kickLoop !== null) {
                         beat2.stopKick()
                     }
-
                     beat1.playKick()
-                }
-                else{
+                } else {
                     beat1.stopKick()
                     beat2.playKick()
                 }
             }
 
             if (data['stoneOnBoard'] >= 30) {
-
-                if (data.player == "Black"){
-                    if (beat2.snareLoop !== null){
+                if (data.player == "Black") {
+                    if (beat2.snareLoop !== null) {
                         beat2.stopSnare()
                     }
-
                     beat1.playSnare()
-                }
-                else{
+                } else{
                     if (beat1.snareLoop !== null){
                         beat1.stopSnare()
                     }
@@ -191,21 +174,18 @@ $(document).ready(function() {
             }
 
             if (data['stoneOnBoard'] >= 45) {
-
-                if (data.player == "Black"){
-                    if (beat2.hihatLoop !== null){
+                if (data.player == "Black") {
+                    if (beat2.hihatLoop !== null) {
                         beat2.stopHihat()
                     }
                     beat1.playHihat()
-                }
-                else{
+                } else{
                     beat1.stopHihat()
                     beat2.playHihat()
                 }
             }
 
             if (data['stoneOnBoard'] > 20) {
-
                 if (data.globalInterpretation[0] > 0) {
                     if (data.player === 'Black') {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
@@ -213,7 +193,6 @@ $(document).ready(function() {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
                     }
                 }
-
                 if (data.globalInterpretation[0] < 0) {
                     if (data.player === 'Black') {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
@@ -221,43 +200,9 @@ $(document).ready(function() {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
                     }
                 }
-
             }
+            //console.log(theme.bass.sampler.volume.value);
 
-            if (data.player === 'Black') {
-                theme.bass.setpPan(0.70)
-                theme.lead.setpPan(0.80)
-            } else {
-                theme.bass.setpPan(-0.70)
-                theme.lead.setpPan(-0.80)
-            }
-
-            console.log('pan : ', theme.bass.pan.pan.value)
-            console.log('pierres connectées (reset à 15)  :', data['stonesConnectionNumber'] % 15)
-
-
-            /**
-             * 
-             * ATTENTION : NOTE A ELIOT : QUAND TU FERAS CHANGEMENT DE TONALITE TOUS LES 10 COUPS SPECIAUX,
-             * PENSE A METTRE A JOUR 'notes' (ATTRIBUT DE LA CLASSE THEME QUI EST UN TABLEAU DE PROBABILITES CONTRUIT SUR LA GAMME CONSTRUITE SUR LA TONIQUE)
-             * METTRE DONC A JOUR LA GAMME (SCALE) EGALEMENT
-             * 
-             * POUR CES DEUX CHOSES CF THEME.JS LIGNES 37 ET 45
-             * 
-             */
-
-            if (data['atariNumber'] !== lastAtariNumber && melodyPlaying) {
-                lastAtariNumber++
-                theme.updateLeadIntervals()
-            }
-
-            if ((data['stonesConnectionNumber'] % 15) === 0 && melodyPlaying) {
-                theme.updateLeadDurations()
-            }
-
-            console.log(theme.bass.sampler.volume.value)
-
-            updateTempo()
 
         })
     })

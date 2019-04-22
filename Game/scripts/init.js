@@ -1,33 +1,33 @@
-function init()
+function init(theme)
 {
-	initTonic();
+	initTonic(theme);
 	initInstruments();
 	initMode();
 }
 
-function initTonic() 
+function initTonic(theme) 
 {
 	let horizontalPos = data["stonePosition"][0];
 
-	let octave = 3; 
+	theme.octave = 3; 
 	if (data["stoneOnBoard"]==2)
 	{
 		if (horizontalPos >= 16)
-			tonalite = "G" + octave;
+			theme.tonic = "G"
 		else if (horizontalPos >= 13)
-			tonalite = "F" + octave;
+			theme.tonic = "F"
 		else if (horizontalPos >= 10)
-			tonalite = "E" + octave;
+			theme.tonic = "E"
 		else if (horizontalPos >= 8)
-			tonalite = "D" + octave;
+			theme.tonic = "D"
 		else if (horizontalPos >= 6)
-			tonalite = "C" + octave;
+			theme.tonic = "C"
 		else if (horizontalPos >= 3)
-			tonalite = "B" + octave;
+			theme.tonic = "B"
 		else if (horizontalPos >= 0)
-			tonalite = "A" + octave;
+			theme.tonic = "A"
 
-		console.log("selected tonalite = " + tonalite);
+		console.log("selected tonalite = " + theme.tonic + theme.octave)
 
 	}	
 }
