@@ -3,116 +3,116 @@ function updateMode()
 	switch (data["cornerMove"])
 	{
 		case "San-san":
-		ambiance.themeP1.updateMode("dorian");
-		ambiance.themeP2.updateMode("dorian");
-		break;
+		ambiance.themeP1.updateMode("dorian")
+		ambiance.themeP2.updateMode("dorian")
+		break
 
 		case "Hoshi":
-		ambiance.themeP1.updateMode("lydian");
-		ambiance.themeP2.updateMode("lydian");
-		break;
+		ambiance.themeP1.updateMode("lydian")
+		ambiance.themeP2.updateMode("lydian")
+		break
 
 		case "Komoku":
-		ambiance.themeP1.updateMode("melodic minor");
-		ambiance.themeP2.updateMode("melodic minor");
-		break;
+		ambiance.themeP1.updateMode("melodic minor")
+		ambiance.themeP2.updateMode("melodic minor")
+		break
 
 		case "Takamoku":
-		ambiance.themeP1.updateMode("locrian");
-		ambiance.themeP2.updateMode("locrian");
-		break;
+		ambiance.themeP1.updateMode("locrian")
+		ambiance.themeP2.updateMode("locrian")
+		break
 
 		case "Mokuhazushi":
-		ambiance.themeP1.updateMode("mixolydian");
-		ambiance.themeP2.updateMode("mixolydian");
-		break;
+		ambiance.themeP1.updateMode("mixolydian")
+		ambiance.themeP2.updateMode("mixolydian")
+		break
 
 		default:
-		ambiance.themeP1.updateMode("major");
-		ambiance.themeP2.updateMode("major");
-		break;
+		ambiance.themeP1.updateMode("major")
+		ambiance.themeP2.updateMode("major")
+		break
 	}
 
-	console.log(ambiance.themeP2.mode);
+	console.log(ambiance.themeP2.mode)
 }
 
 function updateBase(theme)
 {
-	theme.stopBase();
+	theme.stopBase()
 
 	if (data["stonesAround"] == 0)
-		theme.updateBaseNoteCount(1);
+		theme.updateBaseNoteCount(1)
 	else
 	{
 		if (data["stonesAround"] <= 2)
-			theme.updateBaseNoteCount(2);
+			theme.updateBaseNoteCount(2)
 		else
 		{
 			if (data["stonesAround"] == 3)
-				theme.updateBaseNoteCount(3);
+				theme.updateBaseNoteCount(3)
 			else
-				theme.updateBaseNoteCount(4);
+				theme.updateBaseNoteCount(4)
 		}
 	}
-	theme.startBase();
+	theme.startBase()
 }
 
 function updateMelody(theme)
 {
-	theme.stopMelody();
+	theme.stopMelody()
 
 	if (data["stonesAround"] == 0)
-		theme.updateMelody(8);
+		theme.updateMelody(8)
 	else
 	{
 		if (data["stonesAround"] <= 2)
-			theme.updateMelody(5);
+			theme.updateMelody(5)
 		else
 		{
 			if (data["stonesAround"] == 3)
-				theme.updateMelody(3);
+				theme.updateMelody(3)
 			else
-				theme.updateMelody(3);
+				theme.updateMelody(3)
 		}
 	}
-	theme.startMelody(startTime);
+	theme.startMelody(startTime)
 }
 
 function updateTempo()
 {
-	//console.log(Tone.Transport.bpm.value);
+	//console.log(Tone.Transport.bpm.value)
 
 	if (data["moveTime"] < 2 && Tone.Transport.bpm.value < tempo + 60)
-		Tone.Transport.bpm.value += 10;
+		Tone.Transport.bpm.value += 10
 
 	if (data["moveTime"] > 60 && Tone.Transport.bpm.value > tempo - 60)
-		Tone.Transport.bpm.value -= 10;
+		Tone.Transport.bpm.value -= 10
 }
 
 function updateVelocity()
 {
-	ambiance.themeP1.stopMelody();
-	ambiance.themeP2.stopMelody();
+	ambiance.themeP1.stopMelody()
+	ambiance.themeP2.stopMelody()
 
 	if (data["globalInterpretation"] > 0.5)
 	{
-		ambiance.themeP2.bass.velocity = data["globalInterpretation"];
-		ambiance.themeP2.lead.velocity = data["globalInterpretation"];
+		ambiance.themeP2.bass.velocity = data["globalInterpretation"]
+		ambiance.themeP2.lead.velocity = data["globalInterpretation"]
 	}
 	else if (data["globalInterpretation"] < -0.5)
 	{
-		ambiance.themeP1.bass.velocity = data["globalInterpretation"];
-		ambiance.themeP1.lead.velocity = data["globalInterpretation"];
+		ambiance.themeP1.bass.velocity = data["globalInterpretation"]
+		ambiance.themeP1.lead.velocity = data["globalInterpretation"]
 	}
 	else 
 	{
-		ambiance.themeP1.bass.velocity = 0.5;
-		ambiance.themeP1.lead.velocity = 0.5;
-		ambiance.themeP2.bass.velocity = 0.5;
-		ambiance.themeP2.lead.velocity = 0.5;
+		ambiance.themeP1.bass.velocity = 0.5
+		ambiance.themeP1.lead.velocity = 0.5
+		ambiance.themeP2.bass.velocity = 0.5
+		ambiance.themeP2.lead.velocity = 0.5
 	}
 
-	currentTheme.startMelody(startTime);
+	currentTheme.startMelody(startTime)
 
 }
 
@@ -121,62 +121,62 @@ function updateMelodyProbability()
 	switch(data["stoneOnBoard"])
 	{
 		case 10:
-		ambiance.themeP1.updateMelodyNoteProbability(0.1);
-		ambiance.themeP2.updateMelodyNoteProbability(0.1);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.1)
+		ambiance.themeP2.updateMelodyNoteProbability(0.1)
+		break
 
 		case 20:
-		ambiance.themeP1.updateMelodyNoteProbability(0.2);
-		ambiance.themeP2.updateMelodyNoteProbability(0.2);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.2)
+		ambiance.themeP2.updateMelodyNoteProbability(0.2)
+		break
 
 		case 30:
-		ambiance.themeP1.updateMelodyNoteProbability(0.3);
-		ambiance.themeP2.updateMelodyNoteProbability(0.3);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.3)
+		ambiance.themeP2.updateMelodyNoteProbability(0.3)
+		break
 
 		case 40:
-		ambiance.themeP1.updateMelodyNoteProbability(0.4);
-		ambiance.themeP2.updateMelodyNoteProbability(0.4);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.4)
+		ambiance.themeP2.updateMelodyNoteProbability(0.4)
+		break
 
 		case 50:
-		ambiance.themeP1.updateMelodyNoteProbability(0.5);
-		ambiance.themeP2.updateMelodyNoteProbability(0.5);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.5)
+		ambiance.themeP2.updateMelodyNoteProbability(0.5)
+		break
 
 		case 60:
-		ambiance.themeP1.updateMelodyNoteProbability(0.6);
-		ambiance.themeP2.updateMelodyNoteProbability(0.6);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.6)
+		ambiance.themeP2.updateMelodyNoteProbability(0.6)
+		break
 
 		case 70:
-		ambiance.themeP1.updateMelodyNoteProbability(0.75);
-		ambiance.themeP2.updateMelodyNoteProbability(0.75);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.75)
+		ambiance.themeP2.updateMelodyNoteProbability(0.75)
+		break
 
 		case 80:
-		ambiance.themeP1.updateMelodyNoteProbability(0.80);
-		ambiance.themeP2.updateMelodyNoteProbability(0.80);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.80)
+		ambiance.themeP2.updateMelodyNoteProbability(0.80)
+		break
 
 		case 90:
-		ambiance.themeP1.updateMelodyNoteProbability(0.85);
-		ambiance.themeP2.updateMelodyNoteProbability(0.85);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.85)
+		ambiance.themeP2.updateMelodyNoteProbability(0.85)
+		break
 
 		case 100:
-		ambiance.themeP1.updateMelodyNoteProbability(0.90);
-		ambiance.themeP2.updateMelodyNoteProbability(0.90);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.90)
+		ambiance.themeP2.updateMelodyNoteProbability(0.90)
+		break
 
 		case 110:
-		ambiance.themeP1.updateMelodyNoteProbability(0.95);
-		ambiance.themeP2.updateMelodyNoteProbability(0.95);
-		break;
+		ambiance.themeP1.updateMelodyNoteProbability(0.95)
+		ambiance.themeP2.updateMelodyNoteProbability(0.95)
+		break
 
 		default:
-		break;
+		break
 	}
 }
 
@@ -184,50 +184,50 @@ function updateMelodyPattern()
 {
 	if (data["player"] == "White")
 	{
-		let gameStyleIndicator = whitePlayerFeature.defensive - whitePlayerFeature.offensive;
+		let gameStyleIndicator = whitePlayerFeature.defensive - whitePlayerFeature.offensive
 		
 		if (gameStyleIndicator == 0)
-			ambiance.themeP2.updateMelodyPattern("random");
+			ambiance.themeP2.updateMelodyPattern("random")
 		else 
 		{
 			if (gameStyleIndicator > 0)
 			{
 				if (gameStyleIndicator <= 2)
-					ambiance.themeP2.updateMelodyPattern("downUp");
+					ambiance.themeP2.updateMelodyPattern("downUp")
 				else 
-					ambiance.themeP2.updateMelodyPattern("down");
+					ambiance.themeP2.updateMelodyPattern("down")
 			}
 			else
 			{
 				if (gameStyleIndicator >= -2)
-					ambiance.themeP2.updateMelodyPattern("upDown");
+					ambiance.themeP2.updateMelodyPattern("upDown")
 				else 
-					ambiance.themeP2.updateMelodyPattern("up");
+					ambiance.themeP2.updateMelodyPattern("up")
 			}
 		}
 	}
 
 	else 
 	{
-		let gameStyleIndicator = blackPlayerFeature.defensive - blackPlayerFeature.offensive;
+		let gameStyleIndicator = blackPlayerFeature.defensive - blackPlayerFeature.offensive
 		
 		if (gameStyleIndicator == 0)
-			ambiance.themeP1.updateMelodyPattern("random");
+			ambiance.themeP1.updateMelodyPattern("random")
 		else 
 		{
 			if (gameStyleIndicator > 0)
 			{
 				if (gameStyleIndicator <= 2)
-					ambiance.themeP1.updateMelodyPattern("downUp");
+					ambiance.themeP1.updateMelodyPattern("downUp")
 				else 
-					ambiance.themeP1.updateMelodyPattern("down");
+					ambiance.themeP1.updateMelodyPattern("down")
 			}
 			else
 			{
 				if (gameStyleIndicator >= -2)
-					ambiance.themeP1.updateMelodyPattern("upDown");
+					ambiance.themeP1.updateMelodyPattern("upDown")
 				else 
-					ambiance.themeP1.updateMelodyPattern("up");
+					ambiance.themeP1.updateMelodyPattern("up")
 			}
 		}
 	}
@@ -235,51 +235,51 @@ function updateMelodyPattern()
 
 function updateTheme()
 {
-	//console.log(data["player"]);
+	//console.log(data["player"])
 
-	currentTheme.stopBase();
-	currentTheme.stopMelody();
+	currentTheme.stopBase()
+	currentTheme.stopMelody()
 
 
 	if (data["player"] == "White") 
-		currentTheme = ambiance.themeP2;
+		currentTheme = ambiance.themeP2
 
 	else
-		currentTheme = ambiance.themeP1;
+		currentTheme = ambiance.themeP1
 
-	currentTheme.updateBaseChord();
+	currentTheme.updateBaseChord()
 
 	if (basePlaying)
-		updateBase(currentTheme);
+		updateBase(currentTheme)
 
 	if(melodyPlaying)
-		updateMelody(currentTheme);
+		updateMelody(currentTheme)
 }
 
 function updateTonic()
 {
-	let pos = data["stonePosition"];
+	let pos = data["stonePosition"]
 
 	if (pos[0]>9)
 	{
 		if (pos[1]>9)
 		{
-			currentTheme.updateTonic("C", 3);
+			currentTheme.updateTonic("C", 3)
 		}
 		else
 		{
-			currentTheme.updateTonic("E", 3);
+			currentTheme.updateTonic("E", 3)
 		}
 	}
 	else
 	{
 		if (pos[1]>9)
 		{
-			currentTheme.updateTonic("G", 3);
+			currentTheme.updateTonic("G", 3)
 		}
 		else
 		{
-			currentTheme.updateTonic("D", 3);
+			currentTheme.updateTonic("D", 3)
 		}
 	}
 }
@@ -287,24 +287,24 @@ function updateTonic()
 function update()
 {
 
-	//updateTonic();
-	//console.log("UPDATE");
+	//updateTonic()
+	//console.log("UPDATE")
 
-	updateMelodyProbability();
-	updateMelodyPattern();
+	updateMelodyProbability()
+	updateMelodyPattern()
 
-	updateTheme();
+	updateTheme()
 
 	/*
 	if (melodyPlaying)
-		updateVelocity();
+		updateVelocity()
 	*/
 	
-	window.setTimeout(update, Tone.Time("1m").toMilliseconds());
+	window.setTimeout(update, Tone.Time("1m").toMilliseconds())
 }
 
 function updateBassLine()
 {
-	bassLine = createBassLine(tonalite);
-	bassLine.start();
+	bassLine = createBassLine(tonalite)
+	bassLine.start()
 }
