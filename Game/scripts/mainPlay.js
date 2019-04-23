@@ -19,20 +19,12 @@ var tonalite;
 var beat1 = new Beat(1);
 var beat2 = new Beat(2);
 
-const theme = new Theme(3, 'guitar-acoustic', 'bass-electric')
+const theme = new Theme(3, 'piano', 'bass-electric')
 
 let melodyPlaying = false
 let basePlaying = false
 
 var tenLastMoveTimes = new Array();
-//////////////////////////////////////
-
-/*
-var currentTheme = null;
-
-var melodyPlaying = false;
-var basePlaying = false;
-*/
 
 NProgress.start();
 
@@ -43,43 +35,29 @@ function saveMusic() {
     }
 }
 
-/*
-function decrescendo() {
-    const time = data["decrescendoTime"];
+var minTimeAverage = 4
+var maxTimeAverage = 3
 
-    if (time == 10 && ambiance.beat.playingSnare) {
-        console.log("stopSnare");
-        ambiance.beat.stopSnare();
-
-        if (melodyPlaying) {
-            currentTheme.stopMelody();
-            currentTheme.updateMelody(Math.min(0, currentTheme.arpeggioNoteCount - 3));
-            currentTheme.startMelody(startTime);
-        }
-
-    } else if (time == 20 && ambiance.beat.playingHihat) {
-        console.log("stopHihat");
-        ambiance.beat.stopHihat();
-
-        if (melodyPlaying) {
-            currentTheme.stopMelody();
-            melodyPlaying = false;
-        }
-
-    } else if (time == 25 && ambiance.beat.playingKick) {
-        if (basePlaying) {
-            currentTheme.stopBase();
-            basePlaying = false;
-        }
-
-    } else if (time == 30 && ambiance.beat.playingKick) {
-        console.log("stopKick");
-        ambiance.beat.stopKick();
+function updateTempo() {
+    console.log(tenLastMoveTimes)
+    var average = 0.0
+    tenLastMoveTimes.forEach(x => average += parseFloat(x))
+    average /= 10
+    if (average < minTimeAverage) {
+        minTimeAverage = average
     }
+    else if (average > maxTimeAverage) {
+        maxTimeAverage = average
+    }
+    console.log(minTimeAverage + "   " + maxTimeAverage)
+    console.log(average)
 
-    setTimeout(decrescendo, 1000);
+    //tempo entre 80 et 160
+    let tempo = Math.round(120 + 120 * (average - minTimeAverage ) / maxTimeAverage / (1 - minTimeAverage / maxTimeAverage))
+
+    Tone.Transport.bpm.rampTo(tempo, 5)
+    console.log("tempo : " + tempo)
 }
-*/
 
 window.onload = function() {
     Tone.Buffer.on('load', function() {
@@ -90,62 +68,52 @@ window.onload = function() {
         //Evenement Pose de pierre :
         $("#board canvas").on('click', function(coord) {
 
+   
             if (Tone.context.state !== 'running')
-                Tone.context.resume();
+                Tone.context.resume()
 
             ////CODE INITIALISATION
+
             if (start == 0) {
-              startTime = Tone.context.currentTime.toFixed(4);
-
-              recorder.record(soundFile);
-
-              tonalite = "A3";
-              //decrescendo();
-
-              theme.init()
-              theme.startBase()
-              //Random Simple Kick
-              start = 1;
-
-
-              startImpro();
+                startTime = Tone.context.currentTime.toFixed(4)
+                recorder.record(soundFile)
+                init(theme) //initie la tonalité et les instruments en fonction des premiers coups des joueurs
+                theme.init()
+                theme.startBase(startTime)
+                basePlaying = true
+                start = 1
             }
-
-
-            init(); //initie la tonalité et les instruments en fonction des premiers coups des joueurs
-            //ça sert encore à qqch ?
-            ////FIN INITIALISATION
 
             if (data.stoneOnBoard == 4){
                 if (data.totalKnownMoves >= 1){
-                    theme.pickClassicMode()
-                }
-                else{
-                    theme.pickStrangeMode()
+                    theme.pickClassicMode();
+                } else{
+                    theme.pickStrangeMode();
                 }
                 console.log(theme.mode)
-                theme.startBase()
             }
+
             ////FIN INITIALISATION
 
-            if (data.stoneOnBoard <= 10){
+            /*
+
+            if (data.stoneOnBoard <= 10) {
                 tenLastMoveTimes.push(data.moveTime)
             }
-            else{
-                if (tenLastMoveTimes.length == 10){
-                    tenLastMoveTimes.shift()
-                    tenLastMoveTimes.push(data.moveTime)
-                    updateTempo();
-                }
+            else if (tenLastMoveTimes.length == 10) {
+                tenLastMoveTimes.shift()
+                tenLastMoveTimes.push(data.moveTime)
+                updateTempo();
             }
+            */
 
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
                 melodyPlaying = true
             }
 
-            //PERCU
-            switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))){
+    		    //PERCU
+            switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))) {
             	case 0:
             		beat1.changePattern(1, 0);
             		beat2.changePattern(2, 0);
@@ -188,53 +156,44 @@ window.onload = function() {
             }
 
             if (data['stoneOnBoard'] >= 15) {
-
-                if (data.player == "Black"){
-                    if (beat2.kickLoop !== null){
-                        beat2.stopKick();
+                if (data.player == "Black") {
+                    if (beat2.kickLoop !== null) {
+                        beat2.stopKick()
                     }
-
-                    beat1.playKick();
-                }
-                else{
-                    beat1.stopKick();
-                    beat2.playKick();
+                    beat1.playKick()
+                } else {
+                    beat1.stopKick()
+                    beat2.playKick()
                 }
             }
 
             if (data['stoneOnBoard'] >= 30) {
-
-                if (data.player == "Black"){
-                    if (beat2.snareLoop !== null){
-                        beat2.stopSnare();
+                if (data.player == "Black") {
+                    if (beat2.snareLoop !== null) {
+                        beat2.stopSnare()
                     }
-
-                    beat1.playSnare();
-                }
-                else{
+                    beat1.playSnare()
+                } else{
                     if (beat1.snareLoop !== null){
-                        beat1.stopSnare();
+                        beat1.stopSnare()
                     }
-                    beat2.playSnare();
+                    beat2.playSnare()
                 }
             }
 
             if (data['stoneOnBoard'] >= 45) {
-
-                if (data.player == "Black"){
-                    if (beat2.hihatLoop !== null){
-                        beat2.stopHihat();
+                if (data.player == "Black") {
+                    if (beat2.hihatLoop !== null) {
+                        beat2.stopHihat()
                     }
-                    beat1.playHihat();
-                }
-                else{
-                    beat1.stopHihat();
-                    beat2.playHihat();
+                    beat1.playHihat()
+                } else{
+                    beat1.stopHihat()
+                    beat2.playHihat()
                 }
             }
 
             if (data['stoneOnBoard'] > 20) {
-
                 if (data.globalInterpretation[0] > 0) {
                     if (data.player === 'Black') {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
@@ -242,7 +201,6 @@ window.onload = function() {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
                     }
                 }
-
                 if (data.globalInterpretation[0] < 0) {
                     if (data.player === 'Black') {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
@@ -250,37 +208,10 @@ window.onload = function() {
                         theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
                     }
                 }
-
             }
-            console.log(theme.bass.sampler.volume.value);
+            //console.log(theme.bass.sampler.volume.value);
 
 
         })
     });
-}
-
-
-
-var minTimeAverage=4;
-var maxTimeAverage=3;
-function updateTempo()
-{
-    console.log(tenLastMoveTimes);
-    var average = 0.0
-    tenLastMoveTimes.forEach(x=>average+=parseFloat(x))
-    average /= 10
-    if (average < minTimeAverage){
-        minTimeAverage = average;
-    }
-    if (average > maxTimeAverage){
-        maxTimeAverage = average;
-    }
-    console.log(minTimeAverage+"   "+maxTimeAverage)
-    console.log(average)
-
-    //tempo entre 80 et 160
-    let tempo = 80 + 80*(average-minTimeAverage)/maxTimeAverage/(1-minTimeAverage/maxTimeAverage);
-    
-    Tone.Transport.bpm.value = tempo;
-    console.log("tempo : "+tempo)
 }

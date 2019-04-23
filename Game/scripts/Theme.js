@@ -74,7 +74,6 @@ class Theme
 				const note = Improvise.random(this.leadNotes)
 				const duration = Improvise.random(this.leadDurations)
 
-				console.log(this.lead)
 				this.lead.play(note, duration, time)
 				this.startMelody()
 			}
