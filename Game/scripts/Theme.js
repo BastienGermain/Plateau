@@ -1,7 +1,7 @@
-class Theme 
+class Theme
 {
-	constructor(octave, lead, bass = null) 
-	{			
+	constructor(octave, lead, bass = null)
+	{
 		this.lead = new InstrumentSampler(lead)
 		this.lead.sampler.release = 1
 		this.lead.sampler.volume.value = -6
@@ -18,19 +18,19 @@ class Theme
 		this.scale = []
 
 		this.leadDurations = []
-		this.leadIntervals = []		
+		this.leadIntervals = []
 		this.bassDurations = []
 		this.bassIntervals = []
 
 		this.bassStoped = false
 		this.leadStoped = false
-	
+
 	}
 
 ///////////////////////////
 
-	init() 
-	{	
+	init()
+	{
 		this.scale = Scale.create(this.tonic + "" + this.octave, this.mode)
 		this.bassDurations = Improvise.probabilize(Improvise.BassDurations)
 		this.leadDurations = Improvise.probabilize(Improvise.LeadDurations)
@@ -54,7 +54,7 @@ class Theme
 		Tone.Transport.scheduleOnce((time) => {
 
 			if (!this.bassStoped) {
-				const note = (data.stoneOnBoard <= 4) ? (this.tonic + this.octave) : Improvise.random(this.bassNotes) 
+				const note = (data.stoneOnBoard <= 4) ? (this.tonic + this.octave) : Improvise.random(this.bassNotes)
 				const duration = Improvise.random(this.bassDurations)
 
 				this.bass.play(note, duration, time)
@@ -67,7 +67,7 @@ class Theme
 ////////////////////////
 
 	startMelody()
-	{	
+	{
 		Tone.Transport.scheduleOnce((time) => {
 
 			if (!this.leadStoped) {
@@ -131,7 +131,7 @@ class Theme
 
 	// The base is updated and plays 'chordNoteCount' of the current chord
 	// Example : if the chord is CM-0 = ["C0", "E0", "G0"] and 'chordNoteCount' value is 2,
-	//			 only "C0" and "E0" will be played 
+	//			 only "C0" and "E0" will be played
 
 	updateBaseNoteCount(chordNoteCount = 1)
 	{
@@ -150,7 +150,7 @@ class Theme
 		let chord = scribble.chord(this.scale[this.baseIndex]);
 
 		this.base.value = this.adjustNotesOctave(
-			chord.splice(0, Math.min(chord.length, this.chordNoteCount)), 
+			chord.splice(0, Math.min(chord.length, this.chordNoteCount)),
 			this.octave);
 	}
 
@@ -181,13 +181,13 @@ class Theme
 		let chord = scribble.chord(this.scale[this.baseIndex]);
 
 		if (arpeggioNoteCount && arpeggioNoteCount > 0) this.arpeggioNoteCount = arpeggioNoteCount;
-		
+
 		this.melody.values = this.createArpeggio(chord, this.arpeggioNoteCount);
 	}
 
 /////////////////////////
 
-	// Set the probabilty of calling the callback function in the arpeggio Tone.Pattern 
+	// Set the probabilty of calling the callback function in the arpeggio Tone.Pattern
 	// ie. set the probability of playing a note
 
 	updateMelodyNoteProbability(probability)

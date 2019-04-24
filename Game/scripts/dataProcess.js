@@ -403,86 +403,102 @@ function checkAtari(mat) {
 }
 
 function getCornerMove() {
-    const x = data["stonePosition"][0];
-    const y = data["stonePosition"][1];
-    if (x == 2) {
-        if (y == 2) {
-            return "San-san";
-        } else if (y == 3) {
-            return "Komoku";
-        } else if (y == 4) {
-            return "Mokuhazushi";
-        } else if (y == 14) {
-            return "Mokuhazushi";
-        } else if (y == 15) {
-            return "Komoku";
-        } else if (y == 16) {
-            return "San-san";
-        }
-    } else if (x == 3) {
-        if (y == 2) {
-            return "Komoku";
-        } else if (y == 3) {
-            return "Hoshi";
-        } else if (y == 4) {
-            return "Takamoku";
-        } else if (y == 14) {
-            return "Takamoku";
-        } else if (y == 15) {
-            return "Hoshi";
-        } else if (y == 16) {
-            return "Komoku";
-        }
-    } else if (x == 4) {
-        if (y == 2) {
-            return "Mokuhazushi";
-        } else if (y == 3) {
-            return "Takamoku";
-        } else if (y == 15) {
-            return "Takamoku";
-        } else if (y == 16) {
-            return "Mokuhazushi";
-        }
-    } else if (x == 14) {
-        if (y == 2) {
-            return "Mokuhazushi";
-        } else if (y == 3) {
-            return "Takamoku";
-        } else if (y == 15) {
-            return "Takamoku";
-        } else if (y == 16) {
-            return "Mokuhazushi";
-        }
-    } else if (x == 15) {
-        if (y == 2) {
-            return "Komoku";
-        } else if (y == 3) {
-            return "Hoshi";
-        } else if (y == 4) {
-            return "Takamoku";
-        }  else if (y == 14) {
-            return "Takamoku";
-        } else if (y == 15) {
-            return "Hoshi";
-        } else if (y == 16) {
-            return "Komoku";
-        }
-    } else if (x == 16) {
-        if (y == 2) {
-            return "San-san";
-        } else if (y == 3) {
-            return "Komoku";
-        } else if (y == 4) {
-            return "Mokuhazushi";
-        } else if (y == 14) {
-            return "Mokuhazushi";
-        } else if (y == 15) {
-            return "Komoku";
-        } else if (y == 16) {
-            return "San-san";
-        }
+    if (data["stoneOnBoard"] < 5) {
+      const x = data["stonePosition"][0];
+      const y = data["stonePosition"][1];
+      if (x == 2) {
+          if (y == 2) {
+              return "San-san";
+          } else if (y == 3) {
+              return "Komoku";
+          } else if (y == 4) {
+              return "Mokuhazushi";
+          } else if (y == 14) {
+              return "Mokuhazushi";
+          } else if (y == 15) {
+              return "Komoku";
+          } else if (y == 16) {
+              return "San-san";
+          } else {
+            return "";
+          }
+      } else if (x == 3) {
+          if (y == 2) {
+              return "Komoku";
+          } else if (y == 3) {
+              return "Hoshi";
+          } else if (y == 4) {
+              return "Takamoku";
+          } else if (y == 14) {
+              return "Takamoku";
+          } else if (y == 15) {
+              return "Hoshi";
+          } else if (y == 16) {
+              return "Komoku";
+          } else {
+            return "";
+          }
+      } else if (x == 4) {
+          if (y == 2) {
+              return "Mokuhazushi";
+          } else if (y == 3) {
+              return "Takamoku";
+          } else if (y == 15) {
+              return "Takamoku";
+          } else if (y == 16) {
+              return "Mokuhazushi";
+          } else {
+            return "";
+          }
+      } else if (x == 14) {
+          if (y == 2) {
+              return "Mokuhazushi";
+          } else if (y == 3) {
+              return "Takamoku";
+          } else if (y == 15) {
+              return "Takamoku";
+          } else if (y == 16) {
+              return "Mokuhazushi";
+          } else {
+            return "";
+          }
+      } else if (x == 15) {
+          if (y == 2) {
+              return "Komoku";
+          } else if (y == 3) {
+              return "Hoshi";
+          } else if (y == 4) {
+              return "Takamoku";
+          }  else if (y == 14) {
+              return "Takamoku";
+          } else if (y == 15) {
+              return "Hoshi";
+          } else if (y == 16) {
+              return "Komoku";
+          } else {
+            return "";
+          }
+      } else if (x == 16) {
+          if (y == 2) {
+              return "San-san";
+          } else if (y == 3) {
+              return "Komoku";
+          } else if (y == 4) {
+              return "Mokuhazushi";
+          } else if (y == 14) {
+              return "Mokuhazushi";
+          } else if (y == 15) {
+              return "Komoku";
+          } else if (y == 16) {
+              return "San-san";
+          } else {
+            return "";
+          }
+      } else {
+          return "";
+      }
     } else {
-        return "";
+      return "";
     }
 }
 

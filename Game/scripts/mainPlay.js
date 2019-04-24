@@ -68,7 +68,7 @@ window.onload = function() {
         //Evenement Pose de pierre :
         $("#board canvas").on('click', function(coord) {
 
-   
+
             if (Tone.context.state !== 'running')
                 Tone.context.resume()
 
@@ -91,6 +91,7 @@ window.onload = function() {
                     theme.pickStrangeMode();
                 }
                 console.log(theme.mode)
+                updateDisplayedData("Choix du mode : " + theme.mode);
             }
 
             ////FIN INITIALISATION
@@ -110,6 +111,7 @@ window.onload = function() {
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
                 melodyPlaying = true
+                updateDisplayedData("Première connexion de pierre : lancement de la mélodie");
             }
 
     		    //PERCU
@@ -211,7 +213,23 @@ window.onload = function() {
             }
             //console.log(theme.bass.sampler.volume.value);
 
+            if (data["stoneOnBoard"] == 15) {
+              updateDisplayedData("15ème pierre posée");
+              updateDisplayedData("Lancement de la grosse caisse");
+            } else if (data["stoneOnBoard"] == 20) {
+              updateDisplayedData("20ème pierre posée");
+              updateDisplayedData("Le volume de la basse varie selon l'indicateur");
+            } else if (data["stoneOnBoard"] == 30) {
+              updateDisplayedData("30ème pierre posée");
+              updateDisplayedData("Lancement de la caisse claire");
+            } else if (data["stoneOnBoard"] == 45) {
+              updateDisplayedData("45ème pierre posée");
+              updateDisplayedData("Lancement des cymbales");
+            }
 
+            if (data["atariNumber"] > 0) {
+              updateDisplayedData("Retirage aléatoire des intervalles de notes pour la mélodie");
+            }
         })
     });
 }

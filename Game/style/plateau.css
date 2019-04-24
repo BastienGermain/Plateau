@@ -3,8 +3,8 @@ body {
     font-size: 12px;
     color: #444;
     width: 100%;
-    text-align: center;
-    margin: 0;
+    margin-left: 20px;
+    margin-top : 20px;
     padding: 0;
 }
 
@@ -23,6 +23,7 @@ h2 {
     -webkit-user-select  : none;
     -o-user-select       : none;
     user-select          : none;
+    display: inline-block;
 }
 
 #comments {
@@ -54,4 +55,17 @@ h2 {
     padding: 0 4px;
     font-size: 125%;
     color: #666;
+}
+
+#info {
+  float: right;
+  margin-right: 5%;
+  background-color: #111;
+  color: #eee;
+  width: 30%;
+  height: 1070px;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Courier', sans-serif;
+  font-size: 1.5em;
 }

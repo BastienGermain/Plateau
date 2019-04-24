@@ -33,7 +33,7 @@ function switchTimer() {
         oldSecW = secW;
         insertIntotimeArrayPlay(data["moveTime"]);
         data["playerSpeed"] = timeArrayPlay.reduce(reducer) / timeArrayPlay.length;
-        console.log(data["playerSpeed"]);
+        updateDisplayedData("Vitesse moyenne par coup : " + Number.parseFloat(data["playerSpeed"]).toPrecision(3) + " secondes");
     } else {
         clearInterval(timer);
         isCurrentWhite = !isCurrentWhite;
@@ -48,7 +48,7 @@ function switchTimer() {
         oldSecB = secB;
         insertIntotimeArrayPlay(data["moveTime"]);
         data["playerSpeed"] = timeArrayPlay.reduce(reducer) / timeArrayPlay.length;
-        console.log(data["playerSpeed"]);
+        updateDisplayedData("Vitesse moyenne par coup : " + Number.parseFloat(data["playerSpeed"]).toPrecision(3) + " secondes");
     }
 }
 
