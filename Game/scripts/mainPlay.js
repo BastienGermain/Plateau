@@ -63,7 +63,9 @@ window.onload = function() {
     Tone.Buffer.on('load', function() {
         NProgress.done();
         let content = document.getElementById("content");
+        let menu = document.getElementById("menu");
         content.classList.remove("loading");
+        menu.classList.remove("loading");
 
         //Evenement Pose de pierre :
         $("#board canvas").on('click', function(coord) {

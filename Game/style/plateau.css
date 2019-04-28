@@ -2,10 +2,21 @@ body {
     font-family: "Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif;
     font-size: 12px;
     color: #444;
+    text-align: center;
     width: 100%;
-    margin-left: 20px;
-    margin-top : 20px;
+    height: 100vh;
+    margin: 0;
     padding: 0;
+}
+
+header {
+    margin: 0;
+}
+#content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px;
 }
 
 #main {
@@ -24,6 +35,11 @@ h2 {
     -o-user-select       : none;
     user-select          : none;
     display: inline-block;
+}
+
+#board canvas {
+    width: 60vw;
+    height: 95vh;
 }
 
 #comments {
@@ -58,14 +74,29 @@ h2 {
 }
 
 #info {
-  float: right;
-  margin-right: 5%;
-  background-color: #111;
-  color: #eee;
-  width: 30%;
-  height: 1070px;
-  border-radius: 5px;
-  padding: 10px;
-  font-family: 'Courier', sans-serif;
-  font-size: 1.5em;
+    text-align: start;
+    float: right;
+    background-color: #111;
+    color: #eee;
+    height: 90vh;
+    width: 30vw;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: 'Courier', sans-serif;
+    font-size: 1rem;
+    overflow-y: scroll;
+}
+
+@media screen and (max-width: 1000px) {
+    #content {
+        flex-direction: column;
+    }
+
+    #board canvas {
+        width: 95vw;
+    }
+
+    #info {
+        width: 85vw;
+    }
 }

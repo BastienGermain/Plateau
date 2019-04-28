@@ -46,8 +46,9 @@
 </head>
 
 <body>
-    <div id="content" class="loading">
-        <div id="menu">
+    <header>
+        <h1>PLATEAU</h1>
+        <div id="menu" class="loading">
             <button onclick="printData()">Print Data</button>
             <button onclick="printMatrix()">Print Matrix</button>
             <button onclick="saveMusic()">Save Sound</button>
@@ -61,6 +62,9 @@
                 White captures : <span id="white-captures">0</span>
             </p>
         </div>
+    </header>
+
+    <div id="content" class="loading">
 
         <div id="board"></div>
         <div id="info"></div>
