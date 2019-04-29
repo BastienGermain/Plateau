@@ -24,6 +24,8 @@ const theme = new Theme(3, 'piano', 'bass-electric')
 let melodyPlaying = false
 let basePlaying = false
 
+let atariWarned = false;
+
 var tenLastMoveTimes = new Array();
 
 NProgress.start();
@@ -216,21 +218,22 @@ window.onload = function() {
             //console.log(theme.bass.sampler.volume.value);
 
             if (data["stoneOnBoard"] == 15) {
-              updateDisplayedData("15ème pierre posée");
-              updateDisplayedData("Lancement de la grosse caisse");
+              updateDisplayedData("15ème pierre posée")
+              updateDisplayedData("Lancement de la grosse caisse")
             } else if (data["stoneOnBoard"] == 20) {
-              updateDisplayedData("20ème pierre posée");
-              updateDisplayedData("Le volume de la basse varie selon l'indicateur");
+              updateDisplayedData("20ème pierre posée")
+              updateDisplayedData("Le volume de la basse varie selon l'indicateur")
             } else if (data["stoneOnBoard"] == 30) {
-              updateDisplayedData("30ème pierre posée");
-              updateDisplayedData("Lancement de la caisse claire");
+              updateDisplayedData("30ème pierre posée")
+              updateDisplayedData("Lancement de la caisse claire")
             } else if (data["stoneOnBoard"] == 45) {
-              updateDisplayedData("45ème pierre posée");
-              updateDisplayedData("Lancement des cymbales");
+              updateDisplayedData("45ème pierre posée")
+              updateDisplayedData("Lancement des cymbales")
             }
 
-            if (data["atariNumber"] > 0) {
-              updateDisplayedData("Retirage aléatoire des intervalles de notes pour la mélodie");
+            if (data["atariNumber"] > 0 && !atariWarned) {
+              updateDisplayedData("Retirage aléatoire des intervalles de notes pour la mélodie")
+              atariWarned = true
             }
         })
     });
