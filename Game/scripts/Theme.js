@@ -57,7 +57,18 @@ class Theme
 				const note = (data.stoneOnBoard <= 4) ? (this.tonic + this.octave) : Improvise.random(this.bassNotes)
 				const duration = Improvise.random(this.bassDurations)
 
-				this.bass.play(note, duration, time)
+				if (data['stonesAround'] < 2) {
+					this.bass.play(note, duration, time)
+				} else if (data['stonesAround'] >= 2 ) {
+					/**
+					 * 7 (= 8 notes) : tonique, tierce, quinte
+					 * 5  (= 6 notes) : tonique, 2 au dessus, 2 dessus
+					 * 6 (= 7 notes) : 
+					 * 8 (= 9 notes) : 
+					 */
+					this.bass.play(note, duration, time)
+					this.bass.play(Tone.Frequency(note).transpose(5).toNote(), duration, time)
+				}
 				this.startBase()
 			}
 
@@ -119,13 +130,47 @@ class Theme
 
 ///////////////////////////
 
-	// Updates the velocity of the notes played in the Theme
+// Updates the velocity of the notes played in the Theme
 
-	updateMode(mode)
-	{
-		this.mode = mode;
-		this.init();
+updateMode(mode)
+{
+	this.mode = mode;
+	this.init();
+}
+
+///////////////////////////
+	
+	updateBassIntervals() {
+		this.bassIntervals = Improvise.probabilize(Improvise.Intervals)
+		console.log(this.bassIntervals)
+}
+
+//////////////////////////
+
+	updateBassDurations() {
+		this.bassDurations = Improvise.probabilize(Improvise.Durations)
+		console.log(this.bassDurations)
+}	
+
+//////////////////////////
+
+	updateLeadIntervals() {
+		this.leadIntervals = Improvise.probabilize(Improvise.Intervals)
+		console.log(this.leadIntervals)
 	}
+
+//////////////////////////
+
+	updateLeadDurations() {
+		this.leadDurations = Improvise.probabilize(Improvise.Durations)
+		console.log(this.leadDurations)
+}	
+
+//////////////////////////
+
+	updateNotes() {
+		this.notes = Improvise.probabilize(this.scale.map(note => ({value: note})))
+}
 
 ///////////////////////////
 
