@@ -5,9 +5,7 @@ recorder.setInput(Tone.Master);
 var start = 0;
 var startTime = null;
 
-const tempo = 120;
-
-Tone.Transport.bpm.value = tempo;
+Tone.Transport.bpm.value = 120;
 Tone.Master.volume.value = 0;
 
 Tone.Transport.start();
@@ -15,9 +13,10 @@ Tone.Transport.start();
 //////////////////////////////////////
 var lastData;
 
-var tonalite;
-var beat1 = new Beat(1);
-var beat2 = new Beat(2);
+var beat1 = new Beat(1)
+var beat2 = new Beat(2)
+
+var totalKnownMoves=0
 
 const theme = new Theme(3, 'piano', 'bass-electric')
 
@@ -56,8 +55,7 @@ function updateTempo() {
 
     //tempo entre 80 et 160
     let tempo = Math.round(120 + 120 * (average - minTimeAverage ) / maxTimeAverage / (1 - minTimeAverage / maxTimeAverage))
-
-    Tone.Transport.bpm.rampTo(tempo, 5)
+    Tone.Transport.bpm.rampTo(tempo, 1)
     console.log("tempo : " + tempo)
 }
 
@@ -100,7 +98,7 @@ window.onload = function() {
 
             ////FIN INITIALISATION
 
-            /*
+            
 
             if (data.stoneOnBoard <= 10) {
                 tenLastMoveTimes.push(data.moveTime)
@@ -108,14 +106,14 @@ window.onload = function() {
             else if (tenLastMoveTimes.length == 10) {
                 tenLastMoveTimes.shift()
                 tenLastMoveTimes.push(data.moveTime)
-                updateTempo();
+                // updateTempo();
             }
-            */
+            
 
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
                 melodyPlaying = true
-                updateDisplayedData("Première connexion de pierre : lancement de la mélodie");
+                updateDisplayedData("Première connexion de pierre : lancement de la mélodie")
             }
 
     		    //PERCU
@@ -215,7 +213,17 @@ window.onload = function() {
                     }
                 }
             }
+
+            if (data["totalKnownMoves"]-totalKnownMoves > 20){
+                totalKnownMoves += 20
+                let A = theme.tonic
+                theme.tonic = Theme.Notes[(Theme.Notes.indexOf(theme.tonic)-3)%12]
+                console.log("Changement de tonalité : de "+A+" vers "+theme.tonic)
+            }
+
             //console.log(theme.bass.sampler.volume.value);
+            console.log("tonalite : "+theme.tonic)
+            console.log("tempo : "+Tone.Transport.bpm.value)
 
             if (data["stoneOnBoard"] == 15) {
               updateDisplayedData("15ème pierre posée")
