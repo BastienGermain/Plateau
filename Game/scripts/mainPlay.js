@@ -98,7 +98,7 @@ window.onload = function() {
 
             ////FIN INITIALISATION
 
-            
+
 
             if (data.stoneOnBoard <= 10) {
                 tenLastMoveTimes.push(data.moveTime)
@@ -108,7 +108,7 @@ window.onload = function() {
                 tenLastMoveTimes.push(data.moveTime)
                 // updateTempo();
             }
-            
+
 
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
@@ -218,7 +218,8 @@ window.onload = function() {
                 totalKnownMoves += 20
                 let A = theme.tonic
                 theme.tonic = Theme.Notes[(Theme.Notes.indexOf(theme.tonic)-3)%12]
-                console.log("Changement de tonalité : de "+A+" vers "+theme.tonic)
+                console.log("Changement de tonalité : de "+ A +" vers " + theme.tonic)
+                updateDisplayedData("Changement de tonalité : de "+ A +" vers " + theme.tonic)
             }
 
             //console.log(theme.bass.sampler.volume.value);
@@ -252,7 +253,7 @@ window.onload = function() {
                 lastAtariNumber++
                 theme.updateLeadIntervals()
             }
-            
+
             if ((data['stonesConnectionNumber'] % 15) === 0 && melodyPlaying) {
                 updateDisplayedData("Retirage aléatoire des durées de notes pour la mélodie")
                 theme.updateLeadDurations()
