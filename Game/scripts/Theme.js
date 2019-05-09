@@ -62,12 +62,16 @@ class Theme
 				} else if (data['stonesAround'] >= 2 ) {
 					/**
 					 * 7 (= 8 notes) : tonique, tierce, quinte
-					 * 5  (= 6 notes) : tonique, 2 au dessus, 2 dessus
+					 * 5 (= 6 notes) : tonique, 2 au dessus, 2 dessus
 					 * 6 (= 7 notes) : 
 					 * 8 (= 9 notes) : 
 					 */
 					this.bass.play(note, duration, time)
 					this.bass.play(Tone.Frequency(note).transpose(5).toNote(), duration, time)
+				} else if (data[stonesAround] >= 4) {
+					this.bass.play(note, duration, time)
+					this.bass.play(Tone.Frequency(note).transpose(5).toNote(), duration, time)
+					this.bass.play(Tone.Frequency(note).transpose(12).toNote(), duration, time)
 				}
 				this.startBase()
 			}
