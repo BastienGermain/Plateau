@@ -98,7 +98,7 @@ window.onload = function() {
 
             ////FIN INITIALISATION
 
-            
+
 
             if (data.stoneOnBoard <= 10) {
                 tenLastMoveTimes.push(data.moveTime)
@@ -108,7 +108,7 @@ window.onload = function() {
                 tenLastMoveTimes.push(data.moveTime)
                 // updateTempo();
             }
-            
+
 
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
@@ -252,7 +252,7 @@ window.onload = function() {
                 lastAtariNumber++
                 theme.updateLeadIntervals()
             }
-            
+
             if ((data['stonesConnectionNumber'] % 15) === 0 && melodyPlaying) {
                 updateDisplayedData("Retirage aléatoire des durées de notes pour la mélodie")
                 theme.updateLeadDurations()
