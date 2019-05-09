@@ -201,8 +201,26 @@ $(document).ready(function() {
                     }
                 }
             }
-            //console.log(theme.bass.sampler.volume.value);
+            
+            if (data.player === 'Black') {
+                theme.bass.setpPan(0.70)
+                theme.lead.setpPan(0.80)
+            } else {
+                theme.bass.setpPan(-0.70)
+                theme.lead.setpPan(-0.80)
+            }
 
+            console.log('pan : ', theme.bass.pan.pan.value)
+            console.log('pierres connectées (reset à 15)  :', data['stonesConnectionNumber'] % 15)
+
+            if (data['atariNumber'] !== lastAtariNumber && melodyPlaying) {
+                lastAtariNumber++
+                theme.updateLeadIntervals()
+            }
+
+            if ((data['stonesConnectionNumber'] % 15) === 0 && melodyPlaying) {
+                theme.updateLeadDurations()
+            }
 
         })
     })

@@ -23,7 +23,7 @@ const theme = new Theme(3, 'piano', 'bass-electric')
 let melodyPlaying = false
 let basePlaying = false
 
-let atariWarned = false;
+let lastAtariNumber = 0;
 
 var tenLastMoveTimes = new Array();
 
@@ -239,10 +239,24 @@ window.onload = function() {
               updateDisplayedData("Lancement des cymbales")
             }
 
-            if (data["atariNumber"] > 0 && !atariWarned) {
-              updateDisplayedData("Retirage aléatoire des intervalles de notes pour la mélodie")
-              atariWarned = true
+            if (data.player === 'Black') {
+                theme.bass.setpPan(0.70)
+                theme.lead.setpPan(0.80)
+            } else {
+                theme.bass.setpPan(-0.70)
+                theme.lead.setpPan(-0.80)
+            }
+
+            if (data['atariNumber'] !== lastAtariNumber && melodyPlaying) {
+                updateDisplayedData("Retirage aléatoire des intervalles de notes pour la mélodie")
+                lastAtariNumber++
+                theme.updateLeadIntervals()
+            }
+            
+            if ((data['stonesConnectionNumber'] % 15) === 0 && melodyPlaying) {
+                updateDisplayedData("Retirage aléatoire des durées de notes pour la mélodie")
+                theme.updateLeadDurations()
             }
         })
-    });
+    })
 }
