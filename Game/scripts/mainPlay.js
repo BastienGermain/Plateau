@@ -217,7 +217,7 @@ window.onload = function() {
             if (data["totalKnownMoves"]-totalKnownMoves > 20){
                 totalKnownMoves += 20
                 let A = theme.tonic
-                theme.tonic = Theme.Notes[(Theme.Notes.indexOf(theme.tonic)-3)%12]
+                theme.tonic = Theme.Notes[(Theme.Notes.indexOf(theme.tonic)+9)%12]
                 console.log("Changement de tonalité : de "+A+" vers "+theme.tonic)
             }
 
