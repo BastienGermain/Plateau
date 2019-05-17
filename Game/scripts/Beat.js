@@ -6,7 +6,7 @@ class Beat {
 		this.snare = new InstrumentSampler('snare')
 		this.hihat = new InstrumentSampler('hihat')
 
-		this.kick.sampler.volume.value = 12
+		this.kick.sampler.volume.value = 20
 		this.snare.sampler.volume.value = -3
 		this.hihat.sampler.volume.value = 3
 

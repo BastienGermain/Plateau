@@ -153,7 +153,7 @@ window.onload = function() {
             		beat2.changePattern(2, 6);
             		break;
 
-            	case 7: case 8: case 9:
+            	default:
             		beat1.changePattern(1, 7);
             		beat2.changePattern(2, 7);
             		break;
@@ -217,7 +217,7 @@ window.onload = function() {
             if (data["totalKnownMoves"]-totalKnownMoves > 20){
                 totalKnownMoves += 20
                 let A = theme.tonic
-                theme.tonic = Theme.Notes[(Theme.Notes.indexOf(theme.tonic)-3)%12]
+                theme.tonic = Theme.Notes[(Theme.Notes.indexOf(theme.tonic)+9)%12]
                 console.log("Changement de tonalité : de "+ A +" vers " + theme.tonic)
                 updateDisplayedData("Changement de tonalité : de "+ A +" vers " + theme.tonic)
             }

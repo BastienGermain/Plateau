@@ -532,6 +532,21 @@ const dataSample =
         "C4": "C4.[mp3|ogg]",
         "C5": "C5.[mp3|ogg]",
         "C6": "C6.[mp3|ogg]"
+    },
+    
+    "kick":
+    {
+        "C0": "classic-kick.wav"
+    },
+
+    "snare":
+    {
+        "C0": "classic-snare.wav"
+    },
+
+    "hihat":
+    {
+        "C0": "classic-hihat.wav"
     }
 }
 
