@@ -6,9 +6,9 @@ class Beat {
 		this.snare = new InstrumentSampler('snare')
 		this.hihat = new InstrumentSampler('hihat')
 
-		this.kick.sampler.volume.value = 3
-		this.snare.sampler.volume.value = -6
-		this.hihat.sampler.volume.value = -9
+		this.kick.sampler.volume.value = 6
+		this.snare.sampler.volume.value = -3
+		this.hihat.sampler.volume.value = 3
 
 		this.kickSubdivisions = 32
 		this.hihatSubdivisions = 32
@@ -130,7 +130,7 @@ class Beat {
 			})
 
 		this.hihatLoop.loop = Infinity
-		this.hihatLoop.loopEnd = "16n"
+		this.hihatLoop.loopEnd = "32n"
 		this.hihatLoop.playbackRate = 1
 		return this.hihatLoop
 	}

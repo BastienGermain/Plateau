@@ -84,6 +84,8 @@ window.onload = function() {
                 theme.startBase(startTime)
                 basePlaying = true
                 start = 1
+
+                Tone.Transport.bpm.rampTo(300, 10000)
             }
 
             if (data.stoneOnBoard == 4){
@@ -106,7 +108,7 @@ window.onload = function() {
             else if (tenLastMoveTimes.length == 10) {
                 tenLastMoveTimes.shift()
                 tenLastMoveTimes.push(data.moveTime)
-                // updateTempo();
+                //updateTempo();
             }
 
 
@@ -159,7 +161,7 @@ window.onload = function() {
             		break;
             }
 
-            if (data['stoneOnBoard'] >= 15) {
+            if (data['stoneOnBoard'] >= 0) {
                 if (data.player == "Black") {
                     if (beat2.kickLoop !== null) {
                         beat2.stopKick()
@@ -171,7 +173,7 @@ window.onload = function() {
                 }
             }
 
-            if (data['stoneOnBoard'] >= 30) {
+            if (data['stoneOnBoard'] >= 0) {
                 if (data.player == "Black") {
                     if (beat2.snareLoop !== null) {
                         beat2.stopSnare()
@@ -185,7 +187,7 @@ window.onload = function() {
                 }
             }
 
-            if (data['stoneOnBoard'] >= 45) {
+            if (data['stoneOnBoard'] >= 0) {
                 if (data.player == "Black") {
                     if (beat2.hihatLoop !== null) {
                         beat2.stopHihat()
@@ -228,13 +230,13 @@ window.onload = function() {
             if (data["stoneOnBoard"] == 15) {
               updateDisplayedData("15ème pierre posée")
               updateDisplayedData("Lancement de la grosse caisse")
-            } else if (data["stoneOnBoard"] == 20) {
+            } else if (data["stoneOnBoard"] == 26) {
               updateDisplayedData("20ème pierre posée")
               updateDisplayedData("Le volume de la basse varie selon l'indicateur")
             } else if (data["stoneOnBoard"] == 30) {
               updateDisplayedData("30ème pierre posée")
               updateDisplayedData("Lancement de la caisse claire")
-            } else if (data["stoneOnBoard"] == 45) {
+            } else if (data["stoneOnBoard"] == 34) {
               updateDisplayedData("45ème pierre posée")
               updateDisplayedData("Lancement des cymbales")
             }
