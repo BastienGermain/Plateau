@@ -8,7 +8,7 @@ class Theme
 
 		if (bass) {
 			this.bass = new InstrumentSampler(bass)
-			this.bass.sampler.volume.value = -6
+			this.bass.sampler.volume.value = -12
 		}
 
 		this.mode = Scale.StrangeModesNames[Math.floor(Math.random() * Scale.StrangeModesNames.length)]

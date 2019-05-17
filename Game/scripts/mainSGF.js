@@ -17,7 +17,7 @@ var lastData;
 var beat1 = new Beat(1);
 var beat2 = new Beat(2);
 
-const theme = new Theme(3, 'piano', 'bass-electric')
+const theme = new Theme(3, 'guitar-acoustic', 'piano')
 
 let melodyPlaying = false
 let basePlaying = false
