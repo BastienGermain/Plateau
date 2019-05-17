@@ -79,7 +79,7 @@ $(document).ready(function() {
             if (data.stoneOnBoard == 4){
                 if (data.totalKnownMoves >= 1){
                     theme.pickClassicMode();
-                } else{
+                } else {
                     theme.pickStrangeMode();
                 }
                 console.log(theme.mode)
