@@ -66,17 +66,7 @@ jsetup.create('board', function(canvas) {
       getStonesAround();
       getConnectedStones(boardMat);
       data["stoneOnBoard"] += 1;
-      switch(data["stoneOnBoard"]) {
-        case 15:
-          updateDisplayedData("Lancement de la grosse caisse");
-          break;
-        case 30:
-          updateDisplayedData("Lancement de la caisse claire");
-          break;
-        case 45:
-          updateDisplayedData("Lancement des cymbales");
-          break;
-        }
+    
       data["whiteCaptures"] = node.info.captures[2];
       data["blackCaptures"] = node.info.captures[1];
       data["knownMove"] = checkKnownMoves(data, boardMat);

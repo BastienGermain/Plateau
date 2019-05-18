@@ -18,7 +18,7 @@ var beat2 = new Beat(2)
 
 var totalKnownMoves=0
 
-const theme = new Theme(3, 'piano', 'bass-electric')
+const theme = new Theme(3, 'guitar-acoustic', 'cello')
 
 let melodyPlaying = false
 let basePlaying = false
@@ -155,13 +155,14 @@ window.onload = function() {
             		beat2.changePattern(2, 6);
             		break;
 
-            	case 7: case 8: case 9:
+            	default:
             		beat1.changePattern(1, 7);
             		beat2.changePattern(2, 7);
             		break;
             }
 
-            if (data['stoneOnBoard'] >= 0) {
+            /*
+            if (data['stoneOnBoard'] >= 25) {
                 if (data.player == "Black") {
                     if (beat2.kickLoop !== null) {
                         beat2.stopKick()
@@ -187,7 +188,7 @@ window.onload = function() {
                 }
             }
 
-            if (data['stoneOnBoard'] >= 0) {
+            if (data['stoneOnBoard'] >= 35) {
                 if (data.player == "Black") {
                     if (beat2.hihatLoop !== null) {
                         beat2.stopHihat()
@@ -198,20 +199,21 @@ window.onload = function() {
                     beat2.playHihat()
                 }
             }
+            */
 
             if (data['stoneOnBoard'] > 20) {
                 if (data.globalInterpretation[0] > 0) {
                     if (data.player === 'Black') {
-                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, -6)
                     } else {
-                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, -6)
                     }
                 }
                 if (data.globalInterpretation[0] < 0) {
                     if (data.player === 'Black') {
-                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, 3)
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * -20, -6)
                     } else {
-                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, 3)
+                        theme.bass.sampler.volume.value = Math.min(data.globalInterpretation[0] * 20, -6)
                     }
                 }
             }
@@ -220,25 +222,26 @@ window.onload = function() {
                 totalKnownMoves += 20
                 let A = theme.tonic
                 theme.tonic = Theme.Notes[(Theme.Notes.indexOf(theme.tonic)+9)%12]
-                console.log("Changement de tonalité : de "+A+" vers "+theme.tonic)
+                console.log("Changement de tonalité : de "+ A +" vers " + theme.tonic)
+                updateDisplayedData("Changement de tonalité : de "+ A +" vers " + theme.tonic)
             }
 
             //console.log(theme.bass.sampler.volume.value);
             console.log("tonalite : "+theme.tonic)
             console.log("tempo : "+Tone.Transport.bpm.value)
 
-            if (data["stoneOnBoard"] == 15) {
-              updateDisplayedData("15ème pierre posée")
-              updateDisplayedData("Lancement de la grosse caisse")
-            } else if (data["stoneOnBoard"] == 26) {
+            if (data["stoneOnBoard"] == 25) {
+              // updateDisplayedData("25ème pierre posée")
+              // updateDisplayedData("Lancement de la grosse caisse")
+            } else if (data["stoneOnBoard"] == 20) {
               updateDisplayedData("20ème pierre posée")
               updateDisplayedData("Le volume de la basse varie selon l'indicateur")
             } else if (data["stoneOnBoard"] == 30) {
-              updateDisplayedData("30ème pierre posée")
-              updateDisplayedData("Lancement de la caisse claire")
-            } else if (data["stoneOnBoard"] == 34) {
-              updateDisplayedData("45ème pierre posée")
-              updateDisplayedData("Lancement des cymbales")
+              // updateDisplayedData("30ème pierre posée")
+              // updateDisplayedData("Lancement de la caisse claire")
+            } else if (data["stoneOnBoard"] == 35) {
+              // updateDisplayedData("35ème pierre posée")
+              // updateDisplayedData("Lancement des cymbales")
             }
 
             if (data.player === 'Black') {

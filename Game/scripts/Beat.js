@@ -6,8 +6,8 @@ class Beat {
 		this.snare = new InstrumentSampler('snare')
 		this.hihat = new InstrumentSampler('hihat')
 
-		this.kick.sampler.volume.value = 6
-		this.snare.sampler.volume.value = -3
+		this.kick.sampler.volume.value = 16
+		this.snare.sampler.volume.value = 0
 		this.hihat.sampler.volume.value = 3
 
 		this.kickSubdivisions = 32
@@ -221,7 +221,7 @@ Beat.SnarePatterns1 =
 [
 "--------x---------------x-------",
 "--------x-----x---------x---x-x-",
-"--------x--xx-x---------x-xxx-x-", 
+"--------x--xx-x---------x-xxx-x-",
 "----x-------x-------x-------x---",
 "--------x---------------x---x-x-",
 "----x-------x-------x-------x---",
@@ -251,7 +251,7 @@ Beat.HihatPatterns1 =
 ]
 */
 Beat.KickPatterns2 =
-[ 
+[
 "x---------------x-----x---------",
 "x---------------x-----x---------",
 "x---------------x-----x---------",
@@ -265,8 +265,8 @@ Beat.KickPatterns2 =
 Beat.SnarePatterns2 =
 [
 "--------x---------------x-------",
-"--------x-----x---------x--x--x-", 
-"--------x--xx-x---------x-xxxxx-", 
+"--------x-----x---------x--x--x-",
+"--------x--xx-x---------x-xxxxx-",
 "----x-------x-------x-------x---",
 "--------x---------------x-----x-",
 "----x-------x-x-----x-------x---",
@@ -284,7 +284,7 @@ Beat.HihatPatterns2 =
 "-x---x---x---x---x---x---x---x--"]
 
 /*
-[ 
+[
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
