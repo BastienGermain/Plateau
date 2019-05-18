@@ -4,7 +4,7 @@ class Theme
 	{
 		this.lead = new InstrumentSampler(lead)
 		this.lead.sampler.release = 1
-		this.lead.sampler.volume.value = -6
+		this.lead.sampler.volume.value = 6
 
 		if (bass) {
 			this.bass = new InstrumentSampler(bass)

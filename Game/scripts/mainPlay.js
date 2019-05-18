@@ -18,7 +18,7 @@ var beat2 = new Beat(2)
 
 var totalKnownMoves=0
 
-const theme = new Theme(3, 'guitar-acoustic', 'cello')
+const theme = new Theme(3, 'guitar-acoustic', 'piano')
 
 let melodyPlaying = false
 let basePlaying = false
