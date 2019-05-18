@@ -84,8 +84,6 @@ window.onload = function() {
                 theme.startBase(startTime)
                 basePlaying = true
                 start = 1
-
-                Tone.Transport.bpm.rampTo(300, 10000)
             }
 
             if (data.stoneOnBoard == 4){
@@ -118,7 +116,8 @@ window.onload = function() {
                 updateDisplayedData("Première connexion de pierre : lancement de la mélodie")
             }
 
-    		    //PERCU
+            /*
+            //PERCU
             switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))) {
             	case 0:
             		beat1.changePattern(1, 0);
@@ -161,7 +160,6 @@ window.onload = function() {
             		break;
             }
 
-            /*
             if (data['stoneOnBoard'] >= 25) {
                 if (data.player == "Black") {
                     if (beat2.kickLoop !== null) {
@@ -225,10 +223,6 @@ window.onload = function() {
                 console.log("Changement de tonalité : de "+ A +" vers " + theme.tonic)
                 updateDisplayedData("Changement de tonalité : de "+ A +" vers " + theme.tonic)
             }
-
-            //console.log(theme.bass.sampler.volume.value);
-            console.log("tonalite : "+theme.tonic)
-            console.log("tempo : "+Tone.Transport.bpm.value)
 
             if (data["stoneOnBoard"] == 25) {
               // updateDisplayedData("25ème pierre posée")
