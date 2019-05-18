@@ -38,8 +38,8 @@ h2 {
 }
 
 #board canvas {
-    width: 60vw;
-    height: 95vh;
+    /*width: 60vw;
+    height: 95vh;*/
 }
 
 #comments {

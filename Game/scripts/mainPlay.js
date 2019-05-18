@@ -84,6 +84,8 @@ window.onload = function() {
                 theme.startBase(startTime)
                 basePlaying = true
                 start = 1
+
+                Tone.Transport.bpm.rampTo(300, 10000)
             }
 
             if (data.stoneOnBoard == 4){
@@ -106,7 +108,7 @@ window.onload = function() {
             else if (tenLastMoveTimes.length == 10) {
                 tenLastMoveTimes.shift()
                 tenLastMoveTimes.push(data.moveTime)
-                // updateTempo();
+                //updateTempo();
             }
 
 
@@ -172,7 +174,7 @@ window.onload = function() {
                 }
             }
 
-            if (data['stoneOnBoard'] >= 30) {
+            if (data['stoneOnBoard'] >= 0) {
                 if (data.player == "Black") {
                     if (beat2.snareLoop !== null) {
                         beat2.stopSnare()

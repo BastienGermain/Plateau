@@ -130,7 +130,7 @@ class Beat {
 			})
 
 		this.hihatLoop.loop = Infinity
-		this.hihatLoop.loopEnd = "16n"
+		this.hihatLoop.loopEnd = "32n"
 		this.hihatLoop.playbackRate = 1
 		return this.hihatLoop
 	}
@@ -221,7 +221,7 @@ Beat.SnarePatterns1 =
 [
 "--------x---------------x-------",
 "--------x-----x---------x---x-x-",
-"--------x--xx-x---------x-xxx-x-", 
+"--------x--xx-x---------x-xxx-x-",
 "----x-------x-------x-------x---",
 "--------x---------------x---x-x-",
 "----x-------x-------x-------x---",
@@ -251,7 +251,7 @@ Beat.HihatPatterns1 =
 ]
 */
 Beat.KickPatterns2 =
-[ 
+[
 "x---------------x-----x---------",
 "x---------------x-----x---------",
 "x---------------x-----x---------",
@@ -265,8 +265,8 @@ Beat.KickPatterns2 =
 Beat.SnarePatterns2 =
 [
 "--------x---------------x-------",
-"--------x-----x---------x--x--x-", 
-"--------x--xx-x---------x-xxxxx-", 
+"--------x-----x---------x--x--x-",
+"--------x--xx-x---------x-xxxxx-",
 "----x-------x-------x-------x---",
 "--------x---------------x-----x-",
 "----x-------x-x-----x-------x---",
@@ -284,7 +284,7 @@ Beat.HihatPatterns2 =
 "-x---x---x---x---x---x---x---x--"]
 
 /*
-[ 
+[
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
 "x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-",
