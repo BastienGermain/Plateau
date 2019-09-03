@@ -116,7 +116,6 @@ window.onload = function() {
                 updateDisplayedData("Première connexion de pierre : lancement de la mélodie")
             }
 
-            /*
             //PERCU
             switch(Math.trunc(3*Math.abs(data.globalInterpretation[0]))) {
             	case 0:
@@ -197,7 +196,6 @@ window.onload = function() {
                     beat2.playHihat()
                 }
             }
-            */
 
             if (data['stoneOnBoard'] > 20) {
                 if (data.globalInterpretation[0] > 0) {

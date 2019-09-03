@@ -87,8 +87,6 @@ $(document).ready(function() {
 
             ////FIN INITIALISATION
 
-            /*
-
             if (data.stoneOnBoard <= 10) {
                 tenLastMoveTimes.push(data.moveTime)
             }
@@ -97,7 +95,6 @@ $(document).ready(function() {
                 tenLastMoveTimes.push(data.moveTime)
                 updateTempo();
             }
-            */
 
             if (!melodyPlaying && data['stonesConnectionNumber'] > 0) {
                 theme.startMelody()
